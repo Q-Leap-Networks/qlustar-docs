@@ -1,0 +1,88 @@
+<p>
+  Updating a Qlustar cluster is a multi-step process. The detailed steps depend on whether the
+  update involves a kernel update or not (the release notes will mention it, if a new kernel is
+  part of the update) and what module versions you have selected for your images. We'll explain
+  the differences below. Follow the steps in the following order.
+</p>
+<h2>Updating the head-node(s)</h2>
+<p>
+  Apply the standard Debian procedure to update the head-node(s) installation. Execute as root:
+</p>
+<pre>
+  $ aptitude update
+  $ aptitude dist-upgrade
+</pre>
+<p>
+  This will update all packages. In most cases, if new versions of the Qlustar image module
+  packages are available, this will also automatically rebuild the images defined in QluMan. We
+  elaborate on this <a href="#Image-Update">below</a>.
+</p>
+<p>
+  If the kernel was updated by this process reboot the head-node(s) after executing the above
+  commands, otherwise you're done with this step.
+</p>
+<h2>Updating the chroot(s)</h2>
+<p>
+  This is also a standard Debian upgrade as explained in the <a
+  href="/book/docs/first-steps#Adding-Software" target="_blank"> First Steps Guide</a>. If you
+  have setup multiple chroots, you'll have to update all of them.
+</p>
+<h2>Updating the nodes</h2>
+<p>
+  If the update contains a new kernel, reboot all nodes. In case you have some storage nodes
+  that export a global file-system (e.g. NFS or Lustre), reboot them first, then all the other
+  nodes.
+</p>
+<p>
+  If the update doesn't contain a new kernel, you have the choice of either rebooting the nodes
+  like above or using the <strong>Qlustar online update mechanism</strong> (currently the
+  online update has to be executed manually, future versions of QluMan will allow to do this
+  from the GUI) as follows. Execute the following command on the head-node for each node (of
+  course, this can be done in a shell <em>for loop</em>):
+</p>
+<pre>
+  $ qlustar-image-update -u &lt;image name&gt; &lt;hostname&gt;
+</pre>
+<p>
+  where &lt;image name&gt; has to be the name of the image that is currently booted on the
+  corresponding node. You also have the option to first check what exactly the update will
+  change. To find out, execute the following for one sample node per image type:
+</p>
+<pre>
+  $ qlustar-image-update -c &lt;image name&gt; &lt;hostname&gt;
+</pre>
+<p>
+  This will show the files that will be changed by this update.
+</p>
+<pre>
+  $ qlustar-image-update -s &lt;image name&gt; &lt;hostname&gt;
+</pre>
+<p>
+  This will show all services (daemons) that need to be restarted as a result of this update.
+</p>
+<h3 id="Image-Update">When will images be updated/rebuilt?</h3>
+<p>
+  There are a couple of cases to distinguish, depending on what version is selected for an
+  image in QluMan (see also the corresponding section in the <a
+  href="/book/docs/qluman-guide#Image-Versioning" target="_blank"> QluMan Guide</a>).
+</p>
+<ol>
+  <li> Selected image version is of <strong>type x.y.z</strong>,<br/> e.g. 8.1.1. In this case,
+  the image will be rebuilt if and only if there is an update for the selected version (8.1.1)
+  of the modules. Such updates will always be bug-/security-fixes.
+  </li>
+  <li> Selected image version is of <strong>type x.y</strong>,<br/> e.g. 8.1 with 8.1.1 being
+  the most recent 8.1.z version before applying the update. In this case the image is rebuilt,
+  if the update entails a new maintenance release (e.g. 8.1.2 which will then become the new
+  real image version) or an update for the currently installed (8.1.1) modules.
+  </li>
+  <li> Selected image version is of <strong>type x</strong>,,<br/> e.g. 8 with 8.1 being the
+  most recent 8.y and 8.1.1 being the most recent 8.1.z version before applying the update. In
+  this case the image is rebuilt, if either the update entails a new feature release (e.g. 8.2,
+  the latest 8.2.z will then become the new real image version) or a new maintenance release
+  (e.g. 8.1.2 which will then become the new real image version) or an update for the currently
+  installed (8.1.1) modules. With this option, manual intervention to obtain a new image
+  version is only necessary when upgrading to a new major release (e.g. 9.y.z).
+  </li>
+</ol>
+<!--Fictive end_tag--></body></html>

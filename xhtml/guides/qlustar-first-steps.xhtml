@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Fictive XHTML Validation Header</title>
+  </head>
+  <body>
+<p>
+This document describes the first steps to perform after a fresh install of a Qlustar
+head-node.
+</p>
+<h2 >First Boot</h2>
+<p>
+After the server has booted the newly installed Qlustar OS, log in as root and start the
+post-install configuration process by running the command
+</p>
+<pre>
+qlustar-initial-config
+</pre>
+<p>
+This will first thoroughly check your network connectivity and then complete the installation
+by executing the remaining configuration steps as detailed below. During the package update
+process you might be asked whether to keep locally modified configuration files. In this case
+always choose the option
+</p>
+<pre>
+keep the local version currently installed.
+</pre><br/>
+<h3 >Further configuration steps</h3>
+<p>
+If your chosen hostname can't be resolved via DNS, you will see a non-fatal error message
+reminding you that the hostname should be registered in some (external) name service (typically
+DNS).
+</p>
+<h4 >Cluster name</h4>
+<p>
+First, you will be asked for the name of the new Qlustar cluster. This can be any string and is
+used in some places like the slurm or ganglia configuration.
+</p>
+<h4 >NIS Setup</h4>
+<p>
+Next is the setup of the NIS database. Just confirm the suggested NIS server
+with <em>&lt;Ctrl-D&gt;</em> and type <em>&lt;return&gt;</em> to proceed.
+</p>
+<h4 >Configuring ssh</h4>
+<p>
+An ssh key for the root user is generated next. You can enter an optional pass-phrase for it.
+Note however, that a non-empty pass-phrase will have the effect that you will have to specify
+it any time, you try to ssh to another host in the cluster. If you don't want that, work
+without a pass-phrase. This key, will be used to enable login by root to any node of the
+cluster without specifying a password.
+</p>
+<h4 >Configuring Nagios</h4>
+<p>
+The configuration of Nagios requires you to choose a password for the Nagios admin
+account. Please type in the password twice.
+</p>
+<!--btt-->
+<h4 >Configuring QluMan</h4>
+<p>
+QluMan, the Qlustar management framework (see the <a href="/book/docs/qluman-guide"
+target="_blank">QluMan Guide</a>), requires a mysql (mariaDB) database. You will be asked for
+the password of the QluMan DB user next. After entering it, the QluMan database and
+configuration settings will be initialized. This can take a while, since a number of OS images
+and chroots (see <a href="#Adding-Software"> below </a>) will be generated during this step.
+</p>
+<h4 >Configuring Slurm</h4>
+<p>
+If slurm was selected as the cluster resource manager, its configuration requires the
+generation of a munge key and the specification of a password for the slurm mysql
+account. Enter the chosen password twice when asked for it. Note that the slurm database daemon
+is also being configured by this process. Hence, you will be ready to take full advantage of
+the accounting features of slurm.
+</p>
+<h4 >Configuring the virtual Demo Cluster</h4>
+<p>
+If you have chosen to setup some virtual demo nodes during installation, you will be asked for
+the user name of a test account that can be used to explore the cluster. The account will be
+generated with the default password for the cluster (see the information on the screen).
+</p>
+<h3 >Final Reboot</h3>
+<p>
+Please reboot again once all the previous steps are complete (e.g. by typing the
+command <code> shutdown -r now </code>). After the head-node is up and running again, test its
+network connectivity by pinging its public IP address (hostname). Do the same for the virtual
+front-end node, if you have chosen to configure one. It should have booted as well after the
+head-node is up and running. You can try to login to it using ssh.
+</p>
+<p>
+A test mail should have been sent to the e-mail address(es) you specified during the
+installation. If you didn't receive one, review your settings in <code>/etc/aliases</code>
+and/or <code>/etc/postfix/main.cf</code>. In case some of them are wrong, you can execute
+</p>
+<pre>
+$ dpkg-reconfigure postfix
+</pre>
+<p>
+to modify them. 
+</p>
+<h2 >Starting the virtual Demo Cluster</h2>
+<p>
+If you have chosen to configure a virtual demo-cluster, you can start it by executing the
+command:
+</p>
+<pre>
+$ demo-system-start
+</pre>
+<p>
+and to stop
+</p>
+<pre>
+$ demo-system-stop
+</pre>
+<p>
+These commands use the configuration
+file <code>/etc/qlustar/vm-configs/demo-system.conf</code>. If you find that the (automatically
+calculated) amount of RAM per VM is not right, you can change the variable CN_MEM to some other
+value in that file. The consoles of the virtual nodes (and also of the virtual front-end node
+if you chose to set one up) are accessible in a screen session. Type
+</p>
+<pre>
+$ console-fe-vm
+</pre>
+<p>
+to attach to the console session of the virtual FE node and
+</p>
+<!--btt-->
+<pre>
+$ console-demo-vms
+</pre>
+<p>
+to attach to the console sessions of the virtual demo cluster nodes. Note that the screen
+command character is <em>Ctrl-t</em>. To detach from the screen session, type <em>Ctrl-t
+d</em>, to switch to the next/previous screen type <em>Ctrl-t n</em> / <em>Ctrl-t p</em>. More
+details on the usage of screen (or byobu, the Debian customized version we use) are available
+in the corresponding man pages. To check whether all nodes are up and running, type
+</p>
+<pre>
+$ dsh -a uptime
+</pre>
+<p>
+<strong>dsh</strong> or <strong>pdsh</strong> can be used to execute arbitrary commands on
+groups of nodes. Check their man pages and the corresponding 
+<a href="/book/docs/qluman-guide#Generic-Properties" target="_blank">section</a> in the QluMan
+guide for further information.
+</p>
+<h2 >Installed services</h2>
+<p>
+The following services are now configured and running on your head-node:
+</p>
+<ul class="icon">
+<li><strong>Nagios3</strong> (monitoring/alerts) with its web interface at
+  <code>http://&lt;servername&gt;/nagios3/</code>. Login as nagiosadmin with the password you
+  specified previously.</li>
+<li><strong>Ganglia</strong> (monitoring) at 
+  <code>http://&lt;servername&gt;/ganglia/</code></li>
+<li><strong>DHCP/ATFTP</strong> boot service</li>
+<li><strong>NTP</strong> time server as client and server</li>
+<li><strong>NFS</strong>-Server with exports defined in <code>/etc/exports</code></li>
+<li>Depending on your choice of software packages: <strong>Slurm</strong> (DB + control
+  daemon),  <strong>Torque</strong> server, <strong>Corosync</strong>
+  (HA), <strong>Munge</strong> (authentification for slurm/torque). Note that among the latter
+  only slurm and munge are configured automatically during installation. Torque and Corosync
+  require a manual configuration. </li> 
+<li><strong>NIS</strong> server</li>
+<li>Mail service <strong>Postfix</strong></li>
+<li><strong>MariaDB</strong> server (mysql fork)</li>
+<li><strong>QluMan</strong> server (Qlustar Management)</li>
+</ul>
+<p>
+Please note, that you shouldn't install the default Ubuntu MySQL server packages on the
+head-node, since QluMan requires <a href="https://mariadb.org" target="_blank"> MariaDB </a>
+and packages of the latter conflict with the MySQL packages. MariaDB is a complete and
+compatible substitute for MySQL.
+</p>
+<h2 id="Adding-Software">Adding software</h2>
+<p>
+As explained <a href="/book/docs/qluman-guide#UnionFS-Chroots" target="_blank">elsewhere</a>,
+the RAM-based root file-system of a Qlustar compute/storage node can be supplemented by a
+global NFS-exported chroot to allow access to software not already contained in the boot images
+themselves. During installation, one chroot per selected <a
+href="/book/docs/install-guide#Edge_Platform_Selection" target="_blank">edge platform</a> was
+automatically created. The chroots are located at <code>/srv/apps/chroots/&lt;chroot
+name&gt;</code>, where <em>&lt;chroot name&gt;</em> would be <em>precise</em> or
+<em>wheezy</em>. Each of them contains a <strong>full-featured</strong> installation of the
+corresponding Qlustar edge platform. To change into a chroot, convenience bash shell aliases of
+the form <strong>chroot-&lt;chroot name&gt;</strong> are defined for the root user on the
+head-node. You may use them as follows (e.g. for Debian/Wheezy, if it was selected at install):
+</p>
+<pre>
+$ chroot-wheezy
+</pre>
+<p>
+Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control its
+software packages, e.g.
+</p>
+<!--btt-->
+<pre>
+(chroot-wheezy) root@head:~ # aptitude update
+(chroot-wheezy) root@head:~ # aptitude dist-upgrade
+(chroot-wheezy) root@head:~ # aptitude install &lt;package&gt;
+(chroot-wheezy) root@head:~ # exit
+</pre>
+<p>
+The nice thing about this mechanism is that software from packages installed in a particular
+chroot will be available <strong>instantaneously</strong> on all compute/storage nodes that are
+configured to use that chroot. <br/> <strong>Important</strong>: There is usually no need to
+install additional packages on the head-node itself (only in the chroot). Software packages
+installed directly on the head-node will <strong>not</strong> be visible cluster-wide.
+</p>
+<h2>Starting the Cluster Manager QluMan</h2>
+<p>
+  During installation, the Qlustar management GUI qluman-qt is installed for the virtual FE
+  node, if one has been setup, otherwise on the head-node. If you like to have it available on
+  the head-node in any case, just install it there like any other package:
+</p>
+<pre>
+$ apt-get install qluman-qt
+</pre>
+<p>
+  The installation on the head-node is not done by default, since it pulls and installs a lot
+  of other packages that qluman-qt depends on, which will slow down updates. If you have the
+  possibility, <strong>install qluman-qt on your workstation</strong> (see below) and work from
+  there. You can launch qluman-qt remotely on the node where it is installed (FE or head-node)
+  per ssh (with X11 forwarding enabled / -X option) as follows:
+</p>
+<pre>
+$ ssh -X root@servername qluman-qt
+</pre>
+<p>
+  This should bring up the Management Console. For a detailed introduction to QluMan read the
+  <a href="/book/docs/qluman-guide" target="_blank">QluMan Guide</a>.
+</p>
+<h3> Installing the QluMan GUI on a workstation</h3>
+<p>
+  If your workstation runs one of the <a
+  href="/book/docs/install-guide#Edge_Platform_Selection" target="_blank">edge platforms</a>
+  currently supported by Qlustar, you can install the QluMan GUI directly there. This is
+  recommended, since the <strong>responsiveness</strong> of a GUI, that is locally started, is
+  a lot better as compared to one that is running via remote X11. To install the qluman-qt
+  package on your workstation, you need to add the correct Qlustar repository to your
+  <strong>apt sources list</strong>. This can be accomplished by executing the following as
+  root on your workstation.
+</p>
+<pre>
+$ dpkg -l | grep python-software-properties > /dev/null 2>&amp;1 || apt-get install python-software-properties
+$ gpg --no-default-keyring --primary-keyring /etc/apt/trusted.gpg --recv-keys E6BA110F3C0BC307
+</pre>
+<p>
+  The second command should have imported the <strong>Qlustar PGP key</strong> and must output
+  a line like:
+</p>
+<pre>
+gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@q-leap.com&gt;" <strong>imported</strong>
+</pre>
+<!--btt-->
+<p>
+  Then if you have Ubuntu/Precise execute:
+</p>
+<pre>
+$ add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 8.1-precise main non-free'
+$ add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 8.1-precise-proposed-updates main non-free'
+</pre>
+<p>
+  Else for Debian/Wheezy:
+</p>
+<pre>
+$ add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 8.1-wheezy main non-free'
+$ add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 8.1-wheezy-proposed-updates main non-free'
+</pre>
+<p>
+  After this you can install qluman-qt the usual way:
+</p>
+<pre>
+$ apt-get update
+$ apt-get install qluman-qt
+</pre>
+<p>
+  Note, that on Ubuntu you need to have the universe repository enabled in your sources list
+  for the above command to succeed. Finally, the QluMan GUI can then be launched as an ordinary
+  user in a shell on the workstation:
+</p>
+<pre>
+$ qluman-qt &amp;
+</pre>
+<p>
+  <strong>Important</strong>: Please note that the versions of the QluMan packages on the
+  workstation should be the same as on the head-node(s) to ensure correct operation. Some
+  unequal version combinations might work too, but are usually not well tested.
+</p>
+<h2 >Creating Users</h2>
+<p>
+Authenticating users in the cluster can be done in many ways, hence the creation of users
+depends on what method is used. The most basic method is to use NIS. If there is no requirement
+of keeping user authentification in sync with some external service like e.g. LDAP this is
+sufficient. A NIS database is setup during the initial installation process and cluster users
+can be authenticated against it. Creating accounts that should use other authentification
+mechanisms is more complex and beyond the scope of this guide. Some options are explained in
+the admin manual. Add a test user by executing a command like this:
+</p>
+<pre>
+$ adduser.sh -u test -n "Test User"
+</pre>
+<p>
+The behavior of the <code>adduser.sh</code> script can be customized in its configuration file
+<code>/etc/qlustar/common/adduser.cf</code>. It also contains the definition of the initial
+user password.
+</p>
+<h2>Compiling an MPI program</h2>
+<p>
+<a href="http://www.mcs.anl.gov/research/projects/mpi/" target="_blank">MPI (Message Passing
+Interface)</a> is the de facto standard for distributed parallel programming on Linux
+clusters. The default MPI variant in Qlustar is <a href="http://www.open-mpi.org/"
+target="_blank">OpenMpi</a> and is automatically installed in the default chroot during
+installation. You can test the correct installation of MPI with two small &quot;hello
+world&quot; test programs (one in C the other one in FORTRAN90) as the test user you created
+earlier: Login on the front-end node as this user and execute
+</p>
+<pre>
+$ mpicc.openmpi-gcc -o hello-world-c hello-world.c
+$ mpif90.openmpi-gcc -o hello-world-f hello-world.f90
+</pre>
+<p>
+After this you should have created two executables. Check it with
+</p>
+<!--btt-->
+<pre>
+$ ls -l hello-world-?
+</pre>
+<p>
+Now we're prepared to test the queuing system with the two programs.
+</p>
+<h2 >Running an MPI Job</h2>
+<p>
+Still logged in as the test user and assuming at least two demo nodes are started, we can
+submit the two &quot;hello world&quot; programs created previously as follows (commands are
+given for slurm):
+</p>
+<pre>
+$ OMPI_MCA_btl="tcp,self" salloc -N 2 --ntasks-per-node=2 -p demo \
+  srun hello-world-c
+</pre>
+<p>
+This will run the job interactively on 2 nodes with 2 processes each (total of 4
+processes). You should obtain an output like this:
+</p>
+<pre>
+salloc: Granted job allocation 19
+cpu_bind=NULL - beo-201, task  0  0 [13959]: mask 0x1
+cpu_bind=NULL - beo-202, task  3  1 [13607]: mask 0x2
+cpu_bind=NULL - beo-202, task  2  0 [13606]: mask 0x1
+cpu_bind=NULL - beo-201, task  1  1 [13960]: mask 0x2
+Hello world from process 1 of 4
+Hello world from process 3 of 4
+Hello world from process 0 of 4
+Hello world from process 2 of 4
+salloc: Relinquishing job allocation 19
+salloc: Job allocation 19 has been revoked.
+</pre>
+<p>
+The lines starting with <code>cpu_bind=NULL</code> are new in Qlustar 9 and appear due to the
+fact, that we have enabled the verbose setting for the configuration of
+<strong>cpusets</strong> under slurm. They indicate the binding (<strong>core
+affinity</strong>) of the separate MPI tasks to the CPUs/cores of the compute nodes. This is
+done by the <strong>slurm cgroup plugin</strong>, that is now enabled by default. Binding of
+processes to cores guarantees data (memory) locality and thus improves performance on NUMA
+systems, since access to local memory is faster than to remote memory. Note that essentially
+all modern multi-socket (CPU) systems have a NUMA architecture these days (Intel Xeon, AMD
+Opteron, ...), so this is relevant.
+</p>
+<p>
+Similarly the F90 version can be submitted as a batch job using the script
+<code>hello-world-f90-slurm.sh</code> (to see the output, execute <code>cat
+slurm-&lt;job#&gt;.out</code> after the job has finished):
+</p>
+<pre>
+$ sbatch -N 2 --ntasks-per-node=2 -p demo hello-world-f90-slurm.sh
+</pre>
+<p>
+Note that the environment variable <code>OMPI_MCA_btl="tcp,self"</code> is used in the above
+two examples to prevent error messages from not finding an Infiniband network. The latter would
+otherwise occur, because we compile OpenMPI to use an IB network per default and if not found,
+a TCP network is used as backup. TCP can also be set as the default in the OpenMPI config file
+(in the <a href="#Adding-Software">chroot</a>, typically under
+<code>/srv/apps/chroots/trusty/etc/openmpi/x.y.z/openmpi-mca-params.conf</code>) by adding the
+entry:
+</p>
+<pre>
+btl = tcp,self
+</pre>
+<!--btt-->
+<h2 >Running the Linpack benchmark</h2>
+<p>
+The <a href="http://www.top500.org/project/linpack/" target="_blank">Linpack benchmark</a> is
+used to classify supercomputers in the <a href="http://www.top500.org"
+target="_blank">Top500</a> list. That's why on most clusters, it's probably run as one of the
+first parallel programs to check functionality, stability and performance. Qlustar comes with
+an optimized pre-compiled version of Linpack (using a current version of the <a
+href="http://xianyi.github.com/OpenBLAS/" target="_blank">OpenBlas library</a>), and a script
+to auto-generate the necessary input file given the number of nodes, processes per node and
+total amount of RAM for the run.
+</p>
+<p>
+The test user has some pre-defined shell aliases to simplify the submission of Linpack
+jobs. Type <code>alias</code> to see what's available. They are defined
+in <code>$HOME/.bash/alias</code>. Example submission (assuming you have 4 running demo nodes):
+</p>
+<pre>
+$ linp-4-demo-nodes
+</pre>
+<p>
+Check that the job is started (output should be similar):
+</p>
+<pre>
+$ squeue 
+  JOBID PARTITION     NAME     USER  ST       TIME  NODES NODELIST(REASON)
+     27      demo linstres     test   R       2:46      4 beo-[201-204]
+</pre>
+<p>
+ssh to one of the nodes in the NODELIST and check with top that Linpack is running at full
+steam, like:
+</p>
+<pre>
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                 
+18307 test      20   0  354m 280m 2764 R  100 28.0   6:42.92 xhpl-openblas           
+18306 test      20   0  354m 294m 2764 R   99 29.3   6:45.09 xhpl-openblas           
+</pre>
+<p>
+You can check the output of each Linpack run in the files:
+</p>
+<pre>$HOME/bench/hpl/run/job-&lt;jobid&gt;-*/openblas/job-&lt;jobid&gt;-*-&lt;run#&gt;.out
+</pre>
+<p>
+where <code>&lt;jobid&gt;</code> is the slurm JOBID (see squeue command above)
+and <code>&lt;run#&gt;</code> is an integer starting from 1. The way the script is designed, it
+will run indefinitely, restarting Linpack in an infinite loop. So to stop it, you need to
+cancel the job like
+</p>
+<pre>
+$ scancel &lt;jobid&gt;
+</pre>
+<!--btt-->
+<!--Fictive end_tag--></body></html>
