@@ -35,6 +35,45 @@ set -e
 VERSION=%version%
 VERBOSITY=0
 SCRIPTNAME="${0##*/}"
+
+# Global Qlustar publican defs
+QL_LANG=en-US
+QL_DTDVER=5.0
+QL_WEB_STYLE=2
+QL_WEBSITE_TITLE="Qlustar Docs"
+QL_BRAND=qlustar
+QL_BRAND_DIR="${PWD}/brand/${QL_BRAND}"
+
+# Portal stuff
+QL_PORTAL_NAME="Qlustar_Docs_Home"
+QL_PORTAL_DIR="${PWD}/${QL_PORTAL_NAME}"
+
+# Product stuff
+QL_PRODUCT_DIR="${PWD}/products"
+
+# Website defs
+WEB_DIR=website
+WEB_DIR_PATH="${PWD}/${WEB_DIR}"
+WEB_CFG=qlustar-docs
+WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
+WEB_TOC_PATH="${WEB_DIR_PATH}/html"
+
+# Defs for dev site
+QL_DEV_HOST=ql-web-ud
+QL_DEV_PATH=/var/www/qlustar-docs
+QL_DEV_SITE="http://docs-dev.qlustar.com"
+
+# Publican settings
+publican_brand_path=/usr/share/publican/Common_Content/common
+
+# default values
+COLOR_OPT=""
+WEB_SITE_TYPE=DEV
+ALLOWED_ACTIONS=$(concat_string "create-document,update-document,"\
+  "create-portal,update-portal," \
+  "create-product,update-site,create-website,update-website,")
+ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /}
+
 USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
     where options include:
@@ -43,65 +82,35 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
                           update-website,
                           create-portal,
                           update-portal,
+                          create-product,
                           update-site
                           (always required)>
      -s, --site  <Website to create, one of
                           DEV,
                           PROD
-                          (optional/required for )>
+                          (optional. Default: $WEB_SITE_TYPE)>
      -h, --help
      -V, --version
      -v, --verbose
 "
-
-# Global Qlustar publican defs
-QL_LANG=en-US
-QL_DTDVER=4.5
-QL_WEB_STYLE=2
-QL_WEBSITE_TITLE="Qlustar Manuals"
-QL_BRAND=qlustar
-QL_BRAND_DIR="${PWD}/brand/${QL_BRAND}"
-
-# Portal stuff
-QL_PORTAL_NAME=qlustar-docs-portal
-QL_PORTAL_DIR="${PWD}/${QL_PORTAL_NAME}"
-QL_PORTAL_ROOT_FILE="${QL_PORTAL_DIR}/${QL_LANG}/${QL_PORTAL_NAME}.xml"
-
-# Website defs
-WEB_DIR=website
-WEB_DIR_PATH="${PWD}/${WEB_DIR}"
-WEB_CFG=qlustar-docs
-WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
-WEB_TOC_PATH="${WEB_DIR_PATH}/html/docs"
-
-# Defs for dev site
-QL_DEV_HOST=ql-web-ud
-QL_DEV_PATH=/var/www/qlustar-docs/$QL_PORTAL_NAME
-QL_DEV_SITE="http://docs-dev.qlustar.com/$QL_PORTAL_NAME"
-
-# Publican settings
-publican_brand_path=/usr/share/publican/Common_Content/common
-
-# default values
-COLOR_OPT=""
-WEB_SITE_TYPE=DEV
-
-all_args="-a --action -v --verbose  --no-color"
+all_args="-a --action -v --verbose  --no-color -s --site"
 while [ $# -gt 0 ]; do
   case "$1" in
     -a|--action)
-      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
-	"$(concat_string "allowed=create-website,update-website," \
-                         "create-portal,update-portal,update-site")"
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=$ALLOWED_ACTIONS"
       ACTION="$2"
       shift
       ;;
     --no-color)
       COLOR_OPT="--no-color"; color=""
       ;;
+    -p|--product)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=DEV,PROD"
+      WEB_SITE_TYPE="$2"
+      shift
+      ;;
     -s|--site)
-      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
-	"allowed=DEV,PROD"
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=DEV,PROD"
       WEB_SITE_TYPE="$2"
       shift
       ;;
@@ -159,11 +168,10 @@ publish_brand() {
 }
 
 brand_website() {
-  local old_pwd="${PWD}"
-  local tmp_brand_dir="${PWD}/tmp_brand" web_toc_path="${PWD}/${WEB_TOC_PATH}"
+  local old_pwd="${PWD}" tmp_brand_dir="${PWD}/tmp_brand"
 
   # Create brand dirs
-  mkdir ${web_toc_path}/{common,qlustar}
+  mkdir ${WEB_TOC_PATH}/{common,qlustar}
 
   # First common brand
   [ -d "$tmp_brand_dir" ] && rm -rf "$tmp_brand_dir"
@@ -175,11 +183,13 @@ brand_website() {
     exit_with_msg $COLOR_OPT \
       -m "Publican brand not found at $publican_brand_path" -e $ERR_MISSING_FILE
   fi
-  publish_brand "$tmp_brand_dir" "${web_toc_path}/common"
+  publish_brand "$tmp_brand_dir" "${WEB_TOC_PATH}/common"
 
   # Now Qlustar brand
+  rm -rf "$tmp_brand_dir"
   cp -r ../brand/qlustar "$tmp_brand_dir"
-  publish_brand "$tmp_brand_dir" "${web_toc_path}/qlustar"
+  publish_brand "$tmp_brand_dir" "${WEB_TOC_PATH}/qlustar"
+  rm -rf "$tmp_brand_dir"
 }
 
 create_website() {
@@ -188,13 +198,14 @@ create_website() {
   cd $WEB_DIR
   publican create_site --site_config ${WEB_CFG_PATH} --db_file ${WEB_CFG}.db \
     --toc_path "$WEB_TOC_PATH"
-  cat <<-EOF > ${WEB_CFG_PATH}
-title: "${QL_WEBSITE_TITLE}"
-host: %%%http-site%%%
-def_lang: ${QL_LANG}
-web_style: ${QL_WEB_STYLE}
+  cat <<-EOF > ${WEB_CFG_PATH} 
+	title: "${QL_WEBSITE_TITLE}"
+	host: %%%http-site%%%
+	def_lang: ${QL_LANG}
+	web_style: ${QL_WEB_STYLE}
+	manual_toc_update: 1
 
-$(cat ${WEB_CFG_PATH} | sed -e '/^#/d' -e '/^$/d')
+	$(cat ${WEB_CFG_PATH} | sed -e '/^#/d' -e '/^$/d')
 EOF
   touch ${WEB_TOC_PATH}/site_overrides.css
   
@@ -205,8 +216,10 @@ EOF
   publican update_site --site_config ${WEB_CFG}.cfg
 }
 
-update_portal() {
-  cd "$QL_PORTAL_DIR"
+build_and_publish_document() {
+  book_dir="$1"
+
+  cd "$book_dir"
   publican build --publish --formats html-single --brand_dir="$QL_BRAND_DIR" \
     --embedtoc --langs $QL_LANG
   publican install_book --brand_dir="$QL_BRAND_DIR" \
@@ -215,26 +228,73 @@ update_portal() {
 }
 
 create_portal() {
-  local f
+  local f cfg="${QL_PORTAL_DIR}/publican.cfg"
+  local root_file="${QL_PORTAL_DIR}/${QL_LANG}/${QL_PORTAL_NAME}.xml"
+
   create_and_backup_dir $QL_PORTAL_DIR no-create
   publican create --type Article --name "$QL_PORTAL_NAME" --dtdver $QL_DTDVER \
     --brand $QL_BRAND
-  # Remove unnecessary includes
-  sed -i -e '/include href/d; /\<index /d' "$QL_PORTAL_ROOT_FILE"
-  update_portal
+  
+# Cleanup and add web_type: home to cfg
+  cat <<-EOF > "$cfg"
+	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
+	web_type: home
+EOF
+
+  # Remove unnecessary includes from root xml file
+  sed -i -e '/include href/d; /\<index /d' "$root_file"
+  sed -i -e \
+    's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
+    "$root_file"
+  sed -i -e "s,%%title%%,$QL_WEBSITE_TITLE,g" "$root_file"
+
+  build_and_publish_document "$QL_PORTAL_DIR"
 }
 
 create_product() {
-  product="$1" name="$2" edition=$3 version=$4
+  local product="$1"
+  local product="Qlustar Cluster OS"
+  local product_dir="${QL_PRODUCT_DIR}/${product// /}" name=product_home
 
+  local cfg="${name}/publican.cfg"
+  local root_file="${name}/${QL_LANG}/${name}.xml"
+
+  [ -d "product_dir" ] || mkdir -p "$product_dir"
+  cd "$product_dir"
+  create_and_backup_dir "$name" no-create
   publican create --type Article --name "$name" --dtdver $QL_DTDVER \
-    --brand $QL_BRAND --edition $edition --version $version --product "$product"
-  publican create --type Article --brand_dir="$QL_BRAND_DIR" \
-    --name $QL_HOME_NAME
-  publican build --brand_dir="$QL_BRAND_DIR" --publish --formats html-single \
-    --embedtoc --langs $QL_LANG
-  publican install_book --brand_dir="$QL_BRAND_DIR" \
-          --site_config $(website_path_dev) --lang $QL_LANG
+    --brand $QL_BRAND --product "$product"
+# Cleanup and add web_type: home to cfg
+  cat <<-EOF > "$cfg"
+	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
+	web_type: product
+EOF
+
+  # Remove unnecessary includes from root xml file
+  sed -i -e '/include href/d; /\<index /d' "$root_file"
+
+  build_and_publish_document $name
+}
+
+create_document() {
+  local product="$1" name="$2" version=$3
+  local product="Qlustar Cluster OS" name=Admin_Manual version=9.1
+  local product_dir="${QL_PRODUCT_DIR}/${product// /}"
+
+  local cfg="${name}/publican.cfg"
+  local root_file="${name}/${QL_LANG}/${name}.xml"
+
+  cd "$product_dir"
+  create_and_backup_dir "$name" no-create
+  publican create --type Article --name "$name" --dtdver $QL_DTDVER \
+    --brand $QL_BRAND --version $version --product "$product"
+
+# Cleanup and add web_type: home to cfg
+  cat <<-EOF > "$cfg"
+	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
+EOF
+
+  build_and_publish_document $name
 }
 
 update_site() {
@@ -255,15 +315,21 @@ update_site() {
 }
 
 case "$ACTION" in
-  create-website)    C_PARS=""
-    execute=create_website
-    msg="Website createion was succesful.";;
+  create-document)    C_PARS=""
+    execute=create_document
+    msg="Creation of document was successful.";;
   create-portal)     C_PARS=""
     execute=create_portal
     msg="Creation of portal was successful.";;
   update-portal)     C_PARS=""
     execute=update_portal
     msg="Portal update was successful.";;
+  create-product)    C_PARS=""
+    execute=create_product
+    msg="Creation of product was successful.";;
+  create-website)    C_PARS=""
+    execute=create_website
+    msg="Website creation was succesful.";;
   update-site)       C_PARS="WEB_SITE_TYPE"
     execute=update_site
     msg="Update of website was successful.";;
