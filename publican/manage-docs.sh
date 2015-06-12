@@ -36,64 +36,119 @@ VERSION=%version%
 VERBOSITY=0
 SCRIPTNAME="${0##*/}"
 
-# Global Qlustar publican defs
-QL_LANG=en-US
-QL_DTDVER=5.0
-QL_WEB_STYLE=2
-QL_WEBSITE_TITLE="Qlustar Docs"
-QL_BRAND=qlustar
-QL_BRAND_DIR="${PWD}/brand/${QL_BRAND}"
-
-# Portal stuff
-QL_PORTAL_NAME="Qlustar_Docs_Home"
-QL_PORTAL_DIR="${PWD}/${QL_PORTAL_NAME}"
-
-# Product stuff
-QL_PRODUCT_DIR="${PWD}/products"
-
-# Website defs
-WEB_DIR=website
-WEB_DIR_PATH="${PWD}/${WEB_DIR}"
-WEB_CFG=qlustar-docs
-WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
-WEB_TOC_PATH="${WEB_DIR_PATH}/html"
-
-# Defs for dev site
-QL_DEV_HOST=ql-web-ud
-QL_DEV_PATH=/var/www/qlustar-docs
-QL_DEV_SITE="http://docs-dev.qlustar.com"
-
-# Publican settings
-publican_brand_path=/usr/share/publican/Common_Content/common
-
 # default values
 COLOR_OPT=""
-WEB_SITE_TYPE=DEV
-ALLOWED_ACTIONS=$(concat_string "create-document,update-document,"\
-  "create-portal,update-portal," \
-  "create-product,update-site,create-website,update-website,")
-ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /}
+
+CFG_FILE="manage-docs.cfg"
+. $CFG_FILE 2> /dev/null ||  exit_with_msg $COLOR_OPT \
+  -m "Missing config file $CFG_FILE" -e $ERR_MISSING_FILE
+
+# Vars derived from defaults in $CFG_FILE
+QL_BRAND_DIR="${PWD}/brand/${QL_BRAND}"
+QL_PORTAL_DIR="${PWD}/${QL_PORTAL_NAME}"
+WEB_DIR_PATH="${PWD}/${WEB_DIR}"
+WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
+WEB_TOC_PATH="${WEB_DIR_PATH}/html"
+# Other global vars
+PRODUCT_HOME=product-home
+
+# cmdline handling
+ALLOWED_ACTIONS=$(concat_string "create-document,update-document," \
+                                "create-portal,update-portal," \
+                                "create-product,update-product," \
+                                "create-website,update-website," \
+                                "update-site")
+ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /} # Remove spaces from concatenation
+ALLOWED_ACTIONS_USAGE="$(echo ${ALLOWED_ACTIONS} \
+  | sed -e 's/\,/,\n                          /g')"
+
+# Scan for products/documents in product dir
+AVAILABLE_PRODUCTS=""
+AVAILABLE_PROD_ALIASES=""
+AVAILABLE_PROD_ALIASES_USAGE=""
+# AVAILABLE_PRODUCTS array will hold product info
+declare -a AVAILABLE_PRODS
+AVAILABLE_DOCUMENTS=""
+AVAILABLE_DOC_ALIASES=""
+AVAILABLE_DOC_ALIASES_USAGE=""
+# AVAILABLE_DOCS array will hold document info
+declare -a AVAILABLE_DOCS
+prod_index=1
+doc_index=1
+for f1 in $(find "$QL_PRODUCT_DIR" -maxdepth 4 -name ${PRODUCT_HOME}.xml); do
+
+  # First get products
+  [[ $f1 =~ bak[1-9] ]] && continue
+  prodtitle="$(sed -ne \
+    '/title/{s/.*<title role="producttitle">\(.*\)<\/title>.*/\1/p;q;}' $f1)"
+  prod_alias="prod-$(printf '%02d' $doc_index)"
+  prod_alias_u="$prod_alias | $prodtitle"
+  AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS}${prodtitle},"
+  AVAILABLE_PROD_ALIASES="${AVAILABLE_PROD_ALIASES}${prod_alias},"
+  AVAILABLE_PROD_ALIASES_USAGE="${AVAILABLE_PROD_ALIASES_USAGE}${prod_alias_u},"
+  AVAILABLE_PRODS[$prod_index]="${prod_alias},$prodtitle"
+
+  # Now scan for corresponding documents
+  for f2 in $(find "${f1%/*/*/*}" -maxdepth 1 -mindepth 1 -type d ); do
+    [[ $f2 =~ ${PRODUCT_HOME}|bak ]] && continue
+    doc_alias="doc-$(printf '%03d' $doc_index)"
+    doc_alias_use="$doc_alias | ${f2##*/}\t| $prodtitle"
+    AVAILABLE_DOCUMENTS="${AVAILABLE_DOCUMENTS}${f2##*/},"
+    AVAILABLE_DOC_ALIASES="${AVAILABLE_DOC_ALIASES}$doc_alias,"
+    AVAILABLE_DOC_ALIASES_USAGE="${AVAILABLE_DOC_ALIASES_USAGE}$doc_alias_use,"
+    # Each entry has 'doc_alias,doc_dir,doc_name,product'
+    AVAILABLE_DOCS[$doc_index]="${doc_alias},${f2},${f2##*/},$prodtitle"
+    (( ++doc_index ))
+  done
+  (( ++prod_index ))
+done
+
+# Remove commas at the end
+AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS%,}"
+AVAILABLE_PROD_ALIASES="${AVAILABLE_PROD_ALIASES%,}"
+AVAILABLE_DOCUMENTS="${AVAILABLE_DOCUMENTS%,}"
+AVAILABLE_DOC_ALIASES="${AVAILABLE_DOC_ALIASES%,}"
 
 USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
     where options include:
 
-     -a, --action <One of create-website,
-                          update-website,
-                          create-portal,
-                          update-portal,
-                          create-product,
-                          update-site
-                          (always required)>
-     -s, --site  <Website to create, one of
-                          DEV,
-                          PROD
-                          (optional. Default: $WEB_SITE_TYPE)>
+     -a, --action   <Supported actions:
+                            $(echo ${ALLOWED_ACTIONS} \
+  | sed -e 's/\,/\n                            /g')
+                            (always required)>
+     -d, --doc-name <Existing products:
+                            $(echo ${AVAILABLE_DOCUMENTS} \
+  | sed -e 's/\,/\n                          /g')
+                            (only required for document creation)>
+     -D, --doc-id   <Existing document ids:
+                            --------+-------------------+---------------------
+                               Id   |      Doc Name     |        Product
+                            --------+-------------------+---------------------
+                            $(echo ${AVAILABLE_DOC_ALIASES_USAGE} \
+  | sed -e 's/\,/\n                          /g')
+                            (only required for update-document action)>
+     -p, --prod-name <Existing products:
+                            $(echo ${AVAILABLE_PRODUCTS} \
+  | sed -e 's/\,/,\n                          /g')
+                            (required for product creation)>
+     -P, --prod-ids   <Existing product ids:
+                            --------+---------------------
+                               Id   |        Product
+                            --------+---------------------
+                            $(echo ${AVAILABLE_PROD_ALIASES_USAGE} \
+  | sed -e 's/\,/\n                          /g')
+                            (only required for update-product action)>
+     -s, --site      <Website to create, one of
+                            DEV,
+                            PROD
+                            (optional. Default: $WEB_SITE_ALIAS)>
      -h, --help
      -V, --version
      -v, --verbose
 "
-all_args="-a --action -v --verbose  --no-color -s --site"
+all_args="-a --action -d --document -f --formats -p --product -s --site
+          -v --verbose --no-color"
 while [ $# -gt 0 ]; do
   case "$1" in
     -a|--action)
@@ -104,14 +159,37 @@ while [ $# -gt 0 ]; do
     --no-color)
       COLOR_OPT="--no-color"; color=""
       ;;
-    -p|--product)
-      check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=DEV,PROD"
-      WEB_SITE_TYPE="$2"
+    -d|--document)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2"
+      DOCUMENT="$2"
+      shift
+      ;;
+    -D|--doc-id)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
+	"allowed=$AVAILABLE_DOC_ALIASES"
+      DOC_ID="$2"
+      shift
+      ;;
+    -f|--formats)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
+	"allowed=$ALLOWED_FORMATS"
+      FORMATS="$2"
+      shift
+      ;;
+    -p|--prod-name)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2"
+      PRODUCT_NAME="$2"
+      shift
+      ;;
+    -P|--prod-ids)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
+	"allowed=$AVAILABLE_PROD_ALIASES"
+      PROD_ID="$2"
       shift
       ;;
     -s|--site)
       check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=DEV,PROD"
-      WEB_SITE_TYPE="$2"
+      WEB_SITE_ALIAS="$2"
       shift
       ;;
     -v|--verbose)
@@ -217,13 +295,12 @@ EOF
 }
 
 build_and_publish_document() {
-  book_dir="$1"
+  local book_dir="$1" formats="$2"
 
   cd "$book_dir"
-  publican build --publish --formats html-single --brand_dir="$QL_BRAND_DIR" \
+  publican build --publish --formats "$formats" --brand_dir="$QL_BRAND_DIR" \
     --embedtoc --langs $QL_LANG
-  publican install_book --brand_dir="$QL_BRAND_DIR" \
-          --site_config ${WEB_CFG_PATH} --lang $QL_LANG
+  publican install_book --site_config ${WEB_CFG_PATH} --lang $QL_LANG
   publican update_site --site_config ${WEB_CFG_PATH}
 }
 
@@ -243,18 +320,19 @@ EOF
 
   # Remove unnecessary includes from root xml file
   sed -i -e '/include href/d; /\<index /d' "$root_file"
+  # Add title
   sed -i -e \
     's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
     "$root_file"
   sed -i -e "s,%%title%%,$QL_WEBSITE_TITLE,g" "$root_file"
 
-  build_and_publish_document "$QL_PORTAL_DIR"
+  build_and_publish_document "$QL_PORTAL_DIR" html-single
 }
 
 create_product() {
   local product="$1"
   local product="Qlustar Cluster OS"
-  local product_dir="${QL_PRODUCT_DIR}/${product// /}" name=product_home
+  local product_dir="${QL_PRODUCT_DIR}/${product// /}" name=$PRODUCT_HOME
 
   local cfg="${name}/publican.cfg"
   local root_file="${name}/${QL_LANG}/${name}.xml"
@@ -272,8 +350,13 @@ EOF
 
   # Remove unnecessary includes from root xml file
   sed -i -e '/include href/d; /\<index /d' "$root_file"
+  # Add title
+  sed -i -e \
+    's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
+    "$root_file"
+  sed -i -e "s,%%title%%,$product,g" "$root_file"
 
-  build_and_publish_document $name
+  build_and_publish_document $name html-single
 }
 
 create_document() {
@@ -294,11 +377,11 @@ create_document() {
 	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
 EOF
 
-  build_and_publish_document $name
+  build_and_publish_document $name html-single
 }
 
 update_site() {
-  local site=$WEB_SITE_TYPE
+  local site=$WEB_SITE_ALIAS
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
@@ -314,10 +397,12 @@ update_site() {
   rm -rf $tmpdir
 }
 
+execute_args=""
 case "$ACTION" in
-  create-document)    C_PARS=""
+  create-document)    C_PARS="DOCUMENT DOCUMENT_VERSION PRODUCT"
     execute=create_document
-    msg="Creation of document was successful.";;
+    execute_args="'$PRODUCT' '$DOCUMENT' $DOCUMENT_VERSION"
+    msg="Creation of document $DOCUMENT for product $PRODUCT was successful.";;
   create-portal)     C_PARS=""
     execute=create_portal
     msg="Creation of portal was successful.";;
@@ -330,13 +415,13 @@ case "$ACTION" in
   create-website)    C_PARS=""
     execute=create_website
     msg="Website creation was succesful.";;
-  update-site)       C_PARS="WEB_SITE_TYPE"
+  update-site)       C_PARS="WEB_SITE_ALIAS"
     execute=update_site
     msg="Update of website was successful.";;
 esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
-$execute
+$execute $execute_args
 print_message $COLOR_OPT "$msg"
 
 exit 0
