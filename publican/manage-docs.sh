@@ -33,12 +33,14 @@ color=BlueBold
 set -e
 
 VERSION=%version%
+VERSION=0.9
 VERBOSITY=0
 SCRIPTNAME="${0##*/}"
 
 # default values
 COLOR_OPT=""
 CLEANUP=true
+FORMATS=html-single
 
 CFG_FILE="manage-docs.cfg"
 . $CFG_FILE 2> /dev/null ||  exit_with_msg $COLOR_OPT \
@@ -64,6 +66,7 @@ ALLOWED_ACTIONS_USAGE="$(echo ${ALLOWED_ACTIONS} \
   | sed -e 's/\,/,\n                          /g')"
 
 # Scan for products/documents in product dir
+# ------------------------------------------
 AVAILABLE_PRODUCTS=""
 AVAILABLE_PROD_ALIASES=""
 AVAILABLE_PROD_ALIASES_USAGE=""
@@ -76,33 +79,35 @@ AVAILABLE_DOC_ALIASES_USAGE=""
 declare -a AVAILABLE_DOCS
 prod_index=1
 doc_index=1
-for f1 in $(find "$QL_PRODUCT_DIR" -maxdepth 4 -name ${PRODUCT_HOME}.xml); do
+if [ -d "$QL_PRODUCT_DIR" ]; then
+  for f1 in $(find "$QL_PRODUCT_DIR" -maxdepth 4 -name ${PRODUCT_HOME}.xml); do
 
-  # First get products
-  [[ $f1 =~ bak[1-9] ]] && continue
-  prodtitle="$(sed -ne \
-    '/title/{s/.*<title role="producttitle">\(.*\)<\/title>.*/\1/p;q;}' $f1)"
-  prod_alias="prod-$(printf '%02d' $doc_index)"
-  prod_alias_u="$prod_alias | $prodtitle"
-  AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS}${prodtitle},"
-  AVAILABLE_PROD_ALIASES="${AVAILABLE_PROD_ALIASES}${prod_alias},"
-  AVAILABLE_PROD_ALIASES_USAGE="${AVAILABLE_PROD_ALIASES_USAGE}${prod_alias_u},"
-  AVAILABLE_PRODS[$prod_index]="${prod_alias},$prodtitle"
+    # First get products
+    [[ $f1 =~ bak[1-9] ]] && continue
+    prodtitle="$(sed -ne \
+      '/title/{s/.*<title role="producttitle">\(.*\)<\/title>.*/\1/p;q;}' $f1)"
+    prod_alias="prod-$(printf '%02d' $prod_index)"
+    prod_al_u="$prod_alias | $prodtitle"
+    AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS}${prodtitle},"
+    AVAILABLE_PROD_ALIASES="${AVAILABLE_PROD_ALIASES}${prod_alias},"
+    AVAILABLE_PROD_ALIASES_USAGE="${AVAILABLE_PROD_ALIASES_USAGE}${prod_al_u},"
+    AVAILABLE_PRODS[$prod_index]="${prod_alias},$prodtitle"
 
-  # Now scan for corresponding documents
-  for f2 in $(find "${f1%/*/*/*}" -maxdepth 1 -mindepth 1 -type d ); do
-    [[ $f2 =~ ${PRODUCT_HOME}|bak ]] && continue
-    doc_alias="doc-$(printf '%03d' $doc_index)"
-    doc_alias_use="$doc_alias | ${f2##*/}\t| $prodtitle"
-    AVAILABLE_DOCUMENTS="${AVAILABLE_DOCUMENTS}${f2##*/},"
-    AVAILABLE_DOC_ALIASES="${AVAILABLE_DOC_ALIASES}$doc_alias,"
-    AVAILABLE_DOC_ALIASES_USAGE="${AVAILABLE_DOC_ALIASES_USAGE}$doc_alias_use,"
-    # Each entry has 'doc_alias,doc_dir,doc_name,product'
-    AVAILABLE_DOCS[$doc_index]="${doc_alias},${f2},${f2##*/},$prodtitle"
-    (( ++doc_index ))
+    # Now scan for corresponding documents
+    for f2 in $(find "${f1%/*/*/*}" -maxdepth 1 -mindepth 1 -type d ); do
+      [[ $f2 =~ ${PRODUCT_HOME}|bak ]] && continue
+      doc_alias="doc-$(printf '%03d' $doc_index)"
+      doc_al_u="$doc_alias | ${f2##*/}\t| $prodtitle"
+      AVAILABLE_DOCUMENTS="${AVAILABLE_DOCUMENTS}${f2##*/},"
+      AVAILABLE_DOC_ALIASES="${AVAILABLE_DOC_ALIASES}$doc_alias,"
+      AVAILABLE_DOC_ALIASES_USAGE="${AVAILABLE_DOC_ALIASES_USAGE}$doc_al_u,"
+      # Each entry has 'doc_alias,doc_dir,doc_name,product'
+      AVAILABLE_DOCS[$doc_index]="${doc_alias},${f2},${f2##*/},$prodtitle"
+      (( ++doc_index ))
+    done
+    (( ++prod_index ))
   done
-  (( ++prod_index ))
-done
+fi
 
 # Remove commas at the end
 AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS%,}"
@@ -120,7 +125,9 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
                             $(echo ${ALLOWED_ACTIONS} \
   | sed -e 's/\,/\n                            /g')
                             (always required)>
-     -d, --doc-name  <Existing products:
+     -d, --doc-name  <Name for a new document. Must not have spaces.
+                            A space in the name can be achieved by using a '_'.
+                            Existing documents:
                             $(echo ${AVAILABLE_DOCUMENTS} \
   | sed -e 's/\,/\n                          /g')
                             (only required for document creation)>
@@ -129,13 +136,22 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
                                Id   |      Doc Name     |        Product
                             --------+-------------------+---------------------
                             $(echo ${AVAILABLE_DOC_ALIASES_USAGE} \
-  | sed -e 's/\,/\n                          /g')
+  | sed -e 's/\,/\n                            /g')
                             (only required for update-document action)>
+     --doc-type      <Type of a new document. Must be one of:
+                            Article, Book
+                            (required for document creation)>
      --doc-version   <Version of a new document:
                             (required for document creation)>
+     -f, --formats   <Document formats to create. Must be a comma separated list
+                            containing any comination of
+                            html, html-single, pdf, epub, txt
+                            Default: $FORMATS
+                            (only used for update-document)>
      --no-clean      Don't clean publican tmp files after execution
      --no-color      Don't use colored output
-     -p, --prod-name <Existing products:
+     -p, --prod-name <Name for a new product.
+                            Existing products:
                             $(echo ${AVAILABLE_PRODUCTS} \
   | sed -e 's/\,/,\n                            /g')
                             (required for product creation)>
@@ -153,9 +169,24 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
      -h, --help
      -v, --verbose
      -V, --version
+
+                           ---------------
+                           -- Examples: --
+                           ---------------
+
+  - Create a new article document 'Release Notes' for product with id prod-01
+    $ ./manage-docs.sh -a create-document -P prod-01 -d 'Release_Notes' \\
+      --doc-version 9.1 --doc-type Article
+
+  - Update the article after editing its content (it got the id doc-002)
+    $ ./manage-docs.sh -a update-document -D doc-002
+
+  - Create a new product 'Qlustar HPC Stack'
+    $ ./manage-docs.sh -a create-product -p 'Qlustar HPC Stack'
+
+  - Update the product page after editing its content (it got the id prod-02)
+    $ ./manage-docs.sh -a update-product -P prod-002
 "
-all_args="-a --action -d --document -f --formats -p --product -s --site
-          -v --verbose --no-color"
 while [ $# -gt 0 ]; do
   case "$1" in
     -a|--action)
@@ -163,15 +194,22 @@ while [ $# -gt 0 ]; do
       ACTION="$2"
       shift
       ;;
-    -d|--document)
+    -d|--doc-name)
       check_single_arg "$all_args" "$USAGE" "$1" "$2"
       DOC_NAME="$2"
+      [[ $DOC_NAME = *[[:space:]]* ]] && exit_with_msg $COLOR_OPT \
+	-m "Document names must not have spaces!" -e $ERR_USAGE
       shift
       ;;
     -D|--doc-id)
       check_single_arg "$all_args" "$USAGE" "$1" "$2" \
 	"allowed=$AVAILABLE_DOC_ALIASES"
       DOC_ID="$2"
+      shift
+      ;;
+    --doc-type)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2" "allowed=Article,Book"
+      DOC_TYPE="$2"
       shift
       ;;
     --doc-version)
@@ -221,17 +259,17 @@ publican_version=$(publican -V)
 
 create_and_backup_dir() {
   local dir="$1" nocreate="$2"
-  local max_bak=5 bak old_dir dir_bak=${dir}.bak
+  local max_bak=5 bak old_dir dir_bak="${dir}.bak"
 
-  [ -d ${dir_bak}$max_bak ] && rm -rf ${dir_bak}$max_bak
+  [ -d "${dir_bak}$max_bak" ] && rm -rf "${dir_bak}$max_bak"
 
   for bak in $(eval echo {$max_bak..2}); do
-    old_dir=${dir_bak}$(( $bak - 1 ))
-    new_dir=${dir_bak}$bak
-    [ -d $old_dir ] && mv $old_dir $new_dir
+    old_dir="${dir_bak}$(( $bak - 1 ))"
+    new_dir="${dir_bak}$bak"
+    [ -d "$old_dir" ] && mv "$old_dir" "$new_dir"
   done
-  [ -d $dir ] && mv $dir ${dir_bak}1
-  [ "$nocreate" = "no-create" ] || mkdir $dir
+  [ -d "$dir" ] && mv "$dir" "${dir_bak}1"
+  [ "$nocreate" = "no-create" ] || mkdir "$dir"
 }
 
 get_prod_name() {
@@ -244,7 +282,7 @@ get_prod_name() {
   echo ${field#*,} # Second field
 }
 
-get_doc_name() {
+get_doc_dir() {
   local doc_id=$1 i field
 
   for (( i=1 ; n < ${#AVAILABLE_DOCS[@]} ; i++ )); do
@@ -390,16 +428,15 @@ EOF
 }
 
 create_document() {
-  local prod_id="$1" name="$2" version=$3
-  local product="Qlustar Cluster OS" name=Admin_Manual version=9.1
+  local prod_id="$1" name="$2" version=$3 type=$4
+  local product="$(get_prod_name $prod_id)"
   local product_dir="${QL_PRODUCT_DIR}/${product// /}"
-
   local cfg="${name}/publican.cfg"
   local root_file="${name}/${QL_LANG}/${name}.xml"
 
   cd "$product_dir"
   create_and_backup_dir "$name" no-create
-  exec_publican create --type Article --name "$name" --dtdver $QL_DTDVER \
+  exec_publican create --type $type --name "$name" --dtdver $QL_DTDVER \
     --brand $QL_BRAND --version $version --product "$product"
 
 # Cleanup and add web_type: home to cfg
@@ -427,11 +464,14 @@ update_site() {
   rm -rf $tmpdir
 }
 
-execute_args=""
+declare -a execute_args
 case "$ACTION" in
-  create-document)    C_PARS="DOC_NAME DOC_VERSION PROD_ID"
+  create-document)    C_PARS="DOC_NAME DOC_VERSION DOC_TYPE PROD_ID"
     execute=create_document
-    execute_args="$PROD_ID '$DOC_NAME' $DOC_VERSION"
+    execute_args[1]=$PROD_ID
+    execute_args[2]="$DOC_NAME"
+    execute_args[3]=$DOC_VERSION
+    execute_args[4]=$DOC_TYPE
     msg="Creation of document $DOC_NAME for prod_id $PROD_ID was successful.";;
   create-portal)     C_PARS=""
     execute=create_portal
@@ -444,11 +484,13 @@ case "$ACTION" in
     execute=create_website
     msg="Website creation was succesful.";;
   update-document)     C_PARS="DOC_ID"
+    doc_dir="$(get_doc_dir $DOC_ID)"
     execute=build_and_publish_document
-    execute_args="$PROD_ID '$DOC_NAME' $DOC_VERSION"
-    msg="Portal update was successful.";;
+    execute_args="$doc_dir $FORMATS"
+    msg="Update of document ${doc_dir##*/} was successful.";;
   update-portal)     C_PARS=""
-    execute=update_portal
+    execute=build_and_publish_document
+    execute_args="$QL_PORTAL_DIR html-single"
     msg="Portal update was successful.";;
   update-product)     C_PARS="PROD_ID"
     prod_name="$(get_prod_name $PROD_ID)"
@@ -462,7 +504,7 @@ case "$ACTION" in
 esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
-$execute "$execute_args"
+$execute "${execute_args[@]}"
     
 print_message $COLOR_OPT "$msg"
 
