@@ -38,6 +38,7 @@ SCRIPTNAME="${0##*/}"
 
 # default values
 COLOR_OPT=""
+CLEANUP=true
 
 CFG_FILE="manage-docs.cfg"
 . $CFG_FILE 2> /dev/null ||  exit_with_msg $COLOR_OPT \
@@ -113,21 +114,25 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
     where options include:
 
-     -a, --action   <Supported actions:
+     -a, --action    <Supported actions:
                             $(echo ${ALLOWED_ACTIONS} \
   | sed -e 's/\,/\n                            /g')
                             (always required)>
-     -d, --doc-name <Existing products:
+     -d, --doc-name  <Existing products:
                             $(echo ${AVAILABLE_DOCUMENTS} \
   | sed -e 's/\,/\n                          /g')
                             (only required for document creation)>
-     -D, --doc-id   <Existing document ids:
+     -D, --doc-id    <Existing document ids:
                             --------+-------------------+---------------------
                                Id   |      Doc Name     |        Product
                             --------+-------------------+---------------------
                             $(echo ${AVAILABLE_DOC_ALIASES_USAGE} \
   | sed -e 's/\,/\n                          /g')
                             (only required for update-document action)>
+     --doc-version   <Version of a new document:
+                            (required for document creation)>
+     --no-clean      Don't clean publican tmp files after execution
+     --no-color      Don't use colored output
      -p, --prod-name <Existing products:
                             $(echo ${AVAILABLE_PRODUCTS} \
   | sed -e 's/\,/,\n                          /g')
@@ -139,13 +144,13 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
                             $(echo ${AVAILABLE_PROD_ALIASES_USAGE} \
   | sed -e 's/\,/\n                          /g')
                             (only required for update-product action)>
-     -s, --site      <Website to create, one of
+     -s, --site       <Website to upload content to, one of
                             DEV,
                             PROD
                             (optional. Default: $WEB_SITE_ALIAS)>
      -h, --help
-     -V, --version
      -v, --verbose
+     -V, --version
 "
 all_args="-a --action -d --document -f --formats -p --product -s --site
           -v --verbose --no-color"
@@ -156,12 +161,9 @@ while [ $# -gt 0 ]; do
       ACTION="$2"
       shift
       ;;
-    --no-color)
-      COLOR_OPT="--no-color"; color=""
-      ;;
     -d|--document)
       check_single_arg "$all_args" "$USAGE" "$1" "$2"
-      DOCUMENT="$2"
+      DOC_NAME="$2"
       shift
       ;;
     -D|--doc-id)
@@ -170,15 +172,26 @@ while [ $# -gt 0 ]; do
       DOC_ID="$2"
       shift
       ;;
+    --doc-version)
+      check_single_arg "$all_args" "$USAGE" "$1" "$2"
+      DOC_VERSION="$2"
+      shift
+      ;;
     -f|--formats)
       check_single_arg "$all_args" "$USAGE" "$1" "$2" \
 	"allowed=$ALLOWED_FORMATS"
       FORMATS="$2"
       shift
       ;;
+    --no-clean)
+      CLEANUP=false
+      ;;
+    --no-color)
+      COLOR_OPT="--no-color"; color=""
+      ;;
     -p|--prod-name)
       check_single_arg "$all_args" "$USAGE" "$1" "$2"
-      PRODUCT_NAME="$2"
+      PROD_NAME="$2"
       shift
       ;;
     -P|--prod-ids)
@@ -200,22 +213,6 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-case $VERBOSITY in
-  0)
-    CDEB_VERBOSITY="-q"
-    ;;
-  1)
-    CDEB_VERBOSITY=""
-    ;;
-  2)
-    CDEB_VERBOSITY="-v"
-    ;;
-  *)
-    set -x
-    CDEB_VERBOSITY="-v --debug"
-    ;;
-esac
-
 publican_version=$(publican -V)
 [[ $publican_version =~ v4.[3] ]] || exit_with_msg $COLOR_OPT \
   -m "Unsupported publican version: $publican_version" -e $ERR_GENERIC
@@ -235,12 +232,42 @@ create_and_backup_dir() {
   [ "$nocreate" = "no-create" ] || mkdir $dir
 }
 
+get_prod_name() {
+  local prod_id=$1 i field
+
+  for (( i=1 ; n < ${#AVAILABLE_PRODS[@]} ; i++ )); do
+    [[ ${AVAILABLE_PRODS[$i]} =~ $prod_id ]] && \
+      { field=${AVAILABLE_PRODS[$i]} ; break; }
+  done
+  echo ${field#*,} # Second field
+}
+
+get_doc_name() {
+  local doc_id=$1 i field
+
+  for (( i=1 ; n < ${#AVAILABLE_DOCS[@]} ; i++ )); do
+    [[ ${AVAILABLE_DOCS[$i]} =~ $doc_id ]] && \
+      { echo ${AVAILABLE_DOCS[$i]} | awk -F ',' '{print $2}'; break; }
+  done
+}
+
+exec_publican() {
+  case $VERBOSITY in
+    0) publican $@ > /dev/null 2>&1;;
+    1) publican $@ > /dev/null;;
+    *) publican $@
+  esac
+  [ $? -eq 0 ] || exit_with_msg $COLOR_OPT \
+    -m "Publican command: 'publican $@' failed. Start script with -v -v." \
+    -e $ERR_GENERIC
+}
+
 publish_brand() {
   tmp_brand_dir="$1" destdir="$2" old_pwd="$PWD"
   
   cd "$tmp_brand_dir"
-  publican build --formats=xml --langs=$QL_LANG --publish
-  publican install_brand --web --path="${destdir}"
+  exec_publican build --formats=xml --langs=$QL_LANG --publish
+  exec_publican install_brand --web --path="${destdir}"
   cd "$old_pwd"
   rm -rf "$tmp_brand_dir"
 }
@@ -274,8 +301,8 @@ create_website() {
   local old_content
   create_and_backup_dir $WEB_DIR
   cd $WEB_DIR
-  publican create_site --site_config ${WEB_CFG_PATH} --db_file ${WEB_CFG}.db \
-    --toc_path "$WEB_TOC_PATH"
+  exec_publican create_site --site_config ${WEB_CFG_PATH} \
+    --db_file ${WEB_CFG}.db --toc_path "$WEB_TOC_PATH"
   cat <<-EOF > ${WEB_CFG_PATH} 
 	title: "${QL_WEBSITE_TITLE}"
 	host: %%%http-site%%%
@@ -291,17 +318,20 @@ EOF
   brand_website
 
   # Final update of the site
-  publican update_site --site_config ${WEB_CFG}.cfg
+  exec_publican update_site --site_config ${WEB_CFG}.cfg
 }
 
 build_and_publish_document() {
   local book_dir="$1" formats="$2"
 
   cd "$book_dir"
-  publican build --publish --formats "$formats" --brand_dir="$QL_BRAND_DIR" \
-    --embedtoc --langs $QL_LANG
-  publican install_book --site_config ${WEB_CFG_PATH} --lang $QL_LANG
-  publican update_site --site_config ${WEB_CFG_PATH}
+  exec_publican build --publish --formats "$formats" \
+    --brand_dir="$QL_BRAND_DIR" --embedtoc --langs $QL_LANG
+  exec_publican install_book --site_config ${WEB_CFG_PATH} --lang $QL_LANG
+  exec_publican update_site --site_config ${WEB_CFG_PATH}
+  if $CLEANUP; then
+    exec_publican clean > /dev/null
+  fi
 }
 
 create_portal() {
@@ -309,8 +339,8 @@ create_portal() {
   local root_file="${QL_PORTAL_DIR}/${QL_LANG}/${QL_PORTAL_NAME}.xml"
 
   create_and_backup_dir $QL_PORTAL_DIR no-create
-  publican create --type Article --name "$QL_PORTAL_NAME" --dtdver $QL_DTDVER \
-    --brand $QL_BRAND
+  exec_publican create --type Article --name "$QL_PORTAL_NAME" \
+    --dtdver $QL_DTDVER --brand $QL_BRAND
   
 # Cleanup and add web_type: home to cfg
   cat <<-EOF > "$cfg"
@@ -340,7 +370,7 @@ create_product() {
   [ -d "product_dir" ] || mkdir -p "$product_dir"
   cd "$product_dir"
   create_and_backup_dir "$name" no-create
-  publican create --type Article --name "$name" --dtdver $QL_DTDVER \
+  exec_publican create --type Article --name "$name" --dtdver $QL_DTDVER \
     --brand $QL_BRAND --product "$product"
 # Cleanup and add web_type: home to cfg
   cat <<-EOF > "$cfg"
@@ -360,7 +390,7 @@ EOF
 }
 
 create_document() {
-  local product="$1" name="$2" version=$3
+  local prod_id="$1" name="$2" version=$3
   local product="Qlustar Cluster OS" name=Admin_Manual version=9.1
   local product_dir="${QL_PRODUCT_DIR}/${product// /}"
 
@@ -369,7 +399,7 @@ create_document() {
 
   cd "$product_dir"
   create_and_backup_dir "$name" no-create
-  publican create --type Article --name "$name" --dtdver $QL_DTDVER \
+  exec_publican create --type Article --name "$name" --dtdver $QL_DTDVER \
     --brand $QL_BRAND --version $version --product "$product"
 
 # Cleanup and add web_type: home to cfg
@@ -399,22 +429,32 @@ update_site() {
 
 execute_args=""
 case "$ACTION" in
-  create-document)    C_PARS="DOCUMENT DOCUMENT_VERSION PRODUCT"
+  create-document)    C_PARS="DOC_NAME DOC_VERSION PROD_ID"
     execute=create_document
-    execute_args="'$PRODUCT' '$DOCUMENT' $DOCUMENT_VERSION"
-    msg="Creation of document $DOCUMENT for product $PRODUCT was successful.";;
+    execute_args="$PROD_ID '$DOC_NAME' $DOC_VERSION"
+    msg="Creation of document $DOC_NAME for prod_id $PROD_ID was successful.";;
   create-portal)     C_PARS=""
     execute=create_portal
     msg="Creation of portal was successful.";;
-  update-portal)     C_PARS=""
-    execute=update_portal
-    msg="Portal update was successful.";;
   create-product)    C_PARS=""
     execute=create_product
     msg="Creation of product was successful.";;
   create-website)    C_PARS=""
     execute=create_website
     msg="Website creation was succesful.";;
+  update-document)     C_PARS="DOC_ID"
+    execute=build_and_publish_document
+    execute_args="$PROD_ID '$DOC_NAME' $DOC_VERSION"
+    msg="Portal update was successful.";;
+  update-portal)     C_PARS=""
+    execute=update_portal
+    msg="Portal update was successful.";;
+  update-product)     C_PARS="PROD_ID"
+    prod_name="$(get_prod_name $PROD_ID)"
+    prod_dir="${QL_PRODUCT_DIR}/${prod_name// /}/${PRODUCT_HOME}"
+    execute=build_and_publish_document
+    execute_args="$prod_dir html-single"
+    msg="Update of product '$prod_name' was successful.";;
   update-site)       C_PARS="WEB_SITE_ALIAS"
     execute=update_site
     msg="Update of website was successful.";;
@@ -422,6 +462,7 @@ esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
 $execute $execute_args
+    
 print_message $COLOR_OPT "$msg"
 
 exit 0
