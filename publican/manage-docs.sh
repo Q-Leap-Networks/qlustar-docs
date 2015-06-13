@@ -107,8 +107,10 @@ done
 # Remove commas at the end
 AVAILABLE_PRODUCTS="${AVAILABLE_PRODUCTS%,}"
 AVAILABLE_PROD_ALIASES="${AVAILABLE_PROD_ALIASES%,}"
+AVAILABLE_PROD_ALIASES_USAGE="${AVAILABLE_PROD_ALIASES_USAGE%,}"
 AVAILABLE_DOCUMENTS="${AVAILABLE_DOCUMENTS%,}"
 AVAILABLE_DOC_ALIASES="${AVAILABLE_DOC_ALIASES%,}"
+AVAILABLE_DOC_ALIASES_USAGE="${AVAILABLE_DOC_ALIASES_USAGE%,}"
 
 USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
@@ -135,16 +137,16 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
      --no-color      Don't use colored output
      -p, --prod-name <Existing products:
                             $(echo ${AVAILABLE_PRODUCTS} \
-  | sed -e 's/\,/,\n                          /g')
+  | sed -e 's/\,/,\n                            /g')
                             (required for product creation)>
-     -P, --prod-ids   <Existing product ids:
+     -P, --prod-ids  <Existing product ids:
                             --------+---------------------
                                Id   |        Product
                             --------+---------------------
                             $(echo ${AVAILABLE_PROD_ALIASES_USAGE} \
-  | sed -e 's/\,/\n                          /g')
+  | sed -e 's/\,/\n                            /g')
                             (only required for update-product action)>
-     -s, --site       <Website to upload content to, one of
+     -s, --site      <Website to upload content to, one of
                             DEV,
                             PROD
                             (optional. Default: $WEB_SITE_ALIAS)>
@@ -253,9 +255,9 @@ get_doc_name() {
 
 exec_publican() {
   case $VERBOSITY in
-    0) publican $@ > /dev/null 2>&1;;
-    1) publican $@ > /dev/null;;
-    *) publican $@
+    0) publican "$@" > /dev/null 2>&1;;
+    1) publican "$@" > /dev/null;;
+    *) publican "$@"
   esac
   [ $? -eq 0 ] || exit_with_msg $COLOR_OPT \
     -m "Publican command: 'publican $@' failed. Start script with -v -v." \
@@ -361,9 +363,7 @@ EOF
 
 create_product() {
   local product="$1"
-  local product="Qlustar Cluster OS"
   local product_dir="${QL_PRODUCT_DIR}/${product// /}" name=$PRODUCT_HOME
-
   local cfg="${name}/publican.cfg"
   local root_file="${name}/${QL_LANG}/${name}.xml"
 
@@ -436,9 +436,10 @@ case "$ACTION" in
   create-portal)     C_PARS=""
     execute=create_portal
     msg="Creation of portal was successful.";;
-  create-product)    C_PARS=""
+  create-product)    C_PARS="PROD_NAME"
     execute=create_product
-    msg="Creation of product was successful.";;
+    execute_args="$PROD_NAME"
+    msg="Creation of product $PROD_NAME was successful.";;
   create-website)    C_PARS=""
     execute=create_website
     msg="Website creation was succesful.";;
@@ -461,7 +462,7 @@ case "$ACTION" in
 esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
-$execute $execute_args
+$execute "$execute_args"
     
 print_message $COLOR_OPT "$msg"
 
