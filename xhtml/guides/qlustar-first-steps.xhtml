@@ -213,7 +213,100 @@ installed directly on the head-node will <strong>not</strong> be visible cluster
 <p>
   During installation, the Qlustar management GUI qluman-qt is installed for the virtual FE
   node, if one has been setup, otherwise on the head-node. If you like to have it available on
-  the head-node in any case, just install it there like any other package:
+  the head-node in any case, see <a href="#qluman-qt_on_head-node"> below </a>.
+</p>
+<h3> Generating a one time token for the first admin login</h3>
+<p>
+The Qlustar management GUI qluman-qt uses public/private keys for both encryption and
+authentication. For this there first needs to be an exchange of public keys between the client
+and the server. Normally this is done by an user with admin role through the GUI. But for the
+first admin login this must be accomplished using a root shell on the head-node:
+</p>
+<!--btt-->
+<pre>
+root@head:~ # qluman-cli --gencert
+Generating one-time login token for user 'admin':
+Cluster  = QL
+Hostname = beosrv-c
+Port     = 6001
+Pubkey   = b'T)5o]@hsjB2qyY>eb<?)8@BA?idMf>kh%&cRhV/#'
+Enter new pin for one-time token: 
+Server infos and one-time login token for user 'admin':
+---[ CUT FROM HERE ]---
+00000191c2MAAcMuyCNQR0DPILx-y-BLCHpITepvG7R3I6452Cdqiu98u4PsM1VWFGqEAG
+V8YN9K5kyJKHtQHGTB1JqZIwt4q0PLArnyNmhCkGLS6VxWWBDtBB9_dGPqLH4OeQ7sZ725
+6XDGgrKo4Dldc_wuCALegczjYV8oc_yZ07X0oIYlzhDlDpk-hTm5bfW8_x904YF0wcv-G-
+nK1ztRg854O7pC_p1YpEJuzWFqWv0e7ffi-ZgkxwfdGGKF3imp4d9yGY4h6Ixdn8TLG2gk
+Z4XQ4dymvSO9hp8mUabfq7prVUOTYeChB2pOrom8XSQxjOoe4Yll5yv6da_CdGq50KrO8Q
+C12Z4Pz2eSbvqXbo7c7DdLRjMc0v0Km3WyljgdsDYbKC5iT75Bgryc
+---[ TO HERE ]---
+</pre>
+<p>The token can also be saved directly into a file using the <strong>-o &lt;filename&gt;</strong> option and the user the token is for can be specified by the <strong>-u &lt;username&gt;</strong> option like this:
+</p>
+<pre>
+root@head:~ # qluman-cli --gencert -u admin -o token
+Generating one-time login token for user 'admin':
+Cluster  = QL
+Hostname = beosrv-c
+Port     = 6001
+Pubkey   = b'T)5o]@hsjB2qyY>eb<?)8@BA?idMf>kh%&cRhV/#'
+Enter new pin for one-time token: 
+Server infos and one-time login token for user 'admin' saved as 'token'
+</pre>
+<p>
+The server infos and one-time login token are protected by the pin you just entered. This is
+important when the data is send via unencrypted channels to users, like email or jabber, or
+when it is stored on a shared filesystem like NFS. The pin does not need to be a strong
+password. It is just there to make it non-trivial to use an intercepted token. The token can
+also only be used once. So once you use it yourself it becomes useless to anybody else. On the
+other hand if somebody intercepts the token, guesses the pin and uses the token it will no
+longer work for you and you know something is wrong.
+</p>
+<p>
+<!--cbox(first_steps__connect_cluster_1.png)-->
+<!--cbox(first_steps__manage_clusters_new.png)-->
+Having generated the one-time token it is time to start qluman-qt. This can be done on the
+frontend node or your workstation as your normal user. On start the Connect Cluster dialog opens. Click the <strong>Edit</strong> button to open the Manage Clusters dialog. Click the <strong>New</strong> button and select <strong>New Cluster (paste)</strong> or <strong>New Cluster (file)</strong> from the menu depending on whether you saved the one-time token in a file or not.
+</p>
+<p>
+<!--cbox(first_steps__new_cluster__paste_1.png)-->
+<!--cbox(first_steps__new_cluster__file_1.png)-->
+<!--cbox(first_steps__new_cluster__2.png)-->
+<!--cbox(first_steps__new_cluster__3.png)-->
+Paste the one-time token data into the dialog and click <strong>Decrypt</strong> or select the file
+for the token. When asked for the password enter the pin you used when creating the token. The
+dialog should then show the server infos that where included with the one-time token. If you
+started qluman-qt on your workstation then you might have to change the <strong>Local
+Hostname</strong> to use the external name of the head-node. Similarly if you changed the port
+for qlumand you have to adjust that too. Click <strong>Ok</strong> to add the cluster connection.
+</p>
+<p>
+<!--cbox(first_steps__manage_clusters_save.png)-->
+<!--cbox(first_steps__manage_clusters_password.png)-->
+<!--cbox(first_steps__manage_clusters_confirm.png)-->
+After adding the new cluster select <strong>Save</strong> to create the certificate safe and store
+the freshly added cluster connection.
+</p>
+<p>
+<!--cbox(first_steps__connect_cluster_2.png)-->
+<!--cbox(first_steps__connect_cluster_3.png)-->
+<!--cbox(first_steps__saving_key.png)-->
+Select the cluster from the drop-down menu and click <strong>Connect</strong> to connect to your
+cluster for the first time. At this point the client generates a random public and private key
+pair for use with this cluster and user. It then connect to the server using those keys and
+authenticates itself using the one-time token. On success the server stores the public key of
+the client for future logins and the client stores both the private and public keys in the
+certificate safe finalizing the initial handshake.
+</p>
+<p>Note: The GUI client asks for the password for the certificate safe to store the generated
+public/private key pair. It will only do this when you connect with a one-time token. The next
+time the saved key pair will be used to connect and authenticate and the safe contents are not
+changed.
+</p>
+<h3 id="qluman-qt_on_head-node"> Installing the QluMan GUI on the head-node</h3>
+<p>
+Installing the Qlustar management GUI qluman-qt on the head-node is just like installing any
+other package there:
 </p>
 <pre>
 $ apt-get install qluman-qt
@@ -442,3 +535,8 @@ $ scancel &lt;jobid&gt;
 </pre>
 <!--btt-->
 <!--Fictive end_tag--></body></html>
+
+<!--  LocalWords:  Qlustar hostname DNS slurm login Nagios QluMan Ctrl byobu MySQL MariaDB NFS
+-->
+<!--  LocalWords:  chroot chroots mariaDB munge mysql IP
+-->
