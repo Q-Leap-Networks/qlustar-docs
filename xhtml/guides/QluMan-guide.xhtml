@@ -80,30 +80,97 @@ see <a href="#Configuring-a-Host">below</a>.
 </p>
 <h2 >Logging in</h2>
 <p>
-<!--cbox(login__select_cluster.png)-->
-<!--cbox(login__save_cluster.png)-->
-<!--cbox(login.png)-->
-When starting <strong>qluman-qt</strong>, a login dialog appears, showing either the last used
-login information or (on the first start) the default parameters. Access to a cluster is
-specified by its hostname, a network port address (default 6001), a public key and a username
-(default admin) with its password (default admin).
+<!--cbox(connect_cluster_dialog__enter_password_safe.png)-->
+<!--cbox(connect_cluster_dialog__enter_password_safe_remember.png)-->
+When starting <strong>qluman-qt</strong>, it asks for the password to your certificate safe.
+The certificate safe contains the login informations for your clusters and private keys for
+each account. The password for the certificate safe is required on every start and whenever
+changes to the safe need to be safed. You can have the client remember the password for the
+duration it is running by checking the <em>Remember password</em> checkbox. If you are starting
+<strong>qluman-qt</strong> for the first time and therefore have no certificate safe yet this
+dialog is skipped and an empty <strong>Connect Cluster</strong> dialog opens directly. See <a
+href="#manage-cluster-dialog">Managing Clusters</a> below to add your cluster.
 </p>
 <p>
-The public key has been added in QluMan version 1.1.1. It is used for the encryption of the
-network traffic between the GUI and the server which employs <strong>high-speed/high-security
-elliptic-curve cryptography</strong> to protect every packet against espionage, corruption, and
-sabotage. You can find the correct key in the file
-<code>/etc/qlustar/qluman/server-key.pub</code> on the head-node. Be sure not to add spaces or
-other characters when copying and pasting the key, otherwise the connection will fail.
+<!--cbox(connect_cluster_dialog.png)-->
+<!--cbox(connect_cluster_dialog__select_cluster.png)-->
+Having entered the correct password for the certificate safe the <strong>Connect
+Cluster</strong> dialog opens. The last cluster used will be pre selectedor a different cluster
+can be selected from the drop-down menu. Click the <em>Connect</em> button to connect to the
+selected cluster.
+<!--cbox(first_steps__saving_key.png)-->
+If this is the first time you connect to the cluster then at this point the client generates a
+random public and private key pair for use with this cluster and user. It then connect to the
+server using those keys and authenticates itself using the one-time token. On success the
+server stores the public key of the client for future logins and the client stores both the
+private and public keys in the certificate safe finalizing the initial handshake.
+</p>
+<p>Note: The GUI client asks for the password for the certificate safe to store the generated
+public/private key pair. It will only do this when you connect with a one-time token. The next
+time the saved key pair will be used to connect and authenticate and the safe contents are not
+changed.
+</p>
+<h2 id="manage-cluster-dialog">Managing Clusters</h2>
+<p>
+<!--cbox(first_steps__connect_cluster_1.png)-->
+<!--cbox(manage_clusters_idalog.png)-->
+The <strong>Manage Clusters</strong> dialog manages all your acounts on different clusters or
+as different users. It allows adding new cluster acounts, editing existing acounts or removing
+obsolete acounts as well as changing the password for the certificate safe. It can be opened by
+clicking <em>Edit</em> in the <strong>Connect Cluster</strong> dialog.
+</p>
+<h3 >Adding a new Cluster</h3>
+<p>
+<!--cbox(first_steps__manage_clusters_new.png)-->
+To add a new cluster click the <em>New</em> button and select <em>New Cluster (paste)</em> or
+<em>New Cluster (file)</em> from the menu depending on whether you want to paste the one-time
+token or load it from a file. If you don't have a ont-time token for the cluster see <a
+href="#one-time-token">below</a>.
 </p>
 <p>
-The default admin password should be <a href="#User-Manage">changed</a> immediately.  To
-simplify managing multiple clusters, the current login data can be saved by providing a
-specifier and clicking the <em>Save</em> button. This will open a dialog asking for a name, the
-entry will be saved as. Note, that passwords will not be saved. Entering a previously used name
-will overwrite the corresponding entry, otherwise a new one will be created. If saved login
-data exists, it can be selected by its name via the dropdown menu. Entries can be removed by
-pressing the <em>Delete</em> button.
+<!--cbox(first_steps__new_cluster__paste_1.png)-->
+<!--cbox(first_steps__new_cluster__file_1.png)-->
+<!--cbox(first_steps__new_cluster__2.png)-->
+<!--cbox(first_steps__new_cluster__3.png)-->
+Paste the one-time token data into the dialog and click <em>Decrypt</em> or select the file for
+the token. When asked for the password enter the pin you used when creating the token. The
+dialog should then show the server infos that where included with the one-time token. If you
+started qluman-qt on your workstation then you might have to change the <strong>Local
+Hostname</strong> to use the external name of the head-node. Similarly if you changed the port
+for qlumand you have to adjust that too. The <strong>Alias</strong> is the name the cluster
+will use in the drop-down menu in the <strong>Connect Cluster</strong> dialog. Click
+<em>Ok</em> to add the cluster connection.
+</p>
+<p>
+<!--cbox(first_steps__manage_clusters_save.png)-->
+<!--cbox(first_steps__manage_clusters_password.png)-->
+<!--cbox(first_steps__manage_clusters_confirm.png)-->
+After adding the new cluster select <em>Save</em> to save the changes. If this is your first
+cluster then it will create the certificate safe and ask you to enter and confirm a
+password. Otherwise it will ask for the existing password unless the <em>Remember password</em>
+checkbox was enabled.
+</p>
+<h3 >Sorting multiple clusters</h3>
+<!--cbox(manage_clusters_dialog.png)-->
+<!--cbox(manage_clusters_dialog__new_menu__group.png)-->
+<!--cbox(manage_clusters_dialog__group.png)-->
+<!--cbox(manage_clusters_dialog__group2.png)-->
+<!--cbox(connect_cluster_dialog__select_cluster_group.png)-->
+When dealing with multiple clusters the clusters can be reordered using drag&amp;drop to move
+them to the desired location in the list. Clusters can also be grouped together by first
+creating a new group and then dragging the cluster into the group. The tree structure in the
+<strong>Manage Clusters</strong> dialog will be reflected in the drop-down menu in the
+<strong>Connect Cluster</strong> dialog. This allows even large installations with multiple
+cluster to remain managable for the admin. Normal users will most likely not need this feature.
+<h3 >Changing the certificate safe password</h3>
+<p>
+<!--cbox(manage_clusters_dialog__changing_password.png)-->
+<!--cbox(manage_clusters_dialog__change_password.png)-->
+<!--cbox(manage_clusters_dialog__change_password_mismatch.png)-->
+The <strong>Manage Clusters</strong> dialog allows changing the password for the certificate
+safe. This requires entering the old password for the safe as well as the new password and a
+confirmation of the new password. The <em>Ok</em> button will only be selectable if the new
+password and confirmation matches.
 </p>
 <!--btt-->
 <h2 >License Installation</h2>
@@ -1501,39 +1568,79 @@ permissions</strong> for QluMan operations. Once defined, they can be assigned t
 <h3 id="User-Manage"> Managing QluMan Users </h3>
 <p>
 <!--cbox(users.png)-->
+<!--cbox(users__select.png)-->
 The <strong>admin user</strong> is pre-defined and has the <strong>admin role</strong>, meaning
 all possible rights. Roles for the admin user can not be changed, just like the root user in a
 Linux system always has all rights. When running QluMan for the first time, you should set the
-right email address for the admin user and then <strong>change its password</strong>. There are
-two ways to change the password.
+right email address for the admin user.
 </p>
 <p>
-The first one, using the <em>Change password</em> button, brings up the Change Password dialog
-asking for the old password and then twice the new password. When the new password
-<!--cbox(users__change_password.png)-->
-matches the confirmation and is not too trivial, the <em>OK</em> button becomes unghosted and
-the password can be changed. The second one, using the <em>Reset password</em> button, first
-asks you whether you really want to reset the password. If you confirm, qlumand is notified to
-change the password
-<!--cbox(users__reset_password.png)-->
-to a random string and mail it to the users email address. Use this method, if the old password
-is not known or when resetting the password for another user.
-</p>
-<p>
-<!--cbox(users__new2.png)-->
-<!--cbox(users__new.png)-->
-To create a new user, select <strong>&lt;new user&gt;</strong> from the drop-down menu for
-users. Then edit the user name, fill out the remaining fields and click <em>Save</em> to create
-the user. The new user is created without a password (not an empty one), so initially, he can't
-log in and also has no assigned roles. Hence, the next step is to change or reset its
-password. With the new password, the user can then log in and look at the cluster
-properties/configs. However, without assigned roles, he will have no rights to change
-anything. You may
 <!--cbox(users__new3.png)-->
-assign the admin role to the user, giving him the same access rights as the admin user. Or you
-could define more restrictive roles and assign some of them to him. The next chapter explains
-how to create new roles. Don't forget to click the <em>Save</em> button after changing the
-roles assignment to actually activate them.
+<!--cbox(users__new2.png)-->
+<!--cbox(users__select.png)-->
+<!--cbox(users__new.png)-->
+To create a new user, click <em>New User</em> and enter the name for the new user to create
+it. Then select the user from the drop-down menu and fill out the remaining
+fields. The changes will be saved automatically when return it pressed or the input field
+looses the focus. New users have no roles assigned to them and will have no rights to change
+anything. They can look but not touch. See <a href="#Permission-Manage">below</a> for how to
+create new roles and assign them to the user by checking the respective checkboxes. If the
+<em>New User</em> button is not selectable then the user lacks sufficient rights to create new
+users. The roles buttons will then also be disabled preventing an unauthorized user to give
+himself or others extra roles.
+</p>
+<p id="one-time-token">
+<!--cbox(users__new_auth_token.png)-->
+The new is also created without login credentials, so initially, he can't log in. Hence, the
+next step is to generate a one-time token for the user by clicking <em>New Auth Token</em>.
+Generating the one-time token may take a little to generate while before the <strong>New Auth
+Token</strong> dialog opens and shows a certificate containing the generated one-time token as
+well as the other login informations required to connect to the server. The certificate is
+protected by an 8 digit password so that it can be transfered over unencrypted communications
+channels like email or jabber. In such a case the password should be send over a second,
+different, communication channel, e.g. read over the phone. As a special case, when a user
+clicks <em>New Auth Token</em> for itself, the generated token is imported into the running
+client and replaces the current login credentials. A reconnect is then triggered forcing the
+client to generate a new random public/private key pair and use the one-time token to
+authenticate itself to the server. This should be used to invalidate the old keys and replace
+them with fresh ones when a user suspects the certificate safe might have been compromised by
+an attacker.
+</p>
+<p>
+<!--cbox(users__new_auth_token_2.png)-->
+The <strong>New Auth Token</strong> dialog also has 3 usefull buttons at the right bottom
+corner. The <em>Import</em> button allows adding the certificate directly to the running
+client. The use case for this is when creating a user account for oneself when working as
+admin. It is recommendd that for clusters with multiple users with admin role that every user
+has their own user account and the admin user is only used to create those.
+<!--cbox(users__new_auth_token__mailed.png)-->
+<!--cbox(users__new_auth_token__saved.png)-->
+The <em>Save</em> button allows saving the certificate into a file and the <em>Mail</em> button
+sends the certificate to the email configured for the user. In both cases only the certificate
+is saved or mailed and the password needs to be send separately.
+</p>
+<p>
+For the best security it is recommened to leave any new user without roles until they have
+logged in using the one-time token. That way if the certificate was intercepted it has become
+useless to an attacker. Or if the attacker manages to intercept and use the certificate before
+the real user then the real user won't be able to use it. Meanwhile the attacker won't be able
+to change anything in the custer.
+</p>
+<p>
+Note: The certificate contains the information about the cluster telling the client how to
+connect to it and the public key of the <strong>qlumand</strong> server that ensures the client
+will only talk to the right server and can't be eavesdropped. It also contains a one-time token
+allowing any client to log in exactly once within the next 48 hours. On the first login with a
+correct one-time token the clients public key (generated randomly and unique to use cluser and
+user) is stored by the server and used to authenticate the user in the future. The clients and
+servers public and private keys are also used when connecting to safely exchange session keys
+for encryption with perfect forward security.
+</p>
+<p>
+<!--cbox(users__delete2.png>-->
+<!--cbox(users__delete.png>-->
+An user other than admin can be deleted by clicking the <em>Delete User</em> button. Just like
+the <em>New User</em> button it is only enabled if the current user has sufficient rights.
 </p>
 <h3 id="Permission-Manage"> Managing User Roles/Permissions </h3>
 <p>
