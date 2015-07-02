@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Getting_Started_Guides.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN"
+"/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section id="sec-intro-beegfs">
+  <title>Quick start guides for BeeGFS on Qlustar</title>
+  <para>
+   BeeGFS (formerly FhGFS) is a <emphasis>parallel cluster file
+   system</emphasis><indexterm><primary>Cluster
+   FS</primary><secondary>BeeGFS</secondary></indexterm>, developed and maintained by the
+   Fraunhofer Center for High Performance Computing with a strong focus on performance and
+   designed for very easy installation and management. It transparently spreads user data
+   across multiple servers. By increasing the number of servers and disks in the system, you
+   can simply scale performance and capacity of the file system to the level that you need.
+  </para>
+</section>
