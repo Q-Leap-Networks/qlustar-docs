@@ -1,0 +1,100 @@
+- Hardware Management
+  + Infiniband
+    * Howto install Mellanox firmware tools (MFT)
+      > Download mft-*.tgz from the Mellanox site
+        (http://www.mellanox.com/page/management_tools)
+      > Unpack some where
+      > Install the mft package in the chroot that is used
+        by the node where you want to run the tools:
+	On the headnode
+	$ cp .../mft-4.0.0-53/DEBS/mft-4.0.0-53.amd64.deb \
+	  /srv/apps/chroots/trusty/root
+	$ chroot-trusty
+        (trusty) root@ql-head-tr:~ # dpkg -i mft-4.0.0-53.amd64.deb
+      > Login as root on the node you want to use MFT and execute
+        $ mst start
+	Starting MST (Mellanox Software Tools) driver set
+	Loading MST PCI module - Success
+	Loading MST PCI configuration module - Success
+	Create devices
+	
+      > Initialize the fabric status 
+	$ mst ib add
+	-I- Discovering the fabric - Running: ibnetdiscover
+	-I- Added 36 in-band devices
+	
+      > To list all Mellanox devices in the fabric
+	$ mst status
+
+	MST modules:
+	------------
+	    MST PCI module loaded
+	    MST PCI configuration module loaded
+	
+	MST devices:
+	------------
+	/dev/mst/mt4099_pci_cr0          - PCI direct access.
+	                                   domain:bus:dev.fn=0000:05:00.0 bar=0xc7100000 size=0x100000
+	                                   Chip revision is: 01
+	/dev/mst/mt4099_pciconf0         - PCI configuration cycles access.
+	                                   domain:bus:dev.fn=0000:05:00.0 addr.reg=88 data.reg=92
+	                                   Chip revision is: 01
+	
+	Inband devices:
+	-------------------
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x000F
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0019
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0020
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0021
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0022
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0023
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0024
+	/dev/mst/CA_MT26418_MT25408_ConnectX_Mellanox_Technologies_lid-0x0027
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0003
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0004
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0005
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0006
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0007
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0008
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x0009
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x000A
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x000B
+	/dev/mst/CA_MT26428_MT25408_ConnectX_Mellanox_Technologies_lid-0x000C
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0011
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0012
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0013
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0014
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0015
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0016
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0017
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0018
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0026
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0028
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x0029
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x002A
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x002B
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x002C
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x002D
+	/dev/mst/CA_MT4099_MT25408_ConnectX_Mellanox_Technologies_lid-0x002E
+	/dev/mst/SW_MT48438_0x2c90200432318_lid-0x0002
+	/dev/mst/SW_MT51000_0xf4521403005b3050_lid-0x0010
+	
+      > To check the firmware of the switches in the fabric:
+        $ flint -d /dev/mst/SW_MT48438_0x2c90200432318_lid-0x0002 q
+	Image type:      FS2
+	FW Version:      7.4.0
+	Device ID:       48438
+	Description:     Node             Sys image
+	GUIDs:           0002c90200432318 0002c9020043231b 
+	VSD:             n/a
+	PSID:            MT_0C20110002
+	beo-33:~# flint -d /dev/mst/SW_MT51000_0xf4521403005b3050_lid-0x0010 q
+	FW Version:      9.2.8000
+	FW Release Date: 15.5.2014
+	Device ID:       51000
+	Description:     Node             Sys image
+	GUIDs:           f4521403005b3050 f4521403005b3050 
+	Description:     Base             Switch
+	MACs:                f452145b3050     f452145b30b0
+	VSD:             n/a
+	PSID:            MT_1260110021
