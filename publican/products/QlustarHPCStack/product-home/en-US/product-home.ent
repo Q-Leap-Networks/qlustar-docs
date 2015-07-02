@@ -1,0 +1,4 @@
+<!ENTITY PRODUCT "Qlustar HPC Stack">
+<!ENTITY BOOKID "product-home">
+<!ENTITY YEAR "2015">
+<!ENTITY HOLDER "| You need to change the HOLDER entity in the en-US/product-home.ent file |">
