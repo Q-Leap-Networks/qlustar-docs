@@ -19,4 +19,259 @@
    across multiple servers. By increasing the number of servers and disks in the system, you
    can simply scale performance and capacity of the file system to the level that you need.
   </para>
+  <section id="sec-install-beegfs">
+    <title>Select BeeGFS mgmt option upon installation</title>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Check that it is running on the head-node
+	    <screen>
+<command><prompt>$</prompt> /etc/init.d/beegfs-mgmtd status</command>
+	    </screen>
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section id="sec-setting-up-beegfs">
+    <title>Setting up a BeeGFS server node</title>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Create a Qlustar image with required modules
+	    In QluMan, create an image (named e.g. StorNode) that contains the module 
+	    beegfs-&lt;version&gt;-server (current version 2014.01). If you want to mount the BeeGFS FS also
+	    on the storage nodes additionaly include the beegfs-&lt;version&gt;-client module. On compute nodes
+	    that don't run any BeeGFS meta/storage targets, only the beegfs-&lt;version&gt;-client module is required.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Create a boot config with this image and include it in a config set
+	    Create a new boot config (named e.g. StorNode) and select the image just created
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Create a config set that includes this boot config
+	    Create a new config set (named e.g. StorNode) and add the boot config (StorNode) just created.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Create a disk config for the storage nodes
+	    Create a new disk config (named e.g. StorNode) to define the ZFS setup.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Examples:
+    </para>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Make a BeeGFS FS from local disk of compute nodes
+	    A single SSD in the compute nodes is to be used for a meta and storage
+	    target.
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  Copy the definitions of the default boot config and add bmeta bstor as follows
+		  <screen>
+ZFS = var, scratch, bmeta, bstor
+[bmeta]
+zpool = SYS
+mountpoint = /beegfs/meta
+compress = lz4
+[bstor]
+zpool = SYS
+mountpoint = /beegfs/stor
+compress = lz4
+		  </screen>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Add the new disk config to the config set (StorNode)
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Create a new host template with the above definitions
+	    Create a new host template (named e.g. StorNode) and select the just created
+	    config set StorNode. Use (or create) a sensible generic/hardware property set
+	    matching the properties of the storage nodes
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Register and boot the storage nodes
+	    Register the storage nodes like any other nodes and assign the just created
+	    host template (StorNode) to them. Reboot them.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section id="setting-meta-storage-nodes">
+    <title>Setting up BeeGFS meta and storage target on the storage nodes</title>
+    <para>
+      On each storage node perform the following steps (We assume that the above
+      disk config 'StorNode' is initialized on each node):
+      <screen>
+0  root@sn-1  ~  #
+df -h | grep beegfs
+SYS/bmeta                         1002T     0 1002T   0% /beegfs/meta
+SYS/bstor                         1002T     0 1002T   0% /beegfs/stor
+      </screen>
+      We also assume that the servers are named as sn-1, sn-2, ... such that
+      ${HOSTNAME##*-} is the storage node number
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Create Metadata server instance
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  Initialize meta target
+		  <screen>
+<command>
+<prompt>$</prompt> beegfs-setup-meta -p /beegfs/meta -s ${HOSTNAME##*-} -m beosrv-c
+</command>
+Preparing storage directory: /beegfs/meta
+ * Creating format.conf file...
+ * Creating server numeric ID file: /beegfs/meta/nodeNumID
+Updating config file: /etc/beegfs/meta/available/default.conf
+ * Setting management host: beosrv-c
+ * Setting storage directory in config file...
+ * Disabling usage of uninitialized storage directory in config file...
+ * Setting usage of extended attributes to: true
+All done.
+		  </screen>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Start meta server
+		  <screen>
+<command><prompt>$</prompt> /etc/init.d/beegfs-meta start</command>
+		  </screen>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Check meta status
+		  <screen>
+<command><prompt>$</prompt> /etc/init.d/beegfs-meta status</command>
+<command><prompt>$</prompt> less /var/log/beegfs/beegfs-meta.log</command>
+		  </screen>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Create Storage server instance
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  Initialize storage target
+		  <screen>
+<command><prompt>$</prompt> beegfs-setup-storage -p /beegfs/stor -s ${HOSTNAME##*-} \
+-i ${HOSTNAME##*-}01 -m beosrv-c</command>
+Preparing storage target directory: /beegfs/storage
+ * Creating format.conf file...
+ * Creating chunks directory...
+ * Creating mirror directory...
+ * Creating target numeric ID file: /beegfs/storage/targetNumID
+ * Creating server numeric ID file: /beegfs/storage/nodeNumID
+Updating config file: /etc/beegfs/storage/available/default.conf
+ * Setting management host: beosrv-c
+ * Appending to target directory list in config file...
+ * Disabling usage of uninitialized storage targets in config file...
+All done.
+		  </screen>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Start storage server
+		  <screen>
+<command><prompt>$</prompt> /etc/init.d/beegfs-storage start</command>
+		  </screen>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Check storage status
+		  <screen>
+<command><prompt>$</prompt> /etc/init.d/beegfs-storage status</command>
+<command><prompt>$</prompt> less /var/log/beegfs/beegfs-storage.log</command>
+		  </screen>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Register the config files on the head-node for automatic start on boot
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  Retrieve the config files from the first storage node (they are all identical):
+		  <screen>
+<command><prompt>$</prompt> mkdir /etc/qlustar/common/image-files/beegfs/{meta,storage}</command>
+<command><prompt>$</prompt> scp sn-1:/etc/beegfs/meta/available/default.conf \
+/etc/qlustar/common/image-files/beegfs/meta/default.conf</command>
+<command><prompt>$</prompt> scp sn-1:/etc/beegfs/storage/available/default.conf \
+/etc/qlustar/common/image-files/beegfs/storage/default.conf</command>
+		  </screen>
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Generate the Qlustar destination files:
+		  <screen>
+<command><prompt>$</prompt> cat &lt;&lt;EOF &gt; /etc/qlustar/common/image-files/destinations.beegfs-server
+beegfs/meta/default.conf /etc/beegfs/meta/available root:root 644
+beegfs/storage/default.conf /etc/beegfs/storage/available root:root 644
+EOF</command>
+
+<command><prompt>$</prompt> cat &lt;&lt;EOF &gt; /etc/qlustar/common/image-files/destinations.beegfs-client
+# Link source                  target
+../available/default.conf /etc/beegfs/client/enabled
+EOF</command>
+
+<command><prompt>$</prompt> cat &lt;&lt;EOF &gt; /etc/qlustar/common/image-files/softgroups
+[DEFAULT]
+
+beegfs-server: sn-[1-4]
+beegfs-client: beo-20[1-4] login-c
+EOF</command>
+		  </screen>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      The nodes are assigned their beegfs role in 
+      <filename>/etc/qlustar/common/image-files/softgroups</filename>. Change the node names there
+      according to your naming scheme. With these configurations in place, BeeGFS
+      server and clients should start/mount automatically. The default client
+      mount point is <filename>/beegfs/client/default</filename>.
+    </para>
+  </section>
 </section>
+
