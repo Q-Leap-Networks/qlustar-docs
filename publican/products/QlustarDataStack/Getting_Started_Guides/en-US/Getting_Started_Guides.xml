@@ -13,9 +13,6 @@
 	 xmlns:xi="http://www.w3.org/2001/XInclude">
   <xi:include href="Article_Info.xml" />
   <xi:include href="preface.xml" />
-  <para>
-    This is a test paragraph
-  </para>
   <xi:include href="beegfs.xml" />
   <xi:include href="Revision_History.xml" />
   <index />
