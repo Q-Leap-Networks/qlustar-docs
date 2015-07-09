@@ -457,7 +457,9 @@ update_site() {
   cd "$WEB_DIR_PATH"
   [ -d $tmpdir ] && rm -rf $tmpdir
   cp -r ${WEB_TOC_PATH} $tmpdir
-  find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g'
+  find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
+    -e 's,http://www.google.com/search,https://www.google.com/search,g' \
+    -e 's/___blank___"/" target="_blank"/g'
   ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
   tar zcf - $tmpdir | ssh root@${host} \
     "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; chown -R root:root $site_path"
