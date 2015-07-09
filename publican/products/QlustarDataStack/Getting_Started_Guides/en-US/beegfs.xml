@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE section [
+<!DOCTYPE chapter [
 <!ENTITY % BOOK_ENTITIES SYSTEM "Getting_Started_Guides.ent">
 %BOOK_ENTITIES;
 <!ENTITY % sgml.features "IGNORE">
@@ -8,9 +8,9 @@
 "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<section version="5.0" xml:lang="en_US" xmlns="http://docbook.org/ns/docbook"
+<chapter version="5.0" xml:lang="en_US" xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Quick start guide for BeeGFS on Qlustar</title>
+  <title>BeeGFS on Qlustar - Quick Start</title>
   <para>
     <link xlink:href="http://www.beegfs.com/___blank___">BeeGFS</link> (formerly FhGFS) is a
     <emphasis>parallel cluster file system</emphasis><indexterm><primary>Cluster
@@ -308,5 +308,5 @@ EOF</command>
       <filename>/beegfs/client/default</filename>.
     </para>
   </section>
-</section>
+</chapter>
 
