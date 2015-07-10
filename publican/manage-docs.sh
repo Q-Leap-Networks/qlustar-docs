@@ -54,6 +54,7 @@ WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
 WEB_TOC_PATH="${WEB_DIR_PATH}/html"
 # Other global vars
 PRODUCT_HOME=product-home
+FAVICON="${PWD}/qlustar-favicon.ico"
 
 # cmdline handling
 ALLOWED_ACTIONS=$(concat_string "create-document,update-document," \
@@ -353,6 +354,8 @@ create_website() {
 	$(cat ${WEB_CFG_PATH} | sed -e '/^#/d' -e '/^$/d')
 EOF
   touch ${WEB_TOC_PATH}/site_overrides.css
+  # Add favicon
+  cp "$FAVICON" ${WEB_TOC_PATH}/favicon.ico
   
   # Add common + Qlustar brand
   brand_website
@@ -466,7 +469,8 @@ update_site() {
     -e 's/___blank___"/" target="_blank"/g'
   ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
   tar zcf - $tmpdir | ssh root@${host} \
-    "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; chown -R root:root $site_path"
+    "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
+     chown -R root:root $site_path"
   rm -rf $tmpdir
 }
 
