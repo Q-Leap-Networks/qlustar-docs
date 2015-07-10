@@ -187,6 +187,14 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
   - Update the product page after editing its content (it got the id prod-02)
     $ ./manage-docs.sh -a update-product -P prod-002
+
+  - Recreate website from scratch
+    $ ./manage-docs.sh -a create-website
+    $ ./manage-docs.sh -a update-portal
+    $ ./manage-docs.sh -a update-product -P prod-01 (the same for all other
+      prod-??)
+    $ ./manage-docs.sh -a update-document -D doc-001  (the same for all other
+      doc-??)
 "
 while [ $# -gt 0 ]; do
   case "$1" in
