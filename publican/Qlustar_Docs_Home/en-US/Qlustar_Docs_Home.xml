@@ -8,9 +8,56 @@
 %DOCBOOK_ENTS;
 ]>
 <article version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title role="producttitle">Qlustar Docs</title>
-	<para>
-		This is a test paragraph
-	</para>
+  <title role="producttitle">Qlustar Documentation Site</title>
+  <para>
+    The Qlustar documentation is broken down into different products (categories). These
+    products reflect the different use scenarios for Qlustar. The following categories already
+    exist or will appear in the future:
+    <variablelist>
+      <varlistentry>
+	<term><link xlink:href="Qlustar_Cluster_OS/index.html">
+	Qlustar Cluster OS</link></term>
+	<listitem>
+	  <para>
+	    Covers topics relevant to any Qlustar based cluster.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><link xlink:href="Qlustar_HPC_Stack/index.html">
+	  Qlustar HPC stack</link></term>
+	<listitem>
+	  <para>
+	    Covers topics specific to Qlustar HPC clusters.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><link xlink:href="Qlustar_DataStack/index.html">
+	  Qlustar DataStack</link></term>
+	<listitem>
+	  <para>
+	    Covers topics specific to Qlustar storage (Lustre, BeeGFS, Ceph, etc.) clusters.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>Qlustar VStack</term>
+	<listitem>
+	  <para>
+	    Covers topics specific to Qlustar virtualization (OpenStack) clusters.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>Qlustar BioStack</term>
+	<listitem>
+	  <para>
+	    Covers topics specific to Qlustar BioInformatics clusters.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </para>
 </article>
 
