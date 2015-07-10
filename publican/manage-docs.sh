@@ -362,7 +362,7 @@ EOF
 }
 
 build_and_publish_document() {
-  local book_dir="$1" formats="$2"
+  local book_dir="$1" formats="$2" carousel
 
   cd "$book_dir"
   exec_publican build --publish --formats "$formats" \
@@ -371,6 +371,10 @@ build_and_publish_document() {
   exec_publican update_site --site_config ${WEB_CFG_PATH}
   if $CLEANUP; then
     exec_publican clean > /dev/null
+  fi
+  if [ "$book_dir" = "$QL_PORTAL_DIR" ]; then
+    carousel="$book_dir/$QL_LANG/carousel.html"
+    [ -e "$carousel" ] && cp -f "$carousel" "$WEB_TOC_PATH"/$QL_LANG
   fi
 }
 
