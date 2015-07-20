@@ -1,0 +1,3828 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN"
+"/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+  <section version="5.0" xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="admin-man-sect-ZFS">
+    <title>Zpools and ZFS</title>
+    <note>
+      <para>
+	This section borrows heavily from the excellent <link
+	xlink:href="https://pthree.org/2012/04/17/install-zfs-on-debian-gnulinux/___blank___"
+	>ZFS tutorial series</link> by Aaron Toponce.
+      </para>
+    </note>
+    <section xml:id="admin-man-sect-zpools-admin">
+      <title>Zpool Administration</title>
+      <indexterm><primary>Zpools</primary></indexterm>
+      <section xml:id="admin-man-sect-VDEVs">
+	<title>VDEVs</title>
+	<indexterm><primary>Zpools</primary><secondary>VDEVs</secondary></indexterm>
+	<bridgehead>
+	Virtual Device Introduction
+	</bridgehead>
+
+	<para>
+	  To start, we need to understand the concept of virtual devices, or VDEVs, as ZFS uses
+	  them internally extensively. If you are already familiar with RAID, then this concept
+	  is not new to you, although you may not have referred to it as “VDEVs”. Basically, we
+	  have a meta-device that represents one or more physical devices. In Linux software
+	  RAID, you might have a “/dev/md0″ device that represents a RAID-5 array of 4
+	  disks. In this case, “/dev/md0″ would be your “VDEV”.
+	</para>
+
+	<para>
+	  There are seven types of VDEVs in ZFS:
+	</para>
+
+	<orderedlist>
+	  <listitem>
+	    <para>
+	      disk (default)- The physical hard drives in your system.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      file- The absolute path of pre-allocated files/images.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      mirror- Standard software RAID-1 mirror.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      raidz1/2/3- Non-standard distributed parity-based software RAID levels.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      spare- Hard drives marked as a “hot spare” for ZFS software RAID.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      cache- Device used for a level 2 adaptive read cache (L2ARC).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      log- A separate log (SLOG) called the “ZFS Intent Log” or ZIL.
+	    </para>
+	  </listitem>
+	</orderedlist>
+
+	<para>
+	  It’s important to note that VDEVs are always dynamically striped. This will make more
+	  sense as we cover the commands below. However, suppose there are 4 disks in a ZFS
+	  stripe. The stripe size is calculated by the number of disks and the size of the
+	  disks in the array. If more disks are added, the stripe size can be adjusted as
+	  needed for the additional disk. Thus, the dynamic nature of the stripe.
+	</para>
+
+	<bridgehead>
+	  Some zpool caveats
+	</bridgehead>
+
+	<para>
+	  I would be amiss if I didn’t meantion some of the caveats that come with ZFS:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      Once a device is added to a VDEV, it cannot be removed.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      You cannot shrink a zpool, only grow it.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     RAID-0 is faster than RAID-1, which is faster than RAIDZ-1, which is faster than
+	     RAIDZ-2, which is faster than RAIDZ-3.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     Hot spares are not dynamically added unless you enable the setting, which is off
+	     by default.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      A zpool will not dynamically rezise when larger disks fill the pool unless you
+	      enable the setting <emphasis>before</emphasis> your first disk replacement, which
+	      is off by default.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      A zpool will know about “advanced format” 4K sector drives <emphasis>if and only
+	      if</emphasis> the drive reports such.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     Deduplication is <emphasis>extremely expensive</emphasis>, will cause performance
+	     degredation if not enough RAM is installed, and is pool-wide, not local to
+	     filesystems.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     On the other hand, compression is <emphasis>extremely cheap</emphasis> on the CPU,
+	     yet it is disabled by default.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     ZFS suffers a great deal from fragmentation, and full zpools will “feel” the
+	     performance degredation.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	     ZFS suports encryption natively, but it is <emphasis>not</emphasis> Free
+	     Software. It is proprietary copyrighted by Oracle.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+	<para>
+	  For the next examples, we will assume 4 drives: <filename>/dev/sde</filename>,
+	  <filename>/dev/sdf</filename>, <filename>/dev/sdg</filename> and
+	  <filename>/dev/sdh</filename>, all 8 GB USB thumb drives. Between each of the
+	  commands, if you are following along, then make sure you follow the cleanup step at
+	  the end of each section.
+	</para>
+	
+	<bridgehead>
+	  A simple pool
+	</bridgehead>
+	
+	<para>
+	  Let’s start by creating a simple zpool wyth my 4 drives. I could create a zpool named
+	  “tank” with the following command:
+	</para>
+	
+	<screen>
+<prompt>$</prompt><command> zpool create tank sde sdf sdg sdh</command>
+	</screen>
+	
+	<para>
+	  In this case, I’m using four disk VDEVs. Notice that I’m not using full device paths,
+	  although I could. Because VDEVs are always dynamically striped, this is effectively a
+	  RAID-0 between four drives (no redundancy). We should also check the status of the
+	  zpool:
+	</para>
+
+	<screen>
+<prompt>$</prompt><command> zpool status tank</command>
+pool: tank
+state: ONLINE
+scan: none requested
+config:
+
+       NAME        STATE     READ WRITE CKSUM
+       tank        ONLINE       0     0     0
+         sde       ONLINE       0     0     0
+         sdf       ONLINE       0     0     0 
+         sdg       ONLINE       0     0     0
+         sdh       ONLINE       0     0     0
+
+errors: No known data errors	 
+	</screen>
+	<para>
+	  Let’s tear down the zpool, and create a new one. Run the following before continuing,
+	  if you’re following along in your own terminal:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+	
+	<bridgehead>
+	  A simple mirrored zpool
+	</bridgehead>
+	
+	<para>
+	  In this next example, I wish to mirror all four drives
+	  (<filename>/dev/sde</filename>, <filename>/dev/sdf</filename>,
+	  <filename>/dev/sdg</filename> and <filename>/dev/sdh</filename>). So, rather than
+	  using the disk VDEV, I’ll be using “mirror”. The command is as follows:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create tank mirror sde sdf sdg sdh
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+       NAME        STATE     READ WRITE CKSUM
+       tank        ONLINE       0     0     0
+         mirror-0  ONLINE       0     0     0
+           sde     ONLINE       0     0     0
+           sdf     ONLINE       0     0     0
+           sdg     ONLINE       0     0     0
+           sdh     ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+
+	<para>
+	  Notice that “mirror-0″ is now the VDEV, with each physical device managed by it. As
+	  mentioned earlier, this would be analogous to a Linux software RAID “/dev/md0″ device
+	  representing the four physical devices. Let’s now clean up our pool, and create
+	  another.
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+
+	<bridgehead>
+	  Nested VDEVs
+	</bridgehead>
+
+	<para>
+	 VDEVs can be nested. A perfect example is a standard RAID-1+0 (commonly referred to as
+	 “RAID-10″). This is a stripe of mirrors. In order to specify the nested VDEVs, I just
+	 put them on the command line in order (emphasis mine):
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create tank mirror sde sdf mirror sdg sdh
+</command>
+<command>
+<prompt>$</prompt>
+zpool status
+</command>
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+       NAME        STATE     READ WRITE CKSUM
+       tank        ONLINE       0     0     0
+         mirror-0  ONLINE       0     0     0
+           sde     ONLINE       0     0     0
+           sdf     ONLINE       0     0     0
+         mirror-1  ONLINE       0     0     0
+           sdg     ONLINE       0     0     0
+           sdh     ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  The first VDEV is “mirror-0″ which is managing <filename>/dev/sde</filename> and
+	  <filename>/dev/sdf</filename>. This was done by calling “<command>mirror sde
+	  sdf</command>”. The second VDEV is “mirror-1″ which is managing
+	  <filename>/dev/sdg</filename> and <filename>/dev/sdh</filename>. This was done by
+	  calling “<command>mirror sdg sdh</command>”. Because VDEVs are always dynamically
+	  striped, “mirror-0″ and “mirror-1″ are striped, thus creating the RAID-1+0
+	  setup. Don’t forget to cleanup before continuing:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+	
+	<bridgehead>
+	  File VDEVs
+	</bridgehead>
+	
+	<para>
+	  As mentioned, pre-allocated files can be used fer setting up zpools on your existing
+	  ext4 filesystem (or whatever). It should be noted that this is meant entirely for
+	  testing purposes, and not for storing production data. Using files is a great way to
+	  have a sandbox, where you can test compression ratio, the size of the deduplication
+	  table, or other things without actually committing production data to it. When
+	  creating file VDEVs, you cannot use relative paths, but must use absolute
+	  paths. Further, the image files must be preallocated, and not sparse files or thin
+	  provisioned. Let’s see how this works:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt> for i in {1..4}; do dd if=/dev/zero of=/tmp/file$i bs=1G count=4
+&amp;> /dev/null; done
+</command>
+<command>
+<prompt>$</prompt>
+zpool create tank /tmp/file1 /tmp/file2 /tmp/file3 /tmp/file4
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+             NAME          STATE     READ WRITE CKSUM
+             tank          ONLINE       0     0     0
+               /tmp/file1  ONLINE       0     0     0
+               /tmp/file2  ONLINE       0     0     0
+               /tmp/file3  ONLINE       0     0     0
+               /tmp/file4  ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+
+	<para>
+	  In this case, we created a RAID-0. We used preallocated files using
+	  <filename>/dev/zero</filename> that are each 4GB in size. Thus, the size of our zpool
+	  is 16 GB in usable space. Each file, as with our first example using disks, is a
+	  VDEV. Of course, you can treat the files as disks, and put them into a mirror
+	  configuration, RAID-1+0, RAIDZ-1 (coming in the next post), etc.
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+	
+	<bridgehead>
+	  Hybrid pools
+	</bridgehead>
+	
+	<para>  
+	  This last example should show you the complex pools you can setup by using different
+	  VDEVs. Using our four file VDEVs from the previous example, and our four disk VDEVs
+	  <filename>/dev/sde</filename> through <filename>/dev/sdh</filename>, let’s create a
+	  hybrid pool with cache and log drives. Again, I emphasized the nested VDEVs for
+	  clarity:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt> 
+zpool create tank mirror /tmp/file1 /tmp/file2 mirror /tmp/file3
+/tmp/file4 log mirror sde sdf cache sdg sdh
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+               NAME            STATE     READ WRITE CKSUM
+               tank            ONLINE       0     0     0
+                 mirror-0      ONLINE       0     0     0
+                   /tmp/file1  ONLINE       0     0     0
+                   /tmp/file2  ONLINE       0     0     0
+                 mirror-1      ONLINE       0     0     0
+                   /tmp/file3  ONLINE       0     0     0
+                   /tmp/file4  ONLINE       0     0     0
+               logs
+                 mirror-2      ONLINE       0     0     0
+                   sde         ONLINE       0     0     0
+                   sdf         ONLINE       0     0     0
+               cache
+                 sdg           ONLINE       0     0     0
+                 sdh           ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  There’s a lot going on here, so let’s disect it. First, we created a RAID-1+0 using
+	  our four preallocated image files. Notice the VDEVs “mirror-0″ and “mirror-1″, and
+	  what they are managing. Second, we created a third VDEV called “mirror-2″ that
+	  actually is not used for storing data in the pool, but is used as a ZFS intent log,
+	  or ZIL. We’ll cover the ZIL in more detail in another post. Then we created two VDEVs
+	  for caching data called “sdg” and “sdh”. The are standard disk VDEVs that we’ve
+	  already learned about. However, they are also managed by the “cache” VDEV. So, in
+	  this case, we’ve used 6 of the 7 VDEVs listed above, the only one missing is “spare”.
+	</para>
+
+	<para>
+	  Noticing the indentation will help you see what VDEV is managing what. The “tank”
+	  pool is comprised of the “mirror-0″ and “mirror-1″ VDEVs for long-term persistent
+	  storage. The ZIL is magaged by “mirror-2″, which is comprised of
+	  <filename>/dev/sde</filename> and <filename> /dev/sdf</filename>. The read-only cache
+	  VDEV is managed by two disks, <filename>/dev/sdg</filename> and
+	  <filename>/dev/sdh</filename>. Neither the “logs” nor the “cache” are long-term
+	  storage for the pool, thus creating a “hybrid pool” setup.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+	
+	<bridgehead>
+	  Real life example
+	</bridgehead>
+	
+	<para>
+	  In production, the files would be physical disk, and the ZIL and cache would be fast
+	  SSDs. Here is my current zpool setup which is storing this blog, among other things:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool status pool
+</command>
+  pool: pool
+ state: ONLINE
+  scan: scrub repaired 0 in 2h23m with 0 errors on Sun Dec  2 02:23:44 2012
+config:
+
+                NAME                                              STATE     READ WRITE CKSUM
+                pool                                              ONLINE       0     0     0
+                  raidz1-0                                        ONLINE       0     0     0
+                    sdd                                           ONLINE       0     0     0
+                    sde                                           ONLINE       0     0     0
+                    sdf                                           ONLINE       0     0     0
+                    sdg                                           ONLINE       0     0     0
+                logs
+                  mirror-1                                        ONLINE       0     0     0
+                    ata-OCZ-REVODRIVE_OCZ-33W9WE11E9X73Y41-part1  ONLINE       0     0     0
+                    ata-OCZ-REVODRIVE_OCZ-X5RG0EIY7MN7676K-part1  ONLINE       0     0     0
+                cache
+                  ata-OCZ-REVODRIVE_OCZ-33W9WE11E9X73Y41-part2    ONLINE       0     0     0
+                  ata-OCZ-REVODRIVE_OCZ-X5RG0EIY7MN7676K-part2    ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  Notice that my “logs” and “cache” VDEVs are OCZ Revodrive SSDs, while the four
+	  platter disks are in a RAIDZ-1 VDEV (RAIDZ will be discussed in the next
+	  post). However, notice that the name of the SSDs is
+	  “ata-OCZ-REVODRIVE_OCZ-33W9WE11E9X73Y41-part1″, etc. These are found in
+	  <filename>/dev/disk/by-id/</filename>. The reason I chose these instead of “sdb” and
+	  “sdc” is because the cache and log devices don’t necessarily store the same ZFS
+	  metadata. Thus, when the pool is being created on boot, they may not come into the
+	  pool, and could be missing. Or, the motherboard may assign the drive letters in a
+	  different order. This isn’t a problem with the main pool, but is a big problem on
+	  GNU/Linux with logs and cached devices. Using the device name under
+	  <filename>/dev/disk/by-id/</filename> ensures greater persistence and uniqueness.
+	</para>
+	
+	<para>
+	  Also do notice the simplicity in the implementation. Consider doing something similar
+	  with LVM, RAID and ext4. You would need to do the following:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+mdadm -C /dev/md0 -l 0 -n 4 /dev/sde /dev/sdf /dev/sdg /dev/sdh
+</command>
+<command>
+<prompt>$</prompt>
+pvcreate /dev/md0
+</command>
+<command>
+<prompt>$</prompt>
+vgcreate /dev/md0 tank
+</command>
+<command>
+<prompt>$</prompt>
+lvcreate -l 100%FREE -n videos tank
+</command>
+<command>
+<prompt>$</prompt>
+mkfs.ext4 /dev/tank/videos
+</command>
+<command>
+<prompt>$</prompt>
+mkdir -p /tank/videos
+</command>
+<command>
+<prompt>$</prompt>
+mount -t ext4 /dev/tank/videos /tank/videos
+</command>
+	</screen>
+
+	<para>
+	  The above was done in ZFS (minus creating the logical volume, which will get to
+	  later) with one command, rather than seven.
+	</para>
+
+	<bridgehead>
+	  Conclusion
+	</bridgehead>
+
+	<para>
+	  This should act as a good starting point for getting the basic understanding of
+	  zpools and VDEVs. The rest of it is all downhill from here. You’ve made it over the
+	  “big hurdle” of understanding how ZFS handles pooled storage. We still need to cover
+	  RAIDZ levels, and we still need to go into more depth about log and cache devices, as
+	  well as pool settings, such as deduplication and compression, but all of these will
+	  be handled in separate posts. Then we can get into ZFS filesystem datasets, their
+	  settings, and advantages and disagvantages. But, you now have a head start on the
+	  core part of ZFS pools.
+	</para>
+
+      </section>
+
+      <section xml:id="admin-man-sect-raidz">
+	<title>RAIDZ</title>
+	<indexterm><primary>Zpools</primary><secondary>RAIDZ</secondary></indexterm>
+	
+	<bridgehead>
+	  Self-healing RAID
+	</bridgehead>
+	
+	<para>
+	  ZFS can detect silent errors, and fix them on the fly. Suppose for a moment that
+	  there is bad data on a disk in the array, for whatever reason. When the application
+	  requests the data, ZFS constructs the stripe as we just learned, and compares each
+	  block against a SHA-256 checksum in the metadata. If the read stripe does not match
+	  the checksum, ZFS finds the corrupted block, it then reads the parity, and fixes it
+	  through combinatorial reconstruction. It then returns good data to the
+	  application. This is all accomplished in ZFS itself, without the help of special
+	  hardware. Another aspect of the RAIDZ levels is the fact that if the stripe is longer
+	  than the disks in the array, if there is a disk failure, not enough data with the
+	  parity can reconstruct the data. Thus, ZFS will mirror some of the data in the stripe
+	  to prevent this from happening.
+	</para>
+
+	<para>
+	  Again, if your RAID and filesystem are separate products, they are not aware of each
+	  other, so detecting and fixing silent data errors is not possible. So, with that out
+	  of the way, let’s build some RAIDZ pools. As with my previous post, I’ll be using 5
+	  USB thumb drives <filename>/dev/sde</filename>, <filename>/dev/sdf</filename>,
+	  <filename>/dev/sdg</filename>, <filename>/dev/sdh</filename> and
+	  <filename>/dev/sdi</filename> which are all 8 GB in size.
+	</para>
+	
+	<bridgehead>
+	  RAIDZ-1
+	</bridgehead>
+	
+	<para>
+	  RAIDZ-1 is similar to RAID-5 in that there is a single parity bit distributed across
+	  all the disks in the array. The stripe width is variable, and could cover the exact
+	  width of disks in the array, fewer disks, or more disks, as evident in the image
+	  above. This still allows for one disk failure to maintain data. Two disk failures
+	  would result in data loss. A minimum of 3 disks should be used in a RAIDZ-1. The
+	  capacity of your storage will be the number of disks in your array times the storage
+	  of the smallest disk, minus one disk for parity storage (there is a caveat to zpool
+	  storage sizes I’ll get to in another post). So in my example, I should have roughly
+	  16 GB of usable disk.
+	</para>
+	
+	<para>
+	  To setup a zpool with RAIDZ-1, we use the “raidz1″ VDEV, in this case using only 3
+	  USB drives:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create tank raidz1 sde sdf sdg
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: pool
+ state: ONLINE
+  scan: none requested
+config:
+
+             NAME          STATE     READ WRITE CKSUM
+             pool          ONLINE       0     0     0
+               raidz1-0    ONLINE       0     0     0
+                 sde       ONLINE       0     0     0
+                 sdf       ONLINE       0     0     0
+                 sdg       ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  Cleanup before moving on, if following in your terminal:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+
+	<bridgehead>
+	  RAIDZ-2
+	</bridgehead>
+	
+	<para>
+	  RAIDZ-2 is similar to RAID-6 in that there is a dual parity bit distributed across
+	  all the disks in the array. The stripe width is variable, and could cover the exact
+	  width of disks in the array, fewer disks, or more disks, as evident in the image
+	  above. This still allows for two disk failures to maintain data. Three disk failures
+	  would result in data loss. A minimum of 4 disks should be used in a RAIDZ-2. The
+	  capacity of your storage will be the number of disks in your array times the storage
+	  of the smallest disk, minus two disks for parity storage. So in my example, I should
+	  have roughly 16 GB of usable disk.
+	</para>
+	
+	<para>
+	  To setup a zpool with RAIDZ-2, we use the “raidz2″ VDEV:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create tank raidz2 sde sdf sdg sdh
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: pool
+ state: ONLINE
+  scan: none requested
+config:
+
+            NAME          STATE     READ WRITE CKSUM
+            pool          ONLINE       0     0     0
+              raidz2-0    ONLINE       0     0     0
+                sde       ONLINE       0     0     0
+                sdf       ONLINE       0     0     0
+                sdg       ONLINE       0     0     0
+                sdh       ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  Cleanup before moving on, if following in your terminal:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+	
+	<bridgehead>
+	  RAIDZ-3
+	</bridgehead>
+
+	<para>
+	  RAIDZ-3 does not have a standardized RAID level to compare it to. However, it is the
+	  logical continuation of RAIDZ-1 and RAIDZ-2 in that there is a triple parity bit
+	  distributed across all the disks in the array. The stripe width is variable, and
+	  could cover the exact width of disks in the array, fewer disks, or more disks, as
+	  evident in the image above. This still allows for three disk failures to maintain
+	  data. Four disk failures would result in data loss. A minimum of 5 disks should be
+	  used in a RAIDZ-3. The capacity of your storage will be the number of disks in your
+	  array times the storage of the smallest disk, minus three disks for parity
+	  storage. So in out example, we should have roughly 16 GB of usable disk.
+	</para>
+	
+	<para>
+	  To setup a zpool with RAIDZ-3, we use the “raidz3″ VDEV:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create tank raidz3 sde sdf sdg sdh sdi
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: pool
+ state: ONLINE
+  scan: none requested
+config:
+
+                NAME          STATE     READ WRITE CKSUM
+                pool          ONLINE       0     0     0
+                  raidz3-0    ONLINE       0     0     0
+                    sde       ONLINE       0     0     0
+                    sdf       ONLINE       0     0     0
+                    sdg       ONLINE       0     0     0
+                    sdh       ONLINE       0     0     0
+                    sdi       ONLINE       0     0     0
+
+ errors: No known data errors
+	</screen>
+	
+	<para>
+	  Cleanup before moving on, if following in your terminal:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+	</screen>
+
+	<bridgehead>
+	Performance Considerations
+	</bridgehead>
+	
+	<para>
+	  Lastly, in terms of performance, mirrors will always outperform RAIDZ levels. On both
+	  reads and writes. Further, RAIDZ-1 will outperform RAIDZ-2, which it turn will
+	  outperform RAIDZ-3. The more parity bits you have to calculate, the longer it’s going
+	  to take to both read and write the data. Of course, you can always add striping to
+	  your VDEVs to maximize on some of this performance. Nested RAID levels, such as
+	  RAID-1+0 are considered “the Cadillac of RAID levels” due to the flexibility in which
+	  you can lose disks without parity, and the throughput you get from the stripe. So, in
+	  a nutshell, from fastest to slowest, your non-nested RAID levels will perform as:
+	</para>
+	
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      RAID-0 (fastest)
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      RAID-1
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      RAIDZ-1
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      RAIDZ-2
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      RAIDZ-3 (slowest)
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+
+
+
+      </section>
+      <section xml:id="admin-man-sect-ex-import-strg-pools">
+	<title>Exporting and Importing Storage Pools</title>
+	<indexterm><primary>Zpools</primary><secondary>Exporting and Importing Storage
+	Pools</secondary></indexterm>
+      
+	<bridgehead>
+	  Motivation
+	</bridgehead>
+	
+	<para>
+	  As a GNU/Linux storage administrator, you may come across the need to move your
+	  storage from one server to another. This could be accomplished by physically moving
+	  the disks from one storage box to another, or by copying the data from the old live
+	  running system to the new. we will cover both cases in this series. The latter deals
+	  with sending and receiving ZFS snapshots, a topic that will take us some time getting
+	  to. This post will deal with the former; that is, physically moving the drives.
+	</para>
+
+	<para>
+	  One slick feature of ZFS is the ability to export your storage pool, so you can
+	  disassemble the drives, unplug their cables, and move the drives to another
+	  system. Once on the new system, ZFS gives you the ability to import the storage pool,
+	  regardless of the order of the drives. A good demonstration of this is to grab some
+	  USB sticks, plug them in, and create a ZFS storage pool. Then export the pool, unplug
+	  the sticks, drop them into a hat, and mix them up. Then, plug them back in at any
+	  random order, and re-import the pool on a new box. In fact, ZFS is smart enough to
+	  detect endianness. In other words, you can export the storage pool from a big endian
+	  system, and import the pool on a little endian system, without hiccup.
+	</para>
+
+	<bridgehead>
+	  Exporting Storage Pools
+	</bridgehead>
+	
+	<para>
+	  When the migration is ready to take place, before unplugging the power, you need to
+	  export the storage pool. This will cause the kernel to flush all pending data to
+	  disk, writes data to the disk acknowledging that the export was done, and removes all
+	  knowledge that the storage pool existed in the system. At this point, it’s safe to
+	  shut down the computer, and remove the drives.
+	</para>
+
+	<para>
+	  If you do not export the storage pool before removing the drives, you will not be
+	  able to import the drives on the new system, and you might not have gotten all
+	  unwritten data flushed to disk. Even though the data will remain consistent due to
+	  the nature of the filesystem, when importing, it will appear to the old system as a
+	  faulted pool. Further, the destination system will refuse to import a pool that has
+	  not been explicitly exported. This is to prevent race conditions with network
+	  attached storage that may be already using the pool.
+	</para>
+	
+	<para>
+	  To export a storage pool, use the following command:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool export tank
+</command>
+	</screen>
+	
+	<para>
+	  This command will attempt to unmount all ZFS datasets as well as the pool. By
+	  default, when creating ZFS storage pools and filesystems, they are automatically
+	  mounted to the system. There is no need to explicitly unmount the filesystems as you
+	  with with ext3 or ext4. The export will handle that. Further, some pools may refuse
+	  to be exported, for whatever reason. You can pass the “-f” switch if needed to force
+	  the export.
+	</para>
+
+	<bridgehead>
+	  Importing Storage Pools
+	</bridgehead>
+	
+	<para>
+	  Once the drives have been physically installed into the new server, you can import
+	  the pool. Further, the new system may have multiple pools installed, to which you
+	  will want to determine which pool to import, or to import them all. If the storage
+	  pool “tank” does not already exist on the new server, and this is the pool you wish
+	  to import, then you can run the following command:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool import tank
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+ state: ONLINE
+  scan: none requested
+config:
+
+                 NAME        STATE     READ WRITE CKSUM
+                 tank        ONLINE       0     0     0
+                   mirror-0  ONLINE       0     0     0
+                     sde     ONLINE       0     0     0
+                     sdf     ONLINE       0     0     0
+                   mirror-1  ONLINE       0     0     0
+                     sdg     ONLINE       0     0     0
+                     sdh     ONLINE       0     0     0
+                   mirror-2  ONLINE       0     0     0
+                     sdi     ONLINE       0     0     0
+                     sdj     ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  Your storage pool state may not be “ONLINE”, meaning that everything is healthy. If
+	  the system does not recognize a disk in your pool, you may get a “DEGRADED” state. If
+	  one or more of the drives appear as faulty to the system, then you may get a
+	  “FAULTED” state in your pool. You will need to troubleshoot what drives are causing
+	  the problem, and fix accordingly.
+	</para>
+
+	<para>
+	  You can import multiple pools simultaneously by either specifying each pool as an
+	  argument, or by passing the “-a” switch for importing all discovered pools. For
+	  importing the two pools “tank1″ and “tank2″, type:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool import tank1 tank2
+</command>
+	</screen>
+	
+	<para>
+	  For importing all known pools, type:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool import -a
+</command>
+	</screen>
+	
+	<bridgehead>
+	  Recovering A Destroyed Pool
+	</bridgehead>
+
+	<para>
+	  If a ZFS storage pool was previously destroyed, the pool can still be imported to the
+	  system. Destroying a pool doesn’t wipe the data on the disks, so the metadata is
+	  still in tact, and the pool can still be discovered. Let’s take a clean pool called
+	  “tank”, destroy it, move the disks to a new system, then try to import the pool. You
+	  will need to pass the “-D” switch to tell ZFS to import a destroyed pool. Do not
+	  provide the pool name as an argument, as you would normally do:
+	</para>
+
+	<screen>
+(server A)
+<command>
+<prompt>$</prompt>
+zpool destroy tank
+</command>
+(server B)
+<command>
+<prompt>$</prompt>
+zpool import -D
+</command>
+  pool: tank
+    id: 17105118590326096187
+ state: ONLINE (DESTROYED)
+action: The pool can be imported using its name or numeric identifier.
+config:
+
+                 tank        ONLINE
+                   mirror-0  ONLINE
+                     sde     ONLINE
+                     sdf     ONLINE
+                   mirror-1  ONLINE
+                     sdg     ONLINE
+                     sdh     ONLINE
+                   mirror-2  ONLINE
+                     sdi     ONLINE
+                     sdj     ONLINE
+                
+                
+  pool: tank
+    id: 2911384395464928396
+ state: UNAVAIL (DESTROYED)
+status: One or more devices are missing from the system.
+action: The pool cannot be imported. Attach the missing
+        devices and try again.
+   see: http://zfsonlinux.org/msg/ZFS-8000-6X
+config:
+
+                 tank          UNAVAIL  missing device
+                   sdk         ONLINE
+                   sdr         ONLINE
+
+ Additional devices are known to be part of this pool, though their
+ exact configuration cannot be determined.
+	</screen>
+
+	<para>
+	  Notice that the state of the pool is “ONLINE (DESTROYED)”. Even though the pool is
+	  “ONLINE”, it is only partially online. Basically, it’s only been discovered, but it’s
+	  not available for use. If you run the <command>df</command> command, you will find
+	  that the storage pool is not mounted. This means the ZFS filesystem datasets are not
+	  available, and you currently cannot store data into the pool. However, ZFS has found
+	  the pool, and you can bring it fully ONLINE for standard usage by running the import
+	  command one more time, this time specifying the pool name as an argument to import:
+	</para>
+	
+	<screen>
+(server B)
+<command>
+<prompt>$</prompt>
+zpool import -D tank
+</command>
+cannot import 'tank': more than one matching pool
+import by numeric ID instead
+(server B)
+<command>
+<prompt>$</prompt>
+zpool import -D 17105118590326096187
+</command>
+(server B)
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+  scan: none requested
+config:
+
+                   NAME        STATE     READ WRITE CKSUM
+                   tank        ONLINE       0     0     0
+                     mirror-0  ONLINE       0     0     0
+                       sde     ONLINE       0     0     0
+                       sdf     ONLINE       0     0     0
+                     mirror-1  ONLINE       0     0     0
+                       sdg     ONLINE       0     0     0
+                       sdh     ONLINE       0     0     0
+                     mirror-2  ONLINE       0     0     0
+                       sdi     ONLINE       0     0     0
+                       sdj     ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+	
+	<para>
+	  Notice that ZFS was warning me that it found more than on storage pool matching the
+	  name “tank”, and to import the pool, I must use its unique identifier. So, I pass
+	  that as an argument from my previous import. This is because in my previous output,
+	  we can see there are two known pools with the pool name “tank”. However, after
+	  specifying its ID, I was able to successfully bring the storage pool to full “ONLINE”
+	  status. You can identify this by checking its status:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+        still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+        pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+                 NAME        STATE     READ WRITE CKSUM
+                 tank        ONLINE       0     0     0
+                   mirror-0  ONLINE       0     0     0
+                     sde     ONLINE       0     0     0
+                     sdf     ONLINE       0     0     0
+                   mirror-1  ONLINE       0     0     0
+                     sdg     ONLINE       0     0     0
+                     sdh     ONLINE       0     0     0
+                   mirror-2  ONLINE       0     0     0
+                     sdi     ONLINE       0     0     0
+                     sdj     ONLINE       0     0     0
+	</screen>
+	
+	<bridgehead>
+	  Upgrading Storage Pools
+	</bridgehead>
+	
+	<para>
+	  One thing that may crop up when migrating disk, is that there may be different pool
+	  and filesystem versions of the software. For example, you may have exported the pool
+	  on a system running pool version 20, while importing into a system with pool version
+	  28 support. As such, you can upgrade your pool version to use the latest software for
+	  that release. As is evident with the previous example, it seems that the new server
+	  has an update version of the software. We are going to upgrade.
+	</para>
+
+	<warning>
+	  <para>
+	    Once you upgrade your pool to a newer version of ZFS, older versions will not be
+	    able to use the storage pool. So, make sure that when you upgrade the pool, you
+	    know that there will be no need for going back to the old system. Further, there is
+	    no way to revert the upgrade and revert to the old version.
+	  </para>
+	</warning>
+
+	<para>
+	  First, we can see a brief description of features that will be available to the pool:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool upgrade -v
+</command>
+This system is currently running ZFS pool version 28.
+The following versions are supported:
+          
+          VER   DESCRIPTION
+          ---   ---------------------------------------------------
+           1    Initial ZFS version
+           2    Ditto blocks (replicated metadata)
+           3    Hot spares and double parity RAID-Z
+           4    zpool history
+           5    Compression using the gzip algorithm
+           6    bootfs pool property
+           7    Separate intent log devices
+           8    Delegated administration
+           9    refquota and refreservation properties
+           10   Cache devices
+           11   Improved scrub performance
+           12   Snapshot properties
+           13   snapused property
+           14   passthrough-x aclinherit
+           15   user/group space accounting
+           16   stmf property support
+           17   Triple-parity RAID-Z
+           18   Snapshot user holds
+           19   Log device removal
+           20   Compression using zle (zero-length encoding)
+           21   Deduplication
+           22   Received properties
+           23   Slim ZIL
+           24   System attributes
+           25   Improved scrub stats
+           26   Improved snapshot deletion performance
+           27   Improved snapshot creation performance
+           28   Multiple vdev replacements
+
+For more information on a particular version, including supported releases,
+see the ZFS Administration Guide.
+	</screen>
+
+	<para>
+	  So, let’s perform the upgrade to get to version 28 of the pool:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool upgrade -a
+</command>
+	</screen>
+	
+	<para>
+	  As a sidenote, when using ZFS on Linux, the RPM and Debian packages will contain an
+	  <filename>/etc/init.d/zfs</filename> init script for setting up the pools and
+	  datasets on boot. This is done by importing them on boot. However, at shutdown, the
+	  init script does not export the pools. Rather, it just unmounts them. So, if you
+	  migrate the disk to another box after only shutting down, you will be not be able to
+	  import the storage pool on the new box.
+	</para>
+
+	<bridgehead>
+	  Conclusion
+	</bridgehead>
+	
+	<para>
+	  There are plenty of situations where you may need to move disk from one storage
+	  server to another. Thankfully, ZFS makes this easy with exporting and importing
+	  pools. Further, the <command>zpool</command> command has enough subcommands and
+	  switches to handle the most common scenarios when a pool will not export or
+	  import. Towards the very end of the series, we’ll discuss the <command>zdb</command>
+	  command, and how it may be useful here. But at this point, steer clear of zdb, and
+	  just focus on keeping your pools in order, and properly exporting and importing them
+	  as needed.
+	</para>
+
+      </section>
+
+      <section xml:id="admin-man-sect-scrub-and-resilvr">
+	<title>Scrub and Resilver</title>
+	<indexterm><primary>Zpools</primary><secondary>Scrub and
+	Resilver</secondary></indexterm>
+	
+	<bridgehead>
+	  Standard Validation
+	</bridgehead>
+
+	<para>
+	  In GNU/Linux, we have a number of filesystem checking utilities for verifying data
+	  integrity on the disk. This is done through the “fsck” utility. However, it has a
+	  couple major drawbacks. First, you must fsck the disk offline if you are intending on
+	  fixing data errors. This means downtime. So, you must use the
+	  <command>umount</command> command to unmount your disks, before the fsck. For root
+	  partitions, this further means booting from another medium, like a CDROM or USB
+	  stick. Depending on the size of the disks, this downtime could take hours. Second,
+	  the filesystem, such as ext3 or ext4, knows nothing of the underlying data
+	  structures, such as LVM or RAID. You may only have a bad block on one disk, but a
+	  good block on another disk. Unfortunately, Linux software RAID has no idea which is
+	  good or bad, and from the perspective of ext3 or ext4, it will get good data if read
+	  from the disk containing the good block, and corrupted data from the disk containing
+	  the bad block, without any control over which disk to pull the data from, and fixing
+	  the corruption. These errors are known as “silent data errors”, and there is really
+	  nothing you can do about it with the standard GNU/Linux filesystem stack.
+	</para>
+	
+	<bridgehead>
+	  ZFS Scrubbing
+	</bridgehead>
+	
+	<para>
+	  With ZFS on Linux, detecting and correcting silent data errors is done through
+	  scrubbing the disks. This is similar in technique to ECC RAM, where if an error
+	  resides in the ECC DIMM, you can find another register that contains the good data,
+	  and use it to fix the bad register. This is an old technique that has been around for
+	  a while, so it’s surprising that it’s not available in the standard suite of
+	  journaled filesystems. Further, just like you can scrub ECC RAM on a live running
+	  system, without downtime, you should be able to scrub your disks without downtime as
+	  well. With ZFS, you can.
+	</para>
+	
+	<para>
+	  While ZFS is performing a scrub on your pool, it is checking every block in the
+	  storage pool against its known SHA-256 checksum. Every block from top-to-bottom is
+	  checksummed using SHA-256 by default. This can be changed to using the Fletcher
+	  algorithm, although it’s not recommended. Because of SHA-256, you have a 1 in 2^256
+	  or 1 in 10^77 chance that a corrupted block hashes to the same SHA-256 checksum. This
+	  is a 0.00000000000000000000000000000000000000000000000000000000000000000000000000001%
+	  chance. For reference, uncorrected ECC memory errors will happen on about 50 orders
+	  of magnitude more frequently, with the most reliable hardware on the market. So, when
+	  scrubbing your data, the probability is that either the checksum will match, and you
+	  have a good data block, or it won’t match, and you have a corrupted data block.
+	</para>
+
+	<para>
+	  Scrubbing ZFS storage pools is not something that happens automatically. You need to
+	  do it manually, and it’s highly recommended that you do it on a regularly scheduled
+	  interval. The recommended frequency at which you should scrub the data depends on the
+	  quality of the underlying disks. If you have SAS or FC disks, then once per month
+	  should be sufficient. If you have consumer grade SATA or SCSI, you should do once per
+	  week. You can schedule a scrub easily with the following command:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool scrub tank
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+  scan: scrub in progress since Sat Dec  8 08:06:36 2012
+        32.0M scanned out of 48.5M at 16.0M/s, 0h0m to go
+        0 repaired, 65.99% done
+config:
+
+                  NAME        STATE     READ WRITE CKSUM
+                  tank        ONLINE       0     0     0
+                    mirror-0  ONLINE       0     0     0
+                      sde     ONLINE       0     0     0
+                      sdf     ONLINE       0     0     0
+                    mirror-1  ONLINE       0     0     0
+                      sdg     ONLINE       0     0     0
+                      sdh     ONLINE       0     0     0
+                    mirror-2  ONLINE       0     0     0
+                      sdi     ONLINE       0     0     0
+                      sdj     ONLINE       0     0     0
+
+errors: No known data errors
+	</screen>
+
+	<para>
+	  As you can see, you can get a status of the scrub while it is in progress. Doing a
+	  scrub can severely impact performance of the disks and the applications needing
+	  them. So, if for any reason you need to stop the scrub, you can pass the “-s” switch
+	  to the scrub subcommand. However, you should let the scrub continue to completion.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool scrub -s tank
+</command>
+	</screen>
+
+	<para>
+	  You should put something similar to the following in your root’s crontab, which will
+	  execute a scrub every Sunday at 02:00 in the morning:
+	</para>
+	
+	<screen>
+<command>
+0 2 * * 0 /sbin/zpool scrub tank
+</command>
+	</screen>
+
+	<bridgehead>
+	  Self Healing Data
+	</bridgehead>
+
+	<para>
+	  If your storage pool is using some sort of redundancy, then ZFS will not only detect
+	  the silent data errors on a scrub, but it will also correct them if good data exists
+	  on a different disk. This is known as “self healing”, and can be demonstrated in the
+	  following image. In our RAIDZ post, we discussed how the data is self-healed with
+	  RAIDZ, using the parity and a reconstruction algorithm. We are going to simplify it a
+	  bit, and use just a two way mirror. Suppose that an application needs some data
+	  blocks, and in those blocks, on of them is corrupted. How does ZFS know the data is
+	  corrupted? By checking the SHA-256 checksum of the block, as already mentioned. If a
+	  checksum does not match on a block, it will look at our other disk in the mirror to
+	  see if a good block can be found. If so, the good block is passed to the application,
+	  then ZFS will fix the bad block in the mirror, so that it also passes the SHA-256
+	  checksum. As a result, the application will always get good data, and your pool will
+	  always be in a good, clean, consistent state.
+	</para>
+
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="images/small-zfs-self-healing.png"
+			 format="PNG" width="70%"/>
+	    </imageobject>
+	    <caption>Image courtesy of root.cz, showing how ZFS self heals data.</caption>
+	  </mediaobject>  
+	</screenshot>
+	
+	<bridgehead>
+	  Resilvering Data
+	</bridgehead>
+
+	<para>
+	  Resilvering data is the same concept as rebuilding or resyncing data onto the new
+	  disk into the array. However, with Linux software RAID, hardware RAID controllers,
+	  and other RAID implementations, there is no distinction between which blocks are
+	  actually live, and which aren’t. So, the rebuild starts at the beginning of the disk,
+	  and does not stop until it reaches the end of the disk. Because ZFS knows about the
+	  the RAID structure and the filesystem metadata, we can be smart about rebuilding the
+	  data. Rather than wasting our time on free disk, where live blocks are not stored, we
+	  can concern ourselves with ONLY those live blocks. This can provide significant time
+	  savings, if your storage pool is only partially filled. If the pool is only 10%
+	  filled, then that means only working on 10% of the drives. Win. Thus, with ZFS we
+	  need a new term than “rebuilding”, “resyncing” or “reconstructing”. In this case, we
+	  refer to the process of rebuilding data as “resilvering”.
+	</para>
+
+	<para>
+	  Unfortunately, disks will die, and need to be replaced. Provided you have redundancy
+	  in your storage pool, and can afford some failures, you can still send data to and
+	  receive data from applications, even though the pool will be in “DEGRADED” mode. If
+	  you have the luxury of hot swapping disks while the system is live, you can replace
+	  the disk without downtime (lucky you). If not, you will still need to identify the
+	  dead disk, and replace it. This can be a chore if you have many disks in your pool,
+	  say 24. However, most GNU/Linux operating system vendors, such as Debian or Ubuntu,
+	  provide a utility called “hdparm” that allows you to discover the serial number of
+	  all the disks in your pool. This is, of course, that the disk controllers are
+	  presenting that information to the Linux kernel, which they typically do. So, you
+	  could run something like:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt> for i in a b c d e f g; do echo -n "/dev/sd$i: "; hdparm -I
+/dev/sd$i | awk '/Serial Number/ {print $3}'; done
+</command>
+/dev/sda: OCZ-9724MG8BII8G3255
+/dev/sdb: OCZ-69ZO5475MT43KNTU
+/dev/sdc: WD-WCAPD3307153
+/dev/sdd: JP2940HD0K9RJC
+/dev/sde: /dev/sde: No such file or directory
+/dev/sdf: JP2940HD0SB8RC
+/dev/sdg: S1D1C3WR
+	</screen>
+
+	<para>
+	  It appears that <filename>/dev/sde</filename> is my dead disk. I have the serial
+	  numbers for all the other disks in the system, but not this one. So, by process of
+	  elimination, I can go to the storage array, and find which serial number was not
+	  printed. This is my dead disk. In this case, I find serial number “JP2940HD01VLMC”. I
+	  pull the disk, replace it with a new one, and see if <filename>/dev/sde</filename> is
+	  repopulated, and the others are still online. If so, I’ve found my disk, and can add
+	  it to the pool. This has actually happened to me twice already, on both of my
+	  personal hypervisors. It was a snap to replace, and I was online in under 10 minutes.
+	</para>
+
+	<para>
+	  To replace an dead disk in the pool with a new one, you use the “replace”
+	  subcommand. Suppose the new disk also identifed itself as /dev/sde, then I would
+	  issue the following command:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool replace tank sde sde
+</command>
+<command>
+<prompt>$</prompt>
+zpool status tank
+</command>
+  pool: tank
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+        scrub: resilver in progress for 0h2m, 16.43% done, 0h13m to go
+config:
+
+                  NAME          STATE       READ WRITE CKSUM
+                  tank          DEGRADED       0     0     0
+                    mirror-0    DEGRADED       0     0     0
+                      replacing DEGRADED       0     0     0
+                      sde       ONLINE         0     0     0
+                      sdf       ONLINE         0     0     0
+                    mirror-1    ONLINE         0     0     0
+                      sdg       ONLINE         0     0     0
+                      sdh       ONLINE         0     0     0
+                    mirror-2    ONLINE         0     0     0
+                      sdi       ONLINE         0     0     0
+                      sdj       ONLINE         0     0     0
+	</screen>
+	
+	<para>
+	  The resilver is analagous to a rebuild with Linux software RAID. It is rebuilding the
+	  data blocks on the new disk until the mirror, in this case, is in a completely
+	  healthy state. Viewing the status of the resilver will help you get an idea of when
+	  it will complete.
+	</para>
+
+	<bridgehead>
+	  Identifying Pool Problems
+	</bridgehead>
+
+	<para>
+	  Determining quickly if everything is functioning as it should be, without the full
+	  output of the “zpool status” command can be done by passing the “-x” switch. This is
+	  useful for scripts to parse without fancy logic, which could alert you in the event
+	  of a failure:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool status -x
+</command>
+all pools are healthy
+	</screen>
+
+	<para>
+	 The rows in the “zpool status” command give you vital information about the pool, most
+	 of which are self-explanatory. They are defined as follows:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    pool
+		  </term>
+		  <listitem>
+		    <para>
+		      The name of the pool
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    state
+		  </term>
+		  <listitem>
+		    <para>
+		      The current health of the pool. This information refers only to the
+		      ability of the pool to provide the necessary replication level.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    status
+		  </term>
+		  <listitem>
+		    <para>
+		      A description of what is wrong with the pool. This field is omitted if no
+		      problems are found.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    action
+		  </term>
+		  <listitem>
+		    <para>
+		      A recommended action for repairing the errors. This field is an
+		      abbreviated form directing the user to one of the following
+		      sections. This field is omitted if no problems are found.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    see
+		  </term>
+		  <listitem>
+		    <para>
+		      A reference to a knowledge article containing detailed repair
+		      information. Online articles are updated more often than this guide can
+		      be updated, and should always be referenced for the most up-to-date
+		      repair procedures. This field is omitted if no problems are found.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    scrub
+		  </term>
+		  <listitem>
+		    <para>
+		      Identifies the current status of a scrub operation, which might include
+		      the date and time that the last scrub was completed, a scrub in progress,
+		      or if no scrubbing was requested.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    errors
+		  </term>
+		  <listitem>
+		    <para>
+		      Identifies known data errors or the absence of known data errors.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    config
+		  </term>
+		  <listitem>
+		    <para>
+		      Describes the configuration layout of the devices comprising the pool, as
+		      well as their state and any errors generated from the devices. The state
+		      can be one of the following: ONLINE, FAULTED, DEGRADED, UNAVAILABLE, or
+		      OFFLINE. If the state is anything but ONLINE, the fault tolerance of the
+		      pool has been compromised.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+	<para>
+	  The columns in the status output, “READ”, “WRITE” and “CHKSUM” are defined as
+	  follows:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    NAME
+		  </term>
+		  <listitem>
+		    <para>
+		      The name of each VDEV in the pool, presented in a nested order.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    STATE
+		  </term>
+		  <listitem>
+		    <para>
+		      The state of each VDEV in the pool. The state can be any of the states
+		      found in “config” above.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    READ
+		  </term>
+		  <listitem>
+		    <para>
+		      I/O errors occurred while issuing a read request.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    WRITE
+		  </term>
+		  <listitem>
+		    <para>
+		      I/O errors occurred while issuing a write request.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    CHKSUM
+		  </term>
+		  <listitem>
+		    <para>
+		      Checksum errors. The device returned corrupted data as the result of a
+		      read request.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </listitem>
+	</itemizedlist>
+	
+	<bridgehead>
+	  Conclusion
+	</bridgehead>
+	
+	<para>
+	  Scrubbing your data on regular intervals will ensure that the blocks in the storage
+	  pool remain consistent. Even though the scrub can put strain on applications wishing
+	  to read or write data, it can save hours of headache in the future. Further, because
+	  you could have a “damaged device” at any time (see <ulink
+	  url="http://docs.oracle.com/cd/E19082-01/817-2271/gbbvf/index.html"></ulink> about
+	  damaged devices with ZFS), properly knowing how to fix the device, and what to expect
+	  when replacing one, is critical to storage administration. Of course, there is plenty
+	  more I could discuss about this topic, but this should at least introduce you to the
+	  concepts of scrubbing and resilvering data.
+	</para>
+	
+      </section>
+      <section xml:id="admin-man-sect--setting-prop">
+	<title>Getting and Setting Properties</title>
+	<indexterm><primary>Zpools</primary><secondary>Getting and Setting
+	Properties</secondary></indexterm>
+	
+	<bridgehead>
+	  Motivation
+	</bridgehead>
+	
+	<para>
+	  With ext4, and many filesystems in GNU/Linux, we have a way for tuning various flags
+	  in the filesystem. Things like setting labels, default mount options, and other
+	  tunables. With ZFS, it’s no different, and in fact, is far more verbose. These
+	  properties allow us to modify all sorts of variables, both for the pool, and for the
+	  datasets it contains. Thus, we can “tune” the filesystem to our liking or
+	  needs. However, not every property is tunable. Some are read-only. But, we’ll define
+	  what each of the properties are and how they affect the pool. Note, we are only
+	  looking at zpool properties, and we will get to ZFS dataset properties when we reach
+	  the dataset subtopic.
+	</para>
+
+	<bridgehead>
+	  Zpool Properties
+	</bridgehead>
+
+	<variablelist>
+	  <varlistentry>
+	    <term>
+	      allocated
+	    </term>
+	    <listitem>
+	      <para>
+		The amount of data that has been committed into the pool by all of the ZFS
+		datasets. This setting is read-only.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      altroot
+	    </term>
+	    <listitem>
+	      <para>
+		Identifies an alternate root directory. If set, this directory is prepended to
+		any mount points within the pool. This property can be used when examining an
+		unknown pool, if the mount points cannot be trusted, or in an alternate boot
+		environment, where the typical paths are not valid.Setting altroot defaults to
+		using “cachefile=none”, though this may be overridden using an explicit
+		setting.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      ashift
+	    </term>
+	    <listitem>
+	      <para>
+		Can only be set at pool creation time. Pool sector size exponent, to the power
+		of 2. I/O operations will be aligned to the specified size boundaries. Default
+		value is “9″, as 2^9 = 512, the standard sector size operating system utilities
+		use for reading and writing data. For advanced format drives with 4 KiB
+		boundaries, the value should be set to “ashift=12″, as 2^12 = 4096.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      autoexpand
+	    </term>
+	    <listitem>
+	      <para>
+		Must be set before replacing the first drive in your pool. Controls automatic
+		pool expansion when the underlying LUN is grown. Default is “off”. After all
+		drives in the pool have been replaced with larger drives, the pool will
+		automatically grow to the new size. This setting is a boolean, with values
+		either “on” or “off”.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      autoreplace
+	    </term>
+	    <listitem>
+	      <para>
+		Controls automatic device replacement of a “spare” VDEV in your pool. Default
+		is set to “off”. As such, device replacement must be initiated manually by
+		using the “zpool replace” command. This setting is a boolean, with values
+		either “on” or “off”.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      bootfs
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only setting that defines the bootable ZFS dataset in the pool. This is
+		typically set by an installation program.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      cachefile
+	    </term>
+	    <listitem>
+	      <para>
+		Controls the location of where the pool configuration is cached. When importing
+		a zpool on a system, ZFS can detect the drive geometry using the metadata on
+		the disks. However, in some clustering environments, the cache file may need to
+		be stored in a different location for pools that would not automatically be
+		imported. Can be set to any string, but for most ZFS installations, the default
+		location of “/etc/zfs/zpool.cache” should be sufficient.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      capacity
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only value that identifies the percentage of pool space used.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      comment
+	    </term>
+	    <listitem>
+	      <para>
+		A text string consisting of no more than 32 printable ASCII characters that
+		will be stored such that it is available even if the pool becomes faulted. An
+		administrator can provide additional information about a pool using this
+		setting.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      dedupditto
+	    </term>
+	    <listitem>
+	      <para>
+		Sets a block deduplication threshold, and if the reference count for a
+		deduplicated block goes above the threshold, a duplicate copy of the block is
+		stored automatically. The default value is 0. Can be any positive number.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      dedupratio
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only deduplication ratio specified for a pool, expressed as a multiplier
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      delegation
+	    </term>
+	    <listitem>
+	      <para>
+		Controls whether a non-privileged user can be granted access permissions that
+		are defined for the dataset. The setting is a boolean, defaults to “on” and can
+		be “on” or “off”.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      expandsize
+	    </term>
+	    <listitem>
+	      <para>
+		Amount of uninitialized space within the pool or device that can be used to
+		increase the total capacity of the pool. Uninitialized space consists of any
+		space on an EFI labeled vdev which has not been brought online (i.e. “zpool
+		online -e”). This space occurs when a LUN is dynamically expanded.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      failmode
+	    </term>
+	    <listitem>
+	      <para>
+		Controls the system behavior in the event of catastrophic pool failure. This
+		condition is typically a result of a loss of connectivity to the underlying
+		storage device(s) or a failure of all devices within the pool. The behavior of
+		such an event is determined as follows:
+
+		<itemizedlist>
+		  <listitem>
+		    <para>
+		      <variablelist>
+			<varlistentry>
+			  <term>
+			    wait
+			  </term>
+			  <listitem>
+			    <para>
+			      Blocks all I/O access until the device connectivity is recovered
+			      and the errors are cleared. This is the default behavior.
+			    </para>
+			  </listitem>
+			</varlistentry>
+		      </variablelist>
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      <variablelist>
+			<varlistentry>
+			  <term>
+			    continue
+			  </term>
+			  <listitem>
+			    <para>
+			      Returns EIO to any new write I/O requests but allows reads to any
+			      of the remaining healthy devices. Any write requests that have
+			      yet to be committed to disk would be blocked.
+			    </para>
+			  </listitem>
+			</varlistentry>
+		      </variablelist>
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      <variablelist>
+			<varlistentry>
+			  <term>
+			    panic
+			  </term>
+			  <listitem>
+			    <para>
+			      Prints out a message to the console and generates a system crash
+			      dump.
+			    </para>
+			  </listitem>
+			</varlistentry>
+		      </variablelist>
+		    </para>
+		  </listitem>
+		</itemizedlist>
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      free
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only value that identifies the number of blocks within the pool that are
+		not allocated.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      guid
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only property that identifies the unique identifier for the pool. Similar
+		to the UUID string for ext4 filesystems.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      health
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only property that identifies the current health of the pool, as either
+		ONLINE, DEGRADED, FAULTED, OFFLINE, REMOVED, or UNAVAIL.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      listsnapshots
+	    </term>
+	    <listitem>
+	      <para>
+		Controls whether snapshot information that is associated with this pool is
+		displayed with the “zfs list” command. If this property is disabled, snapshot
+		information can be displayed with the “zfs list -t snapshot” command. The
+		default value is “off”. Boolean value that can be either “off” or “on”.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      readonly
+	    </term>
+	    <listitem>
+	      <para>
+		Boolean value that can be either “off” or “on”. Default value is
+		“off”. Controls setting the pool into read-only mode to prevent writes and/or
+		data corruption.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      size
+	    </term>
+	    <listitem>
+	      <para>
+		Read-only property that identifies the total size of the storage pool.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      version
+	    </term>
+	    <listitem>
+	      <para>
+		Writable setting that identifies the current on-disk version of the pool. Can
+		be any value from 1 to the output of the “zpool upgrade -v” command. This
+		property can be used when a specific version is needed for backwards
+		compatibility.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+	
+	<bridgehead>
+	  Getting and Setting Properties
+	</bridgehead>
+
+	<para>
+	  There are a few ways you can get to the properties of your pool- you can get all
+	  properties at once, only one property, or more than one, comma-separated. For
+	  example, suppose I wanted to get just the health of the pool. I could issue the
+	  following command:
+ 	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool get health tank
+</command>
+NAME  PROPERTY  VALUE   SOURCE
+tank  health    ONLINE  -
+	</screen>
+	
+	<para>
+	  If I wanted to get multiple settings, say the health of the system, how much is free,
+	  and how much is allocated, I could issue this command instead:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool get health,free,allocated tank
+</command>
+NAME  PROPERTY   VALUE   SOURCE
+tank  health     ONLINE  -
+tank  free       176G    -
+tank  allocated  32.2G   -
+	</screen>
+
+	<para>
+	  And of course, if I wanted to get all the settings available, I could run:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool get all tank
+</command>
+NAME  PROPERTY       VALUE       SOURCE
+tank  size           208G        -
+tank  capacity       15%         -
+tank  altroot        -           default
+tank  health         ONLINE      -
+tank  guid           1695112377970346970  default
+tank  version        28          default
+tank  bootfs         -           default
+tank  delegation     on          default
+tank  autoreplace    off         default
+tank  cachefile      -           default
+tank  failmode       wait        default
+tank  listsnapshots  off         default
+tank  autoexpand     off         default
+tank  dedupditto     0           default
+tank  dedupratio     1.00x       -
+tank  free           176G        -
+tank  allocated      32.2G       -
+tank  readonly       off         -
+tank  ashift         0           default
+tank  comment        -           default
+tank  expandsize     0           -
+	</screen>
+
+	<para>
+	  Setting a property is just as easy. However, there is a catch. For properties that
+	  require a string argument, there is no way to get it back to default. At least not
+	  that I am aware of. With the rest of the properties, if you try to set a property to
+	  an invalid argument, an error will print to the screen letting you know what is
+	  available, but it will not notify you as to what is default. However, you can look at
+	  the ‘SOURCE’ column. If the value in that column is “default”, then it’s default. If
+	  it’s “local”, then it was user-defined.
+	</para>
+
+	<para>
+	  Suppose we wanted to change the “comment” property, this is how I would do it:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool set comment="Contact admins@example.com" tank
+</command>
+<command>
+<prompt>$</prompt>
+zpool get comment tank
+</command>
+NAME  PROPERTY  VALUE                       SOURCE
+tank  comment   Contact admins@example.com  local
+	</screen>
+	
+	<para>
+	  As you can see, the SOURCE is “local” for the “comment” property. Thus, it was
+	  user-defined. As mentioned, I don’t know of a way to get string properties back to
+	  default after being set. Further, any modifiable property can be set at pool creation
+	  time by using the “-o” switch, as follows:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zpool create -o ashift=12 tank raid1 sda sdb
+</command>
+	</screen>
+
+	<bridgehead>
+	  Final Thoughts
+	</bridgehead>
+	
+	<para>
+	  The zpool properties apply to the entire pool, which means ZFS datasets will inherit
+	  that property from the pool. Some properties that you set on your ZFS dataset, which
+	  will be discussed towards the end of this series, apply to the whole pool. For
+	  example, if you enable block deduplication for a ZFS dataset, it dedupes blocks found
+	  in the entire pool, not just in your dataset. However, only blocks in that dataset
+	  will be actively deduped, while other ZFS datasets may not. Also, setting a property
+	  is not retroactive. In the case of your “autoexpand” zpool property to automatically
+	  expand the zpool size when all the drives have been replaced, if you replaced a drive
+	  before enabling the property, that drive will be considered a smaller drive, even if
+	  it physically isn’t. Setting properties only applies to operations on the data moving
+	  forward, and never backward.
+	</para>
+
+	<para>
+	  Despite a few of these caveats, having the ability to change some parameters of your
+	  pool to fit your needs as a GNU/Linux storage administrator gives you great control
+	  that other filesystems don’t. And, as we’ve discovered thus far, everything can be
+	  handled with a single command <command>zpool</command>, and easy-to-recall
+	  subcommands. We’ll have one more post discussing a thorough examination of caveats
+	  that you will want to consider before creating your pools, then we will leave the
+	  zpool category, and work our way towards ZFS datasets, the bread and butter of ZFS as
+	  a whole. If there is anything additional about zpools you would like me to post on,
+	  let me know now, and I can squeeze it in.
+	</para>
+
+ 	</section>
+	<section xml:id="admin-man-sect-best-practices">
+	  <title>Best Practices and Caveats</title>
+	  <indexterm><primary>Zpools</primary><secondary>Best Practices and
+	  Caveats</secondary></indexterm>
+
+	  <bridgehead>
+	    Best Practices
+	  </bridgehead>
+	  
+	  <para>
+	    As with all recommendations, some of these guidelines carry a great amount of
+	    weight, while others might not. You may not even be able to follow them as rigidly
+	    as you would like. Regardless, you should be aware of them. I’ll try to provide a
+	    reason why for each. They’re listed in no specific order. The idea of “best
+	    practices” is to optimize space efficiency, performance and ensure maximum data
+	    integrity.
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		Only run ZFS on 64-bit kernels. It has 64-bit specific code that 32-bit kernels
+		cannot do anything with.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Install ZFS only on a system with lots of RAM. 1 GB is a bare minimum, 2 GB is
+		better, 4 GB would be preferred to start. Remember, ZFS will use 7/8 of the
+		available RAM for the ARC.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Use ECC RAM when possible for scrubbing data in registers and maintaining data
+		consistency. The ARC is an actual read-only data cache of valuable data in RAM.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Use whole disks rather than partitions. ZFS can make better use of the on-disk
+		cache as a result. If you must use partitions, backup the partition table, and
+		take care when reinstalling data into the other partitions, so you don’t
+		corrupt the data in your pool.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Keep each VDEV in a storage pool the same size. If VDEVs vary in size, ZFS will
+		favor the larger VDEV, which could lead to performance bottlenecks.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Use redundancy when possible, as ZFS can and will want to correct data errors
+		that exist in the pool. You cannot fix these errors if you do not have a
+		redundant good copy elsewhere in the pool. Mirrors and RAID-Z levels accomplish
+		this.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		For the number of disks in the storage pool, use the “power of two plus parity”
+		recommendation. This is for storage space efficiency and hitting the “sweet
+		spot” in performance. So, for a RAIDZ-1 VDEV, use three (2+1), five (4+1), or
+		nine (8+1) disks. For a RAIDZ-2 VDEV, use four (2+2), six (4+2), ten (8+2), or
+		eighteen (16+2) disks. For a RAIDZ-3 VDEV, use five (2+3), seven (4+3), eleven
+		(8+3), or nineteen (16+3) disks. For pools larger than this, consider striping
+		across mirrored VDEVs.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Consider using RAIDZ-2 or RAIDZ-3 over RAIDZ-1. You’ve heard the phrase “when
+		it rains, it pours”. This is true for disk failures. If a disk fails in a
+		RAIDZ-1, and the hot spare is getting resilvered, until the data is fully
+		copied, you cannot afford another disk failure during the resilver, or you will
+		suffer data loss. With RAIDZ-2, you can suffer two disk failures, instead of
+		one, increasing the probability you have fully resilvered the necessary data
+		before the second, and even third disk fails.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Perform regular (at least weekly) backups of the full storage pool. It’s not a
+		backup, unless you have multiple copies. Just because you have redundant disk,
+		does not ensure live running data in the event of a power failure, hardware
+		failure or disconnected cables.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Use hot spares to quickly recover from a damaged device. Set the “autoreplace”
+		property to on for the pool.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Consider using a hybrid storage pool with fast SSDs or NVRAM drives. Using a
+		fast SLOG and L2ARC can greatly improve performance.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		If using a hybrid storage pool with multiple devices, mirror the SLOG and
+		stripe the L2ARC.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		If using a hybrid storage pool, and partitioning the fast SSD or NVRAM drive,
+		unless you know you will need it, 1 GB is likely sufficient for your SLOG. Use
+		the rest of the SSD or NVRAM drive for the L2ARC. The more storage for the
+		L2ARC, the better.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Keep pool capacity under 80% for best performance. Due to the copy-on-write
+		nature of ZFS, the filesystem gets heavily fragmented. Email reports of
+		capacity at least monthly.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Scrub consumer-grade SATA and SCSI disks weekly and enterprise-grade SAS and FC
+		disks monthly.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Email reports of the storage pool health weekly for redundant arrays, and
+		bi-weekly for non-redundant arrays.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		When using advanced format disks that read and write data in 4 KB sectors, set
+		the “ashift” value to 12 on pool creation for maximum performance. Default is 9
+		for 512-byte sectors.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Set “autoexpand” to on, so you can expand the storage pool automatically after
+		all disks in the pool have been replaced with larger ones. Default is off.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Always export your storage pool when moving the disks from one physical system
+		to another.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		When considering performance, know that for sequential writes, mirrors will
+		always outperform RAID-Z levels. For sequential reads, RAID-Z levels will
+		perform more slowly than mirrors on smaller data blocks and faster on larger
+		data blocks. For random reads and writes, mirrors and RAID-Z seem to perform in
+		similar manners. Striped mirrors will outperform mirrors and RAID-Z in both
+		sequential, and random reads and writes.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Compression is disabled by default. This doesn’t make much sense with today’s
+		hardware. ZFS compression is extremely cheap, extremely fast, and barely adds
+		any latency to the reads and writes. In fact, in some scenarios, your disks
+		will respond faster with compression enabled than disabled. A further benefit
+		is the massive space benefits.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <bridgehead>
+	    Caveats
+	  </bridgehead>
+
+	  <para>
+	    The point of the caveat list is by no means to discourage you from using
+	    ZFS. Instead, as a storage administrator planning out your ZFS storage server,
+	    these are things that you should be aware of, so as not to catch you with your
+	    pants down, and without your data. If you don’t head these warnings, you could end
+	    up with corrupted data. The line may be blurred with the “best practices” list
+	    above. I’ve tried making this list all about data corruption if not headed. Read
+	    and head the caveats, and you should be good.
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		Your VDEVs determine the IOPS of the storage, and the slowest disk in that VDEV
+		will determine the IOPS for the entire VDEV.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		ZFS uses 1/64 of the available raw storage for metadata. So, if you purchased a
+		1 TB drive, the actual raw size is 976 GiB. After ZFS uses it, you will have
+		961 GiB of available space. The “zfs list” command will show an accurate
+		representation of your available storage. Plan your storage keeping this in
+		mind.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		ZFS wants to control the whole block stack. It checksums, resilvers live data
+		instead of full disks, self-heals corrupted blocks, and a number of other
+		unique features. If using a RAID card, make sure to configure it as a true JBOD
+		(or “passthrough mode”), so ZFS can control the disks. If you can’t do this
+		with your RAID card, don’t use it. Best to use a real HBA.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not use other volume management software beneath ZFS. ZFS will perform
+		better, and ensure greater data integrity, if it has control of the whole block
+		device stack. As such, avoid using dm-crypt, mdadm or LVM beneath ZFS.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not share a SLOG or L2ARC DEVICE across pools. Each pool should have its own
+		physical DEVICE, not logical drive, as is the case with some PCI-Express SSD
+		cards. Use the full card for one pool, and a different physical card for
+		another pool. If you share a physical device, you will create race conditions,
+		and could end up with corrupted data.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not share a single storage pool across different servers. ZFS is not a
+		clustered filesystem. Use GlusterFS, Ceph, Lustre or some other clustered
+		filesystem on top of the pool if you wish to have a shared storage backend.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Other than a spare, SLOG and L2ARC in your hybrid pool, do not mix VDEVs in a
+		single pool. If one VDEV is a mirror, all VDEVs should be mirrors. If one VDEV
+		is a RAIDZ-1, all VDEVs should be RAIDZ-1. Unless of course, you know what you
+		are doing, and are willing to accept the consequences. ZFS attempts to balance
+		the data across VDEVs. Having a VDEV of a different redundancy can lead to
+		performance issues and space efficiency concerns, and make it very difficult to
+		recover in the event of a failure.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not mix disk sizes or speeds in a single VDEV. Do mix fabrication dates,
+		however, to prevent mass drive failure.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		In fact, do not mix disk sizes or speeds in your storage pool at all.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not mix disk counts across VDEVs. If one VDEV uses 4 drives, all VDEVs
+		should use 4 drives.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not put all the drives from a single controller in one VDEV. Plan your
+		storage, such that if a controller fails, it affects only the number of disks
+		necessary to keep the data online.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		When using advanced format disks, you must set the ashift value to 12 at pool
+		creation. It cannot be changed after the fact. Use “zpool create -o ashift=12
+		tank mirror sda sdb” as an example.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Hot spare disks will not be added to the VDEV to replace a failed drive by
+		default. You MUST enable this feature. Set the autoreplace feature to on. Use
+		“zpool set autoreplace=on tank” as an example.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		The storage pool will not auto resize itself when all smaller drives in the
+		pool have been replaced by larger ones. You MUST enable this feature, and you
+		MUST enable it before replacing the first disk. Use “zpool set autoexpand=on
+		tank” as an example.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		ZFS does not restripe data in a VDEV nor across multiple VDEVs. Typically, when
+		adding a new device to a RAID array, the RAID controller will rebuild the data,
+		by creating a new stripe width. This will free up some space on the drives in
+		the pool, as it copies data to the new disk. ZFS has no such
+		mechanism. Eventually, over time, the disks will balance out due to the writes,
+		but even a scrub will not rebuild the stripe width.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		You cannot shrink a zpool, only grow it. This means you cannot remove VDEVs
+		from a storage pool.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		You can only remove drives from mirrored VDEV using the “zpool detach”
+		command. You can replace drives with another drive in RAIDZ and mirror VDEVs
+		however.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Do not create a storage pool of files or ZVOLs from an existing zpool. Race
+		conditions will be present, and you will end up with corrupted data. Always
+		keep multiple pools separate.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		The Linux kernel may not assign a drive the same drive letter at every
+		boot. Thus, you should use the /dev/disk/by-id/ convention for your SLOG and
+		L2ARC. If you don’t, your zpool devices could end up as a SLOG device, which
+		would in turn clobber your ZFS data.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Don’t create massive storage pools “just because you can”. Even though ZFS can
+		create 78-bit storage pool sizes, that doesn’t mean you need to create one.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Don’t put production directly into the zpool. Use ZFS datasets instead.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Don’t commit production data to file VDEVs. Only use file VDEVs for testing
+		scripts or learning the ins and outs of ZFS.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</section>
+      </section>
+
+      <section xml:id="admin-man-sect-zfs-admin">
+	<title>ZFS Filesystem Administration</title>
+	<indexterm><primary>ZFS File System</primary></indexterm>
+
+      <section xml:id="admin-man-sect-crt-flsys">
+	<title>Creating Filesystems</title>
+	<indexterm><primary>ZFS File System</primary><secondary>Creating
+	Filesystems</secondary></indexterm>
+	
+	<bridgehead>
+	  Background
+	</bridgehead>
+	
+	<para>
+	  First, we need to understand how traditional filesystems and volume management work
+	  in GNU/Linux before we can get a thorough understanding of ZFS datasets. To treat
+	  this fairly, we need to assemble Linux software RAID, LVM, and ext4 or another Linux
+	  kernel supported filesystem together.
+	</para>
+	
+	<para>
+	  This is done by creating a redundant array of disks, and exporting a block device to
+	  represent that array. Then, we format that exported block device using LVM. If we
+	  have multiple RAID arrays, we format each of those as well. We then add all these
+	  exported block devices to a “volume group” which represents my pooled storage. If I
+	  had five exported RAID arrays, of 1 TB each, then I would have 5 TB of pooled storage
+	  in this volume group. Now, I need to decide how to divide up the volume, to create
+	  logical volumes of a specific size. If this was for an Ubuntu or Debian installation,
+	  maybe I would give 100 GB to one logical volume for the root filesystem. That 100 GB
+	  is now marked as occupied by the volume group. I then give 500 GB to my home
+	  directory, and so forth. Each operation exports a block device, representing my
+	  logical volume. It’s these block devices that I format with ex4 or a filesystem of my
+	  choosing.
+	</para>
+	
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="images/lvm.png" format="PNG" width="60%"/>
+	    </imageobject>
+	    <caption>
+	      Linux RAID, LVM, and filesystem stack. Each filesystem is limited in size.
+	    </caption>
+	  </mediaobject>
+	</screenshot>
+
+	<para>
+	  In this scenario, each logical volume is a fixed size in the volume group. It cannot
+	  address the full pool. So, when formatting the logical volume block device, the
+	  filesystem is a fixed size. When that device fills, you must resize the logical
+	  volume and the filesystem together. This typically requires a myriad of commands, and
+	  it’s tricky to get just right without losing data.
+	</para>
+
+	<para>
+	  ZFS handles filesystems a bit differently. First, there is no need to create this
+	  stacked approach to storage. We’ve already covered how to pool the storage, now we
+	  well cover how to use it. This is done by creating a dataset in the filesystem. By
+	  default, this dataset will have full access to the entire storage pool. If our
+	  storage pool is 5 TB in size, as previously mentioned, then our first dataset will
+	  have access to all 5 TB in the pool. If I create a second dataset, it too will have
+	  full access to all 5 TB in the pool. And so on and so forth.
+	</para>
+
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="images/zfs.png" format="PNG" width="80%"/>
+	    </imageobject>
+	    <caption>
+	      Each ZFS dataset can use the full underlying storage.
+	    </caption>
+	  </mediaobject>
+	</screenshot>
+
+	<para>
+	  Now, as files are placed in the dataset, the pool marks that storage as unavailable
+	  to all datasets. This means that each dataset is aware of what is available in the
+	  pool and what is not by all other datasets in the pool. There is no need to create
+	  logical volumes of limited size. Each dataset will continue to place files in the
+	  pool, until the pool is filled. As the cards fall, they fall. You can, of course, put
+	  quotas on datasets, limiting their size, or export ZVOLs, topics we’ll cover later.
+	</para>
+
+	<para>
+	  So, let’s create some datasets.
+	</para>
+
+	<bridgehead>
+	  Basic Creation
+	</bridgehead>
+
+	<para>
+	  In these examples, we will assume our ZFS shared storage is named “tank”. Further, we
+	  will assume that the pool is created with 4 preallocated files of 1 GB in size each,
+	  in a RAIDZ-1 array. Let’s create some datasets.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create tank/test
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME         USED  AVAIL  REFER  MOUNTPOINT
+          tank         175K  2.92G  43.4K  /tank
+          tank/test   41.9K  2.92G  41.9K  /tank/test
+	</screen>
+
+	<para>
+	  Notice that the dataset “tank/test” is mounted to “/tank/test” by default, and that
+	  it has full access to the entire pool. Also notice that it is occupying only 41.9 KB
+	  of the pool. Let’s create 4 more datasets, then look at the output:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create tank/test2
+</command>
+<command>
+<prompt>$</prompt>
+zfs create tank/test3
+</command>
+<command>
+<prompt>$</prompt>
+zfs create tank/test4
+</command>
+<command>
+<prompt>$</prompt>
+zfs create tank/test5
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME         USED  AVAIL  REFER  MOUNTPOINT
+          tank         392K  2.92G  47.9K  /tank
+          tank/test   41.9K  2.92G  41.9K  /tank/test
+          tank/test2  41.9K  2.92G  41.9K  /tank/test2
+          tank/test3  41.9K  2.92G  41.9K  /tank/test3
+          tank/test4  41.9K  2.92G  41.9K  /tank/test4
+          tank/test5  41.9K  2.92G  41.9K  /tank/test5
+	</screen>
+	
+	<para>
+	  Each dataset is automatically mounted to its respective mount point, and each dataset
+	  has full unfettered access to the storage pool. Let’s fill up some data in one of the
+	  datasets, and see how that affects the underlying storage:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+cd /tank/test3
+</command>
+<command>
+<prompt>$</prompt> 
+for i in {1..10}; do dd if=/dev/urandom of=file$i.img bs=1024 count=$RANDOM
+&amp;> /dev/null; done
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME         USED  AVAIL  REFER  MOUNTPOINT
+          tank         159M  2.77G  49.4K  /tank
+          tank/test   41.9K  2.77G  41.9K  /tank/test
+          tank/test2  41.9K  2.77G  41.9K  /tank/test2
+          tank/test3   158M  2.77G   158M  /tank/test3
+          tank/test4  41.9K  2.77G  41.9K  /tank/test4
+          tank/test5  41.9K  2.77G  41.9K  /tank/test5
+	</screen>
+
+	<para>
+	  Notice that in my case, “tank/test3″ is occupying 158 MB of disk, so according to the
+	  rest of the datasets, there is only 2.77 GB available in the pool, where previously
+	  there was 2.92 GB. So as you can see, the big advantage here is that I do not need to
+	  worry about preallocated block devices, as I would with LVM. Instead, ZFS manages the
+	  entire stack, so it understands how much data has been occupied, and how much is
+	  available.
+	</para>
+
+	<bridgehead>
+	  Mounting Datasets
+	</bridgehead>
+	
+	<para>
+	  It’s important to understand that when creating datasets, you aren’t creating
+	  exportable block devices by default. This means you don’t have something directly to
+	  mount. In conclusion, there is nothing to add to your /etc/fstab file for persistence
+	  across reboots.
+	</para>
+
+	<para>
+	  So, if there is nothing to add do the /etc/fstab file, how do the filesystems get
+	  mounted? This is done by importing the pool, if necessary, then running the “zfs
+	  mount” command. Similarly, we have a “zfs unmount” command to unmount datasets, or we
+	  can use the standard “umount” utility:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+umount /tank/test5
+</command>
+<command>
+<prompt>$</prompt>
+mount | grep tank
+</command>
+tank/test on /tank/test type zfs (rw,relatime,xattr)
+tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
+tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
+tank/test4 on /tank/test4 type zfs (rw,relatime,xattr)
+<command>
+<prompt>$</prompt>
+zfs mount tank/test5
+</command>
+<command>
+<prompt>$</prompt>
+mount | grep tank
+</command>
+tank/test on /tank/test type zfs (rw,relatime,xattr)
+tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
+tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
+tank/test4 on /tank/test4 type zfs (rw,relatime,xattr)
+tank/test5 on /tank/test5 type zfs (rw,relatime,xattr)
+	</screen>
+
+	<para>
+	  By default, the mount point for the dataset is
+	  “/&lt;pool-name&gt;/&lt;dataset-name&gt;”. This can be changed, by changing the
+	  dataset property. Just as storage pools have properties that can be tuned, so do
+	  datasets. We’ll dedicate a full post to dataset properties later. We only need to
+	  change the “mountpoint” property, as follows:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs set mountpoint=/mnt/test tank/test
+</command>
+<command>
+<prompt>$</prompt>
+mount | grep tank
+</command>
+tank on /tank type zfs (rw,relatime,xattr)
+tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
+tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
+tank/test4 on /tank/test4 type zfs (rw,relatime,xattr)
+tank/test5 on /tank/test5 type zfs (rw,relatime,xattr)
+tank/test on /mnt/test type zfs (rw,relatime,xattr)
+	</screen>
+
+	<bridgehead>
+	  Nested Datasets
+	</bridgehead>
+	
+	<para>
+	  Datasets don’t need to be isolated. You can create nested datasets within each
+	  other. This allows you to create namespaces, while tuning a nested directory
+	  structure, without affecting the other. For example, maybe you want compression on
+	  /var/log, but not on the parent /var. there are other benefits as well, with some
+	  caveats that we will look at later.
+	</para>
+
+	<para>
+	  To create a nested dataset, create it like you would any other, by providing the
+	  parent storage pool and dataset. In this case we will create a nested log dataset in
+	  the test dataset:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create tank/test/log
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME            USED  AVAIL  REFER  MOUNTPOINT
+          tank            159M  2.77G  47.9K  /tank
+          tank/test      85.3K  2.77G  43.4K  /mnt/test
+          tank/test/log  41.9K  2.77G  41.9K  /mnt/test/log
+          tank/test2     41.9K  2.77G  41.9K  /tank/test2
+          tank/test3      158M  2.77G   158M  /tank/test3
+          tank/test4     41.9K  2.77G  41.9K  /tank/test4
+          tank/test5     41.9K  2.77G  41.9K  /tank/test5
+	</screen>
+	
+	<bridgehead>
+	  Additional Dataset Administration
+	</bridgehead>
+
+	<para>
+	  Along with creating datasets, when you no longer need them, you can destroy
+	  them. This frees up the blocks for use by other datasets, and cannot be reverted
+	  without a previous snapshot, which we’ll cover later. To destroy a dataset:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs destroy tank/test5
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME            USED  AVAIL  REFER  MOUNTPOINT
+          tank            159M  2.77G  49.4K  /tank
+          tank/test      41.9K  2.77G  41.9K  /mnt/test
+          tank/test/log  41.9K  2.77G  41.9K  /mnt/test/log
+          tank/test2     41.9K  2.77G  41.9K  /tank/test2
+          tank/test3      158M  2.77G   158M  /tank/test3
+          tank/test4     41.9K  2.77G  41.9K  /tank/test4
+	</screen>
+	
+	<para>
+	  We can also rename a dataset if needed. This is handy when the purpose of the dataset
+	  changes, and you want the name to reflect that purpose. The arguments take a dataset
+	  source as the first argument and the new name as the last argument. To rename the
+	  tank/test3 dataset to music: 
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs rename tank/test3 tank/music
+</command>
+<command>
+<prompt>$</prompt>
+zfs list
+</command>
+          NAME            USED  AVAIL  REFER  MOUNTPOINT
+          tank            159M  2.77G  49.4K  /tank
+          tank/music      158M  2.77G   158M  /tank/music
+          tank/test      41.9K  2.77G  41.9K  /mnt/test
+          tank/test/log  41.9K  2.77G  41.9K  /mnt/test/log
+          tank/test2     41.9K  2.77G  41.9K  /tank/test2
+          tank/test4     41.9K  2.77G  41.9K  /tank/test4
+	</screen>
+
+      </section>
+      <section xml:id="admin-man-sect-comp-and-dudup">
+	<title>Subsection Compression</title>
+	<indexterm><primary>ZFS File System</primary><secondary>Subsection
+	Compression</secondary></indexterm>
+
+	<para>
+	  Compression is transparent with ZFS if you enable it. This means that every file you
+	  store in your pool can be compressed. From your point of view as an application, the
+	  file does not appear to be compressed, but appears to be stored uncompressed. In
+	  other words, if you run the “file” command on your plain text configuration file, it
+	  will report it as such. Instead, underneath the file layer, ZFS is compressing and
+	  decompressing the data on disk on the fly. And because compression is so cheap on the
+	  CPU, and exceptionally fast with some algorithms, it should not be noticeable.
+	</para>
+
+	<para>
+	  Compression is enabled and disabled per dataset. Further, the supported compression
+	  algorithms are LZJB, ZLE, and Gzip. With Gzip, the standards levels of 1 through 9
+	  are supported, where 1 is as fast as possible, with the least compression, and 9 is
+	  as compressed as possible, taking as much time as necessary. The default is 6, as is
+	  standard in GNU/Linux and other Unix operating systems. LZJB, on the other hand, was
+	  invented by Jeff Bonwick, who is also the author of ZFS. LZJB was designed to be fast
+	  with tight compression ratios, which is standard with most Lempel-Ziv
+	  algorithms. LZJB is the default. ZLE is a speed demon, with very light compression
+	  ratios. LZJB seems to provide the best all around results it terms of performance and
+	  compression.
+	</para>
+
+	<para>
+	  Obviously, compression can vary on the disk space saved. If the dataset is storing
+	  mostly uncompressed data, such as plain text log files, or configuration files, the
+	  compression ratios can be massive. If the dataset is storing mostly compressed images
+	  and video, then you won’t see much if anything in the way of disk savings. With that
+	  said, compression is disabled by default, and enabling LZJB doesn’t seem to yield any
+	  performance impact. So even if you’re storing largely compressed data, for the data
+	  files that are not compressed, you can get those compression savings, without
+	  impacting the performance of the storage server. So, IMO, I would recommend enabling
+	  compression for all of your datasets.
+	</para>
+
+	<warning>
+	  <para>
+	    Enabling compression on a dataset is not retroactive! It will only apply to newly
+	    committed or modified data. Any previous data in the dataset will remain
+	    uncompressed. So, if you want to use compression, you should enable it before you
+	    begin committing data.
+	  </para>
+	</warning>
+
+	<para>
+	  To enable compression on a dataset, we just need to modify the “compression”
+	  property. The valid values for that property are: “on”, “off”, “lzjb”, “gzip”,
+	  “gzip[1-9]“, and “zle”.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create tank/log
+</command>
+<command>
+<prompt>$</prompt>
+zfs set compression=lzjb tank/log
+</command>
+	</screen>
+
+	<para>
+	  Now that we’ve enabled compression on this dataset, let’s copy over some uncompressed
+	  data, and see what sort of savings we would see. A great source of uncompressed data
+	  would be the /etc/ and /var/log/ directories. Let’s create a tarball of these
+	  directories, see it’s raw size and see what sort of space savings we achieved:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+tar -cf /tank/test/text.tar /var/log/ /etc/
+</command>
+<command>
+<prompt>$</prompt>
+ls -lh /tank/test/text.tar
+</command>
+-rw-rw-r-- 1 root root 24M Dec 17 21:24 /tank/test/text.tar
+<command>
+<prompt>$</prompt>
+zfs list tank/test
+</command>
+          NAME        USED  AVAIL  REFER  MOUNTPOINT
+          tank/test  11.1M  2.91G  11.1M  /tank/test
+<command>
+<prompt>$</prompt>
+zfs get compressratio tank/test
+</command>
+          NAME       PROPERTY       VALUE  SOURCE
+          tank/test  compressratio  2.14x  -
+	</screen>
+
+	<para>
+	  So, in my case, I created a 24 MB uncompressed tarball. After copying it to the
+	  dataset that had compression enabled, it only occupied 11.1 MB. This is less than
+	  half the size (text compresses very well)! We can read the “compressratio” property
+	  on the dataset to see what sort of space savings we are achieving. In my case, the
+	  output is telling me that the compressed data would occupy 2.14 times the amount of
+	  disk space, if uncompressed. Very nice.
+	</para>
+
+      </section>
+      <section xml:id="admin-man-sect-snap-clones">
+	<title>Snapshots and Clones</title>
+	<indexterm><primary>ZFS File System</primary><secondary>Snapshots and
+	Clones</secondary></indexterm>
+      
+	<para>
+	  Snapshots with ZFS are similar to snapshots with Linux LVM. A snapshot is a first
+	  class read-only filesystem. It is a mirrored copy of the state of the filesystem at
+	  the time you took the snapshot. Think of it like a digital photograph of the outside
+	  world. Even though the world is changing, you have an image of what the world was
+	  like at the exact moment you took that photograph. Snapshots behave in a similar
+	  manner, except when data changes that was part of the dataset, you keep the original
+	  copy in the snapshot itself. This way, you can maintain persistence of that
+	  filesystem.
+	</para>
+	
+	<para>
+	  You can keep up to 2^64 snapshots in your pool, ZFS snapshots are persistent across
+	  reboots, and they don’t require any additional backing store; they use the same
+	  storage pool as the rest of your data. If you remember our post about the nature of
+	  copy-on-write filesystems, you will remember our discussion about Merkle trees. A ZFS
+	  snapshot is a copy of the Merkle tree in that state, except we make sure that the
+	  snapshot of that Merkle tree is never modified.
+	</para>
+	
+	<para>
+	  Creating snapshots is near instantaneous, and they are cheap. However, once the data
+	  begins to change, the snapshot will begin storing data. If you have multiple
+	  snapshots, then multiple deltas will be tracked across all the snapshots. However,
+	  depending on your needs, snapshots can still be exceptionally cheap.
+	</para>
+
+	<bridgehead>
+	  Creating Snapshots
+	</bridgehead>
+	
+	<para>
+	  You can create two types of snapshots: pool snapshots and dataset snapshots. Which
+	  type of snapshot you want to take is up to you. You must give the snapshot a name,
+	  however. The syntax for the snapshot name is:
+	</para>
+	
+	<screen>
+- pool/dataset@snapshot-name
+- pool@snapshot-name
+	</screen>
+
+	<para>
+	  To create a snapshot, we use the “zfs snapshot” command. For example, to take a
+	  snapshot of the “tank/test” dataset, we would issue:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs snapshot tank/test@tuesday
+</command>
+	</screen>
+	
+	<para>
+	  Even though a snapshot is a first class filesystem, it does not contain modifiable
+	  properties like standard ZFS datasets or pools. In fact, everything about a snapshot
+	  is read-only. For example, if you wished to enable compression on a snapshot, here is
+	  what would happen:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs set compression=lzjb tank/test@friday
+</command>
+cannot set property for 'tank/test@friday': this property can not be modified for
+snapshots
+	</screen>
+
+	<bridgehead>
+	  Listing Snapshots
+	</bridgehead>
+	
+	<para>
+	  Snapshots can be displayed two ways: by accessing a hidden “.zfs” directory in the
+	  root of the dataset, or by using the “zfs list” command. First, let’s discuss the
+	  hidden directory. Check out this madness:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+ls -a /tank/test
+</command>
+./  ../  boot.tar  text.tar  text.tar.2
+<command>
+<prompt>$</prompt>
+cd /tank/test/.zfs/
+</command>
+<command>
+<prompt>$</prompt>
+ls -a
+</command>
+./  ../  shares/  snapshot/
+	</screen>
+
+	<para>
+	  Even though the “.zfs” directory was not visible, even with “ls -a”, we could still
+	  change directory to it. If you wish to have the “.zfs” directory visible, you can
+	  change the “snapdir” property on the dataset. The valid values are “hidden” and
+	  “visible”. By default, it’s hidden. Let’s change it:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs set snapdir=visible tank/test
+</command>
+<command>
+<prompt>$</prompt>
+ls -a /tank/test
+</command>
+./  ../  boot.tar  text.tar  text.tar.2  .zfs/
+	</screen>
+
+	<para>
+	  The other way to display snapshots is by using the “zfs list” command, and passing
+	  the “-t snapshot” argument, as follows:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs list -t snapshot
+</command>
+          NAME                              USED  AVAIL  REFER  MOUNTPOINT
+          pool/cache@2012:12:18:51:2:19:00     0      -   525M  -
+          pool/cache@2012:12:18:51:2:19:15     0      -   525M  -
+          pool/home@2012:12:18:51:2:19:00  18.8M      -  28.6G  -
+          pool/home@2012:12:18:51:2:19:15  18.3M      -  28.6G  -
+          pool/log@2012:12:18:51:2:19:00    184K      -  10.4M  -
+          pool/log@2012:12:18:51:2:19:15    184K      -  10.4M  -
+          pool/swap@2012:12:18:51:2:19:00      0      -    76K  -
+          pool/swap@2012:12:18:51:2:19:15      0      -    76K  -
+          pool/vmsa@2012:12:18:51:2:19:00      0      -  1.12M  -
+          pool/vmsa@2012:12:18:51:2:19:15      0      -  1.12M  -
+          pool/vmsb@2012:12:18:51:2:19:00      0      -  1.31M  -
+          pool/vmsb@2012:12:18:51:2:19:15      0      -  1.31M  -
+          tank@2012:12:18:51:2:19:00           0      -  43.4K  -
+          tank@2012:12:18:51:2:19:15           0      -  43.4K  -
+          tank/test@2012:12:18:51:2:19:00      0      -  37.1M  -
+          tank/test@2012:12:18:51:2:19:15      0      -  37.1M  -
+	</screen>
+
+	<para>
+	  Notice that by default, it will show all snapshots for all pools.
+	</para>
+
+	<para>
+	  If you want to be more specific with the output, you can see all snapshots of a given
+	  parent, whether it be a dataset, or a storage pool. You only need to pass the “-r”
+	  switch for recursion, then provide the parent. In this case, I’ll see only the
+	  snapshots of the storage pool “tank”, and ignore those in “pool”:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs list -r -t snapshot tank
+</command>
+          NAME                              USED  AVAIL  REFER  MOUNTPOINT
+          tank@2012:12:18:51:2:19:00           0      -  43.4K  -
+          tank@2012:12:18:51:2:19:15           0      -  43.4K  -
+          tank/test@2012:12:18:51:2:19:00      0      -  37.1M  -
+          tank/test@2012:12:18:51:2:19:15      0      -  37.1M  -
+	</screen>
+
+	<bridgehead>
+	  Destroying Snapshots
+	</bridgehead>
+
+	<para>
+	  Just as you would destroy a storage pool, or a ZFS dataset, you use a similar method
+	  for destroying snapshots. To destroy a snapshot, use the “zfs destroy” command, and
+	  supply the snapshot as an argument that you want to destroy:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs destroy tank/test@2012:12:18:51:2:19:15
+</command>
+	</screen>
+
+	<para>
+	  An important thing to know, is if a snapshot exists, it’s considered a child
+	  filesystem to the dataset. As such, you cannot remove a dataset until all snapshots,
+	  and nested datasets have been destroyed.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs destroy tank/test
+</command>
+cannot destroy 'tank/test': filesystem has children
+use '-r' to destroy the following datasets:
+tank/test@2012:12:18:51:2:19:15
+tank/test@2012:12:18:51:2:19:00
+	</screen>
+
+	<para>
+	  Destroying snapshots can free up additional space that other snapshots may be holding
+	  onto, because they are unique to those snapshots.
+	</para>
+
+	<bridgehead>
+	  Renaming Snapshots
+	</bridgehead>
+
+	<para>
+	  You can rename snapshots, however, they must be renamed in the storage pool and ZFS
+	  dataset from which they were created. Other than that, renaming snapshots is pretty
+	  straight forward:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs rename tank/test@2012:12:18:51:2:19:15 tank/test@tuesday-19:15
+</command>
+	</screen>
+
+	<bridgehead>
+	  Rolling Back to a Snapshot
+	</bridgehead>
+
+	<para>
+	  A discussion about snapshots would not be complete without a discussion about rolling
+	  back your filesystem to a previous snapshot.
+	</para>
+
+	<para>
+	Rolling back to a previous snapshot will discard any data changes between that snapshot
+	and the current time. Further, by default, you can only rollback to the most recent
+	snapshot. In order to rollback to an earlier snapshot, you must destroy all snapshots
+	between the current time and that snapshot you wish to rollback to. If that’s not
+	enough, the filesystem must be unmounted before the rollback can begin. This means
+	downtime.
+	</para>
+
+	<para>
+	To rollback the “tank/test” dataset to the “tuesday” snapshot, we would issue:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs rollback tank/test@tuesday
+</command>
+cannot rollback to 'tank/test@tuesday': more recent snapshots exist
+use '-r' to force deletion of the following snapshots:
+tank/test@wednesday
+tank/test@thursday
+	</screen>
+
+	<para>
+	  As expected, we must remove the “@wednesday” and “@thursday” snapshots before we can
+	  rollback to the “@tuesday” snapshot.
+	</para>
+	
+	<bridgehead>
+	  ZFS Clones
+	</bridgehead>
+	
+	<para>
+	  A ZFS clone is a writeable filesystem that was “upgraded” from a snapshot. Clones can
+	  only be created from snapshots, and a dependency on the snapshot will remain as long
+	  as the clone exists. This means that you cannot destroy a snapshot, if you cloned
+	  it. The clone relies on the data that the snapshot gives it, to exist. You must
+	  destroy the clone before you can destroy the snapshot.
+	</para>
+
+	<para>
+	Creating clones is nearly instantaneous, just like snapshots, and initially does not
+	take up any additional space. Instead, it occupies all the initial space of the
+	snapshot. As data is modified in the clone, it begins to take up space separate from
+	the snapshot.
+	</para>
+
+	<bridgehead>
+	  Creating ZFS Clones
+	</bridgehead>
+	
+	<para>
+	  Creating a clone is done with the “zfs clone” command, the snapshot to clone, and the
+	  name of the new filesystem. The clone does not need to reside in the same dataset as
+	  the clone, but it does need to reside in the same storage pool. For example, if I
+	  wanted to clone the “tank/test@tuesday” snapshot, and give it the name of
+	  “tank/tuesday”, I would run the following command:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs clone tank/test@tuesday tank/tuesday
+</command>
+<command>
+<prompt>$</prompt>
+dd if=/dev/zero of=/tank/tuesday/random.img bs=1M count=100
+</command>
+<command>
+<prompt>$</prompt>
+zfs list -r tank
+</command>
+          NAME           USED  AVAIL  REFER  MOUNTPOINT
+          tank           161M  2.78G  44.9K  /tank
+          tank/test     37.1M  2.78G  37.1M  /tank/test
+          tank/tuesday   124M  2.78G   161M  /tank/tuesday
+	</screen>
+	
+	<bridgehead>
+	  Destroying Clones
+	</bridgehead>
+
+	<para>
+	  As with destroying datasets or snapshots, we use the “zfs destroy” command. Again,
+	  you cannot destroy a snapshot until you destroy the clones. So, if we wanted to
+	  destroy the “tank/tuesday” clone:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs destroy tank/tuesday
+</command>
+	</screen>
+
+	<para>
+	  Just like you would with any other ZFS dataset.
+	</para>
+
+	<bridgehead>
+	  Some Final Thoughts
+	</bridgehead>
+
+	<para>
+	  Because keeping snapshots is very cheap, it’s recommended to snapshot your datasets
+	  frequently. Sun Microsystems provided a Time Slider that was part of the GNOME
+	  Nautilus file manager. Time Slider keeps snapshots in the following manner:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      frequent- snapshots every 15 mins, keeping 4 snapshots
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      hourly- snapshots every hour, keeping 24 snapshots
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      daily- snapshots every day, keeping 31 snapshots
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      weekly- snapshots every week, keeping 7 snapshots
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      monthly- snapshots every month, keeping 12 snapshots
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+ 	<para>
+	  Unfortunately, Time Slider is not part of the standard GNOME desktop, so it’s not
+	  available for GNU/Linux. However, the ZFS on Linux developers have created a
+	  “zfs-auto-snapshot” package that you can install from the <ulink
+	  url="https://launchpad.net/~zfs-native/+archive/stable">project’s PPA</ulink> if
+	  running Ubuntu. If running another GNU/Linux operating system, you could easily write
+	  a Bash or Python script that mimics that functionality, and place it on your root’s
+	  crontab.
+	</para>
+
+	<para>
+	Because both snapshots and clones are cheap, it’s recommended that you take advantage
+	of them. Clones can be useful to test deploying virtual machines, or development
+	environments that are cloned from production environments. When finished, they can
+	easily be destroyed, without affecting the parent dataset from which the snapshot was
+	created.
+	</para>
+
+      </section>
+      <section xml:id="admin-man-sect-send-and-recv-fsys">
+	<title>Sending and Receiving Filesystems</title>
+	<indexterm><primary>ZFS File System</primary><secondary>Sending and Receiving
+	Filesystems</secondary></indexterm>
+      
+	<bridgehead>
+	  ZFS Send
+	</bridgehead>
+
+	<para>
+	  Sending a ZFS filesystem means taking a snapshot of a dataset, and sending the
+	  snapshot. This ensures that while sending the data, it will always remain consistent,
+	  which is crux for all things ZFS. By default, we send the data to a file. We then can
+	  move that single file to an offsite backup, another storage server, or whatever. The
+	  advantage a ZFS send has over “dd”, is the fact that you do not need to take the
+	  filesystem offilne to get at the data. This is a Big Win IMO.
+	</para>
+
+	<para>
+	To send a filesystem to a file, you first must make a snapshot of the dataset. After
+	the snapshot has been made, you send the snapshot. This produces an output stream, that
+	must be redirected. As such, you would issue something like the following:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs snapshot tank/test@tuesday
+</command>
+<command>
+<prompt>$</prompt>
+zfs send tank/test@tuesday > /backup/test-tuesday.img
+</command>
+	</screen>
+
+	<para>
+	  Now, your brain should be thinking. You have at your disposal a whole suite of Unix
+	  utilities to manipulate data. So, rather than storing the raw data, how about we
+	  compress it with the “xz” utility?
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs send tank/test@tuesday | xz > /backup/test-tuesday.img.xz
+</command>
+	</screen>
+
+	<para>
+	  Want to encrypt the backup? You could use OpenSSL or GnuPG:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt> zfs send tank/test@tuesday | xz | openssl enc -aes-256-cbc -a
+-salt > /backup/test-tuesday.img.xz.asc
+</command>
+	</screen>
+
+	<bridgehead>
+	  ZFS Receive
+	</bridgehead>
+	
+	<para>
+	  Receiving ZFS filesystems is the other side of the coin. Where you have a data
+	  stream, you can import that data into a full writable filesystem. It wouldn’t make
+	  much sense to send the filesystem to an image file, if you can’t really do anything
+	  with the data in the file.
+	</para>
+
+	<para>
+	  Just as “zfs send” operates on streams, “zfs receive” does the same. So, suppose we
+	  want to receive the “/backup/test-tuesday.img” filesystem. We can receive it into any
+	  storage pool, and it will create the necessary dataset.
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs receive tank/test2 &lt; /backup/test-tuesday.img
+</command>
+	</screen>	
+
+	<para>
+	  Of course, in our sending example, I compressed and encrypted a sent filesystem. So,
+	  to reverse that process, I do the commands in the reverse order:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt> openssl enc -d -aes-256-cbc -a -in /storage/temp/testzone.gz.ssl
+| unxz | zfs receive tank/test2
+</command>
+	</screen>
+	
+	<para>
+	  The “zfs recv” command can be used as a shortcut.
+	</para>
+
+	<bridgehead>
+	  Combining Send and Receive
+	</bridgehead>
+
+	<para>
+	  Both “zfs send” and “zfs receive” operate on streams of input and output. So, it
+	  would make sense that we can send a filesystem into another. Of course we can do this
+	  locally:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt> 
+zfs send tank/test@tuesday | zfs receive pool/test
+</command>
+	</screen>
+
+	<para>
+	  This is perfectly acceptable, but it doesn’t make a lot of sense to keep multiple
+	  copies of the filesystem on the same storage server. Instead, it would make better
+	  sense to send the filesystem to a remote box. You can do this trivially with OpenSSH:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt> 
+zfs send tank/test@tuesday | ssh user@server.example.com "zfs receive pool/test"
+</command>
+	</screen>
+
+	<para>
+	 Check out the simplicity of that command. You’re taking live, running and consistent
+	 data from a snapshot, and sending that data to another box. This is epic for offsite
+	 storage backups. On your ZFS storage servers, you would run frequent snapshots of the
+	 datasets. Then, as a nightly cron job, you would “zfs send” the latest snapshot to an
+	 offsite storage server using “zfs receive”. And because you are running a secure,
+	 tight ship, you encrypt the data with OpenSSL and XZ. Win.
+	</para>
+
+      </section>
+      <section xml:id="admin-man-sect-zvols">
+ 	<title>ZVOLS</title>
+	<indexterm><primary>ZFS File System</primary><secondary>ZVOLS</secondary></indexterm>
+
+	<bridgehead>
+	  What is a ZVOL?
+	</bridgehead>
+
+	<para>
+	  A ZVOL is a “ZFS volume” that has been exported to the system as a block device. So
+	  far, when dealing with the ZFS filesystem, other than creating our pool, we haven’t
+	  dealt with block devices at all, even when mounting the datasets. It’s almost like
+	  ZFS is behaving like a userspace application more than a filesystem. I mean, on
+	  GNU/Linux, when working with filesystems, you’re constantly working with block
+	  devices, whether they be full disks, partitions, RAID arrays or logical volumes. Yet
+	  somehow, we’ve managed to escape all that with ZFS. Well, not any longer. Now we get
+	  our hands dirty with ZVOLs.
+	</para>
+
+	<para>
+	  A ZVOL is a ZFS block device that resides in your storage pool. This means that the
+	  single block device gets to take advantage of your underlying RAID array, such as
+	  mirrors or RAID-Z. It gets to take advantage of the copy-on-write benefits, such as
+	  snapshots. It gets to take advantage of online scrubbing, compression and data
+	  deduplication. It gets to take advantage of the ZIL and ARC. Because it’s a
+	  legitimate block device, you can do some very interesting things with your
+	  ZVOL. We’ll look at three of them here- swap, ext4, and VM storage. First, we need to
+	  learn how to create a ZVOL.
+	</para>
+	
+	<bridgehead>
+	  Creating a ZVOL
+	</bridgehead>
+
+	<para>
+	  To create a ZVOL, we use the “-V” switch with our “zfs create” command, and give it a
+	  size. For example, if we wanted to create a 1 GB ZVOL, we could issue the following
+	  command. Notice further that there are a couple new symlinks that exist in
+	  /dev/zvol/tank/ and /dev/tank/ which points to a new block device in /dev/:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create -V 1G tank/disk1
+</command>
+<command>
+<prompt>$</prompt>
+ls -l /dev/zvol/tank/disk1
+</command>
+lrwxrwxrwx 1 root root 11 Dec 20 22:10 /dev/zvol/tank/disk1 -> ../../zd144
+<command>
+<prompt>$</prompt>
+ls -l /dev/tank/disk1
+</command>
+lrwxrwxrwx 1 root root 8 Dec 20 22:10 /dev/tank/disk1 -> ../zd144
+	</screen>
+	
+	<para>
+	  Because this is a full fledged, 100% bona fide block device that is 1 GB in size, we
+	  can do anything with it that we would do with any other block device, and we get all
+	  the benefits of ZFS underneath. Plus, creating a ZVOL is near instantaneous,
+	  regardless of size. Now, I could create a block device with GNU/Linux from a file on
+	  the filesystem. For example, if running ext4, I can create a 1 GB file, then make a
+	  block device out of it as follows:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+fallocate -l 1G /tmp/file.img
+</command>
+<command>
+<prompt>$</prompt>
+losetup /dev/loop0 /tmp/file.img
+</command>
+	</screen>
+
+	<para>
+	  I now have the block device /dev/loop0 that represents my 1 GB file. Just as with any
+	  other block device, I can format it, add it to swap, etc. But it’s not as elegant,
+	  and it has severe limitations. First off, by default you only have 8 loopback devices
+	  for your exported block devices. You can change this number, however. With ZFS, you
+	  can create 2^64 ZVOLs by default. Also, it requires a preallocated image, on top of
+	  your filesystem. So, you are managing three layers of data: the block device, the
+	  file, and the blocks on the filesystem. With ZVOLs, the block device is exported
+	  right off the storage pool, just like any other dataset.
+	</para>
+
+	<para>
+	Let’s look at some things we can do with this ZVOL.
+	</para>
+
+	<bridgehead>
+	  Swap on a ZVOL
+	</bridgehead>
+
+	<para>
+	  It can act as part of a healthy system, keeping RAM dedicated to what the kernel
+	  actively needs. But, when active RAM starts spilling over to swap, then you have “the
+	  swap of death”, as your disks thrash, trying to keep up with the demands of the
+	  kernel. So, depending on your system and needs, you may or may not need swap.
+	</para>
+
+	<para>
+	First, let’s create 1 GB block device for our swap. We’ll call the dataset “tank/swap”
+	to make it easy to identify its intention. Before we begin, let’s check out how much
+	swap we currently have on our system with the “free” command:
+	</para>
+
+	<screen>
+<command>
+  <prompt>$</prompt>
+  free
+</command>
+	
+	                  total       used       free     shared    buffers     cached
+             Mem:      12327288    8637124    3690164          0     175264    1276812
+             -/+ buffers/cache:    7185048    5142240
+             Swap:            0          0          0
+	</screen>
+
+	<para>
+	  In this case, we do not have any swap enabled. So, let’s create 1 GB of swap on a
+	  ZVOL, and add it to the kernel:
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create -V 1G tank/swap
+</command>
+<command>
+<prompt>$</prompt>
+mkswap /dev/zvol/tank/swap
+</command>
+<command>
+<prompt>$</prompt>
+swapon /dev/zvol/tank/swap
+</command>
+<command>
+<prompt>$</prompt>
+free
+</command>
+	
+                 total       used       free     shared    buffers     cached
+    Mem:      12327288    8667492    3659796          0     175268    1276804
+    -/+ buffers/cache:    7215420    5111868
+    Swap:      1048572          0    1048572
+	</screen>
+
+	<para>
+	  It worked! We have a legitimate Linux kernel swap device on top of ZFS. Sweet. As is
+	  typical with swap devices, they don’t have a mountpoint. They are either enabled, or
+	  disabled, and this swap device is no different.
+	</para>
+
+	<bridgehead>
+	  Ext4 on a ZVOL
+	</bridgehead>
+
+	<para>
+	  This may sound wacky, but you could put another filesystem, and mount it, on top of a
+	  ZVOL. In other words, you could have an ext4 formatted ZVOL and mounted to /mnt. You
+	  could even partition your ZVOL, and put multiple filesystems on it. Let’s do that!
+	</para>
+	
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs create -V 100G tank/ext4
+</command>
+<command>
+<prompt>$</prompt>
+fdisk /dev/tank/ext4
+</command>
+( follow the prompts to create 2 partitions- the first 1 GB in size, the second to
+fill the rest )
+<command>
+<prompt>$</prompt>
+fdisk -l /dev/tank/ext4
+</command>
+	
+    Disk /dev/tank/ext4: 107.4 GB, 107374182400 bytes
+    16 heads, 63 sectors/track, 208050 cylinders, total 209715200 sectors
+    Units = sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 8192 bytes
+    I/O size (minimum/optimal): 8192 bytes / 8192 bytes
+    Disk identifier: 0x000a0d54
+
+	
+                         Device Boot       Start         End      Blocks   Id  System
+    /dev/tank/ext4p1            2048     2099199     1048576   83  Linux
+    /dev/tank/ext4p2         2099200   209715199   103808000   83  Linux
+	</screen>
+
+	<para>
+	  Let’s create some filesystems, and mount them:
+	</para>
+
+	<screen>
+<command>
+<prompt>$</prompt>
+zfs set compression=lzjb pool/ext4
+</command>
+<command>
+<prompt>$</prompt>
+tar -cf /mnt/zd0p1/files.tar /etc/
+</command>
+<command>
+<prompt>$</prompt>
+tar -cf /mnt/zd0p2/files.tar /etc /var/log/
+</command>
+<command>
+<prompt>$</prompt>
+zfs snapshot tank/ext4@001
+</command>
+	</screen>
+
+	<para>
+	  You probably didn’t notice, but you just enabled transparent compression and took a
+	  snapshot of your ext4 filesystem. These are two things you can’t do with ext4
+	  natively. You also have all the benefits of ZFS that ext4 normally couldn’t give
+	  you. So, now you regularly snapshot your data, you perform online scrubs, and send it
+	  offsite for backup. Most importantly, your data is consistent.
+	</para>
+	
+	<bridgehead>
+	  ZVOL storage for VMs
+	</bridgehead>
+
+	<para>
+	  Lastly, you can use these block devices as the backend storage for VMs. It’s not
+	  uncommon to create logical volume block devices as the backend for VM storage. After
+	  having the block device available for Qemu, you attach the block device to the
+	  virtual machine, and from its perspective, you have a “/dev/vda” or “/dev/sda”
+	  depending on the setup.
+	</para>
+
+	<para>
+	  If using libvirt, you would have a /etc/libvirt/qemu/vm.xml file. In that file, you
+	  could have the following, where “/dev/zd0″ is the ZVOL block device:
+	</para>
+
+	<screen>
+&lt;disk type='block' device='disk'&gt;
+&lt;driver name='qemu' type='raw' cache='none'/'&gt;
+&lt;source dev='/dev/zd0'/'&gt;
+&lt;target dev='vda' bus='virtio'/'&gt;
+&lt;alias name='virtio-disk0'/'&gt;
+&lt;address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/'&gt;
+&lt;/disk'&gt;
+	</screen>
+	
+	<para>
+	  At this point, your VM gets all the ZFS benefits underneath, such as snapshots,
+	  compression, deduplication, data integrity, drive redundancy, etc.
+	</para>
+
+	<bridgehead>
+	  Conclusion
+	</bridgehead>
+
+	<para>
+	  ZVOLs are a great way to get to block devices quickly while taking advantage of all
+	  of the underlying ZFS features. Using the ZVOLs as the VM backing storage is
+	  especially attractive. However, I should note that when using ZVOLs, you cannot
+	  replicate them across a cluster. ZFS is not a clustered filesystem. If you want data
+	  replication across a cluster, then you should not use ZVOLs, and use file images for
+	  your VM backing storage instead. Other than that, you get all of the amazing benefits
+	  of ZFS that we have been blogging about up to this point, and beyond, for whatever
+	  data resides on your ZVOL.
+	</para>
+
+      </section>
+    </section>
+  </section>

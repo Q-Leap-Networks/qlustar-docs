@@ -1,0 +1,258 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-os-pkg-man">
+  <title>OS Package Management</title>
+  <indexterm><primary>Package Management</primary></indexterm>
+  <para>
+    Ubuntu/Debian package management is based on the concept of package sources or 
+    repositories. A configuration file <filename>/etc/apt/sources.list</filename> 
+    (or separate files in the directory <filename>/etc/apt/sources.list.d</filename>)
+    specifies the location of package sources.
+  </para>
+  <para>
+    When a package is to be installed, all package source locations are checked whether they
+    contain the desired package. If the desired package is found in only one package repository
+    that one is taken, if it is found in more than one, then the package with the newest
+    version is installed.
+  </para>
+  <section id="admin-man-sect-pkg-srcs">
+    <title>Package sources</title>
+    <indexterm><primary>Package Management</primary>
+    <secondary>Package sources</secondary></indexterm>
+    <para> 
+      Package sources are usually specified in <filename>/etc/apt/sources.list</filename> and
+      can be of many different types, like http, ftp, file, cdrom, &hellipsis; (see
+      <command>man sources.list</command>). In a default Qlustar installation this file is
+      empty, since all the Qlustar package sources are defined in the file
+      <filename>/etc/apt/sources.list.d/qlustar.list</filename>. If your system has access to
+      the Internet either directly or through a http proxy the file will look like this:
+    </para>
+    <screen>
+      deb http://repo.qlustar.com/repo/ubuntu 8.1-precise main universe non-free
+      deb http://repo.qlustar.com/repo/ubuntu 8.1-precise-proposed-updates main universe non-free
+    </screen>
+    <para>
+      This enables access to the Qlustar 8.1 software repository.
+    </para>
+    <note>
+      <para>
+	The file <filename>/etc/apt/sources.list.d/qlustar.list</filename> is managed by
+	Qlustar and should usually not be edited manually. If you prefer not to receive the
+	proposed updates, you can comment out the second line in the file. Be aware, that this
+	will prevent you from receiving timely security updates as well.
+      </para>
+    </note>
+  </section>
+  <section id="admin-man-sect-dpkg">
+    <title>dpkg</title>
+    <indexterm><primary>Package Management</primary>
+    <secondary>dpkg</secondary></indexterm>
+    <para>
+      <command>dpkg</command> (see <command>man dpkg</command>) is the basic package management
+      tool for Ubuntu/Debian, comparable to rpm (Red Hat Package Manager). It is not capable
+      of automatically resolving package dependencies.
+    </para>
+  </section>
+  <section id="admin-man-sect-apt">
+    <title>apt</title>
+    <indexterm><primary>Package Management</primary><secondary>apt</secondary></indexterm>
+    <para>
+      <command>apt</command> is the high-level package management tool for Ubuntu/Debian.
+      <command>apt-get</command> (<command>man apt-get</command>)
+      with its sub-commands provides all the functionality needed to maintain an Ubuntu/Debian
+      system. A seem-less and fast upgrade of an Ubuntu/Debian system is typically performed
+      running the two commands
+    </para>
+    <screen>
+      <command><prompt>$ </prompt>apt-get update</command>
+      <command><prompt>$ </prompt>apt-get dist-upgrade.</command>
+    </screen>
+    <para>
+      Detailed upgrade instructions for a Qlustar system can be found in the 
+      <ulink url="http://qlustar.com/book/docs/qlustar-update-procedure">
+	<citetitle>Qlustar Update Guide</citetitle></ulink>.
+    </para>
+    <para>
+      New packages can be installed by running 
+      <command>apt-get install <replaceable>&lt;package name&gt;</replaceable></command>. If  
+      <replaceable>&lt;package name&gt;</replaceable>
+      depends on, or conflicts with other packages those will be automatically installed
+      or removed upon confirmation.
+    </para>
+  </section>
+  <section id="admin-man-sect-debian-pkg-altern">
+    <title>Debian Package Alternatives</title>
+     <indexterm><primary>Package Management</primary>
+     <secondary>alternatives</secondary></indexterm>
+     <para>
+       The possibility to concurrently run different versions of the same
+       application on a single cluster is often crucial. In principle, this is achievable in
+       a couple of ways, each one requiring more or less handwork depending on the type of
+       application in question. Fortunately, Ubuntu/Debian provides the built-in "alternatives
+       mechanism" to manage software versions in automated form. It has the additional
+       advantage that it works appropriately for any kind of application.
+     </para>
+     <para>
+       Let us consider the case of the GNU C compiler 
+       <command>gcc</command> as an example of the situation described above. 
+       Simply installing the <replaceable>gcc</replaceable> package via  <command> apt-get
+       </command> is all you need to do in this case. The alternatives are automatically
+       configured for you.  
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	 gcc --version
+       </command>
+       gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+       Copyright (C) 2011 Free Software Foundation, Inc.
+       This is free software; see the source for copying conditions.  There is NO
+       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     </screen>
+     <para>
+       This tells us that currently we are running the version 4.6.3 of the GNU C compiler. Let
+       us inspect the <replaceable>gcc</replaceable> binary.
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	 which gcc
+       </command>
+       /usr/bin/gcc
+       <command>
+	 <prompt>$ </prompt>
+	 ls -l /usr/bin/gcc
+       </command>
+       lrwxrwxrwx ... /usr/bin/gcc -> /etc/alternatives/gcc
+     </screen>
+     <para>
+       As we tried to locate the <command>gcc</command> command, we found that
+       it was being executed from the <filename>/usr/bin</filename> path. However we 
+       also discovered, that it’s a symbolic link pointing to 
+       <filename>/etc/alternatives/gcc</filename>. The directory 
+       <replaceable>/etc/alternatives</replaceable> is the place, where all the 
+       software alternatives are configured in Ubuntu/Debian. Let us inspect a little further.
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	 ls -l /etc/alternatives/gcc
+       </command>
+       lrwxrwxrwx 1 root root 16 Mai 13 19:23 /etc/alternatives/gcc -> /usr/bin/gcc-4.6
+       <command>
+	 <prompt>$ </prompt>
+	 ls -l /usr/bin/gcc-4.6
+       </command>
+       -rwxr-xr-x 1 root root 353216 Apr 16  2012 /usr/bin/gcc-4.6
+     </screen>
+     <para>
+       We have another symbolic link, this time referring to 
+       <filename>/usr/bin/gcc-4.6</filename> and a little digging afterward reveals that
+       this is the real <command>gcc</command> executable. If alternative versions for a
+       program are available, the alternatives system will create a link with the 
+       name of the program in the default path pointing to the appropriate
+       file in <filename>/etc/alternatives</filename>. This will finally link to the 
+       executable, we actually want to use. Instead of manually manipulating these links,
+       choosing a different default version for a program
+       should be done using the command <command>update-alternatives</command>.
+     </para>
+     <para>
+       Using <command>update-alternatives</command> we can quickly figure out which 
+       alternatives are currently configured for a certain executable. Let us look at the 
+       current setup of <replaceable>gcc</replaceable>.
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	 update-alternatives --display gcc
+       </command>
+       gcc - auto mode
+       link currently points to /usr/bin/gcc-4.6
+       /usr/bin/gcc-4.8 - priority 20
+       /usr/bin/gcc-4.6 - priority 50
+       Current ‘best’ version is /usr/bin/gcc-4.6
+     </screen>
+     <para>
+       As you can see the current link points to <filename>/usr/bin/gcc-4.6</filename>
+       as we already discovered. There is another alternative, namely
+       <filename>/usr/bin/gcc-4.8</filename> with a priority of 20. The priority of
+       <filename>/usr/bin/gcc-4.6</filename> is 50. The line ’gcc - auto mode’
+       means that the alternatives system will look for the package with the highest
+       priority in order to use that executable.
+     </para>
+     <para>
+       The last line in the above output says that the current best priority link is
+       <filename>/usr/bin/gcc-4.6</filename>. Now if we want to use version 4.8 instead,
+       we can tell <command>update-alternatives</command> to use exactly this version:
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	 update-alternatives --config gcc
+       </command>
+       There are 2 alternatives which provide ‘gcc’.
+       Selection Alternative
+       -----------------------------------------------
+       + 1 /usr/bin/gcc-4.8
+       2 /usr/bin/gcc-4.6
+       *Press enter to keep the default[*], or type selection number:
+     </screen>
+     <para>
+       We already knew by looking at the output that there where only two options. Now we
+       can select which option we want. Let’s look at the output of the command again.
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	  update-alternatives --display gcc
+       </command>
+       gcc - status is manual.
+       link currently points to /usr/bin/4.8
+       /usr/bin/gcc-4.6 - priority 50
+       /usr/bin/gcc-4.8 - priority 20
+       Current ‘best’ version is /usr/bin/gcc-4.6.
+     </screen>
+     <para>
+       We got a link currently pointing to <filename>/usr/bin/gcc-4.8</filename>
+       so we quickly do the same checking as we did before.
+     </para>
+     <screen>
+       <command>
+	 <prompt>$ </prompt>
+	  which gcc
+       </command>
+       /usr/bin/gcc
+       <command>
+	 <prompt>$ </prompt>
+	  ls -l /usr/bin/gcc
+       </command>
+       lrwxrwxrwx 1 root root 21 Sep  2 18:32 /usr/bin/gcc -> /etc/alternatives/gcc
+       <command>
+	 <prompt>$ </prompt>
+	 ls -l /etc/alternatives/gcc
+       </command>
+       lrwxrwxrwx 1 root root 16 Sep  2 18:32 /etc/alternatives/gcc -> /usr/bin/gcc-4.8
+       <command>
+	 <prompt>$ </prompt>
+	  gcc --version
+       </command>
+       gcc (Ubuntu 4.8.1-2ubuntu1~10.04.1) 4.8.1
+       Copyright (C) 2013 Free Software Foundation, Inc.
+       This is free software; see the source for copying conditions.  There is NO
+       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     </screen>
+     <para>
+       Only the link within <filename>/etc/alternatives</filename> has changed.
+       When looking at the gcc version we see that it’s using the gcc-4.8 version.
+     </para>
+     <para>
+       A further useful feature of <command>update-alternatives</command> is the
+       possibility of creating groups of files having a relation with each other. These so
+       called slaves will not only allow you to update the link to the desired executable but
+       also any other information related to it like man pages, documentation, etc.
+       Please consult <command>man update-alternatives</command> for more information on the
+       capabilities of this powerful software versioning method.
+     </para>
+   </section>
+ </section>

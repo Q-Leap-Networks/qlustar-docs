@@ -1,0 +1,271 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-user-manage">
+  <title>User Management</title>
+  <indexterm><primary>User Management</primary></indexterm>
+  <para>
+    Currently user management is done on the command line.
+  </para>
+  <section id="admin-man-sect-add-user">
+    <title>Adding User Accounts</title>
+    <indexterm><primary>User Management</primary>
+    <secondary>Adding users</secondary></indexterm>
+    
+    <para>Adding users is conveniently performed by invoking the script</para>
+    <para><command>/usr/sbin/adduser.sh.</command> Example:</para>
+    <para>
+    <screen><prompt>$ </prompt><command>/usr/sbin/adduser.sh -u 
+    <replaceable>username</replaceable> -n
+    <replaceable>'real name'</replaceable></command></screen>
+    </para>
+    <para>
+    This script performs all the tasks necessary for creating a new user account. There are
+    a number of options to this script that you can see when invoking it using the
+    <command>-h</command> flag.
+    This script reads the configuration file
+    <filename>/etc/qlustar/common/adduser.cf</filename> for default
+    values. Please note that the user ids of new accounts should be greater than 1000 to
+    avoid a conflict with existing system accounts.
+    </para>
+  </section>
+  <section id="admin-man-sect-rem-user">
+    <title>Removing User Accounts</title>
+    <indexterm><primary>User Management</primary>
+    <secondary>Removing users</secondary></indexterm>
+    <para>
+      Use the script <filename>/usr/sbin/removeuser.sh</filename> to remove a user
+      account from the system.
+      Example:
+    </para>
+      <screen>
+<prompt>$ </prompt>
+<command>removeuser.sh
+<replaceable>username</replaceable>
+</command>
+      </screen>
+      <para>To recursively remove the user’s home-directory as well add the 
+      <command>-r</command> option:</para>
+      <screen>
+<prompt>$ </prompt>
+<command>removeuser.sh -r
+<replaceable>username</replaceable>
+</command>
+</screen>
+
+      <para>There are other options to this script that you can view when invoking it with 
+      the <command>-h</command>
+      flag. This script also uses the configuration file 
+      <filename>/etc/qlustar/common/adduser.cf</filename> for
+      default values.
+      </para>
+  </section>
+  <section id="admin-man-sect-man-user-restr">
+    <title>Managing user restrictions</title>
+    <indexterm><primary>User Management</primary>
+    <secondary>Managing restrictions</secondary></indexterm>
+    <para>
+      In the default configuration of a Qlustar cluster all NIS registered users are allowed to
+      run commands on the cluster nodes provided such commands don’t require root rights. 
+      However, it is possible for system administrators of a B EOBOX cluster to easily change
+      this standard behaviour. First of all there is a parameter
+      <parameter>NO_USER_LOGIN_ON_NODES</parameter> within the file
+      <filename>/etc/qlustar/common/beobox.conf</filename> which value should be set
+      to <command>true</command> as seen below
+    </para>
+    <screen>
+# Disallow user logins to nodes not running a PBS job
+NO_USER_LOGIN_ON_NODES=true
+    </screen>
+    <para>
+      Finally it is necessary to restart the boot script 
+      <filename>/etc/init.d/torque-mom</filename> on all the
+      nodes:
+    </para>
+ 
+    <screen>
+<prompt>$ </prompt>
+<command>dsh <replaceable>-a</replaceable>
+/etc/init.d/torque-mom restart
+</command>
+    </screen>
+    <para>
+      Following this procedure the administrator can change the cluster behaviour so that
+      users are constrained to only run PBS jobs trough the <command>qsub</command> 
+      command on the nodes.
+      Any other commands being issued by any user other than root will not be allowed to
+      run.
+    </para>
+    <para>
+      The first question arising here is what to do if the administrator would like the users,
+      say <replaceable>usr1</replaceable> and <replaceable>usr2</replaceable> to
+      be an exception to this restrictive rule. In that case it suffices to
+      put the name of those privileged users in the file 
+      <filename>/etc/qlustar/yp/group</filename> as shown:
+    </para>
+    <screen>
+users::100
+admgroup::2001:usr1,usr2
+    </screen>
+    <para>
+      After the regeneration of the NIS database:
+    </para>
+    <screen>
+# cd /var/yp
+/var/yp:# make
+    </screen>
+    <para>
+      users <replaceable>usr1</replaceable> and <replaceable>usr2</replaceable> will be allowed
+      to run commands according to their system rights.
+    </para>
+  </section>
+  <section id="admin-man-sect-shell-stp">
+    <title>Shell Setup</title>
+    <indexterm><primary>Shell setup</primary></indexterm>
+    <para>
+      The Qlustar shell setup supports <replaceable>tcsh</replaceable> and
+      <replaceable>bash</replaceable>. There are global initialization files that are used in
+      both shells so you only have to modify one file for environment variables, aliases and
+      path variables. The global files are:
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/qlustar/common/skel/env</filename></term>
+	<listitem><para>Use this file to add or modify environment variables that are not
+	path variables. The syntax of this file is as follows: lines beginning with a hash
+	sign (#) and empty lines are ignored. Every other line consists of a variable name and
+	the value for this variable separated with a space. Example: the following line sets
+	the variable <envar>VISUAL</envar> to <command>vi</command>:</para></listitem>
+    </varlistentry></variablelist> 
+    <screen>
+VISUAL vi
+    </screen>
+    <note><para>
+      A file <filename>~/.ql-env</filename> in a user’s home directory can define personal
+      environment variables in the same manner.
+    </para></note>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/qlustar/common/skel/alias</filename></term>
+	<listitem><para>
+	  Use this file to define shell aliases. It has the same syntax as the file
+	  <filename>env</filename> described above. Again, a
+	  personal <filename>~/.ql-alias</filename> file can define personal aliases.
+	</para></listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/etc/qlustar/common/skel/paths</filename></term>
+	<listitem><para>
+	  This directory contains files with a name of the form
+	  <replaceable>varname</replaceable><filename>.Linux</filename>.
+	  The <replaceable>varname</replaceable> is converted to upper case and specifies a
+	  ‘PATH like’ environment variable (e.g. <envar>PATH</envar>, <envar>MANPATH</envar>,
+	  <envar>LD_LIBRARY_PATH</envar>, <envar>CLASSPATH</envar> , &hellipsis; ).
+	  Each line in this file is a directory to add to this environment variable. If the
+	  line begins with a ’p’ followed by a space followed by a directory, then this
+	  directory is prepended to the path variable otherwise it is appended. A user can
+	  create his/her own <filename>~/.paths</filename> directory and so can use the same
+	  setup.
+	</para></listitem>
+      </varlistentry>
+    </variablelist> 
+    <section id="admin-man-sect-bash-setup">
+      <title>Bash Setup</title>
+      <indexterm><primary>Shell setup</primary><secondary>Bash Setup</secondary></indexterm>
+      <para>
+	We provide an extensible <replaceable>bash</replaceable> setup and bash is the
+	recommended login shell. The bash startup consists of global settings and user
+	settings. Global settings are stored in files under 
+	<filename>/etc/qlustar/common/skel</filename>. User settings are stored in files in the
+	corresponding home directory.
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/bash/bashrc</filename></term>
+	  <listitem>
+	    <para>
+	      This file sources the other bash files. Do not modify.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/bash/bash-vars</filename></term>
+	  <listitem>
+	    <para>
+	      This file is used for setting bash variables.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/bash/alias</filename></term>
+	  <listitem>
+	    <para>
+	      This file defines bash aliases.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/bash/functions</filename></term>
+	  <listitem>
+	    <para>
+	      You can use this file if you plan making bash functions available to users.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	The file <filename>~/.bashrc</filename> also sources the following user specific 
+	files which have the same meaning as the global bash files.
+      </para>
+      <simplelist>
+	<member><filename>~/.bash/env</filename></member>
+	<member><filename>~/.bash/bash-vars</filename></member>
+	<member><filename>~/.bash/alias</filename></member>
+	<member><filename>~/.bash/functions</filename></member>
+      </simplelist>
+    </section>
+    <section id="admin-man-sect-tcsh-setup">
+      <title>Tcsh Setup</title>
+      <indexterm><primary>Shell setup</primary><secondary>Tcsh Setup</secondary></indexterm>
+      <para>
+	We provide a similar setup for the <replaceable>tcsh</replaceable>.
+	The following files are used:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/tcsh/tcshrc</filename></term>
+	  <listitem>
+	    <para>
+	      This global tcshrc is sourced first and sources other starup files.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/tcsh/tcsh-vars</filename></term>
+	  <listitem>
+	    <para>
+	      Use this file to set tcsh variables.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><filename>/etc/qlustar/common/skel/tcsh/alias</filename></term>
+	  <listitem>
+	    <para>
+	      You can use this file to define tcsh aliases.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	The file <filename>~/.tcshrc</filename> also sources the following use specific
+	files which have the same meaning as the global tcsh files.
+      </para>
+      <simplelist>
+	<member><filename>~/.tcsh/alias</filename></member>
+	<member><filename>~/.tcsh/env</filename></member>
+	<member><filename>~/.tcsh/tcsh-vars</filename></member>
+      </simplelist>
+    </section>
+  </section>
+</section>

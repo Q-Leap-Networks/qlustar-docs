@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="admin-man-chap-general">
+<title>General</title>
+<para>
+Qlustar is a complete Linux distribution based on Debian/Ubuntu. The main focus of Qlustar
+is to provide an Operating System (OS) that simplifies the setup, administration, monitoring
+and general use of Linux clusters. Hence we call it a <emphasis>Cluster
+OS.</emphasis><indexterm><primary>Operating System</primary><secondary>Cluster
+OS</secondary></indexterm>
+</para>
+<para>
+A Qlustar HPC cluster typically consists of one or more head-nodes, and a larger number of
+compute/storage nodes. For better stability and security, it is highly advisable to separate
+user  
+logins onto dedicated FrontEnd (FE) nodes. The latter can run on real physical hardware or
+(especially on small clusters with just a few users) in a virtual machine. Qlustar allows the
+setup/configuration of a KVM FE node during installation. 
+and also add storage nodes serving a parallel file system (e.g. Lustre). All of the machines
+are usually connected through an Ethernet network. If fast inter-node communication is
+required, an additional high-speed interconnect like Infiniband, Myrinet or SCI (Dolphin) can
+be installed. Most of the time, the compute nodes are stripped down servers with IDE/SATA hard
+discs, often without keyboard and mouse connection. Users typically access the cluster either
+through the head or login nodes (if present).
+</para>
+<section id="admin-man-sect-networking">
+<title>Networking</title>
+<para>
+The <command>twiddle</command> command is used to twiddle files. Twiddled files will be marked
+with the .twid extension, so if I <command>twiddle</command> <replaceable>myfile</replaceable>
+then it will  become <replaceable>myfile.twid</replaceable>. Errors are written to the file
+<filename>twiddle.err</filename>.
+</para>
+<para>
+An environment variable <envar>PATH</envar>.
+Use <keycombo><keycap>Ctrl</keycap><keycap>d</keycap></keycombo> to complete the input.
+</para>
+</section>
+<section id="admin-man-sect-nfs">
+<title>NFS</title>
+<para>
+This is a test paragraph in Section 2
+<screen><prompt>bash$</prompt> <command>twiddle <replaceable>myfile</replaceable>
+</command>
+twiddling myfile.....done!</screen> 
+<orderedlist>
+<listitem>
+<para>
+listitem text
+</para>
+</listitem>
+</orderedlist>
+have a look at <xref linkend="Test_Section_1"/>. ok
+also have a look at <xref linkend="sect-test-section-2"/>. ok
+<command>
+  
+</command>
+</para>
+</section>
+</chapter>

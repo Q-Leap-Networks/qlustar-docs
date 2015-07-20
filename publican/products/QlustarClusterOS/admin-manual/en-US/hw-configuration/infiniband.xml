@@ -1,0 +1,202 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-hw-IB">
+  <title>Infiniband Networks</title>
+  <indexterm><primary>Infiniband</primary></indexterm>
+  <para>
+    Many clusters with the need for high-throughput and/or low-latency communication between
+    nodes use Infiniband (IB) network hardware. Qlustar fully supports Infiniband via the
+    <ulink url="https://www.openfabrics.org/linux-sources.html"> <citetitle>OFED software
+    stack</citetitle></ulink>. The basic configuration for Infiniband networks is explained
+    later in <xref linkend="admin-man-sect-infiniband"/>.
+  </para>
+  <section id="admin-man-sect-hw-IB-diag">
+    <title>IB Fabric Verification/Diagnosis</title>
+    <indexterm><primary>Infiniband</primary>
+    <secondary>Network diagnosis</secondary></indexterm>
+    <para>
+      Especially for large clusters, an IB network is a complex fabric. The desired performance
+      can only be achieved, if all components work flawlessly. Hence, it is important to have
+      tools that can verify the validity of the hardware setup. In this section, we describe a
+      number of checks that can help to setup a flawless IB fabric.
+    </para>
+    <screen><command><prompt>$</prompt> ibstat</command>
+CA 'mlx4_0'
+CA type: MT26428
+Number of ports: 1
+Firmware version: 2.7.0
+Hardware version: b0
+Node GUID: 0x003048fffff4cb8c
+System image GUID: 0x003048fffff4cb8f
+Port 1:
+State: Active
+Physical state: LinkUp
+Rate: 40
+Base lid: 310
+LMC: 0
+SM lid: 1
+Capability mask: 0x02510868
+Port GUID: 0x003048fffff4cb8d
+Link layer: InfiniBand
+    </screen>
+    
+    <screen><command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/rate</command>
+40 Gb/sec (4X QDR)
+<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/state</command>
+4: ACTIVE
+<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/phys_state</command>
+5: LinkUp
+<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/board_id</command>
+SM_2122000001000
+<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/fw_ver </command>
+2.7.0
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibv_devinfo</command>
+hca_id: mlx4_0
+fw_ver: 2.7.000
+node_guid: 0030:48ff:fff4:cb8c
+sys_image_guid: 0030:48ff:fff4:cb8f
+vendor_id: 0x02c9
+vendor_part_id: 26428
+hw_ver: 0xB0
+board_id: SM_2122000001000
+phys_port_cnt: 1
+port: 1
+state: PORT_ACTIVE (4)
+max_mtu: 2048 (4)
+active_mtu: 2048 (4)
+sm_lid: 1
+port_lid: 310
+port_lmc: 0x00
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibv_devices </command>
+device node GUID
+------ ----------------
+mlx4_0 003048fffff4cb8c
+    </screen>
+
+    <screen><command><prompt>$</prompt> ifconfig ib0</command>
+ib0 Link encap:UNSPEC HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00 
+inet addr:172.17.7.105 Bcast:172.17.127.255 Mask:255.255.128.0
+UP BROADCAST RUNNING MULTICAST MTU:2044 Metric:1
+RX packets:388445 errors:0 dropped:0 overruns:0 frame:0
+TX packets:34 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:256 
+RX bytes:39462502 (39.4 MB) TX bytes:2040 (2.0 KB)
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibswitches </command>
+Switch : 0x0002c902004885b0 ports 36 "MF0;cluster-ibs:IS5300/L18/U1" base port 0 lid 17 lmc 0
+Switch : 0x0002c90200488f60 ports 36 "MF0;cluster-ibs:IS5300/L17/U1" base port 0 lid 22 lmc 0
+Switch : 0x0002c902004885a8 ports 36 "MF0;cluster-ibs:IS5300/L16/U1" base port 0 lid 16 lmc 0
+Switch : 0x0002c90200488fc8 ports 36 "MF0;cluster-ibs:IS5300/L15/U1" base port 0 lid 26 lmc 0
+Switch : 0x0002c902004885a0 ports 36 "MF0;cluster-ibs:IS5300/L14/U1" base port 0 lid 15 lmc 0
+Switch : 0x0002c90200488fc0 ports 36 "MF0;cluster-ibs:IS5300/L13/U1" base port 0 lid 25 lmc 0
+Switch : 0x0002c902004884e0 ports 36 "MF0;cluster-ibs:IS5300/L12/U1" base port 0 lid 10 lmc 0
+Switch : 0x0002c90200488f68 ports 36 "MF0;cluster-ibs:IS5300/L11/U1" base port 0 lid 23 lmc 0
+Switch : 0x0002c90200488510 ports 36 "MF0;cluster-ibs:IS5300/L10/U1" base port 0 lid 12 lmc 0
+Switch : 0x0002c902004885e8 ports 36 "MF0;cluster-ibs:IS5300/L09/U1" base port 0 lid 19 lmc 0
+Switch : 0x0002c90200488f78 ports 36 "MF0;cluster-ibs:IS5300/L08/U1" base port 0 lid 24 lmc 0
+Switch : 0x0002c90200488598 ports 36 "MF0;cluster-ibs:IS5300/L07/U1" base port 0 lid 14 lmc 0
+Switch : 0x0002c90200488fd8 ports 36 "MF0;cluster-ibs:IS5300/L06/U1" base port 0 lid 27 lmc 0
+Switch : 0x0002c902004885f8 ports 36 "MF0;cluster-ibs:IS5300/L05/U1" base port 0 lid 21 lmc 0
+Switch : 0x0002c902004885f0 ports 36 "MF0;cluster-ibs:IS5300/L03/U1" base port 0 lid 20 lmc 0
+Switch : 0x0002c90200488528 ports 36 "MF0;cluster-ibs:IS5300/L02/U1" base port 0 lid 13 lmc 0
+Switch : 0x0002c902004885e0 ports 36 "MF0;cluster-ibs:IS5300/L01/U1" base port 0 lid 18 lmc 0
+Switch : 0x0002c90200472eb0 ports 36 "MF0;cluster-ibs:IS5300/S09/U1" base port 0 lid 4 lmc 0
+Switch : 0x0002c90200472f08 ports 36 "MF0;cluster-ibs:IS5300/S08/U1" base port 0 lid 9 lmc 0
+Switch : 0x0002c90200472ec8 ports 36 "MF0;cluster-ibs:IS5300/S07/U1" base port 0 lid 7 lmc 0
+Switch : 0x0002c90200472ed0 ports 36 "MF0;cluster-ibs:IS5300/S06/U1" base port 0 lid 8 lmc 0
+Switch : 0x0002c90200472ec0 ports 36 "MF0;cluster-ibs:IS5300/S05/U1" base port 0 lid 6 lmc 0
+Switch : 0x0002c90200472eb8 ports 36 "MF0;cluster-ibs:IS5300/S04/U1" base port 0 lid 5 lmc 0
+Switch : 0x0002c9020046cc60 ports 36 "MF0;cluster-ibs:IS5300/S03/U1" base port 0 lid 2 lmc 0
+Switch : 0x0002c9020046cd58 ports 36 "MF0;cluster-ibs:IS5300/S02/U1" base port 0 lid 3 lmc 0
+Switch : 0x0002c90200479668 ports 36 "MF0;cluster-ibs:IS5300/S01/U1" enhanced port 0 lid 1 lmc
+Switch : 0x0002c90200488500 ports 36 "MF0;cluster-ibs:IS5300/L04/U1" base port 0 lid 11 lmc 0
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibnodes | head -10</command>
+Ca : 0x0002c902002141f0 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c90200214150 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c9020021412c ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c90200214164 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c902002141c8 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c9020020d82c ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c9020020d6c0 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c90200216eb8 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x0002c9020021413c ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
+Ca : 0x002590ffff2fc5f4 ports 1 "MT25408 ConnectX Mellanox Technologies"
+    </screen>
+
+    <para>
+      Because the output of the following command is extremely long, we only show the first
+      40 lines here:
+    </para>
+
+    <screen><command><prompt>$</prompt> ibnetdiscover | head -40</command>
+# Topology file: generated on Thu Oct 10 14:06:20 2013
+#
+# Initiated from node 0002c903000c817c port 0002c903000c817d
+vendid=0x2c9
+devid=0xbd36
+sysimgguid=0x2c90200479470
+switchguid=0x2c902004885b0(2c902004885b0)
+Switch 36 "S-0002c902004885b0" # "MF0;cluster-ibs:IS5300/L18/U1" base port 0 lid 17 lmc 0
+[19] "S-0002c90200479668"[35] # "MF0;cluster-ibs:IS5300/S01/U1" lid 1 4xQDR
+[20] "S-0002c90200479668"[36] # "MF0;cluster-ibs:IS5300/S01/U1" lid 1 4xQDR
+[21] "S-0002c9020046cd58"[35] # "MF0;cluster-ibs:IS5300/S02/U1" lid 3 4xQDR
+[22] "S-0002c9020046cd58"[36] # "MF0;cluster-ibs:IS5300/S02/U1" lid 3 4xQDR
+[23] "S-0002c9020046cc60"[35] # "MF0;cluster-ibs:IS5300/S03/U1" lid 2 4xQDR
+[24] "S-0002c9020046cc60"[36] # "MF0;cluster-ibs:IS5300/S03/U1" lid 2 4xQDR
+[25] "S-0002c90200472eb8"[35] # "MF0;cluster-ibs:IS5300/S04/U1" lid 5 4xQDR
+[26] "S-0002c90200472eb8"[36] # "MF0;cluster-ibs:IS5300/S04/U1" lid 5 4xQDR
+[27] "S-0002c90200472ec0"[35] # "MF0;cluster-ibs:IS5300/S05/U1" lid 6 4xQDR
+[28] "S-0002c90200472ec0"[36] # "MF0;cluster-ibs:IS5300/S05/U1" lid 6 4xQDR
+[29] "S-0002c90200472ed0"[35] # "MF0;cluster-ibs:IS5300/S06/U1" lid 8 4xQDR
+[30] "S-0002c90200472ed0"[36] # "MF0;cluster-ibs:IS5300/S06/U1" lid 8 4xQDR
+[31] "S-0002c90200472ec8"[35] # "MF0;cluster-ibs:IS5300/S07/U1" lid 7 4xQDR
+[32] "S-0002c90200472ec8"[36] # "MF0;cluster-ibs:IS5300/S07/U1" lid 7 4xQDR
+[33] "S-0002c90200472f08"[35] # "MF0;cluster-ibs:IS5300/S08/U1" lid 9 4xQDR
+[34] "S-0002c90200472f08"[36] # "MF0;cluster-ibs:IS5300/S08/U1" lid 9 4xQDR
+[35] "S-0002c90200472eb0"[35] # "MF0;cluster-ibs:IS5300/S09/U1" lid 4 4xQDR
+[36] "S-0002c90200472eb0"[36] # "MF0;cluster-ibs:IS5300/S09/U1" lid 4 4xQDR
+vendid=0x2c9
+devid=0xbd36
+sysimgguid=0x2c90200479470
+switchguid=0x2c90200488f60(2c90200488f60)
+Switch 36 "S-0002c90200488f60" # "MF0;cluster-ibs:IS5300/L17/U1" base port 0 lid 22 lmc 0
+[1] "H-0002c9020021413c"[1](2c9020021413d) # "MT25204 InfiniHostLx Mellanox Technologies" lid 284 4xDDR
+[2] "H-0002c90200216eb8"[1](2c90200216eb9) # "MT25204 InfiniHostLx Mellanox Technologies" lid 241 4xDDR
+[3] "H-0002c9020020d6c0"[1](2c9020020d6c1) # "MT25204 InfiniHostLx Mellanox Technologies" lid 244 4xDDR
+[4] "H-0002c9020020d82c"[1](2c9020020d82d) # "MT25204 InfiniHostLx Mellanox Technologies" lid 242 4xDDR
+[6] "H-0002c902002141c8"[1](2c902002141c9) # "MT25204 InfiniHostLx Mellanox Technologies" lid 243 4xDDR
+[9] "H-0002c90200214164"[1](2c90200214165) # "MT25204 InfiniHostLx Mellanox Technologies" lid 293 4xDDR
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibcheckstate </command>
+## Summary: 215 nodes checked, 0 bad nodes found
+## 1024 ports checked, 0 ports with bad state found
+    </screen>
+
+    <screen><command><prompt>$</prompt> ibcheckwidth </command>
+## Summary: 215 nodes checked, 0 bad nodes found
+## 1024 ports checked, 0 ports with 1x width in error found
+    </screen>
+
+  </section>
+  <section id="admin-man-sect-hw-IB-opensm">
+    <title>OpenSM Configuration</title>
+    <indexterm><primary>Infiniband</primary><secondary>OpenSM</secondary></indexterm>
+    <para>
+      A functional IB fabric needs at least one node with a running subnet manager. This can be
+      a switch or any other node connected to the fabric. In the latter case, OpenSM will be
+      used. Please check the &QLUMANGUIDE; for details about how to setup
+      OpenSM on a compute-node. If OpenSM should run on a head-node, you will have to install
+      the package <parameter>opensm</parameter> and configure it manually, if necessary (for
+      simple networks, the default configuration will be sufficient).
+    </para>
+  </section>
+</section>

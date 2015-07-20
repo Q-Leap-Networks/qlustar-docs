@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-driver-init">
+  <title>Driver Initialization</title>
+  <indexterm><primary>Driver Initialization</primary></indexterm>
+  <para>
+    This section explains actions necessary to activate and properly configure
+    specific drivers.
+  </para>
+  <section id="admin-man-sect-qlogic-drivers">
+    <title>Qlogic drivers</title>
+    <indexterm><primary>Qlogic drivers</primary></indexterm>
+    <para>
+      Most Qlogic HCAs need specific firmware that is not part of the Linux kernel. Qlustar's
+      image modules already include the firmware images. However, if any of your head-nodes has
+      a Qlogic adapter, you will have to install the Qlogic firmware package on all these nodes
+      manually as follows:
+    </para>
+    <screen><command><prompt>$</prompt> apt-get install firmware-qlogic</command>
+    </screen>
+  </section>
+</section>

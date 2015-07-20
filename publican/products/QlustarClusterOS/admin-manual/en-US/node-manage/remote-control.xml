@@ -1,0 +1,181 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-remote-control">
+  <title>Node Remote Control</title>
+  <indexterm><primary>Remote Control</primary></indexterm>
+  
+  <para>
+    This section describes the tools and configuration options for the remote control of
+    Qlustar cluster nodes.
+  </para>
+  
+  <section id="admin-man-sect-ser-cons-para">
+    <title>Serial Console Parameter</title>
+    <indexterm><primary>Remote Control</primary>
+    <secondary>Serial Console Parameter</secondary></indexterm>
+    
+    <para>
+      The default configuration <filename>/etc/qlustar/pxelinux.cfg/default</filename> contains
+      the kernel commandline that is passed to the nodes. If you need to modify the console
+      parameter you can change it there.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+	<term>
+	  Access to the Serial Console
+	</term>
+	<listitem>
+	  <para>
+	    To access the serial console use the command <command>console-login</command>.  It
+	    allows to select the node whose console you wish to open. Depending on the type of
+	    console you need different keystrokes to exit. If you are using
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  ipmiconsole
+	</term>
+	<listitem>
+	  <para>
+	    then you need to type &amp; followed by a dot (.)
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  ipmitool
+	</term>
+	<listitem>
+	  <para>
+	    then type ~ followed by a dot (.)
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  minicom
+	</term>
+      <listitem>
+	<para>
+	  then use Ctrl-a followed by x
+	</para>
+      </listitem>
+      </varlistentry>
+    </variablelist>
+  
+  </section>
+
+  <section id="admin-man-sect-ipmi-config">
+    <title>IPMI Configuration</title>
+    <indexterm><primary>Remote Control</primary>
+    <secondary>Serial Console Parameter</secondary></indexterm>
+
+    <para>
+      Many computers nowadays are equipped with an Intelligent Platform Management Interface
+      (IPMI). Q-Leap Qlustar allows to automatically configure the ip address of these
+      interfaces. The required configuration files are located in the directory
+      <filename>/etc/qlustar/common/ipmi</filename>. The file
+      <filename>overwrite-settings</filename> determines which hosts should configure the ipmi
+      interface. It contains the name overwrite followed by a regular expression that should
+      match the hostnames. To configure the IPMI interface of all hosts the file should look
+      like this:
+    </para>
+
+    <screen>
+overwrite: .*
+    </screen>
+
+    <para>
+      The configuration file <filename>ipmi.conf</filename> contains the default settings that
+      can be overwritten by group specific files. The settings are:
+    </para>
+    
+    <variablelist>
+      <varlistentry>
+	<term>
+	  ge_net
+	</term>
+	<listitem>
+	  <para>
+	    the network of an already configured network interface
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  ipmi_net
+	</term>
+	<listitem>
+	  <para>
+	    the network used for the IPMI network, substitutes ge_net and the result will be
+	    the new address
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  netmask
+	</term>
+	<listitem>
+	  <para>
+	    the netmask
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  gateway
+	</term>
+	<listitem>
+	  <para>
+	    the default gateway to use
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  lan_channel
+	</term>
+	<listitem>
+	  <para>
+	    the IPMI channel for the lan interface
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    
+    <para>
+      Example:
+    </para>
+
+<screen>
+ge_net=192.168.52
+ipmi_net=10.0.0
+netmask=255.255.255.0
+gateway=10.0.0.254
+lan_channel=1
+</screen>
+
+    <para>
+      In this example a host with address 192.168.52.1 will configure the IPMI interface with
+      address 10.0.0.1. Groups are defined in the file <filename>ipmigroups</filename>. This
+      file contains group names followed by regular expressions that should match the members
+      of this group.
+    </para>
+
+<screen>
+grp1:grp2:beo-1[0-9]
+beo-2[0-9]
+</screen>
+
+    <para>
+      Members of the group grp1 will use an additional file ipmi.conf.grp1 and members of the
+      group grp2 the file <filename>ipmi.conf.grp2</filename>. In these files you can overwrite
+      the above default values.
+    </para>
+    
+  </section>
+</section>

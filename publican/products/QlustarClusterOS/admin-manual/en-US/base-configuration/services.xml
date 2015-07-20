@@ -1,0 +1,284 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-base-conf-serv">
+  <title>Basic Services</title>
+  <indexterm><primary>Services</primary></indexterm>
+  
+  <para>
+    This section describes the basic services running on a typical Qlustar cluster.
+  </para>
+  
+  <section id="admin-man-sect-disk-part-file-sys">
+    <title>Disk Partitions and File-systems</title>
+    <indexterm><primary>Services</primary>
+    <secondary>Disk Partitions and File-systems</secondary></indexterm>
+
+    <para>
+      Typically, a head-node has two mirrored boot disks. Sometimes it also holds additional
+      data disks, that are setup either as a mirror, a RAID 5/6 or are part of an external
+      storage system. The boot disk (or the RAID device in case of a RAID boot setup) is used
+      as a physical volume for the basic system LVM volume group (default name vgroot). See
+      <xref linkend="admin-man-sect-vol-man"/> for more details on LVM. The system volume
+      group is the container of the following logical volumes: root, var, tmp, swap, apps and
+      data (the latter can also be chosen to be located on a separate volume group made from
+      additionally available disks during installation). Each of these logical volumes is used
+      as the underlying block device for the correspondingly named file-system. Hence, the
+      whole head-node setup, including the / (root) file-system is typically under control of
+      LVM, adding large flexibility for storage management.
+    </para>
+
+    <para>
+      All additional disks or RAID sets are partitioned with a single partition of type LVM,
+      and used as LVM physical devices. Static mount configuration for file-systems is entered
+      in <filename>/etc/fstab</filename>. All file-systems are of type ext4 unless requested
+      otherwise.
+    </para>
+
+    <note>
+      <para>
+	Newer Qlustar installations also have the option to use ZFS pools (see <xref
+	linkend="admin-man-sect-zpools-admin"/>) to setup additional data disks.
+      </para>
+    </note>
+
+  </section>
+
+  <section id="admin-man-sect-nis">
+    <title>NIS</title>
+    <indexterm><primary>Services</primary>
+    <secondary>NIS</secondary></indexterm>
+
+    <para>
+      NIS (Network Information System) is used as the cluster wide name service database.  User
+      account (passwd and shadow map) and group information (group map), hostname resolution
+      (hosts map), auto-mounter (auto.master, auto.apps, auto.data), netgroup and services are
+      the most important maps. The head-node is configured as a NIS master server when running
+      <command>qlustar-initial-config</command> during installation. In case of a HA head-node
+      setup, the second head-node becomes a NIS slave server.
+    </para>
+    
+    <para>
+      The generated NIS databases are located on the NIS master server under
+      <filename>/var/yp</filename> and the corresponding source files in the directory
+      <filename>/etc/qlustar/yp</filename>. The passwd and shadow tables are updated
+      automatically by the script <filename>adduser.sh</filename> when users are added (see
+      <xref linkend="admin-man-sect-add-user"/>) and the host map is automatically generated
+      from QluMan. Apart from that, usually nothing needs to be changed in the provided NIS
+      configuration. For security reasons, the file <filename>/etc/qlustar/yp/shadow</filename>
+      should be readable and writable only by root. In case NIS source files have been changed
+      manually, the command <command>make -C /var/yp</command> must be executed to regenerate
+      the maps and activate the changes. For more detailed information about NIS, you may also
+      consult the NIS package HowTo at
+      <filename>/usr/share/doc/nis/nis.debian.howto.gz</filename>.
+    </para>
+    
+    <para>
+      Another important security aspect is the access restriction to the NIS server. Only the
+      compute-nodes should be allowed to contact the NIS server. In case the head-node is also
+      used as a work-group NIS server, additional access can be allowed for the corresponding
+      subnet to which the work-group workstations are connected. The access settings are
+      configured in <filename>/etc/ypserv.securenets</filename> (see <command>man
+      ypserv</command>).
+    </para>
+    
+    <para>
+      The master NIS server is also its own client. The corresponding configuration for the NIS
+      client (ypbind) process is set in <filename>/etc/yp.conf</filename>. The NIS domain name
+      is set in <filename>/etc/defaultdomain</filename> and usually defined as
+      <parameter>qlustar</parameter>. On cluster nodes booting over the network, these settings
+      are all configured automatically by DHCP (see also <xref
+      linkend="admin-man-sect-dhcp"/>).
+    </para>
+
+    <note>
+      <para>
+	Like with any standard NIS setup, if a user wants to change his/her login password, the
+	command <command>yppasswd</command> should be used.
+      </para>
+    </note>
+
+  </section>
+
+  <section id="admin-man-sect-nfs-sect">
+    <title>NFS</title>
+    <indexterm><primary>Services</primary>
+    <secondary>NFS</secondary></indexterm> 
+
+    <para>
+      To ensure a cluster wide homogeneous directory structure, the head-node provides NFS
+      (Network File System) services to the compute-nodes. The kernel NFS server with protocol
+      version 3 is used for accomplishing this goal. The typical Qlustar directory structure
+      consists of three file-systems that are exported by the head-node via NFS to all other
+      nodes: <filename>/srv/apps</filename>, <filename>/srv/data</filename> and
+      <filename>/srv/ql-common</filename>. Note that in NFS version 4, one directory serves as
+      the root path for all exported file-systems and all exported directories must be a
+      sub-directory of this path. To achieve compatibility with NFS 4 in Qlustar, the directory
+      <filename>/srv</filename> is used for this purpose. While <filename>/srv/apps</filename>
+      and <filename>/srv/data</filename> are typically separate file-systems on the head-node,
+      the entry <filename>/srv/ql-common</filename> is a bind mount of the global Qlustar
+      configuration directory <filename>/etc/qlustar/common</filename>. This mount is generated
+      from the following entry in <filename>/etc/fstab</filename>:
+    </para>
+    
+    <screen>/etc/qlustar/common    /srv/ql-common    none    bind    0    0
+    </screen>
+    
+    <para>
+      File-systems to be shared via NFS need an entry in the file
+      <filename>/etc/exports</filename>. Execute <command>man exports</command> for a detailed
+      explanation of the corresponding syntax. For security reasons, access to shared
+      file-systems should be limited to trusted networks. The directory
+      <filename>/srv</filename> is exported with a special parameter
+      <parameter>fsid</parameter>. An export entry with the parameter
+      <parameter>no_root_squash</parameter> for a host will enable full write access for the
+      root user on that host (without that parameter, root is mapped to the user nobody on NFS
+      mounts). In the following example, root on the host login-c (default name of the FrontEnd
+      node) will have full write access to all exported file-systems:
+    </para>
+
+    <screen>/srv login-c(async,rw,no_subtree_check,fsid=0,insecure,no_root_squash)\
+  192.168.52.0/24(async,rw,no_subtree_check,fsid=0,insecure)
+/srv/data login-c(async,rw,no_subtree_check,insecure,nohide,no_root_squash)\
+  192.168.52.0/24(async,rw,no_subtree_check,insecure,nohide)
+/srv/apps login-c(async,rw,no-subtree_check,insecure,nohide,no_root_squash)\
+  192.168.52.0/24(async,rw,no_subtree_check,insecure,nohide)
+/srv/ql-common login-c(async,rw,subtree_check,insecure,nohide,no_root_squash)\
+  192.168.52.0/24(async,ro,subtree_check,insecure,nohide)
+    </screen>
+
+    <para>
+      After changing the exports information, the NFS server needs to reload its configuration
+      to activate it. This is achieved by executing the command
+    </para>
+
+    <screen><command><prompt>$</prompt> /etc/init.d/nfs-kernel-server reload</command>
+    </screen>
+    
+  </section>
+
+  <section id="admin-man-sect-auto-mounter">
+    <title>Automounter</title>
+    <indexterm><primary>Services</primary><secondary>Automounter</secondary></indexterm>
+
+    <para>
+      NFS mounts on Qlustar nodes booting via the network are mostly managed by the kernel
+      automounter. The information needed to configure these mounts comes from the NIS
+      automounter maps <parameter>auto.apps</parameter> and
+      <parameter>auto.data</parameter>. You can view the contents of these maps using the
+      commands <command>ypcat -k auto.apps</command> and <command>ypcat -k
+      auto.data</command>. The automounter software is able to determine which mounts are being
+      consulted at a given time using so-called master maps. In Qlustar, this is the NIS map
+      <parameter>auto.master</parameter>. Its content is defined in the source file <filename>
+      /etc/qlustar/yp/auto.master</filename> with the following default settings:
+    </para>
+
+    <screen>/apps auto.apps
+/data auto.data
+    </screen>
+
+    <para>
+      This means that <filename>/apps</filename> is the base mount path for all entries in
+      auto.apps and <filename>/data</filename> for all entries in
+      <filename>auto.data</filename>. The referenced maps themselves have entries of the form
+      (example for <filename>auto.data</filename>):
+    </para>
+
+    <screen>home -fstype=nfs,rw,hard,intr $NFSSRV:/srv/data/&amp;
+    </screen>
+
+    <para>
+      The remote directory <filename>/srv/data</filename> should thus be mounted by the
+      automounter at the path <filename>/data/home</filename> on the NFS client. The variable
+      <envar>$NFSSRV</envar> contains the hostname of the NFS server. Its value defaults to
+      beosrv-c and could be modified by setting the DHCP option
+      <parameter>option-130</parameter> with the following lines in the QluMan DHCP template:
+    </para>
+
+    <screen>option option-130 code 130 = text;
+option option-130 "nfsserver";
+    </screen>
+    <warning>
+      <para>
+	In this example, the variable would be changed to
+	<parameter>nfsserver</parameter>. Changing the default is only recommended for very
+	special cases though.
+      </para>
+    </warning>
+
+  </section>
+
+  <section id="admin-man-sect-ssh">
+    <title>SSH - Secure Shell</title>
+    <indexterm><primary>Services</primary><secondary>SSH - Secure Shell</secondary></indexterm>
+    
+    <para>
+      Remote shell access from the LAN to the head-node and from the head-node to the
+      compute-nodes is only allowed using the OpenSSH secure shell (ssh). A correct
+      configuration of the ssh daemon is of crucial importance for the security of the whole
+      cluster. Most important is to allow only ssh protocol version 2 connections. The default
+      configuration in the cluster allows for <parameter>AgentForwarding</parameter> and
+      <parameter>X11Forwarding</parameter>. This way, X11 programs can be executed without any
+      further hassle from any compute-node with the X display appearing on a users workstation
+      in the LAN.  The relevant ssh configuration files are
+      <filename>/etc/ssh/sshd_config</filename> and <filename>/etc/ssh/ssh_config</filename>.
+    </para>
+    
+    <para>
+      To allow password-less root access from the head to the other cluster nodes, the root ssh
+      public key that is generated on the head-node is automatically put into the file
+      <filename>/etc/qlustar/common/image-files/ssh/authorized_keys</filename> during
+      installation. This file is then copied into the directory <filename>/root/.ssh</filename>
+      on any netboot node during its boot process.
+    </para>
+    
+    <para>
+      One last step is required in order to prevent interactive questions when using ssh logins
+      between nodes: A file named <filename>ssh_known_hosts</filename> containing all hosts
+      keys in the cluster must exist. It is automatically generated by QluMan, placed into
+      the directory <filename>/etc/qlustar/common/image-files/ssh</filename> and linked to
+      <filename>/etc/ssh/ssh_known_hosts</filename> on netboot nodes.
+    </para>
+
+    <variablelist>
+      <varlistentry>
+	<term>
+	  Host-based authentication
+	</term>
+	<listitem>
+	  <para>
+	    To enable host-based authentication, the parameter
+	    <parameter>HostbasedAuthentication</parameter> must be set to
+	    <parameter>yes</parameter> in <filename>/etc/ssh/sshd_config</filename> on the
+	    clients. This is the default in Qlustar. Furthermore, the file
+	    <filename>/etc/ssh/shosts.equiv</filename> must contain the hostnames of all hosts
+	    from where login should be allowed. This file is also automatically generated by
+	    QluMan. Note that this mechanism works for ordinary users but not for the root
+	    user.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+
+  </section>
+
+  <section id="admin-man-sect-mail-server-postfix">
+    <title>Mail server - Postfix</title>
+    <indexterm><primary>Services</primary>
+    <secondary>Mail server - Postfix</secondary></indexterm>
+    
+    <para>
+      Mostly for the purpose of sending alert and other informational messages, the mail server
+      <parameter>postfix</parameter> is setup on the head-node. Typically it is configured to
+      simply transfer all mail to a central mail relay, whose name can be entered during
+      installation. The main postfix configuration file is
+      <filename>/etc/postfix/main.cf</filename>. Mail aliases can be added in
+      <filename>/etc/aliases</filename> (initial aliases were configured during
+      installation). A change in this file requires execution of the command <command>postalias
+      /etc/aliases</command> to activate the changes. Have a look at <xref
+      linkend="admin-man-sect-mail-trans-agent"/> to find out, how to configure mail on the
+      compute-nodes.
+    </para>
+
+  </section>
+</section>

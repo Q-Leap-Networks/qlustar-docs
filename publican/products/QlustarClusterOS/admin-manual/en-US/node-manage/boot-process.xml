@@ -1,0 +1,197 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-boot-process">
+  <title>Boot Process</title>
+  <indexterm><primary>Boot Process</primary></indexterm>
+  
+  <para>
+    This section describes the boot process of Qlustar cluster-nodes.
+  </para>
+  
+  <section id="admin-man-sect-comp-node-boot">
+    <title>Compute-node booting</title>
+    <indexterm><primary>Boot Process</primary>
+    <secondary>Compute-node booting</secondary></indexterm>
+
+    <para> 
+      The boot process of the compute-nodes follows precise rules. It takes place in four
+      steps:
+    </para>
+
+    <orderedlist>
+      <listitem>
+	<para>
+	  The PXE boot ROM of the network card sends a DHCP request. If the node is already
+	  registered in QluMan, the request is answered by the DHCP server running on the
+	  head-node(s), allowing the adapter to configure its basic IP settings.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  The boot ROM requests a PXE loader program from the TFTP server on the head-node (the
+	  TFTP server specified by DHCP could also be on another node, but this is not the
+	  default). The PXE loader is then sent to the compute-node via TFTP.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  PXELinux downloads the Qlustar Linux kernel and the assigned RAM-disk (OS) image,
+	  boots the kernel and mounts the RAM-disk.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  The usual Linux boot process proceeds.
+	</para>
+      </listitem>
+    </orderedlist>
+    
+  </section>
+
+  <section id="admin-man-sect-tftp-boot-serv">
+    <title>TFTP Boot Server</title>
+    <indexterm><primary>Boot Process</primary>
+    <secondary>TFTP Boot Server</secondary></indexterm>
+      
+    <para>
+      The Advanced TFTP server transfers the boot image to the compute-nodes. All files that
+      should be served by tftp must reside in the directory
+      <filename>/var/lib/tftpboot</filename>. On a Qlustar installation, it contains three
+      symbolic links:
+    </para>
+    
+<screen>pxelinux.0 -> <filename>/usr/lib/syslinux/pxelinux.0</filename>
+pxelinux.cfg -> <filename>/etc/qlustar/pxelinux.cfg</filename>
+qlustar -> <filename>/var/lib/qlustar</filename>
+</screen>
+
+    <para>
+      The directory <filename>/etc/qlustar/pxelinux.cfg</filename> contains the PXE boot
+      configuration files for the compute-nodes. There is a default configuration that applies
+      to any node without an assigned custom boot configuration in QluMan. For every host with
+      a custom boot configuration, QluMan adds a symbolic link pointing to the actual
+      configuration file. The links are named after the node's <parameter>Hostid</parameter>,
+      which you can find out with the <command>gethostip</command> command. For more details
+      about how to define boot configurations see the corresponding section of the
+      &QLUMANGUIDE;.
+    </para>
+
+  </section>
+
+  <section id="admin-man-sect-RAM-disk-img">
+    <title>RAM-disk image</title>
+    <indexterm><primary>Boot Process</primary>
+    <secondary>RAM-disk image</secondary></indexterm>
+
+    <para>
+      The RAM-disk image is the file-system holding the node OS that is mounted as the root
+      filesystem of the compute-nodes. It is assembled on the head-node(s) from the image
+      modules, you are able to select in QluMan. Every RAM-disk image contains at least the
+      core module. See the corresponding section of the &QLUMANGUIDE; for more details. All
+      available image modules are displayed and selectable in QluMan and the configuration and
+      assembly of images is done automatically from within QluMan.
+    </para>
+
+    <note>
+      <para>
+	By default, the root password of a Qlustar OS image and hence the node booting it, is
+	taken from the head-node(s) <filename>/etc/shadow</filename> file and is therefore the
+	same as on the head-node(s). If you want to change this, you can call
+	<command>qlustar-image-reconfigure &lt;image-name&gt;</command>. (Replacing
+	&lt;image-name&gt; with the actual name of the image). You can then specify a different
+	root password for the node OS image.
+      </para>
+    </note>
+
+    <variablelist>
+      <varlistentry>
+	<term>
+	  Changelogs
+	</term>
+	<listitem>
+	  <para>
+	    Any Qlustar node OS image contains changelogs of the various image modules it is
+	    composed of. They are located in the directory
+	    <filename>/usr/share/doc/qlustar-image</filename>. The main changelog file is
+	    <filename>core.changelog.gz</filename>. The other files are automatically
+	    generated. The files <filename>*.packages.version.gz</filename> lists the packages
+	    each module is made of. The files <filename>*.contents.changelog*.gz</filename>
+	    lists the files that were changed between each version, and
+	    <filename>*.packages.changelog*.gz</filename> list differences in the package list
+	    and versions. Hence, you always have detailed information about what has been
+	    changed in new images as well as the package sources of their content.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+
+  </section>
+    
+  <section id="admin-man-sect-qluman-execd">
+    <title>QluMan Remote Execution Server</title>
+    <indexterm><primary>QluMan</primary>
+    <secondary>Remote Execution Server</secondary></indexterm>
+    <para>
+      The QluMan execution server (<parameter>qluman-execd</parameter>) runs on any head- and
+      compute-node of a Qlustar cluster. It is one of Qlustar's main components, responsible
+      for executing remote commands as well as writing configurations to disk.
+    </para>
+
+    <section id="admin-man-sect-execd-dynamic-boot-scripts">
+      <title>Dynamic Boot Script Excecution</title>
+      <indexterm><primary>Boot Process</primary>
+      <secondary>Dynamic Execution</secondary></indexterm>
+      <para>
+	When a compute-node boots and <parameter>qluman-execd</parameter> starts, it
+	automatically performs some initialization/configuration tasks depending on the nodes
+	QluMan configuration options. The following is a list of tasks managed by
+	<parameter>qluman-execd</parameter>:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>
+	    Infiniband IP configuration
+	  </term>
+	  <listitem>
+	    <para>
+	      Configuration of the Infiniband IPoIB address, if a node is configured to use
+	      Infiniband within QluMan.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Infiniband OpenSM startup
+	  </term>
+	  <listitem>
+	    <para>
+	      Startup of OpenSM in case the node is configured to do so.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    IPMI IP configuration and channel selection
+	  </term>
+	  <listitem>
+	    <para>
+	      Reconfiguration of the node's IPMI address, if a node is configured
+	      correspondingly within QluMan.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	For details about the configuration of the above components, see the corresponding
+	section of the &QLUMANGUIDE;.
+      </para>
+      <note>
+	<para>
+	  If required for debugging, etc., the boot scripts managed by QluMan Execd can still
+	  be executed manually, like normal System V boot scripts.
+	</para>
+      </note>
+    </section>
+  </section>
+</section>
