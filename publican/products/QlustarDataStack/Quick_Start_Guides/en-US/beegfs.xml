@@ -150,15 +150,18 @@ SYS/bstor                         1002T     0 1002T   0% /beegfs/stor
       servers are named as <systemitem class="systemname">sn-1</systemitem>, <systemitem
       class="systemname">sn-2</systemitem>, ... such that <envar>${HOSTNAME##*-}</envar> is the
       storage node number):
-      <itemizedlist>
-	<listitem>
-	  <para>
+    </para>
+      <task xml:id="create-server-instance">
+	  <title>
 	    Create Metadata server instance
-	    <itemizedlist>
-	      <listitem>
-		<para>
-		  Initialize meta target
-		  <screen>
+	  </title>
+	  <procedure>
+	    <step>
+	      <title>
+		Initialize meta target
+	      </title>
+	      <para>
+		<screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>beegfs-setup-meta -p /beegfs/meta -s ${HOSTNAME##*-} -m beosrv-c</command>
 Preparing storage directory: /beegfs/meta
@@ -170,41 +173,47 @@ Updating config file: /etc/beegfs/meta/available/default.conf
  * Disabling usage of uninitialized storage directory in config file...
  * Setting usage of extended attributes to: true
 All done.
-		  </screen>
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  Start meta server
-		  <screen>
+		</screen>
+	      </para>
+	    </step>
+	    <step>
+	      <title>
+		Start meta server
+	      </title>
+	      <para>
+		<screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>/etc/init.d/beegfs-meta start</command>
-		  </screen>
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  Check meta status
-		  <screen>
+		</screen>
+	      </para>
+	    </step>
+	    <step>
+	      <title>
+		Check meta status
+	      </title>
+	      <para>
+		<screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>/etc/init.d/beegfs-meta status</command>
 
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>less /var/log/beegfs/beegfs-meta.log</command>
-		  </screen>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    Create Storage server instance
-	    <itemizedlist>
-	      <listitem>
-		<para>
-		  Initialize storage target
-		  <screen>
+		</screen>
+	      </para>
+	    </step>
+	  </procedure>
+      </task>
+      <task xml:id="create-storage-server-inst">
+	<title>
+	  Create Storage server instance
+	</title>
+	<procedure>
+	  <step>
+	    <title>
+	      Initialize storage target
+	    </title>
+	    <para>
+	      <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>beegfs-setup-storage -p /beegfs/stor -s ${HOSTNAME##*-} \
 -i ${HOSTNAME##*-}01 -m beosrv-c</command>
@@ -219,43 +228,50 @@ Updating config file: /etc/beegfs/storage/available/default.conf
  * Appending to target directory list in config file...
  * Disabling usage of uninitialized storage targets in config file...
 All done.
-		  </screen>
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  Start storage server
-		  <screen>
+	      </screen>
+	    </para>
+	  </step>
+	  <step>
+	    <title>
+	    Start storage server
+	    </title>
+	    <para>
+	      <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>/etc/init.d/beegfs-storage start</command>
-		  </screen>
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  Check storage status
-		  <screen>
+	      </screen>
+	    </para>
+	  </step>
+	  <step>
+	    <title>
+	      Check storage status
+	    </title>
+	    <para>
+	      <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>/etc/init.d/beegfs-storage status</command>
 
 <prompt>0 root@sn-1 ~ #</prompt>
 <command>less /var/log/beegfs/beegfs-storage.log</command>
-		  </screen>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    Register the config files on the head-node for automatic start on boot
-	    <itemizedlist>
-	      <listitem>
-		<para>
-		  Retrieve the config files from the first storage node <systemitem
-		  class="systemname">sn-1</systemitem> (The configs on different nodes are all
-		  identical):
-		  <screen>
+	      </screen>
+	    </para>
+	  </step>
+	</procedure>
+      </task>
+      <task xml:id="register-config-file">
+	<title>
+	  Register the config files on the head-node for automatic start on boot
+	</title>
+	<procedure>
+	  <step>
+	    <title>
+	      Retrieve config files
+	    </title>
+	    <para>
+	      Retrieve the config files from the first storage node <systemitem
+	      class="systemname">sn-1</systemitem> (the configs on different nodes are all
+	      identical): 
+	      <screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>mkdir -p /etc/qlustar/common/image-files/beegfs/{meta,storage}</command>
 
@@ -266,13 +282,15 @@ All done.
 <prompt>0 root@cl-head ~ #</prompt>
 <command>scp sn-1:/etc/beegfs/storage/available/default.conf \
 /etc/qlustar/common/image-files/beegfs/storage/default.conf</command>
-		  </screen>
-		</para>
-	      </listitem>
-	      <listitem>
-		<para>
-		  Generate the Qlustar destination files:
-		  <screen>
+	      </screen>
+	    </para>
+	  </step>
+	  <step>
+	    <title>
+	      Generate the Qlustar destination files
+	    </title>
+	    <para>
+	      <screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>cat &lt;&lt;EOF &gt; /etc/qlustar/common/image-files/destinations.beegfs-server
 beegfs/meta/default.conf /etc/beegfs/meta/available root:root 644
@@ -292,21 +310,19 @@ EOF</command>
 beegfs-server: sn-[1-4]
 beegfs-client: beo-20[1-4] login-c
 EOF</command>
-		  </screen>
-		</para>
-	      </listitem>
-	    </itemizedlist>
-	  </para>
-	</listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Their beegfs role is assigned to the nodes in
-      <filename>/etc/qlustar/common/image-files/softgroups</filename>. Change the node names
-      there according to your naming scheme. With these configurations in place, BeeGFS server
-      and clients should start/mount automatically upon boot. The default client mount point is
-      <filename>/beegfs/client/default</filename>.
-    </para>
+	      </screen>
+		Their beegfs role is assigned to the nodes in
+		<filename>/etc/qlustar/common/image-files/softgroups</filename>. Change the node names
+		there according to your naming scheme.
+	    </para>
+	  </step>
+	</procedure>
+      </task>
+      <para>
+	With these configurations in place, BeeGFS server
+	and clients should start/mount automatically upon boot. The default client mount point is
+	<filename>/beegfs/client/default</filename>.
+      </para>
   </section>
 </chapter>
 
