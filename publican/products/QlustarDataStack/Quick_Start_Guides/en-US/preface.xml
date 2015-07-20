@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE preface [
-<!ENTITY % BOOK_ENTITIES SYSTEM "Getting_Started_Guides.ent">
+<!ENTITY % BOOK_ENTITIES SYSTEM "Quick_Start_Guides.ent">
 %BOOK_ENTITIES;
 <!ENTITY % sgml.features "IGNORE">
 <!ENTITY % xml.features "INCLUDE">

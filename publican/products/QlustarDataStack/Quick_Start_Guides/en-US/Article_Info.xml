@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE info [
-<!ENTITY % BOOK_ENTITIES SYSTEM "Getting_Started_Guides.ent">
+<!ENTITY % BOOK_ENTITIES SYSTEM "Quick_Start_Guides.ent">
 %BOOK_ENTITIES;
 <!ENTITY % sgml.features "IGNORE">
 <!ENTITY % xml.features "INCLUDE">
@@ -8,9 +8,9 @@
 "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<info version="5.0" xml:id="info-Qlustar_DataStack-Getting_started-Getting_started"
+<info version="5.0" xml:id="info-Qlustar_DataStack-Quick_Start"
       xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Getting Started Guides</title>
+  <title>Quick Start Guides</title>
   <subtitle></subtitle>
   <productname>Qlustar DataStack</productname>
   <productnumber>9.1</productnumber>
