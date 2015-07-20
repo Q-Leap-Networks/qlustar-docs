@@ -178,7 +178,8 @@
 	</para>
 	
 	<screen>
-<prompt>$</prompt><command> zpool create tank sde sdf sdg sdh</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank sde sdf sdg sdh</command>
 	</screen>
 	
 	<para>
@@ -189,7 +190,9 @@
 	</para>
 
 	<screen>
-<prompt>$</prompt><command> zpool status tank</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
 pool: tank
 state: ONLINE
 scan: none requested
@@ -210,10 +213,8 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 	
 	<bridgehead>
@@ -228,14 +229,12 @@ zpool destroy tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create tank mirror sde sdf sdg sdh
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank mirror sde sdf sdg sdh</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
   scan: none requested
@@ -260,10 +259,8 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 
 	<bridgehead>
@@ -277,14 +274,12 @@ zpool destroy tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create tank mirror sde sdf mirror sdg sdh
-</command>
-<command>
-<prompt>$</prompt>
-zpool status
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank mirror sde sdf mirror sdg sdh</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status</command>
+
   pool: tank
  state: ONLINE
   scan: none requested
@@ -313,10 +308,8 @@ errors: No known data errors
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 	
 	<bridgehead>
@@ -335,18 +328,16 @@ zpool destroy tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt> for i in {1..4}; do dd if=/dev/zero of=/tmp/file$i bs=1G count=4
-&amp;> /dev/null; done
-</command>
-<command>
-<prompt>$</prompt>
-zpool create tank /tmp/file1 /tmp/file2 /tmp/file3 /tmp/file4
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+for i in {1..4}; do dd if=/dev/zero of=/tmp/file$i bs=1G count=4
+&amp;> /dev/null; done</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank /tmp/file1 /tmp/file2 /tmp/file3 /tmp/file4</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
   scan: none requested
@@ -371,10 +362,8 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 	
 	<bridgehead>
@@ -390,15 +379,13 @@ zpool destroy tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt> 
+<prompt>0 root@cl-head ~ #</prompt><command>
 zpool create tank mirror /tmp/file1 /tmp/file2 mirror /tmp/file3
-/tmp/file4 log mirror sde sdf cache sdg sdh
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+/tmp/file4 log mirror sde sdf cache sdg sdh</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
   scan: none requested
@@ -445,10 +432,8 @@ errors: No known data errors
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 	
 	<bridgehead>
@@ -461,10 +446,9 @@ zpool destroy tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool status pool
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status pool</command>
+
   pool: pool
  state: ONLINE
   scan: scrub repaired 0 in 2h23m with 0 errors on Sun Dec  2 02:23:44 2012
@@ -508,34 +492,26 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-mdadm -C /dev/md0 -l 0 -n 4 /dev/sde /dev/sdf /dev/sdg /dev/sdh
-</command>
-<command>
-<prompt>$</prompt>
-pvcreate /dev/md0
-</command>
-<command>
-<prompt>$</prompt>
-vgcreate /dev/md0 tank
-</command>
-<command>
-<prompt>$</prompt>
-lvcreate -l 100%FREE -n videos tank
-</command>
-<command>
-<prompt>$</prompt>
-mkfs.ext4 /dev/tank/videos
-</command>
-<command>
-<prompt>$</prompt>
-mkdir -p /tank/videos
-</command>
-<command>
-<prompt>$</prompt>
-mount -t ext4 /dev/tank/videos /tank/videos
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm -C /dev/md0 -l 0 -n 4 /dev/sde /dev/sdf /dev/sdg /dev/sdh</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+pvcreate /dev/md0</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+vgcreate /dev/md0 tank</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvcreate -l 100%FREE -n videos tank</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mkfs.ext4 /dev/tank/videos</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mkdir -p /tank/videos</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount -t ext4 /dev/tank/videos /tank/videos</command>
 	</screen>
 
 	<para>
@@ -613,14 +589,12 @@ mount -t ext4 /dev/tank/videos /tank/videos
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create tank raidz1 sde sdf sdg
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank raidz1 sde sdf sdg</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: pool
  state: ONLINE
   scan: none requested
@@ -641,10 +615,8 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 
 	<bridgehead>
@@ -667,14 +639,12 @@ zpool destroy tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create tank raidz2 sde sdf sdg sdh
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank raidz2 sde sdf sdg sdh</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: pool
  state: ONLINE
   scan: none requested
@@ -696,10 +666,8 @@ errors: No known data errors
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 	
 	<bridgehead>
@@ -723,14 +691,12 @@ zpool destroy tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create tank raidz3 sde sdf sdg sdh sdi
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create tank raidz3 sde sdf sdg sdh sdi</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: pool
  state: ONLINE
   scan: none requested
@@ -753,10 +719,8 @@ config:
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
 	</screen>
 
 	<bridgehead>
@@ -863,10 +827,8 @@ zpool destroy tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool export tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool export tank</command>
 	</screen>
 	
 	<para>
@@ -891,14 +853,12 @@ zpool export tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool import tank
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import tank</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
  state: ONLINE
   scan: none requested
 config:
@@ -933,10 +893,8 @@ errors: No known data errors
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool import tank1 tank2
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import tank1 tank2</command>
 	</screen>
 	
 	<para>
@@ -944,10 +902,8 @@ zpool import tank1 tank2
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool import -a
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import -a</command>
 	</screen>
 	
 	<bridgehead>
@@ -965,15 +921,13 @@ zpool import -a
 
 	<screen>
 (server A)
-<command>
-<prompt>$</prompt>
-zpool destroy tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool destroy tank</command>
+
 (server B)
-<command>
-<prompt>$</prompt>
-zpool import -D
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import -D</command>
+
   pool: tank
     id: 17105118590326096187
  state: ONLINE (DESTROYED)
@@ -1021,22 +975,20 @@ config:
 	
 	<screen>
 (server B)
-<command>
-<prompt>$</prompt>
-zpool import -D tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import -D tank</command>
+
 cannot import 'tank': more than one matching pool
 import by numeric ID instead
+
 (server B)
-<command>
-<prompt>$</prompt>
-zpool import -D 17105118590326096187
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool import -D 17105118590326096187</command>
+
 (server B)
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
   scan: none requested
@@ -1067,10 +1019,9 @@ errors: No known data errors
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
 status: The pool is formatted using an older on-disk format.  The pool can
@@ -1120,10 +1071,9 @@ config:
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool upgrade -v
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool upgrade -v</command>
+
 This system is currently running ZFS pool version 28.
 The following versions are supported:
           
@@ -1167,10 +1117,8 @@ see the ZFS Administration Guide.
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool upgrade -a
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool upgrade -a</command>
 	</screen>
 	
 	<para>
@@ -1264,14 +1212,12 @@ zpool upgrade -a
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool scrub tank
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool scrub tank</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
   scan: scrub in progress since Sat Dec  8 08:06:36 2012
@@ -1302,10 +1248,8 @@ errors: No known data errors
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool scrub -s tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool scrub -s tank</command>
 	</screen>
 
 	<para>
@@ -1314,9 +1258,7 @@ zpool scrub -s tank
 	</para>
 	
 	<screen>
-<command>
-0 2 * * 0 /sbin/zpool scrub tank
-</command>
+<command>0 2 * * 0 /sbin/zpool scrub tank</command>
 	</screen>
 
 	<bridgehead>
@@ -1383,10 +1325,10 @@ zpool scrub -s tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt> for i in a b c d e f g; do echo -n "/dev/sd$i: "; hdparm -I
-/dev/sd$i | awk '/Serial Number/ {print $3}'; done
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+for i in a b c d e f g; do echo -n "/dev/sd$i: "; hdparm -I
+/dev/sd$i | awk '/Serial Number/ {print $3}'; done</command>
+
 /dev/sda: OCZ-9724MG8BII8G3255
 /dev/sdb: OCZ-69ZO5475MT43KNTU
 /dev/sdc: WD-WCAPD3307153
@@ -1414,14 +1356,12 @@ zpool scrub -s tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool replace tank sde sde
-</command>
-<command>
-<prompt>$</prompt>
-zpool status tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool replace tank sde sde</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status tank</command>
+
   pool: tank
  state: ONLINE
 status: One or more devices is currently being resilvered.  The pool will
@@ -1463,10 +1403,9 @@ config:
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool status -x
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool status -x</command>
+
 all pools are healthy
 	</screen>
 
@@ -2078,10 +2017,9 @@ all pools are healthy
  	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool get health tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool get health tank</command>
+
 NAME  PROPERTY  VALUE   SOURCE
 tank  health    ONLINE  -
 	</screen>
@@ -2092,10 +2030,9 @@ tank  health    ONLINE  -
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool get health,free,allocated tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool get health,free,allocated tank</command>
+
 NAME  PROPERTY   VALUE   SOURCE
 tank  health     ONLINE  -
 tank  free       176G    -
@@ -2107,10 +2044,9 @@ tank  allocated  32.2G   -
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool get all tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool get all tank</command>
+
 NAME  PROPERTY       VALUE       SOURCE
 tank  size           208G        -
 tank  capacity       15%         -
@@ -2150,14 +2086,12 @@ tank  expandsize     0           -
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool set comment="Contact admins@example.com" tank
-</command>
-<command>
-<prompt>$</prompt>
-zpool get comment tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool set comment="Contact admins@example.com" tank</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool get comment tank</command>
+
 NAME  PROPERTY  VALUE                       SOURCE
 tank  comment   Contact admins@example.com  local
 	</screen>
@@ -2170,10 +2104,8 @@ tank  comment   Contact admins@example.com  local
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zpool create -o ashift=12 tank raid1 sda sdb
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zpool create -o ashift=12 tank raid1 sda sdb</command>
 	</screen>
 
 	<bridgehead>
@@ -2659,14 +2591,12 @@ zpool create -o ashift=12 tank raid1 sda sdb
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create tank/test
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME         USED  AVAIL  REFER  MOUNTPOINT
           tank         175K  2.92G  43.4K  /tank
           tank/test   41.9K  2.92G  41.9K  /tank/test
@@ -2679,26 +2609,21 @@ zfs list
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create tank/test2
-</command>
-<command>
-<prompt>$</prompt>
-zfs create tank/test3
-</command>
-<command>
-<prompt>$</prompt>
-zfs create tank/test4
-</command>
-<command>
-<prompt>$</prompt>
-zfs create tank/test5
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test2</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test3</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test4</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test5</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME         USED  AVAIL  REFER  MOUNTPOINT
           tank         392K  2.92G  47.9K  /tank
           tank/test   41.9K  2.92G  41.9K  /tank/test
@@ -2715,19 +2640,16 @@ zfs list
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-cd /tank/test3
-</command>
-<command>
-<prompt>$</prompt> 
+<prompt>0 root@cl-head ~ #</prompt><command>
+cd /tank/test3</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
 for i in {1..10}; do dd if=/dev/urandom of=file$i.img bs=1024 count=$RANDOM
-&amp;> /dev/null; done
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+&amp;> /dev/null; done</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME         USED  AVAIL  REFER  MOUNTPOINT
           tank         159M  2.77G  49.4K  /tank
           tank/test   41.9K  2.77G  41.9K  /tank/test
@@ -2765,26 +2687,22 @@ zfs list
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-umount /tank/test5
-</command>
-<command>
-<prompt>$</prompt>
-mount | grep tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+umount /tank/test5</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount | grep tank</command>
+
 tank/test on /tank/test type zfs (rw,relatime,xattr)
 tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
 tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
 tank/test4 on /tank/test4 type zfs (rw,relatime,xattr)
-<command>
-<prompt>$</prompt>
-zfs mount tank/test5
-</command>
-<command>
-<prompt>$</prompt>
-mount | grep tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs mount tank/test5</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount | grep tank</command>
+
 tank/test on /tank/test type zfs (rw,relatime,xattr)
 tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
 tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
@@ -2801,14 +2719,12 @@ tank/test5 on /tank/test5 type zfs (rw,relatime,xattr)
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs set mountpoint=/mnt/test tank/test
-</command>
-<command>
-<prompt>$</prompt>
-mount | grep tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs set mountpoint=/mnt/test tank/test</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount | grep tank</command>
+
 tank on /tank type zfs (rw,relatime,xattr)
 tank/test2 on /tank/test2 type zfs (rw,relatime,xattr)
 tank/test3 on /tank/test3 type zfs (rw,relatime,xattr)
@@ -2836,14 +2752,12 @@ tank/test on /mnt/test type zfs (rw,relatime,xattr)
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create tank/test/log
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/test/log</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME            USED  AVAIL  REFER  MOUNTPOINT
           tank            159M  2.77G  47.9K  /tank
           tank/test      85.3K  2.77G  43.4K  /mnt/test
@@ -2865,14 +2779,12 @@ zfs list
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs destroy tank/test5
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs destroy tank/test5</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME            USED  AVAIL  REFER  MOUNTPOINT
           tank            159M  2.77G  49.4K  /tank
           tank/test      41.9K  2.77G  41.9K  /mnt/test
@@ -2890,14 +2802,12 @@ zfs list
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs rename tank/test3 tank/music
-</command>
-<command>
-<prompt>$</prompt>
-zfs list
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs rename tank/test3 tank/music</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list</command>
+
           NAME            USED  AVAIL  REFER  MOUNTPOINT
           tank            159M  2.77G  49.4K  /tank
           tank/music      158M  2.77G   158M  /tank/music
@@ -2964,14 +2874,11 @@ zfs list
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create tank/log
-</command>
-<command>
-<prompt>$</prompt>
-zfs set compression=lzjb tank/log
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create tank/log</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs set compression=lzjb tank/log</command>
 	</screen>
 
 	<para>
@@ -2982,25 +2889,23 @@ zfs set compression=lzjb tank/log
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-tar -cf /tank/test/text.tar /var/log/ /etc/
-</command>
-<command>
-<prompt>$</prompt>
-ls -lh /tank/test/text.tar
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+tar -cf /tank/test/text.tar /var/log/ /etc/</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -lh /tank/test/text.tar</command>
+
 -rw-rw-r-- 1 root root 24M Dec 17 21:24 /tank/test/text.tar
-<command>
-<prompt>$</prompt>
-zfs list tank/test
-</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list tank/test</command>
+
           NAME        USED  AVAIL  REFER  MOUNTPOINT
           tank/test  11.1M  2.91G  11.1M  /tank/test
-<command>
-<prompt>$</prompt>
-zfs get compressratio tank/test
-</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs get compressratio tank/test</command>
+
           NAME       PROPERTY       VALUE  SOURCE
           tank/test  compressratio  2.14x  -
 	</screen>
@@ -3068,10 +2973,8 @@ zfs get compressratio tank/test
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs snapshot tank/test@tuesday
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs snapshot tank/test@tuesday</command>
 	</screen>
 	
 	<para>
@@ -3082,10 +2985,9 @@ zfs snapshot tank/test@tuesday
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs set compression=lzjb tank/test@friday
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs set compression=lzjb tank/test@friday</command>
+
 cannot set property for 'tank/test@friday': this property can not be modified for
 snapshots
 	</screen>
@@ -3101,19 +3003,17 @@ snapshots
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-ls -a /tank/test
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -a /tank/test</command>
+
 ./  ../  boot.tar  text.tar  text.tar.2
-<command>
-<prompt>$</prompt>
-cd /tank/test/.zfs/
-</command>
-<command>
-<prompt>$</prompt>
-ls -a
-</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+cd /tank/test/.zfs/</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -a</command>
+
 ./  ../  shares/  snapshot/
 	</screen>
 
@@ -3125,14 +3025,12 @@ ls -a
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs set snapdir=visible tank/test
-</command>
-<command>
-<prompt>$</prompt>
-ls -a /tank/test
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs set snapdir=visible tank/test</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -a /tank/test</command>
+
 ./  ../  boot.tar  text.tar  text.tar.2  .zfs/
 	</screen>
 
@@ -3142,10 +3040,9 @@ ls -a /tank/test
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs list -t snapshot
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list -t snapshot</command>
+
           NAME                              USED  AVAIL  REFER  MOUNTPOINT
           pool/cache@2012:12:18:51:2:19:00     0      -   525M  -
           pool/cache@2012:12:18:51:2:19:15     0      -   525M  -
@@ -3177,10 +3074,9 @@ zfs list -t snapshot
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs list -r -t snapshot tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list -r -t snapshot tank</command>
+
           NAME                              USED  AVAIL  REFER  MOUNTPOINT
           tank@2012:12:18:51:2:19:00           0      -  43.4K  -
           tank@2012:12:18:51:2:19:15           0      -  43.4K  -
@@ -3199,10 +3095,8 @@ zfs list -r -t snapshot tank
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs destroy tank/test@2012:12:18:51:2:19:15
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs destroy tank/test@2012:12:18:51:2:19:15</command>
 	</screen>
 
 	<para>
@@ -3212,10 +3106,9 @@ zfs destroy tank/test@2012:12:18:51:2:19:15
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs destroy tank/test
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs destroy tank/test</command>
+
 cannot destroy 'tank/test': filesystem has children
 use '-r' to destroy the following datasets:
 tank/test@2012:12:18:51:2:19:15
@@ -3238,10 +3131,8 @@ tank/test@2012:12:18:51:2:19:00
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs rename tank/test@2012:12:18:51:2:19:15 tank/test@tuesday-19:15
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs rename tank/test@2012:12:18:51:2:19:15 tank/test@tuesday-19:15</command>
 	</screen>
 
 	<bridgehead>
@@ -3267,10 +3158,9 @@ zfs rename tank/test@2012:12:18:51:2:19:15 tank/test@tuesday-19:15
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs rollback tank/test@tuesday
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs rollback tank/test@tuesday</command>
+
 cannot rollback to 'tank/test@tuesday': more recent snapshots exist
 use '-r' to force deletion of the following snapshots:
 tank/test@wednesday
@@ -3314,18 +3204,15 @@ tank/test@thursday
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs clone tank/test@tuesday tank/tuesday
-</command>
-<command>
-<prompt>$</prompt>
-dd if=/dev/zero of=/tank/tuesday/random.img bs=1M count=100
-</command>
-<command>
-<prompt>$</prompt>
-zfs list -r tank
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs clone tank/test@tuesday tank/tuesday</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dd if=/dev/zero of=/tank/tuesday/random.img bs=1M count=100</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs list -r tank</command>
+
           NAME           USED  AVAIL  REFER  MOUNTPOINT
           tank           161M  2.78G  44.9K  /tank
           tank/test     37.1M  2.78G  37.1M  /tank/test
@@ -3343,10 +3230,8 @@ zfs list -r tank
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs destroy tank/tuesday
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs destroy tank/tuesday</command>
 	</screen>
 
 	<para>
@@ -3435,14 +3320,11 @@ zfs destroy tank/tuesday
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs snapshot tank/test@tuesday
-</command>
-<command>
-<prompt>$</prompt>
-zfs send tank/test@tuesday > /backup/test-tuesday.img
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs snapshot tank/test@tuesday</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs send tank/test@tuesday > /backup/test-tuesday.img</command>
 	</screen>
 
 	<para>
@@ -3452,10 +3334,8 @@ zfs send tank/test@tuesday > /backup/test-tuesday.img
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs send tank/test@tuesday | xz > /backup/test-tuesday.img.xz
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs send tank/test@tuesday | xz > /backup/test-tuesday.img.xz</command>
 	</screen>
 
 	<para>
@@ -3463,10 +3343,9 @@ zfs send tank/test@tuesday | xz > /backup/test-tuesday.img.xz
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt> zfs send tank/test@tuesday | xz | openssl enc -aes-256-cbc -a
--salt > /backup/test-tuesday.img.xz.asc
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs send tank/test@tuesday | xz | openssl enc -aes-256-cbc -a
+-salt > /backup/test-tuesday.img.xz.asc</command>
 	</screen>
 
 	<bridgehead>
@@ -3487,10 +3366,8 @@ zfs send tank/test@tuesday | xz > /backup/test-tuesday.img.xz
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs receive tank/test2 &lt; /backup/test-tuesday.img
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs receive tank/test2 &lt; /backup/test-tuesday.img</command>
 	</screen>	
 
 	<para>
@@ -3499,10 +3376,9 @@ zfs receive tank/test2 &lt; /backup/test-tuesday.img
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt> openssl enc -d -aes-256-cbc -a -in /storage/temp/testzone.gz.ssl
-| unxz | zfs receive tank/test2
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+openssl enc -d -aes-256-cbc -a -in /storage/temp/testzone.gz.ssl
+| unxz | zfs receive tank/test2</command>
 	</screen>
 	
 	<para>
@@ -3520,10 +3396,8 @@ zfs receive tank/test2 &lt; /backup/test-tuesday.img
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt> 
-zfs send tank/test@tuesday | zfs receive pool/test
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs send tank/test@tuesday | zfs receive pool/test</command>
 	</screen>
 
 	<para>
@@ -3533,10 +3407,8 @@ zfs send tank/test@tuesday | zfs receive pool/test
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt> 
-zfs send tank/test@tuesday | ssh user@server.example.com "zfs receive pool/test"
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs send tank/test@tuesday | ssh user@server.example.com "zfs receive pool/test"</command>
 	</screen>
 
 	<para>
@@ -3591,19 +3463,17 @@ zfs send tank/test@tuesday | ssh user@server.example.com "zfs receive pool/test"
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create -V 1G tank/disk1
-</command>
-<command>
-<prompt>$</prompt>
-ls -l /dev/zvol/tank/disk1
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create -V 1G tank/disk1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /dev/zvol/tank/disk1</command>
+
 lrwxrwxrwx 1 root root 11 Dec 20 22:10 /dev/zvol/tank/disk1 -> ../../zd144
-<command>
-<prompt>$</prompt>
-ls -l /dev/tank/disk1
-</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /dev/tank/disk1</command>
+
 lrwxrwxrwx 1 root root 8 Dec 20 22:10 /dev/tank/disk1 -> ../zd144
 	</screen>
 	
@@ -3617,14 +3487,11 @@ lrwxrwxrwx 1 root root 8 Dec 20 22:10 /dev/tank/disk1 -> ../zd144
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-fallocate -l 1G /tmp/file.img
-</command>
-<command>
-<prompt>$</prompt>
-losetup /dev/loop0 /tmp/file.img
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+fallocate -l 1G /tmp/file.img</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+losetup /dev/loop0 /tmp/file.img</command>
 	</screen>
 
 	<para>
@@ -3660,10 +3527,8 @@ losetup /dev/loop0 /tmp/file.img
 	</para>
 
 	<screen>
-<command>
-  <prompt>$</prompt>
-  free
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+free</command>
 	
 	                  total       used       free     shared    buffers     cached
              Mem:      12327288    8637124    3690164          0     175264    1276812
@@ -3677,22 +3542,17 @@ losetup /dev/loop0 /tmp/file.img
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create -V 1G tank/swap
-</command>
-<command>
-<prompt>$</prompt>
-mkswap /dev/zvol/tank/swap
-</command>
-<command>
-<prompt>$</prompt>
-swapon /dev/zvol/tank/swap
-</command>
-<command>
-<prompt>$</prompt>
-free
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create -V 1G tank/swap</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mkswap /dev/zvol/tank/swap</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+swapon /dev/zvol/tank/swap</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+free</command>
 	
                  total       used       free     shared    buffers     cached
     Mem:      12327288    8667492    3659796          0     175268    1276804
@@ -3717,20 +3577,17 @@ free
 	</para>
 	
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs create -V 100G tank/ext4
-</command>
-<command>
-<prompt>$</prompt>
-fdisk /dev/tank/ext4
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs create -V 100G tank/ext4</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+fdisk /dev/tank/ext4</command>
+
 ( follow the prompts to create 2 partitions- the first 1 GB in size, the second to
 fill the rest )
-<command>
-<prompt>$</prompt>
-fdisk -l /dev/tank/ext4
-</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+fdisk -l /dev/tank/ext4</command>
 	
     Disk /dev/tank/ext4: 107.4 GB, 107374182400 bytes
     16 heads, 63 sectors/track, 208050 cylinders, total 209715200 sectors
@@ -3750,22 +3607,17 @@ fdisk -l /dev/tank/ext4
 	</para>
 
 	<screen>
-<command>
-<prompt>$</prompt>
-zfs set compression=lzjb pool/ext4
-</command>
-<command>
-<prompt>$</prompt>
-tar -cf /mnt/zd0p1/files.tar /etc/
-</command>
-<command>
-<prompt>$</prompt>
-tar -cf /mnt/zd0p2/files.tar /etc /var/log/
-</command>
-<command>
-<prompt>$</prompt>
-zfs snapshot tank/ext4@001
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs set compression=lzjb pool/ext4</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+tar -cf /mnt/zd0p1/files.tar /etc/</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+tar -cf /mnt/zd0p2/files.tar /etc /var/log/</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+zfs snapshot tank/ext4@001</command>
 	</screen>
 
 	<para>
@@ -3822,7 +3674,6 @@ zfs snapshot tank/ext4@001
 	  of ZFS that we have been blogging about up to this point, and beyond, for whatever
 	  data resides on your ZVOL.
 	</para>
-
       </section>
     </section>
   </section>

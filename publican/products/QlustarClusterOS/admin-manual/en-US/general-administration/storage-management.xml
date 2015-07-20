@@ -33,7 +33,9 @@
 	Example:
       </para>
       <screen>
-<prompt>$ </prompt>cat /proc/mdstat
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /proc/mdstat</command>
+
 Personalities : [raid0] [raid1] [raid5] [multipath]
 read_ahead 1024 sectors
 md0 : active raid1 sdb1[1] sda1[0]
@@ -55,66 +57,52 @@ unused devices: &lt;none&gt;
 	To remove the faulty partition:
       </para>
       <screen>
-<command>
-<prompt>$ </prompt>mdadm --manage /dev/md1 -r /dev/sdb2
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md1 -r /dev/sdb2</command>
       </screen>
       <para>
 	To mark the other affected partitions on the disk as faulty and remove them:
       </para>
       <screen>
-<command>
-<prompt>$ </prompt> 
-mdadm --manage /dev/md0 -f /dev/sdb1
-</command>
-<command>
-<prompt>$ </prompt>
- mdadm --manage /dev/md0 -r /dev/sdb1
-</command>
-<command>
-<prompt>$ </prompt> 
-mdadm --manage /dev/md2 -f /dev/sdb3
-</command>
-<command>
-<prompt>$ </prompt> 
-mdadm --manage /dev/md2 -r /dev/sdb3
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -f /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -r /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -f /dev/sdb3</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -r /dev/sdb3</command>
       </screen>
       <para>
 	Now the disk is not accessed any more and can be removed. After the new disk has
 	been inserted, repartition it:
       </para>
       <screen>
-<command>
-<prompt>$ </prompt>
-sfdisk -d /dev/sda | sfdisk /dev/sdb
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+sfdisk -d /dev/sda | sfdisk /dev/sdb</command>
       </screen>
       <para>
 	Now start the resync
       </para>
       <screen>
-<command>
-<prompt>$ </prompt>
-mdadm --manage /dev/md0 -a /dev/sdb1
-</command>
-<command>
-<prompt>$ </prompt>
-mdadm --manage /dev/md1 -a /dev/sdb2
-</command>
-<command>
-<prompt>$ </prompt>
-mdadm --manage /dev/md2 -a /dev/sdb3
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -a /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md1 -a /dev/sdb2</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -a /dev/sdb3</command>
       </screen>
       <para>
 	To watch the resync process, you can enter:
       </para>
       <screen>
-<command>
-<prompt>$ </prompt>
-watch --differences=cumulative cat /proc/mdstat
-</command> 
+<prompt>0 root@cl-head ~ #</prompt><command>
+watch --differences=cumulative cat /proc/mdstat</command> 
       </screen>
       <para>
 	Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to exit the display
@@ -139,18 +127,14 @@ watch --differences=cumulative cat /proc/mdstat
       Examples:
     </para>
     <screen>
-<command>
-<prompt>$ </prompt>
-pvcreate /dev/sdb1
-</command>
-<command>
-<prompt>$ </prompt>
-vgcreate vg0 /dev/sdb1
-</command>
-<command>
-<prompt>$ </prompt>
-lvcreate -n scratch -L 1GB vg0
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+pvcreate /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+vgcreate vg0 /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvcreate -n scratch -L 1GB vg0</command>
     </screen>
     <para>
       These commands declare /dev/sdb1 as a physical volume, create the volume group
@@ -159,28 +143,22 @@ lvcreate -n scratch -L 1GB vg0
       and mount it:
     </para>
     <screen>
-<command>
-<prompt>$ </prompt>
-mkfs.ext4 /dev/vg0/scratch
-</command>
-<command>
-<prompt>$ </prompt>
-mount /dev/vg0/scratch /scratch
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mkfs.ext4 /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount /dev/vg0/scratch /scratch</command>
     </screen>
     <para>
       To increase the size of the filesystem you do not have to unmount it but you have to
       increase the logical volume before resizing the filesystem:
     </para>
     <screen>
-<command>
-<prompt>$ </prompt>
-lvextend -L +1G /dev/vg0/scratch
-</command>
-<command>
-<prompt>$ </prompt>
-resize2fs /dev/vg0/scratch
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvextend -L +1G /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+resize2fs /dev/vg0/scratch</command>
     </screen>
     <para>
       This increased the filesystem by 1 Gb. If you want to decrease the size of the filesystem
@@ -188,26 +166,20 @@ resize2fs /dev/vg0/scratch
       logical volume:
     </para>
     <screen>
-<command>
-<prompt>$ </prompt>
-unmount /scratch
-</command>
-<command>
-<prompt>$ </prompt>
-e2fsck -f /dev/vg0/scratch
-</command>
-<command>
-<prompt>$ </prompt>
-resize2fs /dev/vg0/scratch 500M
-</command>
-<command>
-<prompt>$ </prompt>
-lvreduce -L 500M /dev/vg0/scratch
-</command>
-<command>
-<prompt>$ </prompt>
-mount /dev/vg0/scratch /scratch
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+unmount /scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+e2fsck -f /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+resize2fs /dev/vg0/scratch 500M</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvreduce -L 500M /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount /dev/vg0/scratch /scratch</command>
     </screen>
     <para>
       This decreased the filesystem to 500Mb. To check how much space is left in a volume

@@ -29,8 +29,8 @@
       the Internet either directly or through a http proxy the file will look like this:
     </para>
     <screen>
-      deb http://repo.qlustar.com/repo/ubuntu 8.1-precise main universe non-free
-      deb http://repo.qlustar.com/repo/ubuntu 8.1-precise-proposed-updates main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 8.1-precise main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 8.1-precise-proposed-updates main universe non-free
     </screen>
     <para>
       This enables access to the Qlustar 8.1 software repository.
@@ -65,8 +65,11 @@
       running the two commands
     </para>
     <screen>
-      <command><prompt>$ </prompt>apt-get update</command>
-      <command><prompt>$ </prompt>apt-get dist-upgrade.</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt-get update</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt-get dist-upgrade.</command>
     </screen>
     <para>
       Detailed upgrade instructions for a Qlustar system can be found in the 
@@ -101,30 +104,28 @@
        configured for you.  
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	 gcc --version
-       </command>
-       gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
-       Copyright (C) 2011 Free Software Foundation, Inc.
-       This is free software; see the source for copying conditions.  There is NO
-       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+<prompt>0 root@cl-head ~ #</prompt><command>
+gcc --version</command>
+
+gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
      </screen>
      <para>
        This tells us that currently we are running the version 4.6.3 of the GNU C compiler. Let
        us inspect the <replaceable>gcc</replaceable> binary.
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	 which gcc
-       </command>
-       /usr/bin/gcc
-       <command>
-	 <prompt>$ </prompt>
-	 ls -l /usr/bin/gcc
-       </command>
-       lrwxrwxrwx ... /usr/bin/gcc -> /etc/alternatives/gcc
+<prompt>0 root@cl-head ~ #</prompt><command>
+which gcc</command>
+
+/usr/bin/gcc
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /usr/bin/gcc</command>
+
+lrwxrwxrwx ... /usr/bin/gcc -> /etc/alternatives/gcc
      </screen>
      <para>
        As we tried to locate the <command>gcc</command> command, we found that
@@ -135,16 +136,15 @@
        software alternatives are configured in Ubuntu/Debian. Let us inspect a little further.
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	 ls -l /etc/alternatives/gcc
-       </command>
-       lrwxrwxrwx 1 root root 16 Mai 13 19:23 /etc/alternatives/gcc -> /usr/bin/gcc-4.6
-       <command>
-	 <prompt>$ </prompt>
-	 ls -l /usr/bin/gcc-4.6
-       </command>
-       -rwxr-xr-x 1 root root 353216 Apr 16  2012 /usr/bin/gcc-4.6
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /etc/alternatives/gcc</command>
+
+lrwxrwxrwx 1 root root 16 Mai 13 19:23 /etc/alternatives/gcc -> /usr/bin/gcc-4.6
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /usr/bin/gcc-4.6</command>
+
+-rwxr-xr-x 1 root root 353216 Apr 16  2012 /usr/bin/gcc-4.6
      </screen>
      <para>
        We have another symbolic link, this time referring to 
@@ -163,15 +163,14 @@
        current setup of <replaceable>gcc</replaceable>.
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	 update-alternatives --display gcc
-       </command>
-       gcc - auto mode
-       link currently points to /usr/bin/gcc-4.6
-       /usr/bin/gcc-4.8 - priority 20
-       /usr/bin/gcc-4.6 - priority 50
-       Current ‘best’ version is /usr/bin/gcc-4.6
+<prompt>0 root@cl-head ~ #</prompt><command>
+update-alternatives --display gcc</command>
+
+gcc - auto mode
+link currently points to /usr/bin/gcc-4.6
+/usr/bin/gcc-4.8 - priority 20
+/usr/bin/gcc-4.6 - priority 50
+Current ‘best’ version is /usr/bin/gcc-4.6
      </screen>
      <para>
        As you can see the current link points to <filename>/usr/bin/gcc-4.6</filename>
@@ -187,60 +186,57 @@
        we can tell <command>update-alternatives</command> to use exactly this version:
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	 update-alternatives --config gcc
-       </command>
-       There are 2 alternatives which provide ‘gcc’.
-       Selection Alternative
-       -----------------------------------------------
-       + 1 /usr/bin/gcc-4.8
-       2 /usr/bin/gcc-4.6
-       *Press enter to keep the default[*], or type selection number:
+<prompt>0 root@cl-head ~ #</prompt><command>
+update-alternatives --config gcc</command>
+
+There are 2 alternatives which provide ‘gcc’.
+Selection Alternative
+-----------------------------------------------
++ 1 /usr/bin/gcc-4.8
+2 /usr/bin/gcc-4.6
+*Press enter to keep the default[*], or type selection number:
      </screen>
      <para>
        We already knew by looking at the output that there where only two options. Now we
        can select which option we want. Let’s look at the output of the command again.
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	  update-alternatives --display gcc
-       </command>
-       gcc - status is manual.
-       link currently points to /usr/bin/4.8
-       /usr/bin/gcc-4.6 - priority 50
-       /usr/bin/gcc-4.8 - priority 20
-       Current ‘best’ version is /usr/bin/gcc-4.6.
+<prompt>0 root@cl-head ~ #</prompt><command>
+update-alternatives --display gcc</command>
+
+gcc - status is manual.
+link currently points to /usr/bin/4.8
+/usr/bin/gcc-4.6 - priority 50
+/usr/bin/gcc-4.8 - priority 20
+Current ‘best’ version is /usr/bin/gcc-4.6.
      </screen>
      <para>
        We got a link currently pointing to <filename>/usr/bin/gcc-4.8</filename>
        so we quickly do the same checking as we did before.
      </para>
      <screen>
-       <command>
-	 <prompt>$ </prompt>
-	  which gcc
-       </command>
-       /usr/bin/gcc
-       <command>
-	 <prompt>$ </prompt>
-	  ls -l /usr/bin/gcc
-       </command>
-       lrwxrwxrwx 1 root root 21 Sep  2 18:32 /usr/bin/gcc -> /etc/alternatives/gcc
-       <command>
-	 <prompt>$ </prompt>
-	 ls -l /etc/alternatives/gcc
-       </command>
-       lrwxrwxrwx 1 root root 16 Sep  2 18:32 /etc/alternatives/gcc -> /usr/bin/gcc-4.8
-       <command>
-	 <prompt>$ </prompt>
-	  gcc --version
-       </command>
-       gcc (Ubuntu 4.8.1-2ubuntu1~10.04.1) 4.8.1
-       Copyright (C) 2013 Free Software Foundation, Inc.
-       This is free software; see the source for copying conditions.  There is NO
-       warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+<prompt>0 root@cl-head ~ #</prompt><command>
+which gcc</command>
+
+/usr/bin/gcc
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /usr/bin/gcc</command>
+
+lrwxrwxrwx 1 root root 21 Sep  2 18:32 /usr/bin/gcc -> /etc/alternatives/gcc
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+ls -l /etc/alternatives/gcc</command>
+
+lrwxrwxrwx 1 root root 16 Sep  2 18:32 /etc/alternatives/gcc -> /usr/bin/gcc-4.8
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+gcc --version</command>
+
+gcc (Ubuntu 4.8.1-2ubuntu1~10.04.1) 4.8.1
+Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
      </screen>
      <para>
        Only the link within <filename>/etc/alternatives</filename> has changed.

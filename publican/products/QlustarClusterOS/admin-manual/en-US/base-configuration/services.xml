@@ -152,7 +152,9 @@
       to activate it. This is achieved by executing the command
     </para>
 
-    <screen><command><prompt>$</prompt> /etc/init.d/nfs-kernel-server reload</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/nfs-kernel-server reload</command>
     </screen>
     
   </section>

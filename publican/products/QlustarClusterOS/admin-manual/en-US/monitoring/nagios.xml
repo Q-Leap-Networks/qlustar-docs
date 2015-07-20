@@ -115,14 +115,11 @@ log_passive_checks=0
    </para>
 
 <screen>
-<command>
-<prompt>$ </prompt>
-dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw
-</command>
-<command>
-<prompt>$ </prompt>
-dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3</command>
 </screen>
    
    <para>
@@ -310,10 +307,8 @@ define command {
    </para>
 
    <screen>
-<command>
-  <prompt>$ </prompt>
-  /etc/init.d/nagios3 stop
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/nagios3 stop</command>
    </screen>
    
    <para>
@@ -321,14 +316,11 @@ define command {
    </para>
    
    <screen>
-<command>
-  <prompt>$ </prompt>
-/etc/init.d/ganglia-monitor restart
-</command>
-<command>
-  <prompt>$ </prompt>
-/etc/init.d/gmetad restart
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/ganglia-monitor restart</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/gmetad restart</command>
    </screen>
 
    <para>
@@ -337,18 +329,14 @@ define command {
    </para>
 
    <screen>
-<command>
-  <prompt>$ </prompt>
-  dsh -a /etc/init.d/ganglia-monitor restart
-</command>
-<command>
-  <prompt>$ </prompt>
-  dsh -a /etc/init.d/gmetric stop
-</command>
-<command>
-  <prompt>$ </prompt>
-  dsh -a /etc/init.d/gmetric start
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/ganglia-monitor restart</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/gmetric stop</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/gmetric start</command>
    </screen>
 
    <para>
@@ -356,10 +344,8 @@ define command {
    </para>
 
    <screen>
-<command>
-  <prompt>$ </prompt>
-  /etc/init.d/nagios3 start
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/nagios3 start</command>
    </screen>
    
  </section>

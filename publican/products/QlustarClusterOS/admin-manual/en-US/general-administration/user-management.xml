@@ -15,9 +15,10 @@
     <para>Adding users is conveniently performed by invoking the script</para>
     <para><command>/usr/sbin/adduser.sh.</command> Example:</para>
     <para>
-    <screen><prompt>$ </prompt><command>/usr/sbin/adduser.sh -u 
-    <replaceable>username</replaceable> -n
-    <replaceable>'real name'</replaceable></command></screen>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/usr/sbin/adduser.sh -u <replaceable>username</replaceable> -n <replaceable>'real name'</replaceable></command>
+    </screen>
     </para>
     <para>
     This script performs all the tasks necessary for creating a new user account. There are
@@ -39,18 +40,14 @@
       Example:
     </para>
       <screen>
-<prompt>$ </prompt>
-<command>removeuser.sh
-<replaceable>username</replaceable>
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+removeuser.sh <replaceable>username</replaceable></command>
       </screen>
       <para>To recursively remove the user’s home-directory as well add the 
       <command>-r</command> option:</para>
       <screen>
-<prompt>$ </prompt>
-<command>removeuser.sh -r
-<replaceable>username</replaceable>
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+removeuser.sh -r <replaceable>username</replaceable></command>
 </screen>
 
       <para>There are other options to this script that you can view when invoking it with 
@@ -84,10 +81,8 @@ NO_USER_LOGIN_ON_NODES=true
     </para>
  
     <screen>
-<prompt>$ </prompt>
-<command>dsh <replaceable>-a</replaceable>
-/etc/init.d/torque-mom restart
-</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh <replaceable>-a</replaceable> /etc/init.d/torque-mom restart</command>
     </screen>
     <para>
       Following this procedure the administrator can change the cluster behaviour so that

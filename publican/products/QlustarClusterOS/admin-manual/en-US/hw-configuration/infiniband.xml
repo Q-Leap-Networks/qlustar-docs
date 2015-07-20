@@ -21,7 +21,10 @@
       tools that can verify the validity of the hardware setup. In this section, we describe a
       number of checks that can help to setup a flawless IB fabric.
     </para>
-    <screen><command><prompt>$</prompt> ibstat</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibstat
+</command>
 CA 'mlx4_0'
 CA type: MT26428
 Number of ports: 1
@@ -41,19 +44,37 @@ Port GUID: 0x003048fffff4cb8d
 Link layer: InfiniBand
     </screen>
     
-    <screen><command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/rate</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /sys/class/infiniband/mlx4_0/ports/1/rate
+</command>
 40 Gb/sec (4X QDR)
-<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/state</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /sys/class/infiniband/mlx4_0/ports/1/state
+</command>
 4: ACTIVE
-<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/ports/1/phys_state</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /sys/class/infiniband/mlx4_0/ports/1/phys_state
+</command>
 5: LinkUp
-<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/board_id</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /sys/class/infiniband/mlx4_0/board_id
+</command>
 SM_2122000001000
-<command><prompt>$</prompt> cat /sys/class/infiniband/mlx4_0/fw_ver </command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /sys/class/infiniband/mlx4_0/fw_ver
+</command>
 2.7.0
     </screen>
 
-    <screen><command><prompt>$</prompt> ibv_devinfo</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibv_devinfo
+</command>
 hca_id: mlx4_0
 fw_ver: 2.7.000
 node_guid: 0030:48ff:fff4:cb8c
@@ -72,13 +93,19 @@ port_lid: 310
 port_lmc: 0x00
     </screen>
 
-    <screen><command><prompt>$</prompt> ibv_devices </command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibv_devices
+</command>
 device node GUID
 ------ ----------------
 mlx4_0 003048fffff4cb8c
     </screen>
 
-    <screen><command><prompt>$</prompt> ifconfig ib0</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ifconfig ib0
+</command>
 ib0 Link encap:UNSPEC HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00 
 inet addr:172.17.7.105 Bcast:172.17.127.255 Mask:255.255.128.0
 UP BROADCAST RUNNING MULTICAST MTU:2044 Metric:1
@@ -88,7 +115,10 @@ collisions:0 txqueuelen:256
 RX bytes:39462502 (39.4 MB) TX bytes:2040 (2.0 KB)
     </screen>
 
-    <screen><command><prompt>$</prompt> ibswitches </command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibswitches
+</command>
 Switch : 0x0002c902004885b0 ports 36 "MF0;cluster-ibs:IS5300/L18/U1" base port 0 lid 17 lmc 0
 Switch : 0x0002c90200488f60 ports 36 "MF0;cluster-ibs:IS5300/L17/U1" base port 0 lid 22 lmc 0
 Switch : 0x0002c902004885a8 ports 36 "MF0;cluster-ibs:IS5300/L16/U1" base port 0 lid 16 lmc 0
@@ -118,7 +148,10 @@ Switch : 0x0002c90200479668 ports 36 "MF0;cluster-ibs:IS5300/S01/U1" enhanced po
 Switch : 0x0002c90200488500 ports 36 "MF0;cluster-ibs:IS5300/L04/U1" base port 0 lid 11 lmc 0
     </screen>
 
-    <screen><command><prompt>$</prompt> ibnodes | head -10</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibnodes | head -10
+</command>
 Ca : 0x0002c902002141f0 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
 Ca : 0x0002c90200214150 ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
 Ca : 0x0002c9020021412c ports 1 "MT25204 InfiniHostLx Mellanox Technologies"
@@ -136,7 +169,10 @@ Ca : 0x002590ffff2fc5f4 ports 1 "MT25408 ConnectX Mellanox Technologies"
       40 lines here:
     </para>
 
-    <screen><command><prompt>$</prompt> ibnetdiscover | head -40</command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibnetdiscover | head -40</command>
+
 # Topology file: generated on Thu Oct 10 14:06:20 2013
 #
 # Initiated from node 0002c903000c817c port 0002c903000c817d
@@ -176,12 +212,18 @@ Switch 36 "S-0002c90200488f60" # "MF0;cluster-ibs:IS5300/L17/U1" base port 0 lid
 [9] "H-0002c90200214164"[1](2c90200214165) # "MT25204 InfiniHostLx Mellanox Technologies" lid 293 4xDDR
     </screen>
 
-    <screen><command><prompt>$</prompt> ibcheckstate </command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibcheckstate 
+</command>
 ## Summary: 215 nodes checked, 0 bad nodes found
 ## 1024 ports checked, 0 ports with bad state found
     </screen>
 
-    <screen><command><prompt>$</prompt> ibcheckwidth </command>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+ibcheckwidth
+</command>
 ## Summary: 215 nodes checked, 0 bad nodes found
 ## 1024 ports checked, 0 ports with 1x width in error found
     </screen>
