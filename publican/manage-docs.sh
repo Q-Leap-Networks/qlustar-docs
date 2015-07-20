@@ -65,6 +65,7 @@ ALLOWED_ACTIONS=$(concat_string "create-document,update-document," \
 ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /} # Remove spaces from concatenation
 ALLOWED_ACTIONS_USAGE="$(echo ${ALLOWED_ACTIONS} \
   | sed -e 's/\,/,\n                          /g')"
+ALLOWED_FORMATS="html,html-single,pdf,epub,txt"
 
 # Scan for products/documents in product dir
 # ------------------------------------------
@@ -227,8 +228,10 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     -f|--formats)
-      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
-	"allowed=$ALLOWED_FORMATS"
+      for format in $(echo "${2//,/ }"); do
+	check_single_arg "$all_args" "$USAGE" "$1" "$format" \
+	  "allowed=$ALLOWED_FORMATS"
+      done
       FORMATS="$2"
       shift
       ;;
