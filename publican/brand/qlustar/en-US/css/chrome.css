@@ -73,14 +73,16 @@ a.email:hover {
     text-decoration: underline;
 }
 
-/* Set color and opacity for screens */
+/* Set color + opacity + line distance for screens */
 .screen {
     background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
 }
 
-/* Set color and opacity for programlistings */
+/* Set color + opacity + line distance for programlistings */
 .programlisting {
     background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
 }
 
 /* Set Background-color of index-panel to qlustar with low opacity */
