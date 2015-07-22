@@ -11,7 +11,9 @@
 <info version="5.0" xml:id="info-Qlustar_DataStack-Quick_Start"
       xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Quick Start Guides</title>
-  <subtitle></subtitle>
+  <subtitle>
+    A collection of quick start guides for the components of the Qlustar DataStack.
+  </subtitle>
   <productname>Qlustar DataStack</productname>
   <productnumber>9.1</productnumber>
   <abstract>
