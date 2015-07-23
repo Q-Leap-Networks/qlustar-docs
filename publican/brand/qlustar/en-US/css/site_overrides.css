@@ -10,9 +10,16 @@
     font-size: 20px !important;
 }
 
-/* Added font-color hover for title of product-view */
-.titles a:hover {
+/* Added font-color for title of product-view */
+.version_bottom_box .titles a, .product_bottom_box .titles a,
+  .grouper .titles a {
     color: #639E00;
+}
+
+/* Added font-color hover for title of product-view */
+.version_bottom_box .titles a:hover, .product_bottom_box .titles a:hover,
+  .grouper .titles a:hover {
+    color: #666666;
 }
 
 /* Changed border of product-view */
