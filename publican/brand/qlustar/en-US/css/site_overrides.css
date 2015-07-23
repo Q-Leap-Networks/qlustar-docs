@@ -1,0 +1,184 @@
+/* Set Background-color of Body*/
+body {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set Background-color + opacity of Index-toc*/
+#floatingtoc .toc {
+    background-color: #525252 !important;
+    opacity: 0.98;
+}
+
+/* Background-color of notes*/
+.note .admonition {
+    background-color: rgba(110, 148, 0, 0.2) !important;
+}
+
+/* Background-color of importants*/
+.important .admonition {
+    background-color: rgba(193, 132, 18, 0.22) !important;
+}
+
+/* Background-color of warnings*/
+.warning .admonition {
+    background-color: rgba(127, 0, 0, 0.12) !important;
+}
+
+/* Increase line distance of para's*/
+.para {
+    line-height: 1.35em;
+}
+
+/* Set 'Qlustar Docs' button font-color to black*/
+#lang_menu > a {
+    color: #000000 !important;
+}
+
+/* Set Font-color of 'Qlustar Docs' button-hover to qlustar */
+#lang_menu > a:hover {
+    color: #c5e236 !important;
+}
+
+/* Set Font-color of e-mail links to green */
+a.email {
+    color: #80965B !important;
+}
+
+/* Added hover to e-mail links for underlines */
+a.email:hover {
+    text-decoration: underline;
+}
+
+/* Set Font-color of links to green and disable underlines*/
+.para a {
+    color: #80965B !important;
+    text-decoration: none !important;
+}
+
+/* Underline links when hover */
+.para a:hover {
+    text-decoration: underline !important;
+}
+
+/* Set Font-color for index-links to green */
+.toc a {
+    color: #80965B !important;
+}
+
+/* Underline index-links when hover */
+.toc a:hover {
+    text-decoration: underline;
+}
+
+/* Set color + opacity + line distance for screens */
+.screen {
+    background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
+}
+
+/* Set color + opacity + line distance for programlistings */
+.programlisting {
+    background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
+}
+
+/* Set Background-color of index-panel to qlustar with low opacity */
+.docnav {
+    background-color: rgba(197, 226, 54, 0.9) !important;
+}
+
+/* Set Font-color of index-panel to black*/
+.docnav .home {
+    color: #000000 !important;
+}
+
+/* Set Font-color of index-panel when hover to grey */
+.docnav .home:hover {
+    color: #474747 !important;
+}
+
+
+/* Highlight box, if a product is choosen from the side_product menu */
+.side_products div.link a.active {
+    #box-shadow: -50px 5px 5px black !important;
+    
+}
+
+/* Set Font-color of box with versionnumber */
+.version_tabs span.active {
+    color: #c5e236 !important;
+}
+
+/* Hide Slideshow-arrows */
+.jcarousel-prev {
+    display: none !important;
+}
+
+.jcarousel-next {
+    display: none !important;
+}
+
+/* Set width of menu 
+#menu {
+    margin-left: 42px;
+    width: 92.9% !important;
+}
+*/
+
+a.rss.link {
+    display: none;
+}
+
+.side_products {
+    position: absolute;
+    left: 32px;
+    right: 10px;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+body > #wrapper {
+    box-shadow: none !important;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+.lang_bottom_box {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+.title a {
+    color: #c5e236 !important;
+}
+
+#menu a:visited {
+  color: #FFFFFF;
+}
+
+.breadcrumb a {
+    color: #c5e236;
+}
+
+.variablelist > a {
+    color: #c5e236;
+}
+
+.side_products div.link a {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+}
+
+.side_products div.link a:hover {
+    background-color: #5a5a5a !important;
+    color: #c5e236 !important;
+
+#menu {
+    background-color: #c5e236;
+}
+
+.breadcrumb {
+    background-color: #000000;
+}
+
+#menu a:hover {
+  color: #c5e236;
+}
+
