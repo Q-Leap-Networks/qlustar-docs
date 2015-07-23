@@ -29,7 +29,7 @@ span.active {
 }
 
 /* Added hover for background-color and font-color of version-number box */
-span.link:hover {
+.bottom_versions_list span.link:hover {
     background-color: #666 !important;
     color: #c5e236 !important;
 }
@@ -104,10 +104,25 @@ body {
 }
 /* -------------------------------------------------- */
 
-/* ------------------- Index-bar -------------------- */
+/* ------------------- Index-panel -------------------- */
 /* Set color of arrow to black */
 .home:after {
     border-color: transparent transparent black !important;
+}
+
+/* Set Background-color of index-panel to qlustar with low opacity */
+.docnav {
+    background-color: rgba(197, 226, 54, 0.9) !important;
+}
+
+/* Set Font-color of index-panel to black*/
+.docnav .home {
+    color: #000000 !important;
+}
+
+/* Set Font-color of index-panel when hover to grey */
+.docnav .home:hover {
+    color: #474747 !important;
 }
 /* -------------------------------------------------- */
 
@@ -163,22 +178,6 @@ a.email:hover {
     background-color: rgba(197, 226, 54, 0.2);
     line-height: 1.3em;
 }
-
-/* Set Background-color of index-panel to qlustar with low opacity */
-.docnav {
-    background-color: rgba(197, 226, 54, 0.9) !important;
-}
-
-/* Set Font-color of index-panel to black*/
-.docnav .home {
-    color: #000000 !important;
-}
-
-/* Set Font-color of index-panel when hover to grey */
-.docnav .home:hover {
-    color: #474747 !important;
-}
-
 
 /* Highlight box, if a product is choosen from the side_product menu */
 .side_products div.link a.active {
