@@ -1,13 +1,13 @@
 /* ------------------ Product-View ------------------ */
 /* Increased font-size from description and line height of product-view */
 .bottom_books .subtitle {
-    font-size: initial !important;
+    font-size: 16px !important;
     margin-top: 11px !important;
 }
 
 /* Increased font-size from title of product-view */
 .titles a {
-    font-size: large !important;
+    font-size: 20px !important;
 }
 
 /* Added font-color hover for title of product-view */
@@ -103,6 +103,12 @@ body {
 #floatingtoc .toc {
     background-color: #525252 !important;
     opacity: 0.98;
+    bottom: 47px !important;
+}
+
+/* Set line-height for toc in manual */
+.toc {
+    line-height: 18px !important;
 }
 
 /* -------------------- Admonitions ------------------ */
@@ -128,14 +134,16 @@ body {
     border-color: transparent transparent black !important;
 }
 
-/* Set Background-color of index-panel to qlustar with low opacity */
+/* Set Background-color of index-panel to qlustar with low opacity + fixed size */
 .docnav {
     background-color: rgba(197, 226, 54, 0.9) !important;
+    height: 42px !important;
 }
 
 /* Set Font-color of index-panel to black*/
 .docnav .home {
     color: #000000 !important;
+    font-size: 16px !important;
 }
 
 /* Set Font-color of index-panel when hover to grey */
@@ -265,7 +273,7 @@ body > #wrapper {
 .side_products div.link a {
     background-color: #c5e236 !important;
     color: #000000 !important;
-    font-size: initial;
+    font-size: 16px;
     font-weight: normal;
 }
 
@@ -286,11 +294,7 @@ body > #wrapper {
 }
 
 .bottom_books .subtitle {
-    font-size: initial;
+    font-size: 16px !important;
     margin-top: 11px !important;
-}
-
-.titles a {
-    font-size: large !important;
 }
 
