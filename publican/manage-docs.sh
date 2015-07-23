@@ -60,7 +60,7 @@ FAVICON="${PWD}/qlustar-favicon.ico"
 ALLOWED_ACTIONS=$(concat_string "create-document,update-document," \
                                 "create-portal,update-portal," \
                                 "create-product,update-product," \
-                                "create-website,update-website," \
+                                "create-website,regenerate-all," \
                                 "update-site")
 ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /} # Remove spaces from concatenation
 ALLOWED_ACTIONS_USAGE="$(echo ${ALLOWED_ACTIONS} \
@@ -190,13 +190,9 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
     $ ./manage-docs.sh -a update-product -P prod-002
 
   - Recreate website from scratch
-    $ ./manage-docs.sh -a create-website
-    $ ./manage-docs.sh -a update-portal
-    $ ./manage-docs.sh -a update-product -P prod-01 (the same for all other
-      prod-??)
-    $ ./manage-docs.sh -a update-document -D doc-001  (the same for all other
-      doc-??)
+    $ ./manage-docs.sh -a regenerate-all
 "
+
 while [ $# -gt 0 ]; do
   case "$1" in
     -a|--action)
@@ -375,9 +371,55 @@ EOF
   exec_publican update_site --site_config ${WEB_CFG}.cfg
 }
 
-build_and_publish_document() {
-  local book_dir="$1" formats="$2" carousel
+regenerate_all() {
+  local a prod_name prod_dir doc_dir doc_name
 
+  center_string -i " == Starting to regenerate all == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  echo_bullet  -i "Initializing website structure"
+  create_website
+  echo_bullet  -i "Adding site home page"
+  build_and_publish_document "$QL_PORTAL_DIR" "html-single"
+  
+  # Now update all active products
+  center_string -i " == Adding all active produtcs == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  for a in ${AVAILABLE_PROD_ALIASES//,/ }; do
+    prod_name="$(get_prod_name $a)"
+    echo_bullet  -i "Adding product $prod_name"
+    prod_dir="${QL_PRODUCT_DIR}/${prod_name// /}/${PRODUCT_HOME}"
+    build_and_publish_document "$prod_dir" "html-single"
+  done
+  # Now update all active documents
+  center_string -i " == Adding all active documents == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  for a in ${AVAILABLE_DOC_ALIASES//,/ }; do
+    doc_dir="$(get_doc_dir $a)"
+    doc_name=${doc_dir##*/}
+    prod_dir=${doc_dir%/*}
+    prod_name=${prod_dir##*/}
+    echo_bullet  -i "Adding document $doc_name of product $prod_name"
+    build_and_publish_document "$doc_dir" $FORMATS
+  done
+}
+
+build_and_publish_document() {
+  local book_dir="$1" formats="$2" carousel active="$1"/active
+
+  if [ -e "$active" ]; then
+    active="$(cat "$active")"
+    if ! $active > /dev/null 2>&1; then
+      center_string -i " == Document/Product not active == " \
+	-c YellowOnBlackBold -a -A "\n\n" -B "\n"
+      echo -e "  -- Activate by changing the content of\n" \
+	"    $(echo $1/active | $SED -e 's,.*publican/,,')\n     to 'true'.\n"
+      return 1
+    fi
+  else
+    exit_with_msg $COLOR_OPT \
+      -m "Missing active file $active" -e $ERR_MISSING_FILE
+  fi
+  
   cd "$book_dir"
   exec_publican build --publish --formats "$formats" \
     --brand_dir="$QL_BRAND_DIR" --embedtoc --langs $QL_LANG
@@ -413,6 +455,7 @@ EOF
     's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
     "$root_file"
   sed -i -e "s,%%title%%,$QL_WEBSITE_TITLE,g" "$root_file"
+  echo true > "$QL_PORTAL_DIR"/active
 
   build_and_publish_document "$QL_PORTAL_DIR" html-single
 }
@@ -441,6 +484,7 @@ EOF
     's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
     "$root_file"
   sed -i -e "s,%%title%%,$product,g" "$root_file"
+  echo true > $name/active
 
   build_and_publish_document $name html-single
 }
@@ -453,6 +497,7 @@ create_document() {
   local root_file="${name}/${QL_LANG}/${name}.xml"
 
   cd "$product_dir"
+  echo false > active
   create_and_backup_dir "$name" no-create
   exec_publican create --type $type --name "$name" --dtdver $QL_DTDVER \
     --brand $QL_BRAND --version $version --product "$product"
@@ -461,6 +506,7 @@ create_document() {
   cat <<-EOF > "$cfg"
 	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
 EOF
+  echo true > $name/active
 
   build_and_publish_document $name html-single
 }
@@ -513,6 +559,9 @@ case "$ACTION" in
   create-website)    C_PARS=""
     execute=create_website
     msg="Website creation was succesful.";;
+  regenerate-all)       C_PARS=""
+    execute=regenerate_all
+    msg="All active documents have been regenerated successfully.";;
   update-document)     C_PARS="DOC_ID"
     doc_dir="$(get_doc_dir $DOC_ID)"
     execute=build_and_publish_document
@@ -537,8 +586,6 @@ case "$ACTION" in
 esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
-$execute "${execute_args[@]}"
-    
-print_message $COLOR_OPT "$msg"
+$execute "${execute_args[@]}" && print_message $COLOR_OPT "$msg"
 
 exit 0
