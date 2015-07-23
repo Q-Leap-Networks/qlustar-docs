@@ -1,3 +1,4 @@
+/* ------------------ Product-View ------------------ */
 /* Increased font-size from description and line height of product-view */
 .bottom_books .subtitle {
     font-size: initial !important;
@@ -18,6 +19,22 @@
 .bottom_books {
     border-bottom: 1px solid #666666 !important;
 }
+/* -------------------------------------------------- */
+
+/* --------------- Version-number Box --------------- */
+/* Changed background-color and font-color of version-number box */
+span.active {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+}
+
+/* Added hover for background-color and font-color of version-number box */
+span.link:hover {
+    background-color: #666 !important;
+    color: #c5e236 !important;
+}
+
+/* -------------------------------------------------- */
 
 /* Set Background-color of Body*/
 body {
