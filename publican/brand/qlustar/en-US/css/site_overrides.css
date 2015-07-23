@@ -213,6 +213,7 @@ body > #wrapper {
     background-color: #c5e236 !important;
     color: #000000 !important;
     font-size: initial;
+    font-weight: normal;
 }
 
 .side_products div.link a:hover {
