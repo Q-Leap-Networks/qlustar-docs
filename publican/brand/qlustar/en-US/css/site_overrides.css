@@ -40,7 +40,16 @@ span.link:hover {
 /* Changed background-color of menu and increased shadow*/
 #menu {
     background-color: #c5e236;
-    box-shadow: 0 5px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 5px 5px rgba(0,0,0,0.15) !important;
+}
+
+/* Set active font-color of menu*/
+#menu a:active,
+.breadcrumb_active > div,
+#lang_menu_2:active > div,
+#book_format_menu:active > div,
+#book_lang_menu:active > div {
+    color: #c5e236;
 }
 
 /* -------------------------------------------------- */
