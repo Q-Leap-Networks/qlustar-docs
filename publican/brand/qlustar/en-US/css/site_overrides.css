@@ -175,9 +175,10 @@ a.email:hover {
     text-decoration: underline !important;
 }
 
-/* Set Font-color for index-links to green */
+/* Set Font-color and fixed font-size for index-links to green */
 .toc a {
     color: #639E00 !important;
+    font-size: 16px;
 }
 
 /* Underline index-links when hover */
