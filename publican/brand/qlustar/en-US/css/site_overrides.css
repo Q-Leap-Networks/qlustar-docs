@@ -121,7 +121,7 @@ body {
 
 /* Set Background-color + opacity of Index-toc*/
 #floatingtoc .toc {
-    background-color: #525252 !important;
+    background-color: #222222 !important;
     opacity: 0.98;
     bottom: 47px !important;
 }
