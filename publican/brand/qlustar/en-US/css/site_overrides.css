@@ -43,13 +43,32 @@ span.link:hover {
     box-shadow: 0 5px 5px rgba(0,0,0,0.15) !important;
 }
 
-/* Set active font-color of menu*/
+/* Set active font-color of menu
 #menu a:active,
 .breadcrumb_active > div,
 #lang_menu_2:active > div,
 #book_format_menu:active > div,
 #book_lang_menu:active > div {
-    color: #c5e236;
+    #color: #c5e236;
+}
+*/
+
+/* Set hover font-color and background-color of menu */
+#menu a:hover,
+.breadcrumb:hover > div,
+#lang_menu_2:hover > div,
+#book_format_menu:hover > div,
+#book_lang_menu:hover > div {
+    background-color: #666666 !important;
+    color: #c5e236 !important;
+}
+
+/* Set the background-color for the language button */
+.breadcrumb > ul,
+#lang_menu_2 > ul,
+#book_format_menu > ul,
+#book_lang_menu > ul {
+    background-color: #666666 !important;
 }
 
 /* -------------------------------------------------- */
@@ -88,11 +107,6 @@ body {
 /* Set 'Qlustar Docs' button font-color to black*/
 #lang_menu > a {
     color: #000000 !important;
-}
-
-/* Set Font-color of 'Qlustar Docs' button-hover to qlustar */
-#lang_menu > a:hover {
-    color: #c5e236 !important;
 }
 
 /* Set Font-color of e-mail links to green */
