@@ -100,14 +100,15 @@ a.email:hover {
 
 /* Highlight box, if a product is choosen from the side_product menu */
 .side_products div.link a.active {
-    #box-shadow: -50px 5px 5px black !important;
+    box-shadow: 0px 0px 17px black !important;
     
 }
 
-/* Set Font-color of box with versionnumber */
+/* Set Font-color of box with versionnumber 
 .version_tabs span.active {
     color: #c5e236 !important;
 }
+*/
 
 /* Hide Slideshow-arrows */
 .jcarousel-prev {
@@ -164,6 +165,7 @@ body > #wrapper {
 .side_products div.link a {
     background-color: #c5e236 !important;
     color: #000000 !important;
+    font-size: initial;
 }
 
 .side_products div.link a:hover {
@@ -180,5 +182,14 @@ body > #wrapper {
 
 #menu a:hover {
   color: #c5e236;
+}
+
+.bottom_books .subtitle {
+    font-size: initial;
+    margin-top: 11px !important;
+}
+
+.titles a {
+    font-size: large !important;
 }
 
