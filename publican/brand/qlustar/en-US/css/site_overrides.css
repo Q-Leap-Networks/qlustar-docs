@@ -12,7 +12,7 @@
 
 /* Added font-color hover for title of product-view */
 .titles a:hover {
-    color: #80965B;
+    color: #639E00;
 }
 
 /* Changed border of product-view */
@@ -73,10 +73,13 @@ span.link:hover {
 
 /* -------------------------------------------------- */
 
+
+/* --------------------- Body ----------------------- */
 /* Set Background-color of Body*/
 body {
     background-color: rgba(250, 250, 250, 1) !important;
 }
+/* -------------------------------------------------- */
 
 /* Set Background-color + opacity of Index-toc*/
 #floatingtoc .toc {
@@ -84,6 +87,7 @@ body {
     opacity: 0.98;
 }
 
+/* -------------------- Admonitions ------------------ */
 /* Background-color of notes*/
 .note .admonition {
     background-color: rgba(110, 148, 0, 0.2) !important;
@@ -98,6 +102,7 @@ body {
 .warning .admonition {
     background-color: rgba(127, 0, 0, 0.12) !important;
 }
+/* -------------------------------------------------- */
 
 /* Increase line distance of para's*/
 .para {
@@ -111,7 +116,7 @@ body {
 
 /* Set Font-color of e-mail links to green */
 a.email {
-    color: #80965B !important;
+    color: #639E00 !important;
 }
 
 /* Added hover to e-mail links for underlines */
@@ -121,7 +126,7 @@ a.email:hover {
 
 /* Set Font-color of links to green and disable underlines*/
 .para a {
-    color: #80965B !important;
+    color: #639E00 !important;
     text-decoration: none !important;
 }
 
@@ -132,7 +137,7 @@ a.email:hover {
 
 /* Set Font-color for index-links to green */
 .toc a {
-    color: #80965B !important;
+    color: #639E00 !important;
 }
 
 /* Underline index-links when hover */
