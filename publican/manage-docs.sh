@@ -43,7 +43,7 @@ CLEANUP=true
 FORMATS=html-single
 
 CFG_FILE="manage-docs.cfg"
-. $CFG_FILE 2> /dev/null ||  exit_with_msg $COLOR_OPT \
+. $CFG_FILE 2> /dev/null || exit_with_msg $COLOR_OPT \
   -m "Missing config file $CFG_FILE" -e $ERR_MISSING_FILE
 
 # Vars derived from defaults in $CFG_FILE
@@ -470,14 +470,22 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f
+  local tmpdir=update-tmp f 
+  local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
 
   cd "$WEB_DIR_PATH"
   [ -d $tmpdir ] && rm -rf $tmpdir
   cp -r ${WEB_TOC_PATH} $tmpdir
   find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
+    -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
     -e 's/___blank___"/" target="_blank"/g'
+  if [ -r $site_css ]; then
+    cp -f $site_css $tmpdir
+  else
+    exit_with_msg $COLOR_OPT \
+      -m "Missing Qlustar CSS file $site_css" -e $ERR_MISSING_FILE
+  fi
   ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
   tar zcf - $tmpdir | ssh root@${host} \
     "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
