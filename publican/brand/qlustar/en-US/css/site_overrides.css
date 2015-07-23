@@ -37,9 +37,10 @@ span.link:hover {
 /* -------------------------------------------------- */
 
 /* --------------------- Menu ----------------------- */
-/* Changed background-color of menu */
+/* Changed background-color of menu and increased shadow*/
 #menu {
     background-color: #c5e236;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.15);
 }
 
 /* -------------------------------------------------- */
