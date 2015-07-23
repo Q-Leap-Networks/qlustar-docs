@@ -36,6 +36,14 @@ span.link:hover {
 
 /* -------------------------------------------------- */
 
+/* --------------------- Menu ----------------------- */
+/* Changed background-color of menu */
+#menu {
+    background-color: #c5e236;
+}
+
+/* -------------------------------------------------- */
+
 /* Set Background-color of Body*/
 body {
     background-color: rgba(250, 250, 250, 1) !important;
