@@ -104,6 +104,13 @@ body {
 }
 /* -------------------------------------------------- */
 
+/* ------------------- Index-bar -------------------- */
+/* Set color of arrow to black */
+.home:after {
+    border-color: transparent transparent black !important;
+}
+/* -------------------------------------------------- */
+
 /* Increase line distance of para's*/
 .para {
     line-height: 1.35em;
