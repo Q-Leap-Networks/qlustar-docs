@@ -23,29 +23,32 @@
 
 /* --------------- Version-number Box --------------- */
 /* Changed background-color and font-color of version-number box */
-span.active {
+version_tabs span {
     background-color: #c5e236 !important;
     color: #000000 !important;
+    font-weight: normal;
 }
 
-/* Added hover for background-color and font-color of version-number box */
+/* Changed background-color and font-color of version-number box when active*/
+/*span.active {*/
+.version_tabs span.active {
+    background-color: #666666 !important;
+    color: #c5e326 !important;
+    font-weight: normal;
+}
+
+/* Color and font-weight for 'All' button */
+.groups.active span{
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+/* Added hover for background-color and font-color of all button */
 .bottom_versions_list span.link:hover {
-    background-color: #666 !important;
+    background-color: #666666 !important;
     color: #c5e236 !important;
 }
-
-/* -------------------------------------------------- */
-
-/* ---------------- Fixed Font-sizes ---------------- */
-#lang_menu,
-#product_menu,
-#version_menu,
-#book_menu,
-#book_format_menu,
-#book_lang_menu {
-    font-size: 16px !important;
-}
-
 /* -------------------------------------------------- */
 
 /* --------------------- Menu ----------------------- */
@@ -89,6 +92,16 @@ span.active {
     background-color: #666666 !important;
 }
 
+/* Set fixed font sizes */
+#lang_menu,
+#product_menu,
+#version_menu,
+#book_menu,
+#book_format_menu,
+#book_lang_menu {
+    font-size: 16px !important;
+}
+
 /* -------------------------------------------------- */
 
 
@@ -107,8 +120,8 @@ body {
 }
 
 /* Set line-height for toc in manual */
-.toc {
-    line-height: 18px !important;
+.toc dt {
+    line-height: 17px !important;
 }
 
 /* -------------------- Admonitions ------------------ */
