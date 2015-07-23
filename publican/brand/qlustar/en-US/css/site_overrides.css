@@ -36,6 +36,18 @@ span.active {
 
 /* -------------------------------------------------- */
 
+/* ---------------- Fixed Font-sizes ---------------- */
+#lang_menu,
+#product_menu,
+#version_menu,
+#book_menu,
+#book_format_menu,
+#book_lang_menu {
+    font-size: 16px !important;
+}
+
+/* -------------------------------------------------- */
+
 /* --------------------- Menu ----------------------- */
 /* Changed background-color of menu and increased shadow*/
 #menu {
