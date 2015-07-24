@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- 
+  Cheat sheet for elements and tags to be used in publican based Qlustar
+  Docbbook documents.
+-->
+
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <chapter xml:id="Requirements">
+    <title>Installation Requirements</title>
+    <para>
+      To install the Qlustar OS you need:
+    </para>
+  </chapter>
+
+</book>
