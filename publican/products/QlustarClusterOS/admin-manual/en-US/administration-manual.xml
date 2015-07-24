@@ -8,22 +8,17 @@
 "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+<book xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
 	 xmlns:xi="http://www.w3.org/2001/XInclude">
-	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Introduction.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="base-configuration/base-configuration.xml"
-		    xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="hw-configuration/hw-configuration.xml"
-		    xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="node-manage/node-manage.xml"
-		    xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="monitoring/monitoring.xml"
-		    xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="general-administration/general-administration.xml"
-		    xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<index />
+  <xi:include href="Book_Info.xml"/>
+  <xi:include href="Preface.xml"/>
+  <xi:include href="Introduction.xml"/>
+  <xi:include href="base-configuration/base-configuration.xml"/>
+  <xi:include href="hw-configuration/hw-configuration.xml"/>
+  <xi:include href="node-manage/node-manage.xml"/>
+  <xi:include href="monitoring/monitoring.xml"/>
+  <xi:include href="general-administration/general-administration.xml"/>
+  <xi:include href="Revision_History.xml"/>
+  <index />
 </book>
