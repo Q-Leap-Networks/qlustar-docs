@@ -26,6 +26,10 @@
 .bottom_books {
     border-bottom: 1px solid #666666 !important;
 }
+/* Set color of version-number-title */
+.title a {
+    color: #c5e236 !important;
+}
 /* -------------------------------------------------- */
 
 /* --------------- Version-number Box --------------- */
@@ -117,16 +121,58 @@ version_tabs span {
     display: none;
 }
 
-/* Vertical align menu points */
-#menu a, .breadcrumb > div {
-    #padding: 3px 12px !important;
+/* Set color of visited menu points */
+#menu a:visited {
+  color: #FFFFFF;
+}
+
+/* Set 'Qlustar Docs' button font-color to black*/
+#lang_menu > a {
+    color: #000000 !important;
 }
 /* -------------------------------------------------- */
 
+/* ----------------- side-bar menu ------------------ */
+/* Highlight box, if a product is choosen from the side_product menu */
+.side_products div.link a.active {
+    box-shadow: 0px 0px 17px black !important;  
+}
+
+/* Adjust side-bar menu */
+.side_products {
+    left: 32px;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set color and font-settings for side-bar menu */
+.side_products div.link a {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Set color for side-bar menu hover*/
+.side_products div.link a:hover {
+    background-color: #5a5a5a !important;
+    color: #c5e236 !important;
+}
+/* -------------------------------------------------- */
 
 /* --------------------- Body ----------------------- */
 /* Set Background-color of Body*/
 body {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Disable shadow and set background-color of body */
+body > #wrapper {
+    box-shadow: none !important;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set background-color of language-bottom-box (on frontpage) */
+.lang_bottom_box {
     background-color: rgba(250, 250, 250, 1) !important;
 }
 /* -------------------------------------------------- */
@@ -184,18 +230,20 @@ body {
 .docnav .home:hover {
     color: #474747 !important;
 }
+
+/* Set Font-color and fixed font-size for index-links to green */
+.toc a {
+    color: #639E00 !important;
+    font-size: 16px;
+}
+
+/* Underline index-links when hover */
+.toc a:hover {
+    text-decoration: underline;
+}
 /* -------------------------------------------------- */
 
-/* Increase line distance of para's*/
-.para {
-    line-height: 1.35em;
-}
-
-/* Set 'Qlustar Docs' button font-color to black*/
-#lang_menu > a {
-    color: #000000 !important;
-}
-
+/* -------------------- Links ----------------------- */
 /* Set Font-color of e-mail links to green */
 a.email {
     color: #639E00 !important;
@@ -204,6 +252,13 @@ a.email {
 /* Added hover to e-mail links for underlines */
 a.email:hover {
     text-decoration: underline;
+}
+/* -------------------------------------------------- */
+
+/* ---------------- Paras & Screens ----------------- */
+/* Increase line distance of para's*/
+.para {
+    line-height: 1.35em;
 }
 
 /* Set Font-color of links to green and disable underlines*/
@@ -215,17 +270,6 @@ a.email:hover {
 /* Underline links when hover */
 .para a:hover {
     text-decoration: underline !important;
-}
-
-/* Set Font-color and fixed font-size for index-links to green */
-.toc a {
-    color: #639E00 !important;
-    font-size: 16px;
-}
-
-/* Underline index-links when hover */
-.toc a:hover {
-    text-decoration: underline;
 }
 
 /* Set color + opacity + line distance for screens */
@@ -240,17 +284,11 @@ a.email:hover {
     line-height: 1.3em;
 }
 
-/* Highlight box, if a product is choosen from the side_product menu */
-.side_products div.link a.active {
-    box-shadow: 0px 0px 17px black !important;
-    
+/* ----------------- Hide Elements ------------------ */
+/* Disable RSS feed */
+a.rss.link {
+    display: none;
 }
-
-/* Set Font-color of box with versionnumber 
-.version_tabs span.active {
-    color: #c5e236 !important;
-}
-*/
 
 /* Hide Slideshow-arrows */
 .jcarousel-prev {
@@ -260,71 +298,5 @@ a.email:hover {
 .jcarousel-next {
     display: none !important;
 }
-
-/* Set width of menu 
-#menu {
-    margin-left: 42px;
-    width: 92.9% !important;
-}
-*/
-
-a.rss.link {
-    display: none;
-}
-
-.side_products {
-    position: absolute;
-    left: 32px;
-    right: 10px;
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-body > #wrapper {
-    box-shadow: none !important;
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-.lang_bottom_box {
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-.title a {
-    color: #c5e236 !important;
-}
-
-#menu a:visited {
-  color: #FFFFFF;
-}
-
-.variablelist > a {
-    color: #c5e236;
-}
-
-.side_products div.link a {
-    background-color: #c5e236 !important;
-    color: #000000 !important;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.side_products div.link a:hover {
-    background-color: #5a5a5a !important;
-    color: #c5e236 !important;
-
-#menu {
-    background-color: #c5e236;
-}
-
-.breadcrumb {
-    background-color: #000000;
-}
-
-#menu a:hover {
-  color: #c5e236;
-}
-
-.bottom_books .subtitle {
-    font-size: 16px !important;
-    margin-top: 11px !important;
-}
+/* -------------------------------------------------- */
 
