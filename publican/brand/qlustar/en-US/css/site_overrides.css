@@ -109,6 +109,10 @@ version_tabs span {
     font-size: 16px !important;
 }
 
+/* Dont show language in menu */
+#book_lang_menu, #lang_menu_2 {
+    display: none;
+}
 /* -------------------------------------------------- */
 
 
