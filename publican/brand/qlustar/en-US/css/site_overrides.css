@@ -64,11 +64,13 @@ version_tabs span {
     background-color: #c5e236 !important;
     box-shadow: 0 5px 5px rgba(0,0,0,0.15) !important;
     color: #000000 !important;
+    #height: 32px;
 }
 /**/
 #menu:after {
     background-color: #c5e236 !important;
     color: #000000 !important;
+    #height: 32px !important;
 }
 
 /* Set active font-color of menu */
@@ -107,11 +109,17 @@ version_tabs span {
 #book_format_menu,
 #book_lang_menu {
     font-size: 16px !important;
+    #padding: 1px 0px !important;
 }
 
 /* Dont show language in menu */
 #book_lang_menu, #lang_menu_2 {
     display: none;
+}
+
+/* Vertical align menu points */
+#menu a, .breadcrumb > div {
+    #padding: 3px 12px !important;
 }
 /* -------------------------------------------------- */
 
@@ -284,10 +292,6 @@ body > #wrapper {
 
 #menu a:visited {
   color: #FFFFFF;
-}
-
-.breadcrumb a {
-    color: #c5e236;
 }
 
 .variablelist > a {
