@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE appendix [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Installation_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<appendix version="5.0" xml:id="appe-Qlustar_Cluster_OS-Installation_Guide-Revision_History" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Revision History</title>
+  <revhistory>
+    <revision>
+      <revnumber>9.1-0</revnumber>
+      <date>Thu Jul 24 2015</date>
+      <author>
+	<personname><firstname>Qlustar</firstname>
+	<surname>Doc Team</surname></personname>
+	<email>qlustar-docs@q-leap.com</email>
+      </author>
+      <revdescription>
+	<simplelist>
+	  <member>Initial version</member>
+	</simplelist>
+      </revdescription>
+    </revision>
+  </revhistory>
+</appendix>
