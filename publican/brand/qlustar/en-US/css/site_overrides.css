@@ -68,13 +68,12 @@ version_tabs span {
     background-color: #c5e236 !important;
     box-shadow: 0 5px 5px rgba(0,0,0,0.15) !important;
     color: #000000 !important;
-    #height: 32px;
 }
 /**/
 #menu:after {
     background-color: #c5e236 !important;
     color: #000000 !important;
-    #height: 32px !important;
+    height: 98% !important;
 }
 
 /* Set active font-color of menu */
