@@ -23,8 +23,10 @@
   <note>
     <para>
       BeeGFS is a <emphasis>non-free</emphasis> but fully integrated component of Qlustar. If
-      used in any Qlustar context other than the <emphasis>Basic Edition</emphasis>, a specific
-      BeeGFS licensed has to be purchased from Q-Leap.
+      used in any Qlustar context other than the <link
+      xlink:href="https://qlustar.com/content/qlustar-basic-edition___blank___">Basic
+      Edition</link>, a specific BeeGFS support contract has to be purchased from Q-Leap
+      Networks.
     </para>
   </note>
   <section xml:id="initial-config-tasks-on-head-nodes">
@@ -44,7 +46,7 @@
       </procedure>
     </task>
     <task xml:id="sec-setting-up-beegfs">
-      <title>Setting up a BeeGFS server node</title>
+      <title>Setting up a BeeGFS server node in QluMan</title>
       <procedure>
 	<step>
 	  <title>Create a Qlustar image with the required modules</title>
@@ -125,17 +127,18 @@ compress = lz4
 	  </para>
 	  <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
-<command>df -h | grep beegfs</command>
-SYS/bmeta                         1002T     0 1002T   0% /beegfs/meta
-SYS/bstor                         1002T     0 1002T   0% /beegfs/stor
+<command>df -h | grep -E '^Filesystem|beegfs'</command>
+Filesystem                  Size  Used Avail Use% Mounted on
+SYS/bmeta                  1002T     0 1002T   0% /beegfs/meta
+SYS/bstor                  1002T     0 1002T   0% /beegfs/stor
 	  </screen>
 	  <important>
 	    <para>
-	      Note that by default, every new host has the generic property <parameter>Schedule
-	      Format: always</parameter>, which is required to format the disk on the first
-	      boot. After the initial boot of a node with the desired disk config in place, you
-	      should remove this property or set <parameter>Schedule Format: never</parameter>
-	      to prevent repeated reformatting.
+	      Note that by default, every new host has the generic QluMan property
+	      <parameter>Schedule Format: always</parameter>, which is required to format the
+	      disk on the first boot. After the initial boot of a node with the desired disk
+	      config in place, you should remove this property or set <parameter>Schedule
+	      Format: never</parameter> to prevent repeated reformatting and hence losing data.
 	    </para>
 	  </important>
 	</step>
