@@ -161,22 +161,32 @@
 books_tests  Desktop1  downloads      images  notes  scripts  svgs
     </screen>
     <para>
-      Commands to be executed on certain nodes of a cluster are indicated by using descriptive
-      hostnames in the shell prompt. Note that by default the shell prompt on Qlustar nodes
-      always ends in the newline character, thus commands are typed on the line following the
-      prompt. As mentioned above, the command itself is shown in <computeroutput>mono-spaced
-      bold</computeroutput> and the output of a command in <computeroutput>mono-spaced
-      roman</computeroutput>. Examples:
+      Commands to be executed on certain nodes of a cluster or the admins workstation are
+      indicated by using descriptive shell prompts including user and hostname. Note that by
+      default, the shell prompt on Qlustar nodes always ends in the newline character, thus
+      commands are typed on the line following the prompt. As mentioned above, the command
+      itself is shown in <computeroutput>mono-spaced bold</computeroutput> and the output of a
+      command in <computeroutput>mono-spaced roman</computeroutput>. Examples:
     </para>
     <screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>echo "I'm executed on a head-node"</command>
-I'm executed on a head-node
+<command>echo "I'm executed by root on a head-node"</command>
+I'm executed by root on a head-node
+    </screen>
+    <screen>
+<prompt>0 root@beo-01 ~ #</prompt>
+<command>echo "I'm executed by root on a compute node"</command>
+I'm executed by root on a compute node
     </screen>
     <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
-<command>echo "I'm executed on a storage node"</command>
-I'm executed on a storage node
+<command>echo "I'm executed by root on a storage node"</command>
+I'm executed by root on a storage node
+    </screen>
+    <screen>
+<prompt>0 user@workstation ~ $ </prompt>
+<command>echo "I'm executed by user admin on the admins workstation"</command>
+I'm executed by user admin on the admins workstation
     </screen>
     <para>
       Source-code listings are also set in <computeroutput>mono-spaced roman</computeroutput>
