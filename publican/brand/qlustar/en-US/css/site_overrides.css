@@ -170,12 +170,14 @@ body {
 .docnav {
     background-color: rgba(197, 226, 54, 0.9) !important;
     height: 42px !important;
+    padding: 0em 0em 0em;
 }
 
 /* Set Font-color of index-panel to black*/
 .docnav .home {
     color: #000000 !important;
     font-size: 16px !important;
+    top: 0.7em !important;
 }
 
 /* Set Font-color of index-panel when hover to grey */
