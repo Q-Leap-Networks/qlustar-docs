@@ -12,27 +12,27 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="Book_Info.xml" />
-  <xi:include href="Preface.xml" />
+  <xi:include href="Book_Info.xml"/>
+  <xi:include href="Preface.xml"/>
 
-<!-- Start of real content -->
+  <!-- Start of real content -->
 
-<chapter xml:id="Requirements">
-  <title>Installation Requirements</title>
-  <para>
-    To install the Qlustar OS you need:
-  </para>
-</chapter>
+  <chapter xml:id="Requirements">
+    <title>Installation Requirements</title>
+    <para>
+      To install the Qlustar OS you need:
+    </para>
+  </chapter>
 
-<chapter xml:id="Load-to-USB ">
-  <title>Loading the installer to a USB flash-drive</title>
-  <para>
+  <chapter xml:id="Load-to-USB">
+    <title>Loading the installer to a USB flash-drive</title>
+    <para>
 
-  </para>
-</chapter>
+    </para>
+  </chapter>
 
-<!-- End of real content -->
+  <!-- End of real content -->
 
-  <xi:include href="Revision_History.xml" />
+  <xi:include href="Revision_History.xml"/>
   <index />
 </book>
