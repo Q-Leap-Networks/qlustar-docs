@@ -26,6 +26,10 @@
 .bottom_books {
     border-bottom: 1px solid #666666 !important;
 }
+/* Set color of version-number-title */
+.title a {
+    color: #c5e236 !important;
+}
 /* -------------------------------------------------- */
 
 /* --------------- Version-number Box --------------- */
@@ -69,6 +73,7 @@ version_tabs span {
 #menu:after {
     background-color: #c5e236 !important;
     color: #000000 !important;
+    height: 98% !important;
 }
 
 /* Set active font-color of menu */
@@ -107,14 +112,66 @@ version_tabs span {
 #book_format_menu,
 #book_lang_menu {
     font-size: 16px !important;
+    #padding: 1px 0px !important;
 }
 
+/* Dont show language in menu */
+#book_lang_menu, #lang_menu_2 {
+    display: none;
+}
+
+/* Set color of visited menu points */
+#menu a:visited {
+  color: #FFFFFF;
+}
+
+/* Set 'Qlustar Docs' button font-color to black*/
+#lang_menu > a {
+    color: #000000 !important;
+}
 /* -------------------------------------------------- */
 
+/* ----------------- side-bar menu ------------------ */
+/* Highlight box, if a product is choosen from the side_product menu */
+.side_products div.link a.active {
+    box-shadow: 0px 0px 17px black !important;  
+}
+
+/* Adjust side-bar menu */
+.side_products {
+    left: 32px;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set color and font-settings for side-bar menu */
+.side_products div.link a {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Set color for side-bar menu hover*/
+.side_products div.link a:hover {
+    background-color: #5a5a5a !important;
+    color: #c5e236 !important;
+}
+/* -------------------------------------------------- */
 
 /* --------------------- Body ----------------------- */
 /* Set Background-color of Body*/
 body {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Disable shadow and set background-color of body */
+body > #wrapper {
+    box-shadow: none !important;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set background-color of language-bottom-box (on frontpage) */
+.lang_bottom_box {
     background-color: rgba(250, 250, 250, 1) !important;
 }
 /* -------------------------------------------------- */
@@ -123,7 +180,7 @@ body {
 #floatingtoc .toc {
     background-color: #222222 !important;
     opacity: 0.98;
-    bottom: 47px !important;
+    bottom: 46px !important;
 }
 
 /* Set line-height for toc in manual */
@@ -158,49 +215,20 @@ body {
 .docnav {
     background-color: rgba(197, 226, 54, 0.9) !important;
     height: 42px !important;
+    padding: 0em 0em 0em;
+    border-radius: 2.5em 2.5em 0 0 !important;
 }
 
 /* Set Font-color of index-panel to black*/
 .docnav .home {
     color: #000000 !important;
     font-size: 16px !important;
+    top: 0.7em !important;
 }
 
 /* Set Font-color of index-panel when hover to grey */
 .docnav .home:hover {
     color: #474747 !important;
-}
-/* -------------------------------------------------- */
-
-/* Increase line distance of para's*/
-.para {
-    line-height: 1.35em;
-}
-
-/* Set 'Qlustar Docs' button font-color to black*/
-#lang_menu > a {
-    color: #000000 !important;
-}
-
-/* Set Font-color of e-mail links to green */
-a.email {
-    color: #639E00 !important;
-}
-
-/* Added hover to e-mail links for underlines */
-a.email:hover {
-    text-decoration: underline;
-}
-
-/* Set Font-color of links to green and disable underlines*/
-.para a {
-    color: #639E00 !important;
-    text-decoration: none !important;
-}
-
-/* Underline links when hover */
-.para a:hover {
-    text-decoration: underline !important;
 }
 
 /* Set Font-color and fixed font-size for index-links to green */
@@ -212,6 +240,36 @@ a.email:hover {
 /* Underline index-links when hover */
 .toc a:hover {
     text-decoration: underline;
+}
+/* -------------------------------------------------- */
+
+/* -------------------- Links ----------------------- */
+/* Set Font-color of e-mail links to green */
+a.email {
+    color: #639E00 !important;
+}
+
+/* Added hover to e-mail links for underlines */
+a.email:hover {
+    text-decoration: underline;
+}
+/* -------------------------------------------------- */
+
+/* ---------------- Paras & Screens ----------------- */
+/* Increase line distance of para's*/
+.para {
+    line-height: 1.35em;
+}
+
+/* Set Font-color of links to green and disable underlines*/
+.para a {
+    color: #639E00 !important;
+    text-decoration: none !important;
+}
+
+/* Underline links when hover */
+.para a:hover {
+    text-decoration: underline !important;
 }
 
 /* Set color + opacity + line distance for screens */
@@ -226,17 +284,11 @@ a.email:hover {
     line-height: 1.3em;
 }
 
-/* Highlight box, if a product is choosen from the side_product menu */
-.side_products div.link a.active {
-    box-shadow: 0px 0px 17px black !important;
-    
+/* ----------------- Hide Elements ------------------ */
+/* Disable RSS feed */
+a.rss.link {
+    display: none;
 }
-
-/* Set Font-color of box with versionnumber 
-.version_tabs span.active {
-    color: #c5e236 !important;
-}
-*/
 
 /* Hide Slideshow-arrows */
 .jcarousel-prev {
@@ -246,75 +298,5 @@ a.email:hover {
 .jcarousel-next {
     display: none !important;
 }
-
-/* Set width of menu 
-#menu {
-    margin-left: 42px;
-    width: 92.9% !important;
-}
-*/
-
-a.rss.link {
-    display: none;
-}
-
-.side_products {
-    position: absolute;
-    left: 32px;
-    right: 10px;
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-body > #wrapper {
-    box-shadow: none !important;
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-.lang_bottom_box {
-    background-color: rgba(250, 250, 250, 1) !important;
-}
-
-.title a {
-    color: #c5e236 !important;
-}
-
-#menu a:visited {
-  color: #FFFFFF;
-}
-
-.breadcrumb a {
-    color: #c5e236;
-}
-
-.variablelist > a {
-    color: #c5e236;
-}
-
-.side_products div.link a {
-    background-color: #c5e236 !important;
-    color: #000000 !important;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.side_products div.link a:hover {
-    background-color: #5a5a5a !important;
-    color: #c5e236 !important;
-
-#menu {
-    background-color: #c5e236;
-}
-
-.breadcrumb {
-    background-color: #000000;
-}
-
-#menu a:hover {
-  color: #c5e236;
-}
-
-.bottom_books .subtitle {
-    font-size: 16px !important;
-    margin-top: 11px !important;
-}
+/* -------------------------------------------------- */
 
