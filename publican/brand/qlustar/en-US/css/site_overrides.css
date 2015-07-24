@@ -217,6 +217,7 @@ body > #wrapper {
     background-color: rgba(197, 226, 54, 0.9) !important;
     height: 42px !important;
     padding: 0em 0em 0em;
+    border-radius: 2.5em 2.5em 0 0 !important;
 }
 
 /* Set Font-color of index-panel to black*/
