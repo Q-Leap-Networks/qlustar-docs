@@ -7,9 +7,11 @@
 <!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<bookinfo version="5.0" conformance="1" xmlns="http://docbook.org/ns/docbook"
-	 xmlns:xlink="http://www.w3.org/1999/xlink"
-	 xml:id="book-Qlustar-Administration-Manual">
+<info version="5.0"
+      xml:id="info-Qlustar_Cluster_OS-admin-manual"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
   <title role="producttitle">Administration Manual</title>
   <subtitle>
     Manual for the configuration, customization and operation of Qlustar clusters.
@@ -34,4 +36,4 @@
   <xi:include href="Common_Content/Legal_Notice.xml"
 	      xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-</bookinfo>
+</info>
