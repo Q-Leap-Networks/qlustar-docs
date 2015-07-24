@@ -497,7 +497,6 @@ create_document() {
   local root_file="${name}/${QL_LANG}/${name}.xml"
 
   cd "$product_dir"
-  echo false > active
   create_and_backup_dir "$name" no-create
   exec_publican create --type $type --name "$name" --dtdver $QL_DTDVER \
     --brand $QL_BRAND --version $version --product "$product"
