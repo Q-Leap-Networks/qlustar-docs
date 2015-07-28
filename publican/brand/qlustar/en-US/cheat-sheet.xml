@@ -58,5 +58,24 @@
       It is usually a good idea to <emphasis role="bold">separate user from system
       activities</emphasis> as much as possible.
     </para>
+    <para>
+      <!-- The way of showing filenames and devices -->
+      Given that the downloaded installer image file is named
+      <filename>qlustar-installer.iso.gz</filename> and that the device name of the drive is
+      <filename>/dev/sdb</filename>.
+    </para>
+    <para>
+      <!-- The way of showing images -->
+      <mediaobject>
+	<imageobject><imagedata fileref="/path/file.png" align="center"
+	width="300px" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  This text is shown, if the picture get lost
+	</phrase></textobject>
+	<caption><para>
+	  This text is the description of the image
+	</para></caption>
+      </mediaobject>
+    </para>
   </chapter>
 </book>
