@@ -112,5 +112,14 @@
 	</procedure>
       </task>
     </para>
+    <para>
+      <!-- The way of showing hostnames -->
+      <systemitem class="systemname">sn-2</systemitem>
+      <systemitem class="systemname">beosrv-c</systemitem>
+    </para>
+    <para>
+      <!-- The way of showing environment variables -->
+      <envar>${HOSTNAME##*-}</envar>
+    </para>
   </chapter>
 </book>
