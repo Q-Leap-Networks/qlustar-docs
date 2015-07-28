@@ -40,6 +40,10 @@
       <firstterm>ZFS</firstterm>
     </para>
     <para>
+      <!-- Used for config files -->
+      <classname>Boot config</classname>
+    </para>
+    <para>
       <!-- Used for example names -->
       <parameter>StorNode</parameter>
     </para>
@@ -76,6 +80,37 @@
 	  This text is the description of the image
 	</para></caption>
       </mediaobject>
+    </para>
+    <para>
+      <!-- An example Step by Step Guide 
+      Every Task got 1 procedure tag. 1 procedure tag
+      can have any number of steps and 1 step can have
+      any number of substeps -->
+      <task xml:id="example-task">
+	<title>This is an example Task</title>
+	<procedure>
+	  <step>
+	    <title>First you look at this cheat-sheet</title>
+	    <para>
+	      Well done!
+	    </para>
+	  </step>
+	  <step>
+	    <title>Then you try to recognize it</title>
+	    <para>
+	      Do you recognize it?
+	    </para>
+	    <substeps>
+	      <step>
+		<title>This is a substep</title>
+		<para>
+		  This is the text of the substep
+		</para>
+	      </step>
+	    </substeps>
+	  </step>
+	</procedure>
+      </task>
     </para>
   </chapter>
 </book>
