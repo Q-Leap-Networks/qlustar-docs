@@ -43,5 +43,10 @@
       <!-- Used for example names -->
       <parameter>StorNode</parameter>
     </para>
+    <para>
+      <!-- The way of showing a link.
+      always add a '/___blank___' after the link!-->
+      <link xlink:href="http://example.com/example/___blank___">Linkname</link>
+    </para>
   </chapter>
 </book>
