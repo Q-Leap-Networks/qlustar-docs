@@ -1,8 +1,22 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
 <!-- 
-  Cheat sheet for elements and tags to be used in publican based Qlustar
-  Docbbook documents.
+  Cheat sheet to find the correct and consistent elements and tags to be used in publican
+  based Qlustar Docbbook documents. The following is a summary list of what is defined:
+
+  - Itemized lists
+  - Names/definitions with replaceables
+  - Dirst mention of an important name
+  - Well defined Qlustar/QluMan terms
+  - Example parameters/names
+  - External links
+  - Italic/bold emphasis
+  - Filenames / devices
+  - Images
+  - Step by Step Guides
+  - Hostnames
+  - Environment/shell variables
+
 -->
 
 <book xmlns="http://docbook.org/ns/docbook"
@@ -17,7 +31,7 @@
     <para>
       <!-- A list in which each entry is marked with a bullet.
       For every item on the list, use <listitem>. An itemizedlist
-      can be nest how often you want.-->
+      can be nested as often as needed.-->
       <itemizedlist>
 	<listitem>
 	  <para>
@@ -40,15 +54,15 @@
       <firstterm>ZFS</firstterm>
     </para>
     <para>
-      <!-- Used for config files -->
+      <!-- Used for defined Qlustar/QluMan terms -->
       <classname>Boot config</classname>
     </para>
     <para>
-      <!-- Used for example names -->
+      <!-- Used for example parameters/names -->
       <parameter>StorNode</parameter>
     </para>
     <para>
-      <!-- The way of showing a link.
+      <!-- The way of showing an external link.
       always add a '/___blank___' after the link!-->
       <link xlink:href="http://example.com/example/___blank___">Linkname</link>
     </para>
@@ -113,7 +127,8 @@
       </task>
     </para>
     <para>
-      <!-- The way of showing hostnames -->
+      <!-- The way of showing hostnames (many more classes exist, see
+      http://www.docbook.org/tdg5/en/html/systemitem.html -->
       <systemitem class="systemname">sn-2</systemitem>
       <systemitem class="systemname">beosrv-c</systemitem>
     </para>
