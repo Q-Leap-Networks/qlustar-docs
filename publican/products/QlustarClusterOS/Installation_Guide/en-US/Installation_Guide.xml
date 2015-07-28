@@ -61,22 +61,25 @@
 	</listitem>
       </itemizedlist>  
     </para>
-    <para>
-      Note that the only virtual machine (VM) we test the installation process on is KVM.
-      Hence, this is the only VM officially supported by Qlustar. Furthermore, nesting of
-      VMs is currently not supported by our kernel. This means that you won't be able to
-      start a virtual front-end node or a virtual demo-cluster directly from within a
-      head-node that is itself running as a VM.
-    </para>
-    <para>
-      Note also, that the Qlustar kernel is configured for cluster server hardware. Hence,
-      it's possible, that drivers for some network or storage adapters on Laptops or
-      other non-server PCs are missing. If you run into such problems, please post it
-      in the <link xlink:href="http://qlustar.com/forums/installation/___blank___">
-      Installation forum</link>. Qlustar also has no support for secure boot (UEFI).
-      If your hardware uses UEFI by default, you need to configure your BIOS to
-      allow so-called legacy boot.
-    </para>
+    <note>
+      <para>
+	The only virtual machine (VM) we test the installation process on is KVM.
+	Hence, this is the only VM officially supported by Qlustar. Furthermore, nesting of
+	VMs is currently not supported by our kernel. This means that you won't be able to
+	start a virtual front-end node or a virtual demo-cluster directly from within a
+	head-node that is itself running as a VM.
+      </para>
+    </note>
+    <note>
+      <para>
+      The Qlustar kernel is configured for cluster server hardware. Hence, it's possible, that
+      drivers for some network or storage adapters on Laptops or other non-server PCs are
+      missing. If you run into such problems, please post it in the <link
+      xlink:href="http://qlustar.com/forums/installation/___blank___"> Installation
+      forum</link>. Qlustar also has no support for secure boot (UEFI).  If your hardware uses
+      UEFI by default, you need to configure your BIOS to allow so-called legacy boot.
+      </para>
+    </note>
   </chapter>
 
   <chapter xml:id="Load-to-USB">
@@ -167,7 +170,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/boot-screen.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Boot Screen
 	      </phrase></textobject>
@@ -187,7 +190,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/welcome.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Welcome Screen
 	      </phrase></textobject>
@@ -210,7 +213,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/localization.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Localization Screen
 	      </phrase></textobject>
@@ -235,7 +238,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/disk-config.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Disk Config Screen
 	      </phrase></textobject>
@@ -258,7 +261,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Home Filesystem Screen
 	      </phrase></textobject>
@@ -273,7 +276,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-2.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Network (1)
 	      </phrase></textobject>
@@ -290,7 +293,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-3.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Network (1)
 	      </phrase></textobject>
@@ -305,7 +308,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-1.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Network (1)
 	      </phrase></textobject>
@@ -338,7 +341,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-network-adapter.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -367,7 +370,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-1-ready.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -382,7 +385,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-2.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -411,7 +414,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-choose-ib.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -435,7 +438,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-2-ready.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -450,7 +453,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/additional-settings.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -505,7 +508,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/additional-settings-ready.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -555,7 +558,7 @@
 		<para>
 		  <mediaobject>
 		    <imageobject><imagedata fileref="images/package-selection.png"
-		    width="400px" format="PNG"/></imageobject>
+		    width="85%" format="PNG"/></imageobject>
 		    <textobject><phrase>
 		      Choose network adapter
 		    </phrase></textobject>
@@ -580,19 +583,20 @@
 		</para>
 		<para>
 		  Beware, that you should choose Lustre as an option here, only if the
-		  head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).
-		  If you merely intend to try out Lustre, it is recommended to
-		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images/___blank___">configure an image</link> with Lustre support in QluMan, and assign it
-		  to some nodes of the
+		  head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).  If you
+		  merely intend to try out Lustre, it is recommended to <link
+		  xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images/___blank___">configure
+		  an image</link> with Lustre support in QluMan, and assign it to some nodes of
+		  the
 		  <link xlink:href="http://qlustar.com/#add-settings/___blank___">
 		    virtual demo-cluster</link>
 		</para>
 		<para>
-		  Note, that apart from Nvidia Cuda software, the packages selected
-		  here will only be installed on the head-node. Selecting and generating
-		  boot-image modules as well as the process of general package installation
-		  for compute/storage nodes booting from the network must be done
-		  elsewhere. This is discussed in the
+		  Note, that apart from Nvidia Cuda software, the packages selected here will
+		  only be installed on the head-node. Selecting and generating boot-image
+		  modules as well as the process of general package installation for
+		  compute/storage nodes booting from the network must be done elsewhere. This
+		  is discussed in the
 		  <link xlink:href="http://qlustar.com/book/docs/first-steps/___blank___">
 		    First Steps</link> and the
 		    <link xlink:href="http://qlustar.com/book/docs/qluman-guide/___blank___">
@@ -601,7 +605,7 @@
 		<para>
 		  <mediaobject>
 		    <imageobject><imagedata fileref="images/package-selection-ready.png"
-		    width="400px" format="PNG"/></imageobject>
+		    width="85%" format="PNG"/></imageobject>
 		    <textobject><phrase>
 		      Choose network adapter
 		    </phrase></textobject>
@@ -626,7 +630,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/summary.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
@@ -648,7 +652,7 @@
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/installation-finished.png"
-	      width="400px" format="PNG"/></imageobject>
+	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Choose network adapter
 	      </phrase></textobject>
