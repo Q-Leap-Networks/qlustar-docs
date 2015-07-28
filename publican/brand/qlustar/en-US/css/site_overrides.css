@@ -187,7 +187,8 @@ body > #wrapper {
 
 /* Set color of specified tags to blue */
 .guimenu strong, .guisubmenu strong,
-.guibutton strong, .guimenuitem strong, .keycap strong{
+.guibutton strong, .guimenuitem strong,
+.guilabel strong, .keycap strong{
     color: rgb(60, 104, 203);
     font-weight: normal !important;
 }
