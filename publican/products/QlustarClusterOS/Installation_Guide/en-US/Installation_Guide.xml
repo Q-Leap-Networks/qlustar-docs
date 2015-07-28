@@ -63,21 +63,22 @@
     </para>
     <note>
       <para>
-	The only virtual machine (VM) we test the installation process on is KVM.
-	Hence, this is the only VM officially supported by Qlustar. Furthermore, nesting of
-	VMs is currently not supported by our kernel. This means that you won't be able to
+	The only virtual machine (VM) we test the installation process on is
+	<firstterm>KVM</firstterm>. Hence, this is the only VM officially supported by
+	Qlustar. Furthermore, while nesting of VMs is supported, it will be rather slow to
 	start a virtual front-end node or a virtual demo-cluster directly from within a
 	head-node that is itself running as a VM.
       </para>
     </note>
     <note>
       <para>
-      The Qlustar kernel is configured for cluster server hardware. Hence, it's possible, that
-      drivers for some network or storage adapters on Laptops or other non-server PCs are
-      missing. If you run into such problems, please post it in the <link
-      xlink:href="http://qlustar.com/forums/installation/___blank___"> Installation
-      forum</link>. Qlustar also has no support for secure boot (UEFI).  If your hardware uses
-      UEFI by default, you need to configure your BIOS to allow so-called legacy boot.
+	The Qlustar kernel is configured for cluster server hardware. Hence, it's possible,
+	that drivers for some network or storage adapters on Laptops or other non-server PCs
+	are missing. If you run into such problems, please post it in the <link
+	xlink:href="http://qlustar.com/forums/installation/___blank___"> Installation
+	forum</link>. Qlustar also has no support for secure boot (UEFI).  If your hardware
+	uses UEFI by default, you need to configure your BIOS to allow so-called
+	<firstterm>legacy boot</firstterm>.
       </para>
     </note>
   </chapter>
