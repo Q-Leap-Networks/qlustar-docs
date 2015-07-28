@@ -184,6 +184,13 @@ body > #wrapper {
 .caption .para {
     margin-top: 0px;
 }
+
+/* Set color of specified tags to blue */
+.guimenu strong, .guisubmenu strong,
+.guibutton strong, .guimenuitem strong, .keycap strong{
+    color: rgb(60, 104, 203);
+    font-weight: normal !important;
+}
 /* -------------------------------------------------- */
 
 /* Set Background-color + opacity of Index-toc*/
