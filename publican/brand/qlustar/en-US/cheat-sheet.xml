@@ -14,6 +14,34 @@
     <para>
       To install the Qlustar OS you need:
     </para>
+    <para>
+      <!-- A list in which each entry is marked with a bullet.
+      For every item on the list, use <listitem>. An itemizedlist
+      can be nest how often you want.-->
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    A DVD or a USB flash-drive (minimum size 2GB) loaded with the Qlustar installer
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    A 64bit x86 server/PC (or virtual machine) with at least two network adapters
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      <!-- The way to show a module with a variable/replaceable -->
+      <literal>beegfs-<replaceable>version</replaceable>-server</literal>
+    </para>
+    <para>
+      <!-- Use first term if an important name appears for the first time -->
+      <firstterm>ZFS</firstterm>
+    </para>
+    <para>
+      <!-- Used for example names -->
+      <parameter>StorNode</parameter>
+    </para>
   </chapter>
-
 </book>
