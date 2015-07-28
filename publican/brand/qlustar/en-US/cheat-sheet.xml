@@ -48,5 +48,15 @@
       always add a '/___blank___' after the link!-->
       <link xlink:href="http://example.com/example/___blank___">Linkname</link>
     </para>
+    <para>
+      <!-- Showing a part of a text in italic -->
+      BeeGFS is a <emphasis>parallel cluster file system</emphasis>, developed and maintained
+      by the Fraunhofer Center for High Performance Computing.
+    </para>
+    <para>
+      <!-- Showing a part of a text in bold -->
+      It is usually a good idea to <emphasis role="bold">separate user from system
+      activities</emphasis> as much as possible.
+    </para>
   </chapter>
 </book>
