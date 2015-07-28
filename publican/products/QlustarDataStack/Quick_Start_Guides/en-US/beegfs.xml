@@ -51,31 +51,39 @@
 	<step>
 	  <title>Create a Qlustar image with the required modules</title>
 	  <para>
-	    In QluMan, create an image (named e.g. StorNode) that contains the module
-	    beegfs-&lt;version&gt;-server (current version 2014.01). If you want to mount the
-	    BeeGFS FS also on the storage nodes additionaly include the
-	    beegfs-&lt;version&gt;-client module. On compute nodes that don't run any BeeGFS
-	    meta/storage targets, only the beegfs-&lt;version&gt;-client module is required.
+	    In QluMan, create an image (named e.g. <parameter>StorNode</parameter>) that
+	    contains the module
+	    <literal>beegfs-<replaceable>version</replaceable>-server</literal> (current
+	    version 2014.01). If you want to mount the BeeGFS FS also on the storage nodes
+	    additionaly include the
+	    <literal>beegfs-<replaceable>version</replaceable>-client</literal> module. On
+	    compute nodes that don't run any BeeGFS meta/storage targets, only the
+	    <literal>beegfs-<replaceable>version</replaceable>-client</literal> module is
+	    required.
 	  </para>
 	</step>
 	<step>
 	  <title>Create a boot config with this image</title>
       	  <para>
-	    Create a new boot config (named e.g. StorNode) and select the image just
-	    created. If necessary, add kernel parameters to the boot config as well.
+	    Create a new <classname>boot config</classname> (named
+	    e.g. <parameter>StorNode</parameter>) and select the image just created. If
+	    necessary, add kernel parameters to the <classname>boot config</classname> as well.
 	  </para>
 	</step>
 	<step>
 	  <title>Create a config set that includes this boot config</title>
 	  <para>
-	    Create a new config set (named e.g. StorNode) and add the boot config (StorNode)
-	    just created.
+	    Create a new <classname>config set</classname> (named
+	    e.g. <parameter>StorNode</parameter>) and add the <classname>boot
+	    config</classname> (<parameter>StorNode</parameter>) just created.
 	  </para>
 	</step>
 	<step>
 	  <title>Create a disk config for the storage nodes</title>
 	  <para>
-	    Create a new disk config (named e.g. StorNode) to define the ZFS setup.
+	    Create a new <classname>disk config</classname> (named
+	    e.g. <parameter>StorNode</parameter>) to define the <firstterm>ZFS</firstterm>
+	    setup.
 	  </para>
 	  <substeps>
 	    <step>
@@ -88,8 +96,8 @@
 		    target.
 		  </para>
 		  <para>
-		    Copy the definitions of the default disk config and add bmeta/bstor as
-		    follows:
+		    Copy the definitions of the default <classname>disk config</classname> and
+		    add bmeta/bstor as follows:
 		    <screen>
 ZFS = var, scratch, bmeta, bstor
 [bmeta]
@@ -107,23 +115,25 @@ compress = lz4
 	    </step>
 	  </substeps>
 	  <para>
-	    Add the new disk config to the new config set (StorNode)
+	    Add the new <classname>disk config</classname> to the new <classname>config
+	    set</classname> (<parameter>StorNode</parameter>)
 	  </para>
 	</step>
 	<step>
 	  <title>Create a new host template with the above definitions</title>
 	  <para>
-	    Create a new host template (named e.g. StorNode) and select the just created config
-	    set StorNode. Use (or create) a sensible generic/hardware property set matching the
-	    properties of the storage nodes.
+	    Create a new host template (named e.g. <parameter>StorNode</parameter>) and select
+	    the just created <classname>config set</classname>
+	    <parameter>StorNode</parameter>. Use (or create) a sensible generic/hardware
+	    property set matching the properties of the storage nodes.
 	  </para>
 	</step>
 	<step>
 	  <title>Register and boot the storage nodes</title>
 	  <para>
 	    Register the storage nodes like any other nodes and assign the just created host
-	    template (StorNode) to them. Reboot them. After they come up again, you should see
-	    the following ZFS filesystems mounted:
+	    template (<parameter>StorNode</parameter>) to them. Reboot them. After they come up
+	    again, you should see the following ZFS filesystems mounted:
 	  </para>
 	  <screen>
 <prompt>0 root@sn-1 ~ #</prompt>
@@ -315,15 +325,15 @@ beegfs-client: beo-20[1-4] login-c
 EOF</command>
 	      </screen>
 		Their beegfs role is assigned to the nodes in
-		<filename>/etc/qlustar/common/image-files/softgroups</filename>. Change the node names
-		there according to your naming scheme.
+		<filename>/etc/qlustar/common/image-files/softgroups</filename>. Change the
+		node names there according to your naming scheme.
 	    </para>
 	  </step>
 	</procedure>
       </task>
       <para>
-	With these configurations in place, BeeGFS server
-	and clients should start/mount automatically upon boot. The default client mount point is
+	With these configurations in place, BeeGFS server and clients should start/mount
+	automatically upon boot. The default client mount point is
 	<filename>/beegfs/client/default</filename>.
       </para>
   </section>

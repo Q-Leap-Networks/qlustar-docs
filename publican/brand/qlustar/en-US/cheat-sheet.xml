@@ -14,6 +14,112 @@
     <para>
       To install the Qlustar OS you need:
     </para>
+    <para>
+      <!-- A list in which each entry is marked with a bullet.
+      For every item on the list, use <listitem>. An itemizedlist
+      can be nest how often you want.-->
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    A DVD or a USB flash-drive (minimum size 2GB) loaded with the Qlustar installer
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    A 64bit x86 server/PC (or virtual machine) with at least two network adapters
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      <!-- The way to show a module with a variable/replaceable -->
+      <literal>beegfs-<replaceable>version</replaceable>-server</literal>
+    </para>
+    <para>
+      <!-- Use first term if an important name appears for the first time -->
+      <firstterm>ZFS</firstterm>
+    </para>
+    <para>
+      <!-- Used for config files -->
+      <classname>Boot config</classname>
+    </para>
+    <para>
+      <!-- Used for example names -->
+      <parameter>StorNode</parameter>
+    </para>
+    <para>
+      <!-- The way of showing a link.
+      always add a '/___blank___' after the link!-->
+      <link xlink:href="http://example.com/example/___blank___">Linkname</link>
+    </para>
+    <para>
+      <!-- Showing a part of a text in italic -->
+      BeeGFS is a <emphasis>parallel cluster file system</emphasis>, developed and maintained
+      by the Fraunhofer Center for High Performance Computing.
+    </para>
+    <para>
+      <!-- Showing a part of a text in bold -->
+      It is usually a good idea to <emphasis role="bold">separate user from system
+      activities</emphasis> as much as possible.
+    </para>
+    <para>
+      <!-- The way of showing filenames and devices -->
+      Given that the downloaded installer image file is named
+      <filename>qlustar-installer.iso.gz</filename> and that the device name of the drive is
+      <filename>/dev/sdb</filename>.
+    </para>
+    <para>
+      <!-- The way of showing images -->
+      <mediaobject>
+	<imageobject><imagedata fileref="/path/file.png" align="center"
+	width="300px" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  This text is shown, if the picture get lost
+	</phrase></textobject>
+	<caption><para>
+	  This text is the description of the image
+	</para></caption>
+      </mediaobject>
+    </para>
+    <para>
+      <!-- An example Step by Step Guide 
+      Every Task got 1 procedure tag. 1 procedure tag
+      can have any number of steps and 1 step can have
+      any number of substeps -->
+      <task xml:id="example-task">
+	<title>This is an example Task</title>
+	<procedure>
+	  <step>
+	    <title>First you look at this cheat-sheet</title>
+	    <para>
+	      Well done!
+	    </para>
+	  </step>
+	  <step>
+	    <title>Then you try to recognize it</title>
+	    <para>
+	      Do you recognize it?
+	    </para>
+	    <substeps>
+	      <step>
+		<title>This is a substep</title>
+		<para>
+		  This is the text of the substep
+		</para>
+	      </step>
+	    </substeps>
+	  </step>
+	</procedure>
+      </task>
+    </para>
+    <para>
+      <!-- The way of showing hostnames -->
+      <systemitem class="systemname">sn-2</systemitem>
+      <systemitem class="systemname">beosrv-c</systemitem>
+    </para>
+    <para>
+      <!-- The way of showing environment variables -->
+      <envar>${HOSTNAME##*-}</envar>
+    </para>
   </chapter>
-
 </book>

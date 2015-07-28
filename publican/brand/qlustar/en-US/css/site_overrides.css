@@ -174,6 +174,24 @@ body > #wrapper {
 .lang_bottom_box {
     background-color: rgba(250, 250, 250, 1) !important;
 }
+
+/* Set Font-size of bridgehead tag*/
+.itemizedlist h2 {
+    font-size: 16px;
+}
+
+/* Set the position of the image descriptions */
+.caption .para {
+    margin-top: 0px;
+}
+
+/* Set color of specified tags to blue */
+.guimenu strong, .guisubmenu strong,
+.guibutton strong, .guimenuitem strong,
+.guilabel strong, .keycap strong{
+    color: rgb(60, 104, 203);
+    font-weight: normal !important;
+}
 /* -------------------------------------------------- */
 
 /* Set Background-color + opacity of Index-toc*/
