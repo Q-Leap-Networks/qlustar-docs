@@ -539,9 +539,9 @@
 		  distribution you (or your users, if you're an administrator) like to
 		  work with/develop for. Note that you can always add support for a
 		  previously unselected edge platform later on by creating corresponding
-		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#UnionFS-Chroots/___blank___">chroots</link> 
+		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#UnionFS-Chroots___blank___">chroots</link> 
 		  and
-		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images/___blank___">Qlustar images</link> using QluMan.
+		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images___blank___">Qlustar images</link> using QluMan.
 		</para>
 		<para>
 		  Technically, choosing a specific edge platform (e.g. Debian/Wheezy)

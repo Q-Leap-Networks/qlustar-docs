@@ -35,8 +35,8 @@
 	  them internally extensively. If you are already familiar with RAID, then this concept
 	  is not new to you, although you may not have referred to it as “VDEVs”. Basically, we
 	  have a meta-device that represents one or more physical devices. In Linux software
-	  RAID, you might have a “/dev/md0″ device that represents a RAID-5 array of 4
-	  disks. In this case, “/dev/md0″ would be your “VDEV”.
+	  RAID, you might have a <filename>/dev/md0</filename> device that represents a RAID-5
+	  array of 4 disks. In this case, <filename>/dev/md0</filename> would be your “VDEV”.
 	</para>
 
 	<para>
@@ -317,7 +317,7 @@ zpool destroy tank</command>
 	</bridgehead>
 	
 	<para>
-	  As mentioned, pre-allocated files can be used fer setting up zpools on your existing
+	  As mentioned, pre-allocated files can be used per setting up zpools on your existing
 	  ext4 filesystem (or whatever). It should be noted that this is meant entirely for
 	  testing purposes, and not for storing production data. Using files is a great way to
 	  have a sandbox, where you can test compression ratio, the size of the deduplication
@@ -411,7 +411,7 @@ errors: No known data errors
 	</screen>
 	
 	<para>
-	  There’s a lot going on here, so let’s disect it. First, we created a RAID-1+0 using
+	  There’s a lot going on here, so let’s dissect it. First, we created a RAID-1+0 using
 	  our four preallocated image files. Notice the VDEVs “mirror-0″ and “mirror-1″, and
 	  what they are managing. Second, we created a third VDEV called “mirror-2″ that
 	  actually is not used for storing data in the pool, but is used as a ZFS intent log,
@@ -766,9 +766,6 @@ zpool destroy tank</command>
 	  </listitem>
 	</itemizedlist>
 
-
-
-
       </section>
       <section xml:id="admin-man-sect-ex-import-strg-pools">
 	<title>Exporting and Importing Storage Pools</title>
@@ -836,8 +833,8 @@ zpool export tank</command>
 	  default, when creating ZFS storage pools and filesystems, they are automatically
 	  mounted to the system. There is no need to explicitly unmount the filesystems as you
 	  with with ext3 or ext4. The export will handle that. Further, some pools may refuse
-	  to be exported, for whatever reason. You can pass the “-f” switch if needed to force
-	  the export.
+	  to be exported, for whatever reason. You can pass the <command>-f</command> switch if
+	  needed to force the export.
 	</para>
 
 	<bridgehead>
@@ -879,17 +876,18 @@ errors: No known data errors
 	</screen>
 	
 	<para>
-	  Your storage pool state may not be “ONLINE”, meaning that everything is healthy. If
-	  the system does not recognize a disk in your pool, you may get a “DEGRADED” state. If
-	  one or more of the drives appear as faulty to the system, then you may get a
-	  “FAULTED” state in your pool. You will need to troubleshoot what drives are causing
-	  the problem, and fix accordingly.
+	  Your storage pool state may not be <property>ONLINE</property>, meaning that
+	  everything is healthy. If the system does not recognize a disk in your pool, you may
+	  get a <property>DEGRADED</property> state. If one or more of the drives appear as
+	  faulty to the system, then you may get a <property>FAULTED</property> state in your
+	  pool. You will need to troubleshoot what drives are causing the problem, and fix
+	  accordingly.
 	</para>
 
 	<para>
 	  You can import multiple pools simultaneously by either specifying each pool as an
-	  argument, or by passing the “-a” switch for importing all discovered pools. For
-	  importing the two pools “tank1″ and “tank2″, type:
+	  argument, or by passing the <command>-a</command> switch for importing all discovered
+	  pools. For importing the two pools “tank1″ and “tank2″, type:
 	</para>
 
 	<screen>
@@ -915,8 +913,8 @@ zpool import -a</command>
 	  system. Destroying a pool doesn’t wipe the data on the disks, so the metadata is
 	  still in tact, and the pool can still be discovered. Let’s take a clean pool called
 	  “tank”, destroy it, move the disks to a new system, then try to import the pool. You
-	  will need to pass the “-D” switch to tell ZFS to import a destroyed pool. Do not
-	  provide the pool name as an argument, as you would normally do:
+	  will need to pass the <command>-D</command> switch to tell ZFS to import a destroyed
+	  pool. Do not provide the pool name as an argument, as you would normally do:
 	</para>
 
 	<screen>
@@ -964,13 +962,14 @@ config:
 	</screen>
 
 	<para>
-	  Notice that the state of the pool is “ONLINE (DESTROYED)”. Even though the pool is
-	  “ONLINE”, it is only partially online. Basically, it’s only been discovered, but it’s
-	  not available for use. If you run the <command>df</command> command, you will find
-	  that the storage pool is not mounted. This means the ZFS filesystem datasets are not
-	  available, and you currently cannot store data into the pool. However, ZFS has found
-	  the pool, and you can bring it fully ONLINE for standard usage by running the import
-	  command one more time, this time specifying the pool name as an argument to import:
+	  Notice that the state of the pool is <property>ONLINE (DESTROYED)</property>. Even
+	  though the pool is <property>ONLINE</property>, it is only partially
+	  online. Basically, it’s only been discovered, but it’s not available for use. If you
+	  run the <command>df</command> command, you will find that the storage pool is not
+	  mounted. This means the ZFS filesystem datasets are not available, and you currently
+	  cannot store data into the pool. However, ZFS has found the pool, and you can bring
+	  it fully ONLINE for standard usage by running the import command one more time, this
+	  time specifying the pool name as an argument to import:
 	</para>
 	
 	<screen>
@@ -1014,8 +1013,8 @@ errors: No known data errors
 	  name “tank”, and to import the pool, I must use its unique identifier. So, I pass
 	  that as an argument from my previous import. This is because in my previous output,
 	  we can see there are two known pools with the pool name “tank”. However, after
-	  specifying its ID, I was able to successfully bring the storage pool to full “ONLINE”
-	  status. You can identify this by checking its status:
+	  specifying its ID, I was able to successfully bring the storage pool to full
+	  <property>ONLINE</property> status. You can identify this by checking its status:
 	</para>
 
 	<screen>
@@ -1123,7 +1122,7 @@ zpool upgrade -a</command>
 	
 	<para>
 	  As a sidenote, when using ZFS on Linux, the RPM and Debian packages will contain an
-	  <filename>/etc/init.d/zfs</filename> init script for setting up the pools and
+	  <application>/etc/init.d/zfs</application> init script for setting up the pools and
 	  datasets on boot. This is done by importing them on boot. However, at shutdown, the
 	  init script does not export the pools. Rather, it just unmounts them. So, if you
 	  migrate the disk to another box after only shutting down, you will be not be able to
@@ -1170,8 +1169,9 @@ zpool upgrade -a</command>
 	  good or bad, and from the perspective of ext3 or ext4, it will get good data if read
 	  from the disk containing the good block, and corrupted data from the disk containing
 	  the bad block, without any control over which disk to pull the data from, and fixing
-	  the corruption. These errors are known as “silent data errors”, and there is really
-	  nothing you can do about it with the standard GNU/Linux filesystem stack.
+	  the corruption. These errors are known as <errorname>silent data errors</errorname>,
+	  and there is really nothing you can do about it with the standard GNU/Linux
+	  filesystem stack.
 	</para>
 	
 	<bridgehead>
@@ -1243,8 +1243,9 @@ errors: No known data errors
 	<para>
 	  As you can see, you can get a status of the scrub while it is in progress. Doing a
 	  scrub can severely impact performance of the disks and the applications needing
-	  them. So, if for any reason you need to stop the scrub, you can pass the “-s” switch
-	  to the scrub subcommand. However, you should let the scrub continue to completion.
+	  them. So, if for any reason you need to stop the scrub, you can pass the
+	  <command>-s</command> switch to the scrub subcommand. However, you should let the
+	  scrub continue to completion.
 	</para>
 
 	<screen>
@@ -1350,9 +1351,9 @@ for i in a b c d e f g; do echo -n "/dev/sd$i: "; hdparm -I
 	</para>
 
 	<para>
-	  To replace an dead disk in the pool with a new one, you use the “replace”
-	  subcommand. Suppose the new disk also identifed itself as /dev/sde, then I would
-	  issue the following command:
+	  To replace an dead disk in the pool with a new one, you use the
+	  <command>replace</command> subcommand. Suppose the new disk also identifed itself as
+	  <filename>/dev/sde</filename>, then I would issue the following command:
 	</para>
 	
 	<screen>
@@ -1397,9 +1398,9 @@ config:
 
 	<para>
 	  Determining quickly if everything is functioning as it should be, without the full
-	  output of the “zpool status” command can be done by passing the “-x” switch. This is
-	  useful for scripts to parse without fancy logic, which could alert you in the event
-	  of a failure:
+	  output of the <command>zpool status</command> command can be done by passing the
+	  <command>-x</command> switch. This is useful for scripts to parse without fancy
+	  logic, which could alert you in the event of a failure:
 	</para>
 
 	<screen>
@@ -1410,8 +1411,8 @@ all pools are healthy
 	</screen>
 
 	<para>
-	 The rows in the “zpool status” command give you vital information about the pool, most
-	 of which are self-explanatory. They are defined as follows:
+	 The rows in the <command>zpool status</command> command give you vital information
+	 about the pool, most of which are self-explanatory. They are defined as follows:
 	</para>
 
 	<itemizedlist>
@@ -1656,12 +1657,12 @@ all pools are healthy
 	  Scrubbing your data on regular intervals will ensure that the blocks in the storage
 	  pool remain consistent. Even though the scrub can put strain on applications wishing
 	  to read or write data, it can save hours of headache in the future. Further, because
-	  you could have a “damaged device” at any time (see <ulink
-	  url="http://docs.oracle.com/cd/E19082-01/817-2271/gbbvf/index.html"></ulink> about
-	  damaged devices with ZFS), properly knowing how to fix the device, and what to expect
-	  when replacing one, is critical to storage administration. Of course, there is plenty
-	  more I could discuss about this topic, but this should at least introduce you to the
-	  concepts of scrubbing and resilvering data.
+	  you could have a “damaged device” at any time (see <link
+	  xlink:href="http://docs.oracle.com/cd/E19082-01/817-2271/gbbvf/index.html">about
+	  damaged devices with ZFS</link>), properly knowing how to fix the device, and what to
+	  expect when replacing one, is critical to storage administration. Of course, there is
+	  plenty more I could discuss about this topic, but this should at least introduce you
+	  to the concepts of scrubbing and resilvering data.
 	</para>
 	
       </section>
@@ -1712,8 +1713,8 @@ all pools are healthy
 		any mount points within the pool. This property can be used when examining an
 		unknown pool, if the mount points cannot be trusted, or in an alternate boot
 		environment, where the typical paths are not valid.Setting altroot defaults to
-		using “cachefile=none”, though this may be overridden using an explicit
-		setting.
+		using <property>cachefile=none</property>, though this may be overridden using
+		an explicit setting.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1727,7 +1728,8 @@ all pools are healthy
 		of 2. I/O operations will be aligned to the specified size boundaries. Default
 		value is “9″, as 2^9 = 512, the standard sector size operating system utilities
 		use for reading and writing data. For advanced format drives with 4 KiB
-		boundaries, the value should be set to “ashift=12″, as 2^12 = 4096.
+		boundaries, the value should be set to <property>ashift=12</property>, as 2^12
+		= 4096.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1751,10 +1753,10 @@ all pools are healthy
 	    </term>
 	    <listitem>
 	      <para>
-		Controls automatic device replacement of a “spare” VDEV in your pool. Default
-		is set to “off”. As such, device replacement must be initiated manually by
-		using the “zpool replace” command. This setting is a boolean, with values
-		either “on” or “off”.
+		Controls automatic device replacement of a <property>spare</property> VDEV in
+		your pool. Default is set to “off”. As such, device replacement must be
+		initiated manually by using the <command>zpool replace</command> command. This
+		setting is a boolean, with values either “on” or “off”.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1780,7 +1782,7 @@ all pools are healthy
 		the disks. However, in some clustering environments, the cache file may need to
 		be stored in a different location for pools that would not automatically be
 		imported. Can be set to any string, but for most ZFS installations, the default
-		location of “/etc/zfs/zpool.cache” should be sufficient.
+		location of <filename>/etc/zfs/zpool.cache</filename> should be sufficient.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1849,8 +1851,9 @@ all pools are healthy
 	      <para>
 		Amount of uninitialized space within the pool or device that can be used to
 		increase the total capacity of the pool. Uninitialized space consists of any
-		space on an EFI labeled vdev which has not been brought online (i.e. “zpool
-		online -e”). This space occurs when a LUN is dynamically expanded.
+		space on an EFI labeled vdev which has not been brought online
+		(i.e. <command>zpool online -e</command>). This space occurs when a LUN is
+		dynamically expanded.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1962,9 +1965,10 @@ all pools are healthy
 	    <listitem>
 	      <para>
 		Controls whether snapshot information that is associated with this pool is
-		displayed with the “zfs list” command. If this property is disabled, snapshot
-		information can be displayed with the “zfs list -t snapshot” command. The
-		default value is “off”. Boolean value that can be either “off” or “on”.
+		displayed with the <command>zfs list</command> command. If this property is
+		disabled, snapshot information can be displayed with the <command>zfs list -t
+		snapshot</command> command. The default value is “off”. Boolean value that can
+		be either “off” or “on”.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1997,9 +2001,9 @@ all pools are healthy
 	    <listitem>
 	      <para>
 		Writable setting that identifies the current on-disk version of the pool. Can
-		be any value from 1 to the output of the “zpool upgrade -v” command. This
-		property can be used when a specific version is needed for backwards
-		compatibility.
+		be any value from 1 to the output of the <command>zpool upgrade -v</command>
+		command. This property can be used when a specific version is needed for
+		backwards compatibility.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -2082,7 +2086,8 @@ tank  expandsize     0           -
 	</para>
 
 	<para>
-	  Suppose we wanted to change the “comment” property, this is how I would do it:
+	  Suppose we wanted to change the <property>comment</property> property, this is how I
+	  would do it:
 	</para>
 
 	<screen>
@@ -2097,10 +2102,11 @@ tank  comment   Contact admins@example.com  local
 	</screen>
 	
 	<para>
-	  As you can see, the SOURCE is “local” for the “comment” property. Thus, it was
-	  user-defined. As mentioned, I don’t know of a way to get string properties back to
-	  default after being set. Further, any modifiable property can be set at pool creation
-	  time by using the “-o” switch, as follows:
+	  As you can see, the SOURCE is “local” for the <property>comment</property>
+	  property. Thus, it was user-defined. As mentioned, I don’t know of a way to get
+	  string properties back to default after being set. Further, any modifiable property
+	  can be set at pool creation time by using the <command>-o</command> switch, as
+	  follows:
 	</para>
 	
 	<screen>
@@ -2119,11 +2125,11 @@ zpool create -o ashift=12 tank raid1 sda sdb</command>
 	  example, if you enable block deduplication for a ZFS dataset, it dedupes blocks found
 	  in the entire pool, not just in your dataset. However, only blocks in that dataset
 	  will be actively deduped, while other ZFS datasets may not. Also, setting a property
-	  is not retroactive. In the case of your “autoexpand” zpool property to automatically
-	  expand the zpool size when all the drives have been replaced, if you replaced a drive
-	  before enabling the property, that drive will be considered a smaller drive, even if
-	  it physically isn’t. Setting properties only applies to operations on the data moving
-	  forward, and never backward.
+	  is not retroactive. In the case of your <property>autoexpand</property> zpool
+	  property to automatically expand the zpool size when all the drives have been
+	  replaced, if you replaced a drive before enabling the property, that drive will be
+	  considered a smaller drive, even if it physically isn’t. Setting properties only
+	  applies to operations on the data moving forward, and never backward.
 	</para>
 
 	<para>
@@ -3677,3 +3683,6 @@ zfs snapshot tank/ext4@001</command>
       </section>
     </section>
   </section>
+
+<!--  LocalWords:  fsck
+-->

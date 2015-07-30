@@ -5,16 +5,16 @@
   <para>
     Qlustar is a full-fledged Linux distribution based on Debian/Ubuntu. Its main focus is to
     provide an Operating System (OS) that simplifies the setup, administration, monitoring and
-    general use of Linux clusters. Hence we call it a <emphasis>Cluster
-    OS.</emphasis><indexterm><primary>Operating System</primary><secondary>Cluster
+    general use of Linux clusters. Hence we call it a <firstterm>Cluster
+    OS.</firstterm><indexterm><primary>Operating System</primary><secondary>Cluster
     OS</secondary></indexterm>
   </para>
   <para>
-    A Qlustar cluster typically consists of one or more <emphasis>head-nodes</emphasis>,
+    A Qlustar cluster typically consists of one or more <firstterm>head-nodes</firstterm>,
     <indexterm><primary>head-node</primary></indexterm> and a larger number of compute-,
     storage- or cloud-nodes (in this manual we usually refer to these latter nodes simply as
     compute-nodes). In an HPC cluster, it is highly advisable to separate user login sessions
-    onto dedicated <emphasis>Front-End (FE) nodes</emphasis><indexterm><primary>Front-End
+    onto dedicated <firstterm>Front-End (FE) nodes</firstterm><indexterm><primary>Front-End
     nodes</primary></indexterm>. This leads to higher stability and security of the whole
     system, since then the head-node(s) (its most critical component), are not subject to
     problems arising from uncontrolled user activity. The FE node(s) can run on real physical

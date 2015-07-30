@@ -61,7 +61,8 @@
       symbolic links:
     </para>
     
-<screen>pxelinux.0 -> <filename>/usr/lib/syslinux/pxelinux.0</filename>
+<screen>
+pxelinux.0 -> <filename>/usr/lib/syslinux/pxelinux.0</filename>
 pxelinux.cfg -> <filename>/etc/qlustar/pxelinux.cfg</filename>
 qlustar -> <filename>/var/lib/qlustar</filename>
 </screen>
@@ -133,7 +134,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
     <indexterm><primary>QluMan</primary>
     <secondary>Remote Execution Server</secondary></indexterm>
     <para>
-      The QluMan execution server (<parameter>qluman-execd</parameter>) runs on any head- and
+      The QluMan execution server (<firstterm>qluman-execd</firstterm>) runs on any head- and
       compute-node of a Qlustar cluster. It is one of Qlustar's main components, responsible
       for executing remote commands as well as writing configurations to disk.
     </para>
@@ -143,10 +144,9 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       <indexterm><primary>Boot Process</primary>
       <secondary>Dynamic Execution</secondary></indexterm>
       <para>
-	When a compute-node boots and <parameter>qluman-execd</parameter> starts, it
-	automatically performs some initialization/configuration tasks depending on the nodes
-	QluMan configuration options. The following is a list of tasks managed by
-	<parameter>qluman-execd</parameter>:
+	When a compute-node boots and qluman-execd starts, it automatically performs some
+	initialization/configuration tasks depending on the nodes QluMan configuration
+	options. The following is a list of tasks managed by qluman-execd:
       </para>
       <variablelist>
 	<varlistentry>

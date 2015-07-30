@@ -49,9 +49,10 @@ deb http://repo.qlustar.com/repo/ubuntu 8.1-precise-proposed-updates main univer
     <indexterm><primary>Package Management</primary>
     <secondary>dpkg</secondary></indexterm>
     <para>
-      <command>dpkg</command> (see <command>man dpkg</command>) is the basic package management
-      tool for Ubuntu/Debian, comparable to rpm (Red Hat Package Manager). It is not capable
-      of automatically resolving package dependencies.
+      <command>dpkg</command> (see <command>man dpkg</command>) is the
+      basic package management tool for Ubuntu/Debian, comparable to
+      rpm (<application>Red Hat Package Manager</application>). It is
+      not capable of automatically resolving package dependencies.
     </para>
   </section>
   <section id="admin-man-sect-apt">
@@ -72,14 +73,15 @@ apt-get update</command>
 apt-get dist-upgrade.</command>
     </screen>
     <para>
-      Detailed upgrade instructions for a Qlustar system can be found in the 
-      <ulink url="http://qlustar.com/book/docs/qlustar-update-procedure">
-	<citetitle>Qlustar Update Guide</citetitle></ulink>.
+      Detailed upgrade instructions for a Qlustar system can be found
+      in the <link
+      xlink:href="http://qlustar.com/book/docs/qlustar-update-procedure">>Qlustar
+      Update Guide</link>.
     </para>
     <para>
       New packages can be installed by running 
       <command>apt-get install <replaceable>&lt;package name&gt;</replaceable></command>. If  
-      <replaceable>&lt;package name&gt;</replaceable>
+      <replaceable>package name</replaceable>
       depends on, or conflicts with other packages those will be automatically installed
       or removed upon confirmation.
     </para>
@@ -99,7 +101,7 @@ apt-get dist-upgrade.</command>
      <para>
        Let us consider the case of the GNU C compiler 
        <command>gcc</command> as an example of the situation described above. 
-       Simply installing the <replaceable>gcc</replaceable> package via  <command> apt-get
+       Simply installing the <package>gcc</package> package via <command>apt-get
        </command> is all you need to do in this case. The alternatives are automatically
        configured for you.  
      </para>
@@ -114,7 +116,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
      </screen>
      <para>
        This tells us that currently we are running the version 4.6.3 of the GNU C compiler. Let
-       us inspect the <replaceable>gcc</replaceable> binary.
+       us inspect the <application>gcc</application> binary.
      </para>
      <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
@@ -132,7 +134,7 @@ lrwxrwxrwx ... /usr/bin/gcc -> /etc/alternatives/gcc
        it was being executed from the <filename>/usr/bin</filename> path. However we 
        also discovered, that it’s a symbolic link pointing to 
        <filename>/etc/alternatives/gcc</filename>. The directory 
-       <replaceable>/etc/alternatives</replaceable> is the place, where all the 
+       <filename>/etc/alternatives</filename> is the place, where all the 
        software alternatives are configured in Ubuntu/Debian. Let us inspect a little further.
      </para>
      <screen>
@@ -160,7 +162,7 @@ ls -l /usr/bin/gcc-4.6</command>
      <para>
        Using <command>update-alternatives</command> we can quickly figure out which 
        alternatives are currently configured for a certain executable. Let us look at the 
-       current setup of <replaceable>gcc</replaceable>.
+       current setup of <application>gcc</application>.
      </para>
      <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
@@ -173,12 +175,12 @@ link currently points to /usr/bin/gcc-4.6
 Current ‘best’ version is /usr/bin/gcc-4.6
      </screen>
      <para>
-       As you can see the current link points to <filename>/usr/bin/gcc-4.6</filename>
-       as we already discovered. There is another alternative, namely
+       As you can see the current link points to <filename>/usr/bin/gcc-4.6</filename> as we
+       already discovered. There is another alternative, namely
        <filename>/usr/bin/gcc-4.8</filename> with a priority of 20. The priority of
-       <filename>/usr/bin/gcc-4.6</filename> is 50. The line ’gcc - auto mode’
-       means that the alternatives system will look for the package with the highest
-       priority in order to use that executable.
+       <filename>/usr/bin/gcc-4.6</filename> is 50. The line <code>'gcc - auto mode’</code>
+       means that the alternatives system will look for the package with the highest priority
+       in order to use that executable.
      </para>
      <para>
        The last line in the above output says that the current best priority link is

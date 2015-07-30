@@ -44,27 +44,24 @@
       type. The Qlustar Cluster Suite detects the type that is suitable for a specific compute
       node. You can list the current metrics by running <command>ganglia --help</command>.  The
       package <package>ganglia-webfrontend</package> allows to view the state of your cluster
-      and each node from within a web-browser. It suffices to visit the URL <ulink
-      url="http://&lt;head node&gt;/ganglia/"></ulink>.
-      
-      <screenshot>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="./images/ganglia-overview.png" format="PNG" width="70%" />
-	  </imageobject>
-	  <caption> Cluster Monitoring Web Interface over Ganglia</caption>
-	</mediaobject>
-      </screenshot>
-      
-      <screenshot>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="./images/ganglia-node.png" format="PNG" width="70%" />
-	  </imageobject>
-	  <caption>Node Monitoring with Ganglia</caption>
-	</mediaobject>
-      </screenshot>
-      
+      and each node from within a web-browser. It suffices to visit the Link
+      <literal>http://<replaceable>head-node</replaceable>/ganglia</literal>.
     </para>
+    <para></para>
+    <mediaobject>
+      <imageobject>
+	<imagedata fileref="./images/ganglia-overview.png" format="PNG" width="70%" />
+      </imageobject>
+      <caption> Cluster Monitoring Web Interface over Ganglia</caption>
+    </mediaobject>
+    <para></para>
+
+    <mediaobject>
+      <imageobject>
+	<imagedata fileref="./images/ganglia-node.png" format="PNG" width="70%" />
+      </imageobject>
+      <caption>Node Monitoring with Ganglia</caption>
+    </mediaobject>
+      
   </section>
 </section>

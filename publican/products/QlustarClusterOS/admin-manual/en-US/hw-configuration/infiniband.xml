@@ -6,10 +6,10 @@
   <indexterm><primary>Infiniband</primary></indexterm>
   <para>
     Many clusters with the need for high-throughput and/or low-latency communication between
-    nodes use Infiniband (IB) network hardware. Qlustar fully supports Infiniband via the
-    <ulink url="https://www.openfabrics.org/linux-sources.html"> <citetitle>OFED software
-    stack</citetitle></ulink>. The basic configuration for Infiniband networks is explained
-    later in <xref linkend="admin-man-sect-infiniband"/>.
+    nodes use Infiniband (IB) network hardware. Qlustar fully supports Infiniband via the <link
+    xlink:href="https://www.openfabrics.org/___blank___">OFED software
+    stack</link>. The basic configuration for Infiniband networks is explained later in <xref
+    linkend="admin-man-sect-infiniband"/>.
   </para>
   <section id="admin-man-sect-hw-IB-diag">
     <title>IB Fabric Verification/Diagnosis</title>
@@ -237,8 +237,11 @@ ibcheckwidth
       a switch or any other node connected to the fabric. In the latter case, OpenSM will be
       used. Please check the &QLUMANGUIDE; for details about how to setup
       OpenSM on a compute-node. If OpenSM should run on a head-node, you will have to install
-      the package <parameter>opensm</parameter> and configure it manually, if necessary (for
+      the package <package>opensm</package> and configure it manually, if necessary (for
       simple networks, the default configuration will be sufficient).
     </para>
   </section>
 </section>
+
+<!--  LocalWords:  openfabrics
+-->

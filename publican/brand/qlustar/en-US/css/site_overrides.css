@@ -192,6 +192,23 @@ body > #wrapper {
     color: rgb(60, 104, 203);
     font-weight: normal !important;
 }
+
+/* Set the distance between the title and the para from a
+   variablelist */
+.variablelist .para {
+    padding-bottom: 8px;
+}
+
+/* Set font-size of h5 headings */
+h5 {
+    font-size: 15px !important;
+}
+
+/* Set font-size of h6 headings */
+h6 {
+    font-size: 15px;
+    margin-left: -4px;
+}
 /* -------------------------------------------------- */
 
 /* Set Background-color + opacity of Index-toc*/
