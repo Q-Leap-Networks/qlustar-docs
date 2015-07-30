@@ -5,17 +5,21 @@
   based Qlustar Docbbook documents. The following is a summary list of what is defined:
 
   - Itemized lists
+  - Variable lists
   - Names/definitions with replaceables
   - Dirst mention of an important name
   - Well defined Qlustar/QluMan terms
   - Example parameters/names
   - External links
+  - Internal links
   - Italic/bold emphasis
   - Filenames / devices
   - Images
   - Step by Step Guides
   - Hostnames
   - Environment/shell variables
+  - Packages
+  - Error message
 
 -->
 
@@ -46,6 +50,21 @@
       </itemizedlist>
     </para>
     <para>
+      <!-- A list with a title and an indented Text-->
+      <variablelist>
+	<varlistentry>
+	  <term>
+	    Title
+	  </term>
+	  <listitem>
+	    <para>
+	      This is indented Text.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+    <para>
       <!-- The way to show a module with a variable/replaceable -->
       <literal>beegfs-<replaceable>version</replaceable>-server</literal>
     </para>
@@ -65,6 +84,12 @@
       <!-- The way of showing an external link.
       always add a '/___blank___' after the link!-->
       <link xlink:href="http://example.com/example/___blank___">Linkname</link>
+    </para>
+    <para>
+      <!-- The way of showing an internal link
+      The string in 'linkend' is the id to link-->
+      This the key-control file regarding the DNS configuration (see
+      <xref linkend="admin-man-sect-dns"/>).
     </para>
     <para>
       <!-- Showing a part of a text in italic -->
@@ -135,6 +160,15 @@
     <para>
       <!-- The way of showing environment variables -->
       <envar>${HOSTNAME##*-}</envar>
+    </para>
+    <para>
+      <!-- The way of showing a package -->
+      In that case the package <package>bind9</package> should be installed.
+    </para>
+    <para>
+      <!-- The way of showing names of error messages-->
+      These errors are known as <errorname>silent data errors</errorname>,
+      and there is really nothing you can do about it with the standard GNU/Linux
     </para>
   </chapter>
 </book>
