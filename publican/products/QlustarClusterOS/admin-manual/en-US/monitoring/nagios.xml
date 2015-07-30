@@ -48,10 +48,10 @@ define hostgroup {
     </screen>
 
     <para>
-      The regular expression beo-0. specifies that all nodes whose hostname match the
-      expression belong to this group. If you need to create another group because not all
-      metrics are available for all nodes, or some metrics require different thresholds than
-      you can do so here:
+      The regular expression <systemitem class="systemname">beo-0</systemitem>. specifies that
+      all nodes whose hostname match the expression belong to this group. If you need to create
+      another group because not all metrics are available for all nodes, or some metrics
+      require different thresholds than you can do so here:
     </para>
 
     <screen>
@@ -63,10 +63,11 @@ define hostgroup {
     </screen>
 
     <para>
-      The file service-definitions.cfg lists all metrics that should be monitored. It includes
-      the threholds, and for which groups each service is defined. It should be a passive
-      check, and ql-hwmonitord should be configured to send the data. The following example
-      defines a service only for the members of the group opterons:
+      The file <filename>service-definitions.cfg</filename> lists all metrics that should be
+      monitored. It includes the threholds, and for which groups each service is defined. It
+      should be a passive check, and ql-hwmonitord should be configured to
+      send the data. The following example defines a service only for the members of the group
+      opterons:
     </para>
 
 <screen>
@@ -103,12 +104,12 @@ define service {
      checks in <filename>nagios.cfg</filename>: 
    </para>
 
-<screen>
+   <screen>
 check_external_commands=1
 accept_passive_service_checks=1
 log_external_comamnds=0
 log_passive_checks=0
-</screen>
+   </screen>
    
    <para>
      Then run as root:
@@ -123,7 +124,7 @@ dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3</command>
 </screen>
    
    <para>
-     ql-hwmonitord The process ql-hwmonitord uses the configuration file
+     The process ql-hwmonitord uses the configuration file
      <filename>/etc/qlustar/lib/hw-monitor/services</filename>. Each line in this file is
      either a comment that starts with a ’#’ is an empty line or contains six space separated
      fields (a tab will not work!):
@@ -221,7 +222,7 @@ DAEMON_ARGS="--interval 300"
    
    <para>
      Torque Healthcheck An additional value provided by Ganglia on the nodes is the Health
-     check of Torque Mom (see section 6.5.1). If this parameter is in an error state the node
+     check of Torque Mom. If this parameter is in an error state the node
      can be set offline to prevent any jobs from running on this node. The following section in
      the file <filename>service-definitions.cfg</filename> defines this service for all nodes
      in the group ganglia-nodes:
@@ -288,9 +289,15 @@ define command {
    <indexterm><primary>Nagios</primary><secondary>Webinterface</secondary></indexterm>
    
    <para>
-     You can open the Webinterface at the address <ulink url="http://&lt;head
-     node&gt;/nagios3/"></ulink>. Login as nagiosadmin. You can change the password by
-     executing the command <command>htpasswd /etc/nagios3/htpasswd.users nagiosadmin</command>
+     You can open the Webinterface at the address
+     <literal>http://<replaceable>head-node</replaceable>/nagios3/</literal>. Login as
+     nagiosadmin. You can change the password by executing the command
+   </para>
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+htpasswd /etc/nagios3/htpasswd.users nagiosadmin</command>
+   </screen>
+   <para>
      as root.
    </para>
    
@@ -350,3 +357,6 @@ dsh -a /etc/init.d/gmetric start</command>
    
  </section>
 </section>
+
+<!--  LocalWords:  hwmonitord
+-->

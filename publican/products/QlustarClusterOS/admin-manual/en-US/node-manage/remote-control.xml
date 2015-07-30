@@ -40,7 +40,7 @@
 	</term>
 	<listitem>
 	  <para>
-	    then you need to type &amp; followed by a dot (.)
+	    then you need to type <keycombo><keycap>&amp;</keycap><keycap>.</keycap></keycombo>
 	  </para>
 	</listitem>
       </varlistentry>
@@ -50,7 +50,7 @@
 	</term>
 	<listitem>
 	  <para>
-	    then type ~ followed by a dot (.)
+	    then type <keycombo><keycap>~</keycap><keycap>.</keycap></keycombo>
 	  </para>
 	</listitem>
       </varlistentry>
@@ -60,7 +60,7 @@
 	</term>
       <listitem>
 	<para>
-	  then use Ctrl-a followed by x
+	  then use <keycombo><keycap>Ctrl-a</keycap><keycap>x</keycap></keycombo>
 	</para>
       </listitem>
       </varlistentry>
@@ -78,10 +78,10 @@
       (IPMI). Q-Leap Qlustar allows to automatically configure the ip address of these
       interfaces. The required configuration files are located in the directory
       <filename>/etc/qlustar/common/ipmi</filename>. The file
-      <filename>overwrite-settings</filename> determines which hosts should configure the ipmi
-      interface. It contains the name overwrite followed by a regular expression that should
-      match the hostnames. To configure the IPMI interface of all hosts the file should look
-      like this:
+      <filename>overwrite-settings</filename> determines which hosts should configure the
+      <interfacename>ipmi</interfacename> interface. It contains the name overwrite followed by
+      a regular expression that should match the hostnames. To configure the IPMI interface of
+      all hosts the file should look like this:
     </para>
 
     <screen>
@@ -151,13 +151,13 @@ overwrite: .*
       Example:
     </para>
 
-<screen>
+    <screen>
 ge_net=192.168.52
 ipmi_net=10.0.0
 netmask=255.255.255.0
 gateway=10.0.0.254
 lan_channel=1
-</screen>
+    </screen>
 
     <para>
       In this example a host with address 192.168.52.1 will configure the IPMI interface with
@@ -166,16 +166,19 @@ lan_channel=1
       of this group.
     </para>
 
-<screen>
+    <screen>
 grp1:grp2:beo-1[0-9]
 beo-2[0-9]
-</screen>
+    </screen>
 
     <para>
-      Members of the group grp1 will use an additional file ipmi.conf.grp1 and members of the
-      group grp2 the file <filename>ipmi.conf.grp2</filename>. In these files you can overwrite
-      the above default values.
+      Members of the group grp1 will use an additional file <filename>ipmi.conf.grp1</filename>
+      and members of the group grp2 the file <filename>ipmi.conf.grp2</filename>. In these
+      files you can overwrite the above default values.
     </para>
     
   </section>
 </section>
+
+<!--  LocalWords:  grp
+-->

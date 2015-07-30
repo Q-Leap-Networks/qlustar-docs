@@ -14,7 +14,7 @@
       <para>
 	Software RAID is part of the Linux kernel. RAID configuration is done with the 
 	<command>mdadm</command> command. It is used to manage the RAID devices (see man page).
-      Status information is obtained form <filename>/proc/mdstat.</filename>
+	Status information is obtained form <filename>/proc/mdstat.</filename>
       </para>
       <variablelist>
 	<varlistentry>
@@ -48,8 +48,8 @@ unused devices: &lt;none&gt;
       </screen>
       <para>
 	So disk <filename>/dev/sdb</filename> has failed. In the example, the disk error
-	affected only /dev/md1, but partitions of the faulty disk are also part of
-	<filename>/dev/md0</filename> and <filename>/dev/md2</filename>. So they need
+	affected only <filename>/dev/md1</filename>, but partitions of the faulty disk are also
+	part of <filename>/dev/md0</filename> and <filename>/dev/md2</filename>. So they need
 	to be removed as well before the disk can be replaced. Hence, the following commands
 	need to be executed:
       </para>
@@ -105,7 +105,8 @@ mdadm --manage /dev/md2 -a /dev/sdb3</command>
 watch --differences=cumulative cat /proc/mdstat</command> 
       </screen>
       <para>
-	Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to exit the display
+	Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to exit the
+	display
       </para>
     </section>
   </section>
@@ -116,8 +117,8 @@ watch --differences=cumulative cat /proc/mdstat</command>
     <para>
       The Linux Logical Volume Manager (LVM) provides a convenient and flexible way of
       managing storage. Storage devices like hard discs or RAID sets are registered as
-      <replaceable>physical volumes</replaceable>, and are then assigned to volume groups. 
-      Volume groups contain one or more <replaceable>logical volumes</replaceable>,
+      <literal>physical volumes</literal>, and are then assigned to volume groups. 
+      Volume groups contain one or more <literal>logical volumes</literal>,
       which can be resized according to the storage space available in the
       volume group. New physical volumes can be added to or removed from a volume group
       at any time, thereby transparently enlarging or reducing the storage space available in
@@ -137,10 +138,10 @@ vgcreate vg0 /dev/sdb1</command>
 lvcreate -n scratch -L 1GB vg0</command>
     </screen>
     <para>
-      These commands declare /dev/sdb1 as a physical volume, create the volume group
-      vg0 with the physical volume /dev/sdb1, and create a logical volume
-      /dev/vg0/scratch of size 1GB. You can now create a filesystem on this logical volume
-      and mount it:
+      These commands declare <filename>/dev/sdb1</filename> as a physical volume, create the
+      volume group vg0 with the physical volume <filename>/dev/sdb1</filename>, and create a
+      logical volume <filename>/dev/vg0/scratch</filename> of size 1GB. You can now create a
+      filesystem on this logical volume and mount it:
     </para>
     <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
@@ -187,16 +188,31 @@ mount /dev/vg0/scratch /scratch</command>
     </para>
     <para>
       Frequent commands:
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Physical volumes: <command>pvcreate</command>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Volume groups: <command>vgscan</command>, <command>vgchange</command>,
+	    <command>vgdisplay</command>, <command>vgcreate</command>,
+	    <command>vgremove</command>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Logical volumes: <command>lvdisplay</command>,<command>lvcreate</command>,
+	    <command>lvextend</command>, <command>lvreduce</command>,
+	    <command>lvremove</command>
+	  </para>
+	</listitem>
+      </itemizedlist>
     </para>
-    <simplelist>
-      <member>Physical volumes: <command>pvcreate</command></member>
-      <member>Volume groups: <command>vgscan</command>, <command>vgchange</command>,
-      <command>vgdisplay</command>, <command>vgcreate</command>, 
-      <command>vgremove</command></member>
-      <member>Logical volumes: <command>lvdisplay</command>,<command>lvcreate</command>,
-      <command>lvextend</command>, <command>lvreduce</command>,
-      <command>lvremove</command></member>
-    </simplelist>
   </section>
   <xi:include href="zfs.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </section>
+
+<!--  LocalWords:  sdb
+-->
