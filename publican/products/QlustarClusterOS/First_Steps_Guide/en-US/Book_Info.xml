@@ -11,10 +11,10 @@
       xml:id="info-Qlustar_Cluster_OS-First_Steps_Guide"
       xmlns="http://docbook.org/ns/docbook"
       xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Installation Guide</title>
+  <title>First Steps Guide</title>
   <subtitle>
-    This document describes the necessary steps to install the Qlustar Cluster Operating
-    System.
+    This document describes the first steps to perform after a fresh install of a Qlustar
+    head-node.
   </subtitle>
   <productname>Qlustar Cluster OS</productname>
   <productnumber>9.1</productnumber>
