@@ -7,11 +7,25 @@
 <!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<book version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Chapter.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<index />
-</book>
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
 
+  <xi:include href="Book_Info.xml"/>
+  <xi:include href="Preface.xml"/>
+
+  <!-- Start of real content -->
+
+  <chapter xml:id="First-boot">
+    <title>First Boot</title>
+    <para>
+      After the server has booted the newly installed Qlustar OS, log in as root and start the
+      post-install configuration process by running the command
+
+    </para>
+  </chapter>
+ <!-- End of real content -->
+
+  <xi:include href="Revision_History.xml"/>
+  <index />
+</book>
