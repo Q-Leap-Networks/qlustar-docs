@@ -22,6 +22,293 @@
       After the server has booted the newly installed Qlustar OS, log in as root and start the
       post-install configuration process by running the command
 
+      <screen>
+/usr/sbin/qlustar-initial-config
+      </screen>
+    </para>
+    <para>
+      This will first thoroughly check your network connectivity and then complete the
+      installation by executing the remaining configuration steps as detailed below. During the
+      package update process you might be asked whether to keep locally modified configuration
+      files. In this case always choose the option
+
+      <screen>
+keep the local version currently installed.
+      </screen>
+    </para>
+
+    <para>
+      <task xml:id="further-config-steps">
+	<title>Further configuration steps</title>
+	<procedure>
+	  <para>
+	    If your chosen hostname can't be resolved via DNS, you will see a non-fatal error
+	    message reminding you that the hostname should be registered in some (external)
+	    name service (typically DNS).
+	  </para>
+	  <step>
+	    <title>Cluster name</title>
+	    <para>
+	      First, you will be asked for the name of the new Qlustar cluster. This can be any
+	      string and is used in some places like the slurm or ganglia configuration.
+	    </para>
+	  </step>
+	  <step>
+	    <title>NIS Setup</title>
+	    <para>
+	      Next is the setup of the NIS database. Just confirm the suggested NIS server with
+	      <keycombo><keycap>Ctrl-D</keycap><keycap>Enter</keycap></keycombo> to proceed.
+	    </para>
+	  </step>
+	  <step>
+	    <title>Configuring ssh</title>
+	    <para>
+	      An ssh key for the root user is generated next. You can enter an optional
+	      pass-phrase for it. Note however, that a non-empty pass-phrase will have the
+	      effect that you will have to specify it any time, you try to ssh to another host
+	      in the cluster. If you don't want that, work without a pass-phrase. This key,
+	      will be used to enable login by root to any node of the cluster without
+	      specifying a password.
+	    </para>
+	  </step>
+	  <step>
+	    <title>Configuring Nagios</title>
+	    <para>
+	      The configuration of Nagios requires you to choose a password for the Nagios
+	      admin account. Please type in the password twice.
+	    </para>
+	  </step>
+	  <step>
+	    <title>Configuring QluMan</title>
+	    <para>
+	      QluMan, the Qlustar management framework (see the QluMan Guide), requires a mysql
+	      (mariaDB) database. You will be asked for the password of the QluMan DB user
+	      next. After entering it, the QluMan database and configuration settings will be
+	      initialized. This can take a while, since a number of OS images and chroots (see
+	      below ) will be generated during this step.
+	    </para>
+	  </step>
+	  <step>
+	    <title>Configuring Slurm</title>
+	    <para>
+	      If slurm was selected as the cluster resource manager, its configuration requires
+	      the generation of a munge key and the specification of a password for the slurm
+	      mysql account. Enter the chosen password twice when asked for it. Note that the
+	      slurm database daemon is also being configured by this process. Hence, you will
+	      be ready to take full advantage of the accounting features of slurm.
+	    </para>
+	  </step>
+	  <step>
+	    <title>Configuring the virtual Demo Cluster</title>
+	    <para>
+	      If you have chosen to setup some virtual demo nodes during installation, you will
+	      be asked for the user name of a test account that can be used to explore the
+	      cluster. The account will be generated with the default password for the cluster
+	      (see the information on the screen).
+	    </para>
+	  </step>
+	</procedure>
+      </task>
+    </para>
+
+    <para>
+      <bridgehead>
+	Final Reboot
+      </bridgehead>
+      <blockquote>
+	<para>
+	  Please reboot again once all the previous steps are complete (e.g. by typing the
+	  command <command>shutdown -r</command> now ). After the head-node is up and running
+	  again, test its network connectivity by pinging its public IP address (hostname). Do
+	  the same for the virtual front-end node, if you have chosen to configure one. It
+	  should have booted as well after the head-node is up and running. You can try to
+	  login to it using ssh.  A test mail should have been sent to the e-mail address(es)
+	  you specified during the installation. If you didn't receive one, review your
+	  settings in <filename>/etc/aliases</filename> and/or
+	  <filename>/etc/postfix/main.cf</filename>. In case some of them are wrong, you can
+	  execute
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>dpkg-reconfigure postfix</command>
+	    </screen>
+	    to modify them.
+	</para>
+      </blockquote>
+    </para>
+    <para>
+      <bridgehead>
+	Starting the virtual Demo Cluster
+      </bridgehead>
+      <blockquote>
+	<para>
+	  If you have chosen to configure a virtual demo-cluster, you can start it by executing
+	  the command:
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>demo-system-start</command>
+	  </screen>
+	  and to stop
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>demo-system-stop</command>
+	  </screen>
+	  These commands use the configuration file
+	  <filename>/etc/qlustar/vm-configs/demo-system.conf</filename>. If you find that the
+	  (automatically calculated) amount of RAM per VM is not right, you can change the
+	  variable <varname>CN_MEM</varname> to some other value in that file. The consoles of
+	  the virtual nodes (and also of the virtual front-end node if you chose to set one up)
+	  are accessible in a screen session. Type
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>console-fe-vm</command>
+	  </screen>
+	  to attach to the console session of the virtual FE node and
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>console-demo-vms</command>
+	  </screen>
+	  to attach to the console sessions of the virtual demo cluster nodes. Note that the
+	  screen command character is <keycap>Ctrl-t</keycap>. To detach from the screen
+	  session, type <keycombo><keycap>Ctrl-t</keycap><keycap>d</keycap></keycombo>, to
+	  switch to the next/previous screen type
+	  <keycombo><keycap>Ctrl-t</keycap><keycap>n</keycap></keycombo> /
+	  <keycombo><keycap>Ctrl-t</keycap><keycap>p</keycap></keycombo>. More details on the
+	  usage of screen (or byobu, the Debian customized version we use) are available in the
+	  corresponding <literal>man pages</literal>. To check whether all nodes are up and
+	  running, type
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>dsh -a uptime</command>
+	  </screen>
+	  <command>dsh</command> or <command>pdsh</command> can be used to execute arbitrary
+	  commands on groups of nodes. Check their <literal>man pages</literal> and the
+	  corresponding section in the QluMan guide for further information.
+	</para>
+      </blockquote>
+    </para>
+    <para>
+      <bridgehead>
+	Installed services
+      </bridgehead>
+      <blockquote>
+	<para>
+	  The following services are now configured and running on your head-node:
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<application>Nagios3</application> (monitoring/alerts) with its web interface
+		at http://<replaceable>headnode</replaceable>/nagios3/. Login as nagiosadmin
+		with the password you specified previously.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>Ganglia</application> (monitoring) at
+		http://<replaceable>headnode</replaceable>/ganglia/
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>DHCP/ATFTP</application> boot service
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>NTP</application> time server as client and server
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>NFS</application>-Server with exports defined in
+		<filename>/etc/exports</filename>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Depending on your choice of software packages: <application>Slurm</application>
+		(DB + control daemon), <application>Torque</application> server,
+		<application>Corosync</application> (HA), <application>Munge</application>
+		(authentification for slurm/torque). Note that among the latter only slurm and
+		munge are configured automatically during installation. Torque and Corosync
+		require a manual configuration.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>NIS</application> server
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Mail service <application>Postfix</application>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>MariaDB</application> server (mysql fork)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<application>QluMan</application> server (Qlustar Management)
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	  Please note, that you shouldn't install the default Ubuntu MySQL server packages on
+	  the head-node, since QluMan requires <link
+	  xlink:href="https://mariadb.org/___blank___">MariaDB</link> and packages of the
+	  latter conflict with the MySQL packages. MariaDB is a complete and compatible
+	  substitute for MySQL.
+	</para>
+      </blockquote>
+    </para>
+    <para>
+      <bridgehead>
+	Adding software
+      </bridgehead>
+      <blockquote>
+	<para>
+	  As explained <link
+	  xlink:href="https://qlustar.com/book/docs/qluman-guide#UnionFS-Chroots">
+	  elsewhere</link>, the RAM-based root file-system of a Qlustar compute/storage node
+	  can be supplemented by a global NFS-exported chroot to allow access to software not
+	  already contained in the boot images themselves. During installation, one chroot per
+	  selected <link
+	  xlink:href="https://qlustar.com/book/docs/install-guide#Edge_Platform_Selection">edge
+	  platform</link> was automatically created. The chroots are located at
+	  <filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
+	  <replaceable>chroot name</replaceable> would be precise or wheezy. Each of them
+	  contains a full-featured installation of the corresponding Qlustar edge platform. To
+	  change into a chroot, convenience bash shell aliases of the form
+	  chroot-<replaceable>chroot name</replaceable> are defined for the root user on the
+	  head-node. You may use them as follows (e.g. for Debian/Wheezy, if it was selected at
+	  install):
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>chroot-wheezy</command>
+	  </screen>
+	  Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
+	  its software packages, e.g.
+	  <screen>
+<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<command>apt-get update</command>
+
+<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<command>apt-get dist-upgrade</command>
+
+<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<command>apt-get install <replaceable>package</replaceable></command>
+
+<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<command>exit</command>
+	  </screen>
+	  The nice thing about this mechanism is that software from packages installed in a
+	  particular chroot will be available instantaneously on all compute/storage nodes that
+	  are configured to use that chroot.  Important: There is usually no need to install
+	  additional packages on the head-node itself (only in the chroot). Software packages
+	  installed directly on the head-node will not be visible cluster-wide.
+	</para>
+      </blockquote>
     </para>
   </chapter>
  <!-- End of real content -->
