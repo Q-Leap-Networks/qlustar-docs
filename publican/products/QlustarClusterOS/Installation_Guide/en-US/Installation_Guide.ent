@@ -1,4 +1,5 @@
 <!ENTITY PRODUCT "Qlustar Cluster OS">
 <!ENTITY BOOKID "Installation_Guide">
 <!ENTITY YEAR "2015">
-<!ENTITY HOLDER "| You need to change the HOLDER entity in the en-US/Installation_Guide.ent file |">
+<!ENTITY HOLDER "Q-Leap Networks GmbH">
+<!ENTITY hellipsis "&#x2026;">
