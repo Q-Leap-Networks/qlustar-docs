@@ -236,7 +236,7 @@
 	    RAID array (different RAID levels can be chosen depending on the number of the
 	    disks available). The chosen disk (or created RAID device) will then be used
 	    as a LVM physical volume to create a LVM volume group (the name of which can
-	    be specified). Four ext4 filesystems <filename>(root, var, tmp, apps)</filename>
+	    be specified). Four ext4 file-systems <filename>(root, var, tmp, apps)</filename>
 	    will automatically be created on equally named LVM logical volumes within this 
 	    volume group.
 	  </para>
@@ -254,56 +254,56 @@
 	  </para>
 	</step>
 	<step>
-	  <title>Home Filesystem</title>
+	  <title>Home File-System</title>
 	  <para>
-	    A separate file system is used for the home directories. If there are additional
+	    A separate file-system is used for the home directories. If there are additional
 	    unused disks in the system you are offered the choice to use them in the next
 	    screen. If not, you can use the previously configured volume group for this
-	    additional file system. If you choose <guimenuitem>"Other"</guimenuitem>
-	    then no configuration for a home filesystem will be done. In this case, you
-	    won't be able to add any cluster users without further manual steps.
+	    additional file-system. If you choose <guimenuitem>"Other"</guimenuitem>, then no
+	    configuration for a home file-system will be done. In this case, you won't be able
+	    to add any cluster users without further manual steps to setup a home file-system.
 	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-1.png"
 	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
-		Home Filesystem Screen
+		Home File-System Screen
 	      </phrase></textobject>
 	      <caption><para>
-		Home Filesystem Screen
+		Home File-System Screen
 	      </para></caption>
 	    </mediaobject>
 	  </para>
 	</step>
 	<step>
-	  <title>Home Filesystem on separate Disks</title>
+	  <title>Home File-System on separate Disks</title>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-2.png"
 	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
-		Network (1)
+		Home on separate disks (1)
 	      </phrase></textobject>
 	      <caption><para>
-		Network (1)
+		Home on separate disks (1)
 	      </para></caption>
 	    </mediaobject>
 	  </para>
 	  <para>
 	    This screen only appears if you have selected <guimenuitem>"Select disks"
 	    </guimenuitem> in the previous step.  You can choose the disks and possibly
-	    the raid level to use for the home file system similar to the previous dialog.
+	    the raid level to use for the home file-system similar to the previous dialog.
 	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-3.png"
 	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
-		Network (1)
+		Home on separate disks (2)
 	      </phrase></textobject>
 	      <caption><para>
-		Network (1)
+		Home on separate disks (2)
 	      </para></caption>
 	    </mediaobject>
 	  </para>
