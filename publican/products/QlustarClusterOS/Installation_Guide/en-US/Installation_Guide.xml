@@ -76,7 +76,7 @@
 	that drivers for some network or storage adapters on Laptops or other non-server PCs
 	are missing. If you run into such problems, please post it in the <link
 	xlink:href="http://qlustar.com/forums/installation/___blank___"> Installation
-	forum</link>. Qlustar also has no support for secure boot (UEFI).  If your hardware
+	forum</link>. Qlustar also has no support for secure boot (UEFI). If your hardware
 	uses UEFI by default, you need to configure your BIOS to allow so-called
 	<firstterm>legacy boot</firstterm>.
       </para>
@@ -96,22 +96,19 @@
       <para>
 	After downloading the installer image, verify its integrity, by executing
 	the following command:
-      </para>
-    </important>
-    <para>
-      <screen>
+	<screen>
 <prompt>0 user@workstation ~ $ </prompt>
 <command>sha256sum qlustar-installer.iso.gz</command>
-      </screen>
+	</screen>
+	Now compare the such-generated checksum with the value that is published at the above
+	download page. If the checksums are not identical, do not proceed with the
+	installation, since that means the installer is corrupt (either due to hardware errors
+	or a malicious attack). In this case, you should download the image once more. If the
+	problem persists, also after downloading from a different computer, please post the
+	incidence in the <link xlink:href="http://qlustar.com/forum/___blank___">support
+	forum</link>.
     </para>
-    <para>
-      Now compare the such-generated checksum with the value that is published at the above
-      download page. If the checksums are not identical, do not proceed with the installation,
-      since that means the installer is corrupt (either due to hardware errors or a malicious
-      attack). In this case, you should download the image once more. If the problem persists,
-      also after downloading from a different computer, please post the incidence in the
-      <link xlink:href="http://qlustar.com/forum/___blank___">support forum</link>.
-    </para>
+    </important>
     <para>
       The instructions in this guide only apply to the latest version. With the downloaded
       disk image you can easily create a bootable drive under Linux as follows (note that
@@ -120,50 +117,56 @@
       device name of the drive is <filename>/dev/sdb</filename>, the following command 
       (executed as root) will load the image to the flash-drive:
       <screen>
-<prompt>0 user@workstation ~ $ </prompt>
+<prompt>0 root@workstation ~ # </prompt>
 <command>gunzip -c qlustar-installer.iso.gz | dd of=/dev/sdb</command>
       </screen>
     </para>
     <para>
       Depending on the speed of your flash-drive, this can take up to 20 minutes.
-      Attention: The above command will destroy all data on the USB drive or to be
-      more precise, it will destroy the data of the device named <filename>/dev/sdb</filename>!
-      So make sure to find out the correct device name of the drive. This can be
-      achieved e.g. by executing the command
+    </para>
+    <warning>
+      <para>
+	The above command will destroy all data on the USB drive or to be more precise, it will
+	destroy the data of the device named <filename>/dev/sdb</filename>!  So make sure to
+	find out the correct device name of the drive.
+      </para>
+    </warning>
+    <para>
+      This can be achieved e.g. by executing the command
     <screen>
-<prompt>0 user@workstation ~ $ </prompt>
+<prompt>0 root@workstation ~ # </prompt>
 <command>tail -f /var/log/kern.log</command>
     </screen>
     </para>
     <para>
-      at the shell prompt before you insert the drive. Just after you have
-      inserted it, a message like 
+      at the shell prompt before you insert the drive. Just after you have inserted it, a
+      message like
       <screen>
 <computeroutput>[sdb] Attached SCSI removable disk</computeroutput>
       </screen>
-      should appear. In this case your USB drive would have the
-      device name <filename>/dev/sdb</filename>.  If the above command finished successfully,
-      you can use the drive to install the Qlustar OS on the target machine. This is
-      described in the next paragraph.
+      should appear. In this case your USB drive would have the device name
+      <filename>/dev/sdb</filename>. If the above <command>dd</command> command finished
+      successfully, you can use the drive to install the Qlustar OS on the target machine. This
+      is described in the next paragraph.
     </para>
   </chapter>
   <chapter xml:id="Installation-process">
     <title>Installation process</title>
     <task xml:id="inst-process">
-      <title>Installation process</title>
+      <title>Step by step instructions</title>
       <procedure>
 	<step>
 	  <title>Booting from the USB Drive</title>
 	  <para>
-	    Insert the drive in the server that you want to install the Qlustar OS on and boot.
-	    Make sure to select the USB drive as the boot device, either by entering the BIOS
-	    and changing the boot order or by entering a boot menu and then selecting the
+	    Insert the drive into the server that you want to install the Qlustar OS on and
+	    boot. Make sure to select the USB drive as the boot device, either by entering the
+	    BIOS and changing the boot order or by entering a boot menu and then selecting the
 	    drive. On some BIOSes the latter is achieved by pressing the key
 	    <keycap>F7</keycap> or <keycap>F12</keycap>.
 	  </para>
 	</step>
 	<step>
-	  <title>Installation process</title>
+	  <title>Starting the installation process</title>
 	  <para>
 	    If the server boots from your drive it will present a menu with the following
 	    entries:
@@ -261,7 +264,7 @@
 	  </para>
 	  <para>
 	    <mediaobject>
-	      <imageobject><imagedata fileref="images/choose-home.png"
+	      <imageobject><imagedata fileref="images/choose-home-1.png"
 	      width="85%" format="PNG"/></imageobject>
 	      <textobject><phrase>
 		Home Filesystem Screen
