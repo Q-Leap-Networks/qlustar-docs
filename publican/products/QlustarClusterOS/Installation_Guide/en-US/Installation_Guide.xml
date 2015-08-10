@@ -186,10 +186,11 @@
 	  <para>
 	    of which the first is highlighted. If you install via a serial console (e.g. IPMI
 	    serial-over-LAN) select the correct entry <replaceable>(ttyS0/1/2)</replaceable>
-	    depending on your hardware setup. Press enter to start the installation. After
-	    the kernel was loaded you will see the kernel messages on the screen followed
-	    by some messages of the installation system. Finally the installer will present
-	    a welcome screen and you can start configuring the system by pressing enter.
+	    depending on your hardware setup. Press <keycap>Enter</keycap> to start the
+	    installation. After the kernel was loaded, you will see the kernel messages on the
+	    screen followed by some messages of the installation system. Finally the installer
+	    will present its welcome screen at which you can start the installer configuration
+	    process by pressing <keycap>Enter</keycap>.
 	  </para>
 	  <para>
 	    <mediaobject>
@@ -208,7 +209,7 @@
 	  <title>Localization settings</title>
 	  <para>
 	    In the first screen you can select the timezone and keyboard mapping. After you
-	    have made your choices, selected OK and pressed enter, the keyboard mapping will
+	    have made your choices, selected OK and pressed <keycap>Enter</keycap>, the keyboard mapping will
 	    be configured according your choice.  If you have selected a wrong mapping the
 	    keyboard will not function properly. If this is still the case after changing
 	    the mapping to the correct value, you will have to reboot the server and start
@@ -648,10 +649,11 @@
 	  <title>Actual Installation</title>
 	  <para>
 	    The actual installation process will take a few minutes to complete. Press
-	    enter when requested at the end of the process. Remove the USB drive and
-	    press enter again to reboot. Please note that the head-node has a text-only
-	    console. An X server (graphical interface) is not installed, in order to keep
-	    resource consumption low and eliminate package overhead.
+	    <keycap>Enter</keycap> when requested at the end of the process. Remove the USB
+	    drive and press <keycap>Enter</keycap> again to reboot. Please note that the
+	    head-node has a text-only console. An X server (graphical interface) is not
+	    installed, in order to keep resource consumption low and eliminate package
+	    overhead.
 	  </para>
 	  <para>
 	    <mediaobject>
