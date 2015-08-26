@@ -52,12 +52,36 @@ keep the local version currently installed.
 	      First, you will be asked for the name of the new Qlustar cluster. This can be any
 	      string and is used in some places like the slurm or ganglia configuration.
 	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-1.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
+	    </para>
 	  </step>
 	  <step>
 	    <title>NIS Setup</title>
 	    <para>
 	      Next is the setup of the NIS database. Just confirm the suggested NIS server with
 	      <keycombo><keycap>Ctrl-D</keycap><keycap>Enter</keycap></keycombo> to proceed.
+	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-3.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
 	    </para>
 	  </step>
 	  <step>
@@ -70,12 +94,36 @@ keep the local version currently installed.
 	      will be used to enable login by root to any node of the cluster without
 	      specifying a password.
 	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-4.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
+	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring Nagios</title>
 	    <para>
 	      The configuration of Nagios requires you to choose a password for the Nagios
 	      admin account. Please type in the password twice.
+	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-5.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
 	    </para>
 	  </step>
 	  <step>
@@ -87,6 +135,18 @@ keep the local version currently installed.
 	      initialized. This can take a while, since a number of OS images and chroots (see
 	      below ) will be generated during this step.
 	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-7.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
+	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring Slurm</title>
@@ -97,6 +157,18 @@ keep the local version currently installed.
 	      slurm database daemon is also being configured by this process. Hence, you will
 	      be ready to take full advantage of the accounting features of slurm.
 	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-9.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
+	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring the virtual Demo Cluster</title>
@@ -105,6 +177,18 @@ keep the local version currently installed.
 	      be asked for the user name of a test account that can be used to explore the
 	      cluster. The account will be generated with the default password for the cluster
 	      (see the information on the screen).
+	    </para>
+	    <para>
+	      <mediaobject>
+		<imageobject><imagedata fileref="images/initial-config-10.png"
+		width="85%" format="PNG"/></imageobject>
+		<textobject><phrase>
+		  Name cluster
+		</phrase></textobject>
+		<caption><para>
+		  Name the cluster
+		</para></caption>
+	      </mediaobject>
 	    </para>
 	  </step>
 	</procedure>
@@ -254,11 +338,15 @@ keep the local version currently installed.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
+	  <note>
+	    <para>
 	  Please note, that you shouldn't install the default Ubuntu MySQL server packages on
 	  the head-node, since QluMan requires <link
 	  xlink:href="https://mariadb.org/___blank___">MariaDB</link> and packages of the
 	  latter conflict with the MySQL packages. MariaDB is a complete and compatible
 	  substitute for MySQL.
+	    </para>
+	  </note>
 	</para>
       </blockquote>
     </para>
@@ -277,7 +365,7 @@ keep the local version currently installed.
 	  xlink:href="https://qlustar.com/book/docs/install-guide#Edge_Platform_Selection">edge
 	  platform</link> was automatically created. The chroots are located at
 	  <filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	  <replaceable>chroot name</replaceable> would be precise or wheezy. Each of them
+	  <replaceable>chroot name</replaceable> would be trusty or wheezy. Each of them
 	  contains a full-featured installation of the corresponding Qlustar edge platform. To
 	  change into a chroot, convenience bash shell aliases of the form
 	  chroot-<replaceable>chroot name</replaceable> are defined for the root user on the
