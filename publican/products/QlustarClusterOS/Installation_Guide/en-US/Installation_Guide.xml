@@ -330,6 +330,7 @@
 	    cluster network address and other parameters. It doesn't have to be accurate,
 	    just an approximate number will do.
 	  </para>
+	  <note>
 	  <para>
 	    Note that Qlustar requires cluster-internal IP networks to be in a
 	    <emphasis role="bold">non-public</emphasis> range. If you're unhappy with the range
@@ -337,6 +338,7 @@
 	    you can change NK to another number (e.g. NK=1000 suggests 10.x.x.x,
 	    NK=200 172.16.x.x and NK=16 192.168.x.x).
 	  </para>
+	  </note>
 	  <para>
 	    You can also set the hostname (associated with the public IP) for the
 	    new head-node. The name of the cluster-internal interface is 
@@ -490,6 +492,7 @@
 	    started automatically though, so the head-node will be able to boot, even if an
 	    insane number of demo VMs are chosen.
 	  </para>
+	  <note>
 	  <para>
 	    Please note, that if you choose neither the option for the virtual FE node,
 	    nor the virtual demo-cluster, the necessary network pre-configurations
@@ -497,6 +500,7 @@
 	    you'll have to do a number of non-trivial manual steps after installation,
 	    in case you find out, that you need support for VMs later on.
 	  </para>
+	  </note>
 	  <para>
 	    If you need a <emphasis role="bold">proxy</emphasis> to access the WWW, you
 	    can enter the relevant proxy parameters here. To speed up the installation
@@ -586,6 +590,7 @@
 		    First Steps Guide</link>, Slurm is a requirement and is also sufficient
 		    for a basic evaluation setup.
 		</para>
+		<note>
 		<para>
 		  Beware, that you should choose Lustre as an option here, only if the
 		  head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).  If you
@@ -596,6 +601,8 @@
 		  <link xlink:href="http://qlustar.com/#add-settings/___blank___">
 		    virtual demo-cluster</link>
 		</para>
+		</note>
+		<note>
 		<para>
 		  Note, that apart from Nvidia Cuda software, the packages selected here will
 		  only be installed on the head-node. Selecting and generating boot-image
@@ -607,6 +614,7 @@
 		    <link xlink:href="http://qlustar.com/book/docs/qluman-guide/___blank___">
 		      QluMan Guide</link>
 		</para>
+		</note>
 		<para>
 		  <mediaobject>
 		    <imageobject><imagedata fileref="images/package-selection-ready.png"

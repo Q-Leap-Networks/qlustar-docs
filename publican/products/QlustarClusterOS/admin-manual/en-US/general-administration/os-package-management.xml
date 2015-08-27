@@ -29,8 +29,8 @@
       the Internet either directly or through a http proxy the file will look like this:
     </para>
     <screen>
-deb http://repo.qlustar.com/repo/ubuntu 8.1-precise main universe non-free
-deb http://repo.qlustar.com/repo/ubuntu 8.1-precise-proposed-updates main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty-proposed-updates main universe non-free
     </screen>
     <para>
       This enables access to the Qlustar 8.1 software repository.
