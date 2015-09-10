@@ -36,18 +36,35 @@ def convert_img_to_colorbox(soup):
         img_path = ctag.find_previous_sibling("img")['src']
         thumbnail_path = re.sub("images", "images/thumbnails", img_path)
         caption = ctag.find_next("div").string.strip()
+        new_div_tag = soup.new_tag("div")
+        new_div_tag['class'] = "colorbox"
         new_a_tag = soup.new_tag("a")
         new_a_tag['class'] = "colorbox"
         new_a_tag['href'] = img_path
         new_a_tag['title'] = caption
+        new_div_tag.append(new_a_tag)
         new_img_tag = soup.new_tag("img")
         new_img_tag['src'] = thumbnail_path
         new_a_tag.append(new_img_tag)
-        ctag.parent.parent.replace_with(new_a_tag)
+        ctag.parent.replace_with(new_div_tag)
+
+def rearrange_colorboxes(soup):
+    for cbtag in soup.select('div[class="colorbox"]'):
+        # Wrap all colorboxes that follow each other directly into a div
+        prev = cbtag.find_previous_sibling()
+        if prev and prev.name == "div":
+            try:
+                if 'colorbox' in prev['class']:
+                    # Remove cbox from current position and reinsert at end of previous paragraph
+                    prev.append(cbtag.a)
+                    cbtag.extract()
+            except KeyError:
+                pass
 
 def process(soup):
     add_colorbox_header(soup)
     convert_img_to_colorbox(soup)
+    rearrange_colorboxes(soup)
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Qlustar Doc HTML/XML files')
@@ -56,7 +73,6 @@ def main():
 
     try:
         with open(args.input_file, encoding="UTF-8") as input_file:
-            #data = input_file.read(encoding="utf8")
             soup = BeautifulSoup(input_file)
     except EnvironmentError as err:
         print(err)
