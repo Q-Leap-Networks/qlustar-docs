@@ -515,7 +515,7 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f img_paths img_path thumb_path
+  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path
   local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
   local colorbox_js=$QL_BRAND_DIR/$QL_LANG/javascript/jquery.colorbox-min.js
 
@@ -527,6 +527,11 @@ update_site() {
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
     -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
     -e 's/___blank___"/" target="_blank"/g'
+  # Apply converter
+  for f in $(find $(find $tmpdir -name html-single) -name index.html); do
+    echo "Converting ${f##*/html-single/}"
+    ../convert-html.py -i $f
+  done
   # Create thumbnails
   img_paths=$(find . -name images | grep html-single)
   for img_path in $img_paths; do
@@ -547,7 +552,6 @@ update_site() {
     fi
   done
   cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
-
   ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
   tar zcf - $tmpdir | ssh root@${host} \
     "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
