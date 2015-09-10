@@ -515,22 +515,39 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f 
+  local tmpdir=update-tmp f img_paths img_path thumb_path
   local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
+  local colorbox_js=$QL_BRAND_DIR/$QL_LANG/javascript/jquery.colorbox-min.js
 
   cd "$WEB_DIR_PATH"
   [ -d $tmpdir ] && rm -rf $tmpdir
   cp -r ${WEB_TOC_PATH} $tmpdir
+  # Make simple substitutions
   find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
     -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
     -e 's/___blank___"/" target="_blank"/g'
-  if [ -r $site_css ]; then
-    cp -f $site_css $tmpdir
-  else
-    exit_with_msg $COLOR_OPT \
-      -m "Missing Qlustar CSS file $site_css" -e $ERR_MISSING_FILE
-  fi
+  # Create thumbnails
+  img_paths=$(find . -name images | grep html-single)
+  for img_path in $img_paths; do
+    thumb_path=$img_path/thumbnails
+    if ls ${img_path}/*.png > /dev/null 2>&1; then
+      [ -d $thumb_path ] || mkdir $thumb_path
+      for f in ${img_path}/*.png; do
+	convert $f -resize 128x ${thumb_path}/${f##*/}
+      done
+    fi
+  done
+  for f in $site_css $colorbox_js; do
+    if [ -r $f ]; then
+      cp -f $f $tmpdir
+    else
+      exit_with_msg $COLOR_OPT \
+	-m "Missing Qlustar brand file $f" -e $ERR_MISSING_FILE
+    fi
+  done
+  cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
+
   ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
   tar zcf - $tmpdir | ssh root@${host} \
     "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
