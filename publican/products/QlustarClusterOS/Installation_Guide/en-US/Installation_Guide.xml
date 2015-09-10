@@ -168,10 +168,6 @@
 	<step>
 	  <title>Starting the installation process</title>
 	  <para>
-	    If the server boots from your drive it will present a menu with the following
-	    entries:
-	  </para>
-	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/boot-screen.png"
 	      width="85%" format="PNG"/></imageobject>
@@ -182,17 +178,6 @@
 		Boot Screen
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
-	    of which the first is highlighted. If you install via a serial console (e.g. IPMI
-	    serial-over-LAN) select the correct entry <replaceable>(ttyS0/1/2)</replaceable>
-	    depending on your hardware setup. Press <keycap>Enter</keycap> to start the
-	    installation. After the kernel was loaded, you will see the kernel messages on the
-	    screen followed by some messages of the installation system. Finally the installer
-	    will present its welcome screen at which you can start the installer configuration
-	    process by pressing <keycap>Enter</keycap>.
-	  </para>
-	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/welcome.png"
 	      width="85%" format="PNG"/></imageobject>
@@ -203,18 +188,19 @@
 		Welcome Screen
 	      </para></caption>
 	    </mediaobject>
+	    When the server boots from your drive, it will present a menu with various
+	    alternative boot options of which the first is highlighted (see picture). If you
+	    install via a <firstterm>serial console</firstterm> (e.g. IPMI serial-over-LAN)
+	    select the correct entry <replaceable>(ttyS0/1/2)</replaceable> depending on your
+	    hardware setup. Press <keycap>Enter</keycap> to start the installation. After the
+	    kernel was loaded, you will see the kernel messages on the screen followed by some
+	    messages of the installation system. Finally the installer will present its welcome
+	    screen at which you can start the installer configuration process by pressing
+	    <keycap>Enter</keycap>.
 	  </para>
 	</step>
 	<step>
 	  <title>Localization settings</title>
-	  <para>
-	    In the first screen you can select the timezone and keyboard mapping. After you
-	    have made your choices, selected OK and pressed <keycap>Enter</keycap>, the keyboard mapping will
-	    be configured according your choice.  If you have selected a wrong mapping the
-	    keyboard will not function properly. If this is still the case after changing
-	    the mapping to the correct value, you will have to reboot the server and start
-	    the installation from scratch.
-	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/localization.png"
@@ -226,20 +212,16 @@
 		Localization Screen
 	      </para></caption>
 	    </mediaobject>
+	    In the first screen you can select the timezone and keyboard mapping. After you
+	    have made your choices, selected OK and pressed <keycap>Enter</keycap>, the
+	    keyboard mapping will be configured according your choice.  If you have selected a
+	    wrong mapping the keyboard will not function properly. If this is still the case
+	    after changing the mapping to the correct value, you will have to reboot the server
+	    and start the installation from scratch.
 	  </para>
 	</step>
 	<step>
 	  <title>Disk Configuration</title>
-	  <para>
-	    In this screen you can select the disk(s) to install Qlustar on.  If there is
-	    more then one disk in the system you can select multiple disks and create a
-	    RAID array (different RAID levels can be chosen depending on the number of the
-	    disks available). The chosen disk (or created RAID device) will then be used
-	    as a LVM physical volume to create a LVM volume group (the name of which can
-	    be specified). Four ext4 file-systems <filename>(root, var, tmp, apps)</filename>
-	    will automatically be created on equally named LVM logical volumes within this 
-	    volume group.
-	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/disk-config.png"
@@ -251,18 +233,18 @@
 		Disk Config Screen
 	      </para></caption>
 	    </mediaobject>
+	    In this screen you can select the disk(s) to install Qlustar on.  If there is
+	    more then one disk in the system you can select multiple disks and create a
+	    RAID array (different RAID levels can be chosen depending on the number of the
+	    disks available). The chosen disk (or created RAID device) will then be used
+	    as a LVM physical volume to create a LVM volume group (the name of which can
+	    be specified). Four ext4 file-systems <filename>(root, var, tmp, apps)</filename>
+	    will automatically be created on equally named LVM logical volumes within this 
+	    volume group.
 	  </para>
 	</step>
 	<step>
 	  <title>Home File-System</title>
-	  <para>
-	    A separate file-system is used for the home directories. If there are additional
-	    unused disks in the system you are offered the choice to use them in the next
-	    screen. If not, you can use the previously configured volume group for this
-	    additional file-system. If you choose <guimenuitem>"Other"</guimenuitem>, then no
-	    configuration for a home file-system will be done. In this case, you won't be able
-	    to add any cluster users without further manual steps to setup a home file-system.
-	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-1.png"
@@ -274,6 +256,12 @@
 		Home File-System Screen
 	      </para></caption>
 	    </mediaobject>
+	    A separate file-system is used for the home directories. If there are additional
+	    unused disks in the system you are offered the choice to use them in the next
+	    screen. If not, you can use the previously configured volume group for this
+	    additional file-system. If you choose <guimenuitem>"Other"</guimenuitem>, then no
+	    configuration for a home file-system will be done. In this case, you won't be able
+	    to add any cluster users without further manual steps to setup a home file-system.
 	  </para>
 	</step>
 	<step>
@@ -289,13 +277,6 @@
 		Home on separate disks (1)
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
-	    This screen only appears if you have selected <guimenuitem>"Select disks"
-	    </guimenuitem> in the previous step.  You can choose the disks and possibly
-	    the raid level to use for the home file-system similar to the previous dialog.
-	  </para>
-	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-home-3.png"
 	      width="85%" format="PNG"/></imageobject>
@@ -306,6 +287,9 @@
 		Home on separate disks (2)
 	      </para></caption>
 	    </mediaobject>
+	    This screen only appears if you have selected <guimenuitem>"Select disks"
+	    </guimenuitem> in the previous step.  You can choose the disks and possibly
+	    the raid level to use for the home file-system similar to the previous dialog.
 	  </para>
 	</step>
 	<step>
@@ -321,8 +305,6 @@
 		Network (1)
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
 	    In this screen, you configure the IP addresses for the cluster and public
 	    network. The installer has some logic to check for valid network configuration
 	    parameters as well as suggesting reasonable values. The chosen number of
@@ -340,12 +322,6 @@
 	  </para>
 	  </note>
 	  <para>
-	    You can also set the hostname (associated with the public IP) for the
-	    new head-node. The name of the cluster-internal interface is 
-	    <systemitem class="systemname">beosrv-c</systemitem>. Note that two network
-	    adapters are necessary for proper operation of your cluster.
-	  </para>
-	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/choose-network-adapter.png"
 	      width="85%" format="PNG"/></imageobject>
@@ -356,6 +332,10 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
+	    You can also set the hostname (associated with the public IP) for the
+	    new head-node. The name of the cluster-internal interface is 
+	    <systemitem class="systemname">beosrv-c</systemitem>. Note that two network
+	    adapters are necessary for proper operation of your cluster.
 	  </para>
 	  <para>
 	    It's important that you correctly identify external (public/access to the
@@ -365,14 +345,6 @@
 	    management interface. If you don't have any special reason for changing the
 	    suggested address/netmask of the internal adapter, we recommend to leave them
 	    unchanged.
-	  </para>
-	  <para>
-	    Postfix is running on the head-node as the central <emphasis role="bold">
-	    mail transfer agent</emphasis>. You need to specify a mail relay host
-	    (either by name if resolvable via DNS or by IP) in your LAN, where mail
-	    of the cluster will be accepted and redistributed. Root mails generated
-	    on the cluster, will be redirected to a list of e-mail addresses, that you
-	    can enter next (multiple addresses should be separated by a comma).
 	  </para>
 	  <para>
 	    <mediaobject>
@@ -385,6 +357,12 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
+	    Postfix is running on the head-node as the central <emphasis role="bold">
+	    mail transfer agent</emphasis>. You need to specify a mail relay host
+	    (either by name if resolvable via DNS or by IP) in your LAN, where mail
+	    of the cluster will be accepted and redistributed. Root mails generated
+	    on the cluster, will be redirected to a list of e-mail addresses, that you
+	    can enter next (multiple addresses should be separated by a comma).
 	  </para>
 	</step>
 	<step>
@@ -400,25 +378,14 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
 	    Here you have the possibility to configure optional <parameter>Infiniband
 	  </parameter> (IB) and/or <parameter>IPMI</parameter> network parameters,
 	    if you have the corresponding hardware in your cluster.
 	  </para>
 	  <para>
-	    If there are nodes with IB in the cluster, you first need to set the option
-	    whether the head-node itself also has IB hardware or not. If it doesn't,
-	    you only need to choose the IB TCP/IP network address parameters (defaults
-	    are again recommended). Otherwise, you have the additional choice to run
-	    <command>OpenSM</command> (IB subnet manager) on the head-node. Note,
-	    that at least one node (or switch) in an IB fabric has to run a subnet manager.
-	    Given the value of the IB network address, the host part of the IB adapters
-	    IP address will be set from the host part of the Ethernet address of the node
-	    in the cluster network. Example: IP cluster network 192.168.52.100 -
-	    IP IB network 192.168.53.100.
-	  </para>
-	  <para>
+	    If there are nodes with IB in the cluster, you first need to set the option whether
+	    the head-node itself also has IB hardware or not. If it doesn't, you only need to
+	    choose the IB TCP/IP network address parameters (defaults are again recommended).
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/network-choose-ib.png"
 	      width="85%" format="PNG"/></imageobject>
@@ -429,18 +396,12 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
-	    As with IB, if some of the nodes of your cluster have an IPMI adapter, that
-	    is connected to a switch, you can enter the network address parameters that
-	    will be used to configure its IP address. Again, the host part of the IPMI
-	    adapters IP will be derived from its cluster network IP (see above). Additional,
-	    host specific IPMI configuration options can be set in 
-	    <link xlink:href=
-		  "http://qlustar.com/book/docs/qluman-guide/___blank___">QluMan</link>.
-	    Please note, that the configuration of IPMI adapters is hardware dependent.
-	    The method, we use, works on most systems, but we can't give any guarantee,
-	    that it will work on yours. Please contact us in case of problems.
+	    Otherwise, you have the additional choice to run <command>OpenSM</command> (IB
+	    subnet manager) on the head-node. Note, that at least one node (or switch) in an IB
+	    fabric has to run a subnet manager.  Given the value of the IB network address, the
+	    host part of the IB adapters IP address will be set from the host part of the
+	    Ethernet address of the node in the cluster network. Example: IP cluster network
+	    192.168.52.100 - IP IB network 192.168.53.100.
 	  </para>
 	  <para>
 	    <mediaobject>
@@ -453,6 +414,15 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
+	    As with IB, if some of the nodes of your cluster have an IPMI adapter, that is
+	    connected to a switch, you can enter the network address parameters that will be
+	    used to configure its IP address. Again, the host part of the IPMI adapters IP will
+	    be derived from its cluster network IP (see above). Additional, host specific IPMI
+	    configuration options can be set in <link xlink:href=
+	    "http://qlustar.com/book/docs/qluman-guide/___blank___">QluMan</link>.  Please
+	    note, that the configuration of IPMI adapters is hardware dependent.  The method,
+	    we use, works on most systems, but we can't give any guarantee, that it will work
+	    on yours. Please contact us in case of problems.
 	  </para>
 	</step>
 	<step>
@@ -468,8 +438,6 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
-	  </para>
-	  <para>
 	    For the sake of system stability and performance, it is usually a good idea to
 	    <emphasis role="bold">separate user from system activities</emphasis> as much
 	    as possible. To achieve this, we suggest to run only system-related tasks
@@ -502,6 +470,16 @@
 	  </para>
 	  </note>
 	  <para>
+	    <mediaobject>
+	      <imageobject><imagedata fileref="images/additional-settings-ready.png"
+	      width="85%" format="PNG"/></imageobject>
+	      <textobject><phrase>
+		Choose network adapter
+	      </phrase></textobject>
+	      <caption><para>
+		Choose network adapter
+	      </para></caption>
+	    </mediaobject>
 	    If you need a <emphasis role="bold">proxy</emphasis> to access the WWW, you
 	    can enter the relevant proxy parameters here. To speed up the installation
 	    of additional packages later on, you could copy the software packages on the
@@ -513,18 +491,6 @@
 	    next option and enter the device name. Additional kernel parameters for the
 	    head-node can be specified next (typically, none are needed). Finally type
 	    in the password for the root user twice.
-	  </para>
-	  <para>
-	    <mediaobject>
-	      <imageobject><imagedata fileref="images/additional-settings-ready.png"
-	      width="85%" format="PNG"/></imageobject>
-	      <textobject><phrase>
-		Choose network adapter
-	      </phrase></textobject>
-	      <caption><para>
-		Choose network adapter
-	      </para></caption>
-	    </mediaobject>
 	  </para>
 	</step>
 	<step>
@@ -552,6 +518,16 @@
 		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images___blank___">Qlustar images</link> using QluMan.
 		</para>
 		<para>
+		  <mediaobject>
+		    <imageobject><imagedata fileref="images/package-selection.png"
+		    width="85%" format="PNG"/></imageobject>
+		    <textobject><phrase>
+		      Choose network adapter
+		    </phrase></textobject>
+		    <caption><para>
+		      Choose network adapter
+		    </para></caption>
+		  </mediaobject>
 		  Technically, choosing a specific edge platform (e.g. Debian/Wheezy)
 		  will cause Qlustar images based on Debian/Wheezy to be created along
 		  with an associated chroot. The latter will hold a complete Debian/Wheezy
@@ -564,9 +540,12 @@
 		  Ubuntu/Precise and Debian/Wheezy
 		  <emphasis role="bold">simultaneously</emphasis> in the same cluster.
 		</para>
+	      </listitem>
+	      <listitem>
+		<bridgehead>Package Bundle Selection</bridgehead>
 		<para>
 		  <mediaobject>
-		    <imageobject><imagedata fileref="images/package-selection.png"
+		    <imageobject><imagedata fileref="images/package-selection-ready.png"
 		    width="85%" format="PNG"/></imageobject>
 		    <textobject><phrase>
 		      Choose network adapter
@@ -575,11 +554,6 @@
 		      Choose network adapter
 		    </para></caption>
 		  </mediaobject>
-		</para>
-	      </listitem>
-	      <listitem>
-		<bridgehead>Package Bundle Selection</bridgehead>
-		<para>
 		  The default installation will only install a minimal set of basic
 		  packages on the head-node of your cluster. Here you can select additional
 		  package bundles to install. Among others, you have the choice of two
@@ -615,31 +589,12 @@
 		      QluMan Guide</link>
 		</para>
 		</note>
-		<para>
-		  <mediaobject>
-		    <imageobject><imagedata fileref="images/package-selection-ready.png"
-		    width="85%" format="PNG"/></imageobject>
-		    <textobject><phrase>
-		      Choose network adapter
-		    </phrase></textobject>
-		    <caption><para>
-		      Choose network adapter
-		    </para></caption>
-		  </mediaobject>
-		</para>
 	      </listitem>
 	    </itemizedlist>
 	  </para>
 	</step>
 	<step>
 	  <title>Reviewing Installation Settings</title>
-	  <para>
-	    Before the actual installation will begin, the final screen shows a summary
-	    of the settings, that have been selected/will be used (you will have to move
-	    back with the left arrow key in order to scroll down in the summary screen).
-	    If there are any parameters, you want to change, just go back and make the
-	    required modifications.
-	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/summary.png"
@@ -651,18 +606,15 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
+	    Before the actual installation will begin, the final screen shows a summary
+	    of the settings, that have been selected/will be used (you will have to move
+	    back with the left arrow key in order to scroll down in the summary screen).
+	    If there are any parameters, you want to change, just go back and make the
+	    required modifications.
 	  </para>
 	</step>
 	<step>
 	  <title>Actual Installation</title>
-	  <para>
-	    The actual installation process will take a few minutes to complete. Press
-	    <keycap>Enter</keycap> when requested at the end of the process. Remove the USB
-	    drive and press <keycap>Enter</keycap> again to reboot. Please note that the
-	    head-node has a text-only console. An X server (graphical interface) is not
-	    installed, in order to keep resource consumption low and eliminate package
-	    overhead.
-	  </para>
 	  <para>
 	    <mediaobject>
 	      <imageobject><imagedata fileref="images/installation-finished.png"
@@ -674,6 +626,12 @@
 		Choose network adapter
 	      </para></caption>
 	    </mediaobject>
+	    The actual installation process will take a few minutes to complete. Press
+	    <keycap>Enter</keycap> when requested at the end of the process. Remove the USB
+	    drive and press <keycap>Enter</keycap> again to reboot. Please note that the
+	    head-node has a text-only console. An X server (graphical interface) is not
+	    installed, in order to keep resource consumption low and eliminate package
+	    overhead.
 	  </para>
 	</step>
       </procedure>
