@@ -413,3 +413,12 @@ text-indent:-9999px;}
 .cboxSlideshow_off #cboxSlideshow{background-position:-150px -25px; right:27px;}
 .cboxSlideshow_off #cboxSlideshow:hover{background-position:-125px 0px;}
 
+body .colorbox img {
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+body div.colorbox {
+    float: right;
+}
