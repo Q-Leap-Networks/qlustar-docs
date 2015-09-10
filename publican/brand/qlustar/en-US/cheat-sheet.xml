@@ -89,7 +89,7 @@
       <!-- The way of showing an internal link
       The string in 'linkend' is the id to link-->
       This the key-control file regarding the DNS configuration (see
-      <xref linkend="admin-man-sect-dns"/>).
+      <xref linkend="admin-man-sect-dns" endterm="Linkname"/>).
     </para>
     <para>
       <!-- Showing a part of a text in italic -->
