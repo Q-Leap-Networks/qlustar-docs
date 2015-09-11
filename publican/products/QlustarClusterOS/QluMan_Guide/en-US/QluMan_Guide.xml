@@ -13,116 +13,11 @@
 
   <xi:include href="Book_Info.xml"/>
   <xi:include href="Preface.xml"/>
-  <xi:include href="Chapter.xml"/>
+  <xi:include href="Introduction.xml"/>
 
-  <chapter xml:id="Introduction">
-    <title>Introduction</title>
-    <section id="introduction">
-    <title>Introduction</title>
-    <para>
-      A Qlustar HPC cluster is designed to boot and manage compute or storage nodes (hosts)
-      over the network and make them run a minimal OS (Operating System) image in RAM. Local
-      disks (if present) are only used to preserve log files across boots and for temporary
-      storage (e.g. for compute jobs). One or more head-nodes deliver the boot images to the
-      nodes. Additionally, a small <firstterm>NFS</firstterm> share containing part of the
-      configuration space for the nodes is exported from one of the head-nodes. Optionally, the
-      RAM-based root FS (file-system) can be supplemented by a global <xref
-      linkend="UnionFS-Chroots" endterm="UnionFS-Chroots"/> to support software not already
-      contained in the boot images themselves. The head-node(s) of the cluster typically
-      provides <firstterm>TFTP/PXE boot services</firstterm>, <firstterm>DHCP
-      service</firstterm>, <firstterm>NIS service</firstterm>, <firstterm>torque</firstterm> or
-      <firstterm>slurm resource management</firstterm> etc. to the cluster. The management of
-      these and all cluster-related components of a <productname>Qlustar</productname>
-      installation in general can easily be accomplished through a single administration
-      interface: <application>QluMan</application>, the <literal>Qlustar Management
-      interface</literal>.
-    </para>
-    <para>
-      The <application>QluMan</application> GUI is <parameter>multi-user</parameter> as well as
-      <parameter>multi-cluster</parameter> capable: Different users are allowed to work
-      simultaneously with the GUI. Changes made by one user are updated and visible in
-      real-time in the windows opened by all the other users. On the other hand, it is possible
-      to manage a virtually unlimited number of clusters within a single instance of the
-      <application>QluMan</application> GUI at the same time. Each cluster is shown in a tab or
-      in a separate main window.
-    </para>
-    </section>
-    <section id="functionality-overview">
-      <title>Functionality Overview</title>
-      <para>
-	A central part of Qlustar are its pre-configured <literal>modular OS
-	images</literal>. Different nodes may have different hardware or need to provide
-	specific and varying functionality/services. Therefore, to optimize the use of hardware
-	resources and increase stability/security, Qlustar does not come with just one boot
-	image that covers every use-case. Instead, a number of <literal>image modules</literal>
-	with different software components are provided from which <literal>individual custom
-	OS images</literal> can be created as needed. A Qlustar OS image just contains what is
-	actually required to accomplish the tasks of a node, nothing more. See below for more
-	details about configuring <xref linkend="Qlustar-OS-Images"
-	endterm="Qlustar-OS-Images"/>)
-      </para>
-      <para>
-	But providing different OS images is still not enough for a flexible yet easily
-	manageable cluster: A node booting a generated image also receives extra configuration
-	options via DHCP and via NFS at boot time, thus allowing to fine-tune the OS
-	configuration at run-time. E.g. it is possible to determine how the local disks are to
-	be used (if any are present), whether additional services like
-	<firstterm>OpenSM</firstterm> or <firstterm>samba</firstterm> should be
-	enabled/disabled and a lot more. Four different configuration/property categories exist
-	in <application>QluMan</application>:
-      </para>
-      <para>
-	<itemizedlist>
-	  <listitem>
-	    <para>
-	      <xref linkend="Generic-Properties" endterm="Generic-Properties"/> are simple
-	      on/off options or key+value pairs applicable to groups of nodes, e.g. to flag the
-	      reformatting of the local disks at the next boot, add torque node properties,
-	      etc.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      <xref linkend="Config-Classes"/> handle more complex
-	      configurations like boot/disk configs, DHCP, etc.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      <xref linkend="Hardware-Properties" endterm="Hardware-Properties"/> are not used
-	      to configure the nodes themselves but describe their hardware configuration and
-	      are of importance e.g. for the slurm or torque resource managers and/or inventory
-	      management.
-	    </para>
-	  </listitem>
-	  <listitem>
-	    <para>
-	      Finally, <xref linkend="Specific-Properties" endterm="Specific-Properties"/> are
-	      properties that are unique to a particular node, like its serial
-	      number. Therefore, these properties can only be assigned to individual nodes.
-	    </para>
-	  </listitem>
-	</itemizedlist>
-      </para>
-      <para>
-	Of course, one can configure every host in a cluster individually. But in most
-	clusters, there are large groups of hosts that should be configured
-	identically. However, even if there are several groups, they might share some
-	properties/configurations but not all of them. To provide a simple handling of such
-	scenarios, <application>QluMan</application> allows to combine generic properties,
-	hardware properties and config classes each into sets. Moreover, it is possible to
-	combine exactly one generic property, one hardware property and one config set into a
-	<classname>Host Template</classname>. Assigning a Host Template to a group of hosts
-	makes it possible to specify their complete properties and configuration settings with
-	a single click. Nonetheless, for maximum flexibility, it is also allowed to override or
-	extend the settings from the template of a host by assigning either one of the sets
-	and/or individual properties/config classes to it. In case of conflicts, values from
-	individual properties/config classes have highest priority followed by set values and
-	finally the Host Template values. For more details on this see <xref
-	linkend="Configuring-a-Host"/>.
-      </para>
-    </section>
-    <section id="logging-in">
+  <chapter xml:id="chap-Starting-Up">
+    <title>Starting Up</title>
+    <section xml:id="sec-logging-in">
       <title>Logging in</title>
       <para>
 	<!--cbox(connect_cluster_dialog__enter_password_safe.png)-->
@@ -162,7 +57,7 @@
 	</note>
       </para>
     </section>
-    <section id="manage-cluster-dialog">
+    <section xml:id="manage-cluster-dialog">
       <title>Managing Clusters</title>
       <para>
 	<!--cbox(first_steps__connect_cluster_1.png)-->
@@ -239,7 +134,7 @@
 	button will only be selectable if the new password and confirmation matches.
       </para>
     </section>
-    <section id="license-installation">
+    <section xml:id="license-installation">
       <title>License Installation</title>
       <para>
 	<!--cbox(menu-license_key.png)-->
@@ -282,7 +177,7 @@
 	the <classname>Enclosure View</classname> window.
       </para>
     </section>
-    <section id="Configuring-the-Network">
+    <section xml:id="Configuring-the-Network">
       <title>Configuring Network Parameters</title>
       <para>
 	<!--cbox(main_window__network_config.png)-->
@@ -342,7 +237,7 @@
 	<guibutton>Save</guibutton> button.
       </para>
     </section>
-    <section id="EnclosureView">
+    <section xml:id="EnclosureView">
       <title>Enclosure View</title>
       <para>
 	<!--cbox(startup.png)-->
@@ -508,7 +403,7 @@
 	  for moving things around.
 	</para>
       </blockquote>
-      <bridgehead id="Selection">
+      <bridgehead xml:id="Selection">
 	Selection
       </bridgehead>
       <para>
@@ -540,7 +435,7 @@
 	in the current selection, that are also part of the set defined by the filter.
       </para>
     </section>
-    <section id="New-Hosts">
+    <section xml:id="New-Hosts">
       <title>New Hosts</title>
       <para>
 	To add new hosts to the cluster you can either select "New Hosts" from the context menu
@@ -585,14 +480,14 @@
 	additional configuration is needed for a new host.
       </para>
     </section>
-    <section id="Configuring-a-Host">
+    <section xml:id="Configuring-a-Host">
       <title>Configuring a Host</title>
       <para>
 	The configuration of a host consists of the definition and assignment of different
 	types of properties and config classes. Properties are always a key + value pair and
 	are further split into generic, hardware and specific properties.
       </para>
-      <bridgehead id="Hardware-Properties">
+      <bridgehead xml:id="Hardware-Properties">
 	Hardware Properties
       </bridgehead>
       <para>
@@ -602,7 +497,7 @@
 	assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
 	purely informational and might be used for inventory management.
       </para>
-      <bridgehead id="Generic-Properties">
+      <bridgehead xml:id="Generic-Properties">
 	Generic Properties
       </bridgehead>
       <para>
@@ -616,14 +511,14 @@
 	generic property. This is useful e.g. to add multiple torque host tags or to put hosts
 	in multiple groups for dsh/pdsh (via the 'Host tag').
       </para>
-      <bridgehead id="Specific-Properties">
+      <bridgehead xml:id="Specific-Properties">
 	Specific Properties
       </bridgehead>
       <para>
 	As the name suggests, <literal>specific properties</literal> are specific to a single
 	host. The best example for such a property is the serial number of the host.
       </para>
-      <bridgehead id="PropConf-Sets">
+      <bridgehead xml:id="PropConf-Sets">
 	Property/Config Sets
       </bridgehead>
       <para>
@@ -634,7 +529,7 @@
 	Template</literal> can then be created by choosing one generic property set, one
 	hardware property set and one config set.
       </para>
-      <bridgehead id="Host-Templates">
+      <bridgehead xml:id="Host-Templates">
 	Host Templates
       </bridgehead>
       <para>
@@ -660,7 +555,7 @@
 	boot of the host so that log files will be preserved across boots in the future.
       </para>
     </section>
-    <section id="Config-Classes">
+    <section xml:id="Config-Classes">
       <title>Config Classes</title>
       <para>
 	<!--cbox(write_files__with_changes.png)-->
@@ -992,7 +887,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="SlurmPartitions">
+	<bridgehead xml:id="SlurmPartitions">
 	  Slurm Partitions
 	</bridgehead>
 	<para>
@@ -1002,7 +897,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="SlurmPropertyEditor">
+	<bridgehead xml:id="SlurmPropertyEditor">
 	  Slurm Property Editor
 	</bridgehead>
 	<para>
@@ -1045,7 +940,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="SlurmAssignHost">
+	<bridgehead xml:id="SlurmAssignHost">
 	  Assigning Hosts to Slurm Node Groups and Partitions
 	</bridgehead>
 	<para>
@@ -1065,9 +960,9 @@
 	</para>
       </blockquote>
     </section>
-    <section id="Other-Configs">
+    <section xml:id="Other-Configs">
       <title>Other Configs</title>
-      <bridgehead id="Qlustar-OS-Images">
+      <bridgehead xml:id="Qlustar-OS-Images">
 	Qlustar OS Images
       </bridgehead>
       <para>
@@ -1180,7 +1075,7 @@
 	  </para>
 	</note>
       </para>
-      <bridgehead id="UnionFS-Chroots">
+      <bridgehead xml:id="UnionFS-Chroots">
 	UnionFS Chroots
       </bridgehead>
       <para>
@@ -1262,7 +1157,7 @@
 	have to clone the original chroot giving the clone the new desired name and afterwards
 	remove the old chroot.
       </para>
-      <bridgehead id="Configuring-IB">
+      <bridgehead xml:id="Configuring-IB">
 	Infiniband network
       </bridgehead>
       <para>
@@ -1382,7 +1277,7 @@
 	directly) and then edit the value.
       </para>
     </section>
-    <section id="Comand-execution">
+    <section xml:id="Comand-execution">
       <title>RXEngine / Remote Execution Engine</title>
       <para>
 	<!--cbox(execute__overview.png)-->
@@ -1633,7 +1528,7 @@
 	(e.g. <code>man bash</code>) for more details.
       </para>
     </section>
-    <section id="CommandEditor">
+    <section xml:id="CommandEditor">
       <title>Command Editor</title>
       <para>
 	<!--cbox(command_editor__ls.png)-->
@@ -1648,7 +1543,7 @@
 	unrestricted. A user either has rights to execute any pre-defined commands or
 	none. Below the role selector, the command itself is defined.
       </para>
-      <bridgehead id="CommandEditor-defining">
+      <bridgehead xml:id="CommandEditor-defining">
 	Defining or editing a command
       </bridgehead>
       <para>
@@ -1734,7 +1629,7 @@
 	<command>echo</command> commands.
       </para>
     </section>
-    <section id="HostFilterEditor">
+    <section xml:id="HostFilterEditor">
       <title>Host Filter Editor</title>
       <para>
 	<!--cbox(filter_editor.png)-->
@@ -1792,7 +1687,7 @@
 	menu item clears the filter, so one can start from scratch. To finally create (save)
 	the new filter click <guibutton>Save as</guibutton> and enter a name for it.
       </para>
-      <bridgehead id="HostFilterEditorEdit">
+      <bridgehead xml:id="HostFilterEditorEdit">
 	Editing a Filter
       </bridgehead>
       <para>
@@ -1802,7 +1697,7 @@
 	filter, Using an existing name will replace the old filter. Using a different name will
 	create a new filter.
       </para>
-      <bridgehead id ="HostFilterEditorFilterTypes">
+      <bridgehead xml:id="HostFilterEditorFilterTypes">
 	Types of Filters
       </bridgehead>
       <para>
@@ -1819,7 +1714,7 @@
 	in future versions.
       </para>
       <blockquote>
-	<bridgehead id="HostnameFilter">
+	<bridgehead xml:id="HostnameFilter">
 	  Hostname Filter
 	</bridgehead>
 	<para>
@@ -1845,7 +1740,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="HostTemplateFilter">
+	<bridgehead xml:id="HostTemplateFilter">
 	  Host Template Filter
 	</bridgehead>
 	<para>
@@ -1867,7 +1762,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="EnclosureFilter">
+	<bridgehead xml:id="EnclosureFilter">
 	  Enclosure Filter
 	</bridgehead>
 	<para>
@@ -1888,7 +1783,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="Inverting-a-Filter">
+	<bridgehead xml:id="Inverting-a-Filter">
 	  Inverting a Filter
 	</bridgehead>
 	<para>
@@ -1912,7 +1807,7 @@
 	</para>
       </blockquote>
       <blockquote>
-	<bridgehead id="Additive-versus-Subtractive">
+	<bridgehead xml:id="Additive-versus-Subtractive">
 	  Additive versus subtractive
 	</bridgehead>
 	<para>
@@ -1928,7 +1823,7 @@
 	</para>
       </blockquote>
     </section>
-    <section id="User-Rights-Manage">
+    <section xml:id="User-Rights-Manage">
       <title>QluMan User and Rights Management</title>
       <para>
 	<application>QluMan</application> is <literal>multi-user capable</literal> and provides
@@ -1940,7 +1835,7 @@
 	<application>QluMan</application> operations. Once defined, they can be assigned to a
 	user.
       </para>
-      <bridgehead id="User-Manage">
+      <bridgehead xml:id="User-Manage">
 	Managing QluMan Users
       </bridgehead>
       <para>
@@ -1968,7 +1863,7 @@
 	rights to create new users. The roles buttons will then also be disabled preventing an
 	unauthorized user to give himself or others extra roles.
       </para>
-      <para id="one-time-token">
+      <para xml:id="one-time-token">
 	<!--cbox(users__new_auth_token.png)-->
 	The new is also created without login credentials, so initially, he can't log
 	in. Hence, the next step is to generate a one-time token for the user by clicking
@@ -2029,7 +1924,7 @@
 	User</guibutton> button. Just like the <guibutton>New User</guibutton> button it is
 	only enabled if the current user has sufficient rights.
       </para>
-      <bridgehead id="Permission-Manage">
+      <bridgehead xml:id="Permission-Manage">
 	Managing User Roles/Permissions
       </bridgehead>
       <para>
@@ -2063,7 +1958,7 @@
 	<guibutton>>Undo</guibutton> to reset the rights to the last saved settings.
       </para>
     </section>
-    <section id="Look-And-Feel">
+    <section xml:id="Look-And-Feel">
       <title>Customizing the Look&amp;Feel</title>
       <para>
 	There are three aspects of <application>QluMan's</application> appearance that can be
@@ -2075,7 +1970,7 @@
 	Appearance</classname> icon and you'll have the options to modify fonts, colors and
 	style.
       </para>
-      <bridgehead id="Look-And-Feel-Fonts">
+      <bridgehead xml:id="Look-And-Feel-Fonts">
 	Fonts
       </bridgehead>
       <para>
@@ -2086,7 +1981,7 @@
 	and clicking the <guibutton>Apply</guibutton> button changes the corresponding font on
 	the fly.
       </para>
-      <bridgehead id="Look-And-Feel-Colors">
+      <bridgehead xml:id="Look-And-Feel-Colors">
 	Colors
       </bridgehead>
       <para>
@@ -2098,7 +1993,7 @@
 	set with the corresponding pull-down menu. Changing one of the values and clicking the
 	<guibutton>Apply</guibutton> button changes the corresponding color on the fly.
       </para>
-      <bridgehead id="Look-And-Feel-Manual">
+      <bridgehead xml:id="Look-And-Feel-Manual">
 	Manual
       </bridgehead>
       <para>
@@ -2111,7 +2006,7 @@
 	themes, this should just apply the favorite desktop settings you're familiar with to
 	<application>QluMan</application> (restart of QluMan GUI required).
       </para>
-      <bridgehead id="Look-And-Feel-Widget-Style">
+      <bridgehead xml:id="Look-And-Feel-Widget-Style">
 	Widget Style
       </bridgehead>
       <para>
