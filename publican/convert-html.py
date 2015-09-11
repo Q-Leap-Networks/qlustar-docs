@@ -26,7 +26,16 @@ def add_colorbox_header(soup):
         colorbox_script_tag = soup.new_tag("script")
         colorbox_script_tag['type'] = orig_tag['type']
         colorbox_script_tag.string =("jQuery(document).ready(function () {"
-                                     "$('a.colorbox').colorbox({opacity: 0.1, fixed: true});"
+                                     "  $('a.colorbox').colorbox({"
+                                     "    opacity: 0.1,"
+                                     "    fixed: true,"
+                                     "    maxWidth: '85%',"
+                                     "    maxHeight: '85%',"
+                                     "    transition: 'elastic',"
+                                     "    onLoad: function() {"
+                                     "      $.colorbox.resize({ width: $('.cboxPhoto').width() })"
+                                     "    }"
+                                     "  });"
                                      "});")
         orig_tag.insert_after(colorbox_script_tag)
         orig_tag.insert_after(colorbox_js_tag)
