@@ -49,11 +49,6 @@ keep the local version currently installed.
 	  <step>
 	    <title>Cluster name</title>
 	    <para>
-	      First, you will be asked for the name of the new Qlustar cluster. This can be any
-	      string and is used in some places like the <firstterm>slurm</firstterm> or
-	      <firstterm>ganglia</firstterm> configuration.
-	    </para>
-	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-1.png"
 		width="85%" format="PNG"/></imageobject>
@@ -64,15 +59,13 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      First, you will be asked for the name of the new Qlustar cluster. This can be any
+	      string and is used in some places like the <firstterm>slurm</firstterm> or
+	      <firstterm>ganglia</firstterm> configuration.
 	    </para>
 	  </step>
 	  <step>
 	    <title>NIS Setup</title>
-	    <para>
-	      Next is the setup of the <firstterm>NIS</firstterm> database. Just confirm the
-	      suggested NIS server with
-	      <keycombo><keycap>Ctrl-D</keycap><keycap>Enter</keycap></keycombo> to proceed.
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-3.png"
@@ -84,18 +77,13 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      Next is the setup of the <firstterm>NIS</firstterm> database. Just confirm the
+	      suggested NIS server with
+	      <keycombo><keycap>Ctrl-D</keycap><keycap>Enter</keycap></keycombo> to proceed.
 	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring ssh</title>
-	    <para>
-	      An ssh key for the root user is generated next. You can enter an optional
-	      pass-phrase for it. Note however, that a non-empty pass-phrase will have the
-	      effect that you will have to specify it any time, you try to ssh to another host
-	      in the cluster. If you don't want that, work without a pass-phrase. This key,
-	      will be used to enable login by root to any node of the cluster without
-	      specifying a password.
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-4.png"
@@ -107,14 +95,16 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      An ssh key for the root user is generated next. You can enter an optional
+	      pass-phrase for it. Note however, that a non-empty pass-phrase will have the
+	      effect that you will have to specify it any time, you try to ssh to another host
+	      in the cluster. If you don't want that, work without a pass-phrase. This key,
+	      will be used to enable login by root to any node of the cluster without
+	      specifying a password.
 	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring Nagios</title>
-	    <para>
-	      The configuration of <firstterm>Nagios</firstterm> requires you to choose a
-	      password for the Nagios admin account. Please type in the password twice.
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-5.png"
@@ -126,17 +116,12 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      The configuration of <firstterm>Nagios</firstterm> requires you to choose a
+	      password for the Nagios admin account. Please type in the password twice.
 	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring QluMan</title>
-	    <para>
-	      QluMan, the Qlustar management framework (see the QluMan Guide), requires a
-	      <firstterm>mysql</firstterm> (mariaDB) database. You will be asked for the
-	      password of the QluMan DB user next. After entering it, the QluMan database and
-	      configuration settings will be initialized. This can take a while, since a number
-	      of OS images and chroots (see below ) will be generated during this step.
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-7.png"
@@ -148,17 +133,15 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      QluMan, the Qlustar management framework (see the QluMan Guide), requires a
+	      <firstterm>mysql</firstterm> (mariaDB) database. You will be asked for the
+	      password of the QluMan DB user next. After entering it, the QluMan database and
+	      configuration settings will be initialized. This can take a while, since a number
+	      of OS images and chroots (see below ) will be generated during this step.
 	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring Slurm</title>
-	    <para>
-	      If slurm was selected as the cluster resource manager, its configuration requires
-	      the generation of a munge key and the specification of a password for the slurm
-	      mysql account. Enter the chosen password twice when asked for it. Note that the
-	      slurm database daemon is also being configured by this process. Hence, you will
-	      be ready to take full advantage of the accounting features of slurm.
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-9.png"
@@ -170,16 +153,15 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      If slurm was selected as the cluster resource manager, its configuration requires
+	      the generation of a munge key and the specification of a password for the slurm
+	      mysql account. Enter the chosen password twice when asked for it. Note that the
+	      slurm database daemon is also being configured by this process. Hence, you will
+	      be ready to take full advantage of the accounting features of slurm.
 	    </para>
 	  </step>
 	  <step>
 	    <title>Configuring the virtual Demo Cluster</title>
-	    <para>
-	      If you have chosen to setup some virtual demo nodes during installation, you will
-	      be asked for the user name of a test account that can be used to explore the
-	      cluster. The account will be generated with the default password for the cluster
-	      (see the information on the screen).
-	    </para>
 	    <para>
 	      <mediaobject>
 		<imageobject><imagedata fileref="images/initial-config-10.png"
@@ -191,6 +173,10 @@ keep the local version currently installed.
 		  Name the cluster
 		</para></caption>
 	      </mediaobject>
+	      If you have chosen to setup some virtual demo nodes during installation, you will
+	      be asked for the user name of a test account that can be used to explore the
+	      cluster. The account will be generated with the default password for the cluster
+	      (see the information on the screen).
 	    </para>
 	  </step>
 	</procedure>
