@@ -21,8 +21,8 @@
     <section xml:id="license-installation">
       <title>License Installation</title>
       <para>
-	<!--cbox(menu-license_key.png)-->
-	<!--cbox(expired.png)-->
+	<!--cbox(file: license_key/menu.png)-->
+	<!--cbox(file: license_key/expired.png)-->
 	To be able to configure your cluster with <application>QluMan</application>, a license
 	key needs to be installed. Without a valid key, an error will be displayed upon
 	start-up and the QluMan daemon will only allow read-only operations. In read-only mode,
@@ -35,9 +35,9 @@
 	empty.
       </para>
       <para>
-	<!--cbox(license_key-request.png)-->
-	<!--cbox(license_key__key_info.png)-->
-	<!--cbox(license_key__empty.png)-->
+	<!--cbox(file: license_key/request.png)-->
+	<!--cbox(file: license_key/key_info.png)-->
+	<!--cbox(file: license_key/empty.png)-->
 	To request a license key, click the <guibutton>Request Key</guibutton> button and a
 	<classname>Key Info Dialog</classname> will open asking you for your name and address
 	info. If you intend to use <classname>Qlustar Basic Edition</classname>, checkmark
@@ -49,7 +49,7 @@
 	xlink:href="mailto:order@q-leap.com?Subject=License%20request">order@q-leap.com</link>
       </para>
       <para>
-	<!--cbox(license_key.png)-->
+	<!--cbox(file: license_key/key.png)-->
 	After a while, you will receive a license key by mail that you can import using the
 	<guibutton>Import Key</guibutton> button. If the import was successful, the license
 	information will be displayed and you're ready to start working with
@@ -64,7 +64,7 @@
     <section xml:id="Configuring-the-Network">
       <title>Configuring Network Parameters</title>
       <para>
-	<!--cbox(main_window__network_config.png)-->
+	<!--cbox(file: main_window__network_config.png)-->
 	During the installation of Qlustar, the configuration parameters for the cluster
 	network had to be entered and normally you won't need to change them. For the rare
 	circumstances, where they do need to be changed, or in case you just want to verify the
@@ -84,7 +84,7 @@
 	Configuring Ethernet
       </bridgehead>
       <para>
-	<!--cbox(network_config__ethernet.png)-->
+	<!--cbox(file: network_config__ethernet.png)-->
 	Changing the Ethernet network configuration is the most involved and requires several
 	steps. In the <classname>Global Cluster Network Config</classname> there are 3 settings
 	relevant for <firstterm>Ethernet</firstterm>: The Cluster Network IP address, the
@@ -110,7 +110,7 @@
 	not change them, so you need to check and adjust each of them manually.
       </para>
       <para>
-	<!--cbox(network_config__proxy.png)-->
+	<!--cbox(file: network_config__proxy.png)-->
 	If the head-node does not have direct access to the Internet, a <parameter>http
 	proxy</parameter> must be configured. Qluman uses this proxy to download packages from
 	the <guilabel>Qlustar repository</guilabel>, when creating a new chroot. Click the
@@ -124,7 +124,7 @@
     <section xml:id="EnclosureView">
       <title>Enclosure View</title>
       <para>
-	<!--cbox(startup.png)-->
+	<!--cbox(file: enclosure_view/startup.png)-->
 	The <classname>Enclosure View</classname> shows an overview of the cluster in a tree
 	structure.  The tree structure is designed to reflect the physical structure of the
 	cluster. At the lowest level are the hosts. A host can be a head, storage or compute
@@ -140,19 +140,19 @@
 	enclosure</firstterm>.
       </para>
       <para>
-	<!--cbox(enclosure_view__select_host.png)-->
+	<!--cbox(file: enclosure_view__select_host.png)-->
 	Selecting a node in the tree displays its configuration info on the right hand side:
 	The hostname, IP and MAC can be edited and saved by pressing
 	<keycap>return</keycap>. The check-mark to the right of the field shows the state of
 	the change. If the entered value is not valid, the check-box is cleared
-	<!--cbox(checkbox_unchecked.png)-->
+	<!--cbox(file: checkbox_unchecked.png)-->
 	The check-boxes tool-tip (you'll see it when the mouse moves on top of it) gives the
 	reason why the entered value is invalid. If the entered value is valid but has not yet
 	been saved, the check-box is checked but ghosted
-	<!--cbox(checkbox_ghostchecked.png)-->
+	<!--cbox(file: checkbox_ghostchecked.png)-->
 	Finally, after the value has been saved in the database, the check-box shows a solid
 	check.
-	<!--cbox(checkbox_checked.png)-->
+	<!--cbox(file: checkbox_checked.png)-->
       </para>
       <para>
 	For nodes that are not part of a <literal>multi-host enclosure</literal> (like a Blade
@@ -185,7 +185,7 @@
 	Enclosures
       </bridgehead>
       <para>
-	<!--cbox(enclosure_view__select_twin2.png)-->
+	<!--cbox(file: enclosure_view__select_twin2.png)-->
 	Similar to host nodes, selecting an enclosure entry displays the physical layout of the
 	corresponding enclosure on the right. Controls to select the visibility level and
 	special slots are available at the top of the display. See below for more details about
@@ -193,7 +193,7 @@
 	the above case, both name and type are "Twin². Below the title you have a
 	representation of the physical layout of the enclosure. For this example, you see the
 	2x2 slots that are characteristic of a
-	<!--cbox(enclosure_view__select_rack_specials.png)-->
+	<!--cbox(file: enclosure_view__select_rack_specials.png)-->
 	Twin² enclosure. Two slots are filled with <systemitem
 	class="systemname">beo-01</systemitem> and <systemitem
 	class="systemname">beo-02</systemitem> and two slots remain empty, showing only the
@@ -210,8 +210,8 @@
 	slots.
       </para>
       <para>
-	<!--cbox(enclosure_view__select_rack_deep.png)-->
-	<!--cbox(enclosure_view__select_rack.png)-->
+	<!--cbox(file: enclosure_view__select_rack_deep.png)-->
+	<!--cbox(file: enclosure_view__select_rack.png)-->
 	Now let's explain the effect of the two controls at the top in more detail: The
 	<guibutton>Show special slots</guibutton> check-box controls the visibility of the top,
 	left, right and bottom special slots. Especially if these slots are empty, this will
@@ -234,8 +234,8 @@
 	  yet. This will change in a future version.
 	</para>
 	<para>
-	  <!--cbox(enclosure_view__new_enclosure2.png)-->
-	  <!--cbox(enclosure_view__new_enclosure.png)-->
+	  <!--cbox(file: enclosure_view__new_enclosure2.png)-->
+	  <!--cbox(file: enclosure_view__new_enclosure.png)-->
 	  Suitable for ordinary servers, a host being selected in the enclosure view can be
 	  placed into a single slot host enclosure directly by selecting the correct type in
 	  the host info part of the window (see <xref linkend="EnclosureView"/>). For host
@@ -246,8 +246,8 @@
 	  into a non-host enclosure, only if it is already inside a host enclosure.
 	</para>
 	<para>
-	  <!--cbox(enclosure_view__select_host_enclosure2.png)-->
-	  <!--cbox(enclosure_view__select_host_enclosure.png)-->
+	  <!--cbox(file: enclosure_view__select_host_enclosure2.png)-->
+	  <!--cbox(file: enclosure_view__select_host_enclosure.png)-->
 	  Another option to place hosts into enclosures is by selecting a number of them and
 	  then choosing a host enclosure from the context menu. This way, a new enclosure of
 	  the selected type is automatically created and all selected hosts are moved into
@@ -273,8 +273,8 @@
 	  different enclosures after the operation.
 	</para>
 	<para>
-	  <!--cbox(enclosure_view__move_to_slot.png)-->
-	  <!--cbox(enclosure_view__select_host_enclosure3.png)-->
+	  <!--cbox(file: enclosure_view__move_to_slot.png)-->
+	  <!--cbox(file: enclosure_view__select_host_enclosure3.png)-->
 	  When using drag&amp;drop for the relocation, the host or enclosure is always placed
 	  into the lowest suitable slot of the target enclosure. This reflects our experience,
 	  that usually enclosures are simply filled from left to right and bottom to top. But
@@ -302,9 +302,9 @@
 	Template or add/alter a generic property of a set of hosts.
       </para>
       <para>
-	<!--cbox(enclosure_view__selection_button.png)-->
-	<!--cbox(enclosure_view__selection__menu.png)-->
-	<!--cbox(enclosure_view__selection__submenu.png)-->
+	<!--cbox(file: enclosure_view__selection_button.png)-->
+	<!--cbox(file: enclosure_view__selection__menu.png)-->
+	<!--cbox(file: enclosure_view__selection__submenu.png)-->
 	An alternative and more powerful way to select a set of hosts is available via the
 	<guibutton>Selection</guibutton> button at the bottom of the <classname>Enclosure
 	View</classname>. At the top of the selection menu this brings up you'll find 3 items
@@ -325,7 +325,7 @@
 	To add new hosts to the cluster you can either select "New Hosts" from the context menu
 	in the Enclosure View tree or from the "Manage Hosts" menu. This opens the "Hosts
 	Window".
-	<!--cbox(new_host_window.png)-->
+	<!--cbox(file: new_host_window.png)-->
       </para>
       <para>
 	 Adding a new host requires the specification of an IP address, hostname and MAC in the
@@ -340,7 +340,7 @@
 	 changed manually to add the next host. Only the new MAC will need to be entered.
       </para>
       <para>
-	<!--cbox(new_host_window-select.png)-->
+	<!--cbox(file: new_host_window-select.png)-->
 	To help adding new hosts, qlumand scans the <filename>DHCP log file</filename> for
 	unknown hosts that have requested an IP address. For each unknown host found in the
 	logs, the table at the top of the window shows the time of the first and last
@@ -353,7 +353,7 @@
 	auto-increment feature for the IP address and hostname. If unsure, try adding a single
 	host first and check the auto-increment does the right thing before adding a group of
 	hosts. One easy way to add groups of hosts is to power them on one at a time with a
-	<!--cbox(new_host_window-template.png)-->
+	<!--cbox(file: new_host_window-template.png)-->
 	short delay (say 30 seconds). The hosts will then appear in the Unknown MACs table in
 	the order they were powered on and can be added as a group with the click of a single
 	button.
@@ -406,7 +406,7 @@
 	Property/Config Sets
       </bridgehead>
       <para>
-	<!--cbox(enclosure_view__select_template.png)-->
+	<!--cbox(file: enclosure_view__select_template.png)-->
 	Individual generic properties, hardware properties and config classes can be used to
 	define generic property sets, hardware property sets and config sets. This is simply a
 	means of grouping them together so they can be used as a single entity. A <literal>Host
@@ -420,7 +420,7 @@
 	When a correct <literal>Host Template</literal> exists, a host can be configured by
 	selecting the desired template in the <classname>Enclosure View</classname> window.
 	For a single host, this can be done by selecting it in the tree view. This brings up
-	the host <!--cbox(enclosure_view__select_template2.png)--> information on the left and
+	the host <!--cbox(file: enclosure_view__select_template2.png)--> information on the left and
 	the template can be selected from the drop-down menu. To configure multiple hosts, you
 	would select them in the tree view and choose a <literal>Host Template</literal> from
 	the context menu. The check-marks in the sub-menu indicate which <literal>Host
@@ -432,7 +432,7 @@
 	assigned properties take precedence over ones of the same type selected through the
 	<literal>Host Template</literal>. This is useful when a property should be changed
 	temporarily for some hosts or when a property should not be
-	<!--cbox(enclosure_view__select_generic_property.png)-->
+	<!--cbox(file: enclosure_view__select_generic_property.png)-->
 	changeable globally through the Host Template. Note that by default, every new host has
 	the generic property <parameter>Schedule Format: always</parameter>, which is required
 	to format the disk on the first boot. This should be removed after the first successful
@@ -442,8 +442,8 @@
     <section xml:id="Config-Classes">
       <title>Config Classes</title>
       <para>
-	<!--cbox(write_files__with_changes.png)-->
-	<!--cbox(write_files.png)-->
+	<!--cbox(file: write_files__with_changes.png)-->
+	<!--cbox(file: write_files/main.png)-->
 	Config Classes manage configurations that are too complex to fit into the key + value
 	scheme used by properties. Therefore, there is no common interface to configure all
 	classes. Instead each class has its own configuration dialog presenting the specific
@@ -464,9 +464,9 @@
 	The configurations managed via config classes and sub-classes in the
 	<application>QluMan</application> GUI are translated into automatically generated
 	configuration files on the head-node(s). While <application>QluMan</application>
-	<!--cbox(preview_diff__diff_one.png)-->
-	<!--cbox(preview_diff__diff_many.png)-->
-	<!--cbox(preview_diff__view.png)-->
+	<!--cbox(file: preview_diff__diff_one.png)-->
+	<!--cbox(file: preview_diff__diff_many.png)-->
+	<!--cbox(file: preview_diff__view.png)-->
 	configuration options are usually saved in the <application>QluMan</application>
 	database immediately after they have been entered in the GUI, the write process of the
 	real configuration files on disk is a separate step that needs to be specifically
@@ -504,14 +504,14 @@
 	specification of <firstterm>PXELinux</firstterm> commands and/or Linux kernel
 	parameters. When opened, the <classname>Boot Config</classname> window shows a list of
 	all boot configs currently
-	<!--cbox(boot_config__collapsed.png)-->
+	<!--cbox(file: boot_config__collapsed.png)-->
 	defined sorted by their names. Note that the default config is special in the sense
 	that it applies to any node that has no specific boot config assigned (either through a
 	template or directly) to itself. This means that in the simplest configuration (all
 	nodes should boot identically), it is sufficient to just have the "default" boot config
 	without any specific assignment. By expanding a boot config item, the configured
 	<productname>Qlustar</productname> image, PXELinux command
-	<!--cbox(boot_config__context_menu.png)-->
+	<!--cbox(file: boot_config__context_menu.png)-->
 	and kernel parameters become visible. You can change any of the values by simply
 	selecting a different option from the drop-down menus. In case of kernel parameters,
 	you can also directly edit the entry and save the result by pressing
@@ -519,7 +519,7 @@
 	remove them through the context menu.
       </para>
       <para>
-	<!--cbox(boot_config__new.png)-->
+	<!--cbox(file: boot_config__new.png)-->
 	The context menu also lets you create new boot configs as well as edit or delete an
 	existing one. Alternatively a new boot config can be created by clicking the
 	<guibutton>New</guibutton> button at the bottom of the dialog. Both the context menu
@@ -540,7 +540,7 @@
 	DHCP Config
       </bridgehead>
       <para>
-	<!--cbox(dhcp_config__global.png)-->
+	<!--cbox(file: dhcp_config__global.png)-->
 	The <classname>DHCP config</classname> dialog allows the configuration of the DHCP
 	server and is provide by the main menu <guimenuitem>Manage
 	Configs</guimenuitem>-><guimenuitem>DHCP Configs</guimenuitem>. The final DHCP server
@@ -554,7 +554,7 @@
 	<filename>dhcpd.conf</filename> man page for the syntax of this file.
       </para>
       <para>
-	<!--cbox(dhcp_config__edit_global.png)-->
+	<!--cbox(file: dhcp_config__edit_global.png)-->
 	To prevent multiple persons from editing at the same time and overwriting each others
 	changes accidentally you must acquire a lock for the template by clicking the
 	<guibutton>Edit</guibutton> button. If another user is already editing the file the
@@ -562,7 +562,7 @@
 	template.
       </para>
       <para>
-	<!--cbox(dhcp_config__save_global.png)-->
+	<!--cbox(file: dhcp_config__save_global.png)-->
 	After having finished editing a template don't forget to save your changes by clicking
 	the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
 	save. You can undo all your changes up to the last time the template was saved by
@@ -579,7 +579,7 @@
 	</note>
       </para>
       <para>
-	<!--cbox(template__lock_expire.png)-->
+	<!--cbox(file: template__lock_expire.png)-->
 	The template lock expires automatically after some time without activity so that the
 	template is not deadlocked if someone forgets to release the lock. In such a case the
 	above dialog will be shown notifying you about it. By selecting
@@ -588,7 +588,7 @@
 	of the failure.
       </para>
       <para>
-	<!--cbox(dhcp_config__menu.png)-->
+	<!--cbox(file: dhcp_config__menu.png)-->
 	DHCP options can also be set in separate group templates and targeted to specific
 	hosts. For simple clusters, this is hardly ever needed, but for large clusters e.g. you
 	might want to have more than one boot server to speed up cluster boot time. In this
@@ -599,8 +599,8 @@
 	are included.
       </para>
       <para>
-	<!--cbox(dhcp_config__edit_new.png)-->
-	<!--cbox(dhcp_config__new.png)-->
+	<!--cbox(file: dhcp_config__edit_new.png)-->
+	<!--cbox(file: dhcp_config__new.png)-->
 	The drop-down menu also lets you create new templates by selecting the <guimenuitem>new
 	DHCP group</guimenuitem> entry. Enter the name of the template in the text field and
 	fill in the contents and description of the template. Pressing <keycap>return</keycap>
@@ -641,7 +641,7 @@
 	endterm="PropConf-Sets"/>.
       </para>
       <para>
-	<!--cbox(disk_configs.png)-->
+	<!--cbox(file: disk_config/main.png)-->
 	Disk configurations can be managed using the <classname>Disk Configs</classname> dialog
 	accessible from the main menu <guimenuitem>Manage
 	Configs</guimenuitem>-><guimenuitem>Disk Configs</guimenuitem>. You can select the
@@ -695,10 +695,10 @@
 	  Slurm Config Header
 	</bridgehead>
 	<para>
-	  <!--cbox(slurm__preview.png)-->
-	  <!--cbox(slurm_config__cgroups.png)-->
-	  <!--cbox(slurm_config__editing.png)-->
-	  <!--cbox(slurm_config__config.png)-->
+	  <!--cbox(file: slurm__preview.png)-->
+	  <!--cbox(file: slurm_config__cgroups.png)-->
+	  <!--cbox(file: slurm_config__editing.png)-->
+	  <!--cbox(file: slurm_config__config.png)-->
 	  The overall slurm configuration is split into two templates, the slurm config and
 	  <filename>cgroups.conf</filename>. On write, <application>QluMan</application> adds
 	  the NodeName and PartitionName lines at the end of the slurm config template to
@@ -717,7 +717,7 @@
 	  Slurm Node Groups
 	</bridgehead>
 	<para>
-	  <!--cbox(slurm__node_groups.png)-->
+	  <!--cbox(file: slurm__node_groups.png)-->
 	  Slurm node properties are configured from two sources:
 	</para>
 	<para>
@@ -746,19 +746,19 @@
 	  </itemizedlist>
 	</para>
 	<para>
-	  <!--cbox(slurm__node_groups__new3.png)-->
-	  <!--cbox(slurm__node_groups__new2.png)-->
-	  <!--cbox(slurm__node_groups__new1.png)-->
+	  <!--cbox(file: slurm__node_groups__new3.png)-->
+	  <!--cbox(file: slurm__node_groups__new2.png)-->
+	  <!--cbox(file: slurm__node_groups__new1.png)-->
 	  A new node group can be created by clicking the <guibutton>New Node Group</guibutton>
 	  button or selecting <guimenuitem>New Node Group</guimenuitem> from the context
 	  menu. This opens a dialog asking for the name of the new group.  An existing node
 	  group can be renamed or deleted from the context menu.
 	</para>
 	<para>
-	  <!--cbox(slurm__node_groups__change_property.png)-->
-	  <!--cbox(slurm__node_groups__add_property1.png)-->
-	  <!--cbox(slurm__node_groups__rename2.png)-->
-	  <!--cbox(slurm__node_groups__rename1.png)-->
+	  <!--cbox(file: slurm__node_groups__change_property.png)-->
+	  <!--cbox(file: slurm__node_groups__add_property1.png)-->
+	  <!--cbox(file: slurm__node_groups__rename2.png)-->
+	  <!--cbox(file: slurm__node_groups__rename1.png)-->
 	  The context menu also allows to add properties to a group. Note, that some properties
 	  are <emphasis role="bold">unique</emphasis>, i.e. only one value can be selected for
 	  the property. Adding a second value of the same property will automatically replace
@@ -775,7 +775,7 @@
 	  Slurm Partitions
 	</bridgehead>
 	<para>
-	  <!--cbox(slurm__partitions.png)-->
+	  <!--cbox(file: slurm__partitions.png)-->
 	  The creation of Slurm partitions works exactly the same way as with slurm node
 	  groups. Please see above for how to create, rename and change partitions.
 	</para>
@@ -792,8 +792,8 @@
 	  selected, the editor for partition properties will be opened.
 	</para>
 	<para>
-	  <!--cbox(slurm__node_groups__property_editor.png)-->
-	  <!--cbox(slurm__node_groups__properties1.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor.png)-->
+	  <!--cbox(file: slurm__node_groups__properties1.png)-->
 	  To add a new property, enter the name of the property in the name field. If the name
 	  does not already exist, the <guibutton>New Property</guibutton> button will be
 	  enabled. Click on it to create the property. <application>QluMan</application> has a
@@ -803,8 +803,8 @@
 	  property values automatically.
 	</para>
 	<para>
-	  <!--cbox(slurm__node_groups__property_editor__new_bad.png)-->
-	  <!--cbox(slurm__node_groups__property_editor__new.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__new_bad.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__new.png)-->
 	  When a property is created that is not on the white-list (<emphasis
 	  role="bold">Gris</emphasis> in the screenshot) a dialog opens up, asking for
 	  confirmation. Note that adding an unknown property can lead to a failure when trying
@@ -813,10 +813,10 @@
 	  <guibutton>Delete</guibutton> button.
 	</para>
 	<para>
-	  <!--cbox(slurm__node_groups__property_editor__delete_value.png)-->
-	  <!--cbox(slurm__node_groups__property_editor__add_value.png)-->
-	  <!--cbox(slurm__node_groups__property_editor__delete.png)-->
-	  <!--cbox(slurm__node_groups__property_editor__new_good.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__delete_value.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__add_value.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__delete.png)-->
+	  <!--cbox(file: slurm__node_groups__property_editor__new_good.png)-->
 	  To add values to a property, first select the desired property using the pull-down
 	  menu from the name. Then enter the new property using <guibutton>Add
 	  Value</guibutton> at the bottom and press <keycap>return</keycap> to add it. To
@@ -828,17 +828,17 @@
 	  Assigning Hosts to Slurm Node Groups and Partitions
 	</bridgehead>
 	<para>
-	  <!--cbox(slurm__assign_host3.png)-->
-	  <!--cbox(slurm__assign_host2.png)-->
-	  <!--cbox(slurm__assign_host1.png)-->
+	  <!--cbox(file: slurm__assign_host3.png)-->
+	  <!--cbox(file: slurm__assign_host2.png)-->
+	  <!--cbox(file: slurm__assign_host1.png)-->
 	  Host are assigned to Slurm <classname>Node Groups</classname> and <emphasis
 	  role="bold">Partitions</emphasis> by use of a <xref linkend="Host-Templates"
 	  endterm="Host-Templates"/> and its corresponding <xref linkend="Config-Classes"/>. A
 	  <classname>Config Set</classname> may contain at most one <classname>Node
 	  Group</classname> but any number of <emphasis role="bold">Partitions</emphasis>,
 	  since a host can be member of an arbitrary number of slurm
-	  <!--cbox(slurm__assign_host5.png)-->
-	  <!--cbox(slurm__assign_host4.png)-->
+	  <!--cbox(file: slurm__assign_host5.png)-->
+	  <!--cbox(file: slurm__assign_host4.png)-->
 	  partitions. Both can be added by selecting them via <guimenuitem>Add
 	  Config</guimenuitem> in the context menu of the <classname>Config Set</classname>.
 	</para>
@@ -850,7 +850,7 @@
 	Qlustar OS Images
       </bridgehead>
       <para>
-	<!--cbox(qlustar_images.png)-->
+	<!--cbox(file: qlustar_images/main.png)-->
 	Qlustar OS images can be defined and configured in the <classname>Qlustar
 	Images</classname> dialog accessible via <guimenuitem>Manage
 	Configs</guimenuitem>-><guimenuitem>Qlustar Images</guimenuitem>. Each image has a
@@ -868,7 +868,7 @@
 	  tracking the newest x.y (x.y.z) releases automatically. Example: If you have
 	  installed version 9 of the modules, you will currently get the 9.0 (most recent 9.y)
 	  versions, but when 9.1 will be
-	  <!--cbox(qlustar_images__modules.png)-->
+	  <!--cbox(file: qlustar_images__modules.png)-->
 	  available, <code>apt-get dist-upgrade</code> will update to 9.1 versions
 	  automatically. So with this choice, updates will usually include larger changes,
 	  since new <emphasis role="bold">feature</emphasis> releases (like 9.1) will
@@ -889,7 +889,7 @@
 	  Image Properties
 	</bridgehead>
 	<para>
-	  <!--cbox(qlustar_images__new.png)-->
+	  <!--cbox(file: qlustar_images__new.png)-->
 	  A couple of images are pre-defined during the installation process. The dialog shows
 	  the images sorted by their names. Expanding an entry shows its configuration and
 	  allows to select a UnionFS chroot via the drop-down menu. Each image must contain at
@@ -909,8 +909,8 @@
 	NIS hosts
       </bridgehead>
       <para>
-	<!--cbox(nis_host_header.png)-->
-	NIS (network information system) is used to manage hostname resolution within the
+	<!--cbox(file: nis/host_header.png)-->
+	NIS (Network Information System) is used to manage hostname resolution within the
 	cluster. For all hosts that are managed within <application>QluMan</application>
 	itself, a corresponding NIS entry is created automatically. However, administrators
 	might want to add other hosts external to the cluster to the NIS database as well. To
@@ -929,7 +929,7 @@
 	SSH host files
       </bridgehead>
       <para>
-	<!--cbox(ssh_hosts__known.png)-->
+	<!--cbox(file: ssh_hosts__known.png)-->
 	To simplify ssh remote logins to cluster nodes, three ssh configuration files are
 	provided and managed by <application>QluMan</application>: (a)
 	<filename>ssh_known_hosts</filename> (holds ssh host keys of cluster nodes), (b)
@@ -943,8 +943,8 @@
 	inserted during the installation process.
       </para>
       <para>
-	<!--cbox(ssh_hosts__authorized_keys.png)-->
-	<!--cbox(ssh_hosts__equiv.png)-->
+	<!--cbox(file: ssh_hosts__authorized_keys.png)-->
+	<!--cbox(file: ssh_hosts__equiv.png)-->
 	Management of the three configs is similar to the <classname>NIS hosts</classname>
 	dialog: To edit the header part of either config, select <guimenuitem>Manage
 	Configs</guimenuitem>-><guimenuitem>SSH Configs</guimenuitem> from the main menu. Then
@@ -983,8 +983,8 @@
 	installation to give you the best of all worlds.
       </para>
       <para>
-	<!--cbox(manage_chroots.png)-->
-	<!--cbox(menu-manage_cluster__manage_chroots.png)-->
+	<!--cbox(file: manage_chroots/main.png)-->
+	<!--cbox(file: menu-manage_cluster__manage_chroots.png)-->
 	The chroot associated with a Qlustar image is easily selectable as explained <xref
 	linkend="Qlustar-OS-Images" endterm="Qlustar-OS-Images"/>. Management of the chroots
 	themselves is possible via the <classname>Manage Chroots</classname> dialog which is
@@ -995,7 +995,7 @@
 	"https://qlustar.com/book/docs/first-steps#Adding-Software">elsewhere</link>.
       </para>
       <para>
-	<!--cbox(manage_chroots__select_chroot.png)-->
+	<!--cbox(file: manage_chroots__select_chroot.png)-->
 	To <emphasis role="bold">specify a chroot to operate on</emphasis>, select it via the
 	corresponding pull-down menu. This will show its description, as well as its properties
 	like the NFS server that hosts it, the filesystem path on the server, the flavor (edge
@@ -1004,8 +1004,8 @@
 	8.1).
       </para>
       <para>
-	<!--cbox(manage_chroots__new2.png)-->
-	<!--cbox(manage_chroots__new1.png)-->
+	<!--cbox(file: manage_chroots__new2.png)-->
+	<!--cbox(file: manage_chroots__new1.png)-->
 	When <emphasis role="bold">generating a new chroot</emphasis>, a name for the chroot
 	must be specified and optionally a description of its purpose. Furthermore, you can
 	select an NFS server where the chroot will be located (currently only one option), a
@@ -1017,9 +1017,9 @@
 	of minutes) in its own window.
       </para>
       <para>
-	<!--cbox(manage_chroots__edit.png)-->
-	<!--cbox(manage_chroots__clone2.png)-->
-	<!--cbox(manage_chroots__clone1.png)-->
+	<!--cbox(file: manage_chroots__edit.png)-->
+	<!--cbox(file: manage_chroots__clone2.png)-->
+	<!--cbox(file: manage_chroots__clone1.png)-->
 	<emphasis role="bold">Cloning an existing chroot</emphasis> is mostly useful when you
 	want to test an upgrade to a new release or for other tests. Pressing the
 	<guibutton>Clone</guibutton> button opens a sub-window in which you can specify the
@@ -1028,9 +1028,9 @@
 	it in its own window. Editing a chroot let's you edit it's description.
       </para>
       <para>
-	<!--cbox(manage_chroots__remove3.png)-->
-	<!--cbox(manage_chroots__remove2.png)-->
-	<!--cbox(manage_chroots__remove1.png)-->
+	<!--cbox(file: manage_chroots__remove3.png)-->
+	<!--cbox(file: manage_chroots__remove2.png)-->
+	<!--cbox(file: manage_chroots__remove1.png)-->
 	<emphasis role="bold">Removal of a chroot</emphasis> by pressing the
 	<guibutton>Remove</guibutton> button first asks you for a final confirmation. If you
 	then press the <guibutton>Delete</guibutton> button, the chroot will be removed
@@ -1049,7 +1049,7 @@
 	address (IPoIB) just like Ethernet adapters. If you have chosen to configure an IB
 	network during installation, this section is mostly about how to review or change the
 	initial
-	<!--cbox(network_config__infiniband.png)-->
+	<!--cbox(file: network_config__infiniband.png)-->
 	settings. If not, IB first has to be activated in the <xref
 	linkend="Configuring-the-Network"/> dialog. An IB Network address IP and netmask can
 	then be chosen. The Infiniband network must not collide with the Cluster (Ethernet) or
@@ -1060,7 +1060,7 @@
 	large as the Cluster Network netmask. Hence, smaller values won't be selectable.
       </para>
       <para>
-	<!--cbox(hardware_property_set__ib.png)-->
+	<!--cbox(file: hardware_property_set__ib.png)-->
 	To actually have a node's IB adapter be configured during the boot process, additional
 	steps are necessary. It is not uncommon, that a cluster consists of hosts with IB and
 	hosts without. Therefore, the pre-defined hardware property <parameter>IB
@@ -1080,7 +1080,7 @@
 	  the routing tables. Qlustar provides <application>OpenSM</application> for this
 	  task. If the head-node is also part of the IB network, it's usually best to configure
 	  it to run OpenSM. This might have
-	  <!--cbox(opensm__port_all.png)-->
+	  <!--cbox(file: opensm__port_all.png)-->
 	  been chosen during installation, in which case there is nothing more to be done. If
 	  not, you have the option to run OpenSM on ordinary nodes too. In this case, it is
 	  advisable to run OpenSM on two or three nodes (not more) for redundancy reasons. It
@@ -1092,8 +1092,8 @@
 	  the OpenSM daemon will be started on all its Infiniband ports.
 	</para>
 	<para>
-	  <!--cbox(opensm__port_create_1.png)-->
-	  <!--cbox(opensm__port_1.png)-->
+	  <!--cbox(file: opensm__port_create_1.png)-->
+	  <!--cbox(file: opensm__port_1.png)-->
 	  If a host has more than one IB port, OpenSM can also be configured to run only on a
 	  specific port instead of all of them. The port can be specified by its number or by
 	  its unique ID. As this is an uncommon configuration and the unique ID is unknown
@@ -1106,8 +1106,8 @@
 	  the OpenSM Ports property through the context menu.
 	</para>
 	<para>
-	  <!--cbox(opensm__option_edit.png)-->
-	  <!--cbox(opensm__option_add.png)-->
+	  <!--cbox(file: opensm__option_edit.png)-->
+	  <!--cbox(file: opensm__option_add.png)-->
 	  In some circumstances it might be necessary to run OpenSM with extra options. This
 	  can also be configured via generic properties. The only preset value is the empty
 	  string, so you need to create a new value for the options you require. First add the
@@ -1120,7 +1120,7 @@
 	IPMI settings
       </bridgehead>
       <para>
-	<!--cbox(network_config__ipmi.png)-->
+	<!--cbox(file: network_config__ipmi.png)-->
 	Configuring IPMI is similar to Infiniband and also involves multiple steps, because
 	there are a number of options to set. If you have chosen to configure an IPMI network
 	during installation, a larger part of this section is about how to review or change the
@@ -1131,7 +1131,7 @@
 	the choice of netmask apply.
       </para>
       <para>
-	<!--cbox(hardware_property_set__ipmi.png)-->
+	<!--cbox(file: hardware_property_set__ipmi.png)-->
 	Often not all nodes in a cluster have IPMI. Therefore, in
 	<application>QluMan</application> per default no host is configured to setup IPMI,
 	unless it is assigned the hardware property <literal>IPMI Adapter</literal> with a
@@ -1141,8 +1141,8 @@
 	monitoring its temperature and fan speeds.
       </para>
       <para>
-	<!--cbox(generic_property_set__ipmi_channel_add.png)-->
-	<!--cbox(generic_property_set__ipmi_initialize_add.png)-->
+	<!--cbox(file: generic_property_set__ipmi_channel_add.png)-->
+	<!--cbox(file: generic_property_set__ipmi_initialize_add.png)-->
 	Enabling IPMI nodes for remote control involves two more settings. The first one is the
 	generic property <parameter>Initialize IPMI</parameter>. Per default the settings of
 	the IPMI cards are not touched by <productname>Qlustar</productname>. However, while
@@ -1153,7 +1153,7 @@
 	allows a one-time setup of the cards properties.
       </para>
       <para>
-	<!--cbox(generic_property_set__ipmi_channel_edit.png)-->
+	<!--cbox(file: generic_property_set__ipmi_channel_edit.png)-->
 	The second generic property is the <parameter>IPMI Channel</parameter> to use. Per
 	default channel 1 is used and this is the only preset value for the property. If you
 	need to use a different channel, first add the generic property <parameter>IPMI
@@ -1164,7 +1164,7 @@
     <section xml:id="Comand-execution">
       <title>RXEngine / Remote Execution Engine</title>
       <para>
-	<!--cbox(execute__overview.png)-->
+	<!--cbox(file: execute__overview.png)-->
 	<application>QluMan</application> provides a powerful <classname>remote command
 	execution engine</classname>, that allows to run shell commands on any number of hosts
 	in <emphasis role="bold">parallel</emphasis> and analyze their output/status in
@@ -1224,9 +1224,9 @@
 	Executing a pre-defined command
       </bridgehead>
       <para>
-	<!--cbox(execute_predefined2.png)-->
-	<!--cbox(execute_predefined1.png)-->
-	<!--cbox(enclosure_view__execute_predefined.png)-->
+	<!--cbox(file: execute_predefined2.png)-->
+	<!--cbox(file: execute_predefined1.png)-->
+	<!--cbox(file: enclosure_view__execute_predefined.png)-->
 	Pre-Defined commands can be created using the <classname>Command Editor</classname>
 	(see <xref linkend="CommandEditor"/> for details). To execute a pre-defined command,
 	open the pull-down menu of the <guibutton>Execute button</guibutton> at the bottom of
@@ -1241,9 +1241,9 @@
 	<guibutton>Execute</guibutton> button.
       </para>
       <para>
-	<!--cbox(execute_predefined4.png)-->
-	<!--cbox(execute_predefined3.png)-->
-	<!--cbox(enclosure_view__execute_predefined2.png)-->
+	<!--cbox(file: execute_predefined4.png)-->
+	<!--cbox(file: execute_predefined3.png)-->
+	<!--cbox(file: enclosure_view__execute_predefined2.png)-->
 	Arguments to a pre-defined command can be set fixed to a <xref
 	linkend="HostFilterEditor"/> , in which case the filter and its resulting hostlist are
 	shown as plain text and can not be edited. Optionally, specification of arguments in
@@ -1260,8 +1260,8 @@
 	Executing a custom command
       </bridgehead>
       <para>
-	<!--cbox(execute.png)-->
-	<!--cbox(enclosure_view__execute.png)-->
+	<!--cbox(file: execute/main.png)-->
+	<!--cbox(file: enclosure_view__execute.png)-->
 	To execute a custom command, open the pull-down menu of the <guimenu>Execute
 	button</guimenu> at the bottom of the <classname>Enclosure View</classname> and select
 	custom command from the menu. This opens a new blank <classname>Command
@@ -1274,9 +1274,9 @@
 	</note>.
       </para>
       <para>
-	<!--cbox(execute__past_command.png)-->
-	<!--cbox(execute__update.png)-->
-	<!--cbox(execute__selected.png)-->
+	<!--cbox(file: execute__past_command.png)-->
+	<!--cbox(file: execute__update.png)-->
+	<!--cbox(file: execute__selected.png)-->
 	In case hosts were selected in the <classname>Enclosure View</classname> before
 	clicking the <guibutton>Execute</guibutton> button, a hostlist representing these hosts
 	will be present in the <classname>Command Execution</classname> window. This allows
@@ -1301,7 +1301,7 @@
 	Running Commands / Interpreting their Output
       </bridgehead>
       <para>
-	<!--cbox(execute__command.png)-->
+	<!--cbox(file: execute__command.png)-->
 	Once the hostlist is added, a command can simply be run by entering it in the command
 	box and hitting the <guibutton>Execute</guibutton> button. It will then start to run in
 	parallel on all listed hosts and the command output will be collected. Periodically, in
@@ -1314,7 +1314,7 @@
 	Command State
       </bridgehead>
       <para>
-	<!--cbox(execute__df.png)-->
+	<!--cbox(file: execute__df.png)-->
 	After the <guibutton>Execute</guibutton> button has been pressed, all hosts will start
 	in the <literal>Pending state</literal>. Once a host confirms that it has started its
 	command, it will change to the <literal>Running state</literal>. When the command
@@ -1326,8 +1326,8 @@
 	state. Otherwise, it enters the <literal>Success</literal> state.
       </para>
       <para>
-	<!--cbox(execute__killed.png)-->
-	<!--cbox(execute__pending.png)-->
+	<!--cbox(file: execute__killed.png)-->
+	<!--cbox(file: execute__pending.png)-->
 	In the screenshot example, the hosts <systemitem class="systemname">sn-1</systemitem>
 	and <systemitem class="systemname">sn-2</systemitem> were down, so they remained in the
 	<literal>Pending</literal> state. By clicking the <guibutton>Pending</guibutton>
@@ -1343,7 +1343,7 @@
 	Hosts and Groups
       </bridgehead>
       <para>
-	<!--cbox(execute_group.png)-->
+	<!--cbox(file: execute_group.png)-->
 	Hosts executing a command are not only grouped by their execution state, the command
 	output produced by the different hosts is also <emphasis role="bold">analyzed and
 	compared</emphasis> to each other. Hosts with identical output are put into a
@@ -1368,7 +1368,7 @@
 	Filtering by stdout and stderr
       </bridgehead>
       <para>
-	<!--cbox(execute__errors.png)-->
+	<!--cbox(file: execute__errors.png)-->
 	Commands usually output regular text to <literal>stdout</literal> and warnings as well
 	as errors to <literal>stderr</literal>. In the latter case, the command ends up in the
 	<literal>Errors</literal> state, because this is usually something that needs further
@@ -1379,8 +1379,8 @@
 	reading from the file descriptors causes the order to slightly change.
       </para>
       <para>
-	<!--cbox(execute_stderr.png)-->
-	<!--cbox(execute__stdout.png)-->
+	<!--cbox(file: execute_stderr.png)-->
+	<!--cbox(file: execute__stdout.png)-->
 	Some commands produce a lot of output. Error messages are then easily overseen in
 	between the lines. Similarly a command might report a lot of harmless errors, that hide
 	the interesting output going to <literal>stdout</literal>. To simplify an analysis of
@@ -1393,7 +1393,7 @@
 	Passing input to a command
       </bridgehead>
       <para>
-	<!--cbox(execute__input.png)-->
+	<!--cbox(file: execute__input.png)-->
 	Sometimes it is necessary to pass some input to a command. This can be done by clicking
 	the <guibutton>Input</guibutton> button near the top. Another text box will then be
 	added to the window and will allow to specify, what should be passed to
@@ -1415,8 +1415,8 @@
     <section xml:id="CommandEditor">
       <title>Command Editor</title>
       <para>
-	<!--cbox(command_editor__ls.png)-->
-	<!--cbox(command_editor.png)-->
+	<!--cbox(file: command_editor__ls.png)-->
+	<!--cbox(file: command_editor/main.png)-->
 	The <classname>command editor</classname> shows all the pre-defined commands in a tree
 	view on the left. A number of useful commands are already defined by default. Selecting
 	a command shows its definition on the right-hand side, where it can also be
@@ -1431,9 +1431,9 @@
 	Defining or editing a command
       </bridgehead>
       <para>
-	<!--cbox(command_editor__new2.png)-->
-	<!--cbox(command_editor__new1.png)-->
-	<!--cbox(command_editor__rename.png)-->
+	<!--cbox(file: command_editor__new2.png)-->
+	<!--cbox(file: command_editor__new1.png)-->
+	<!--cbox(file: command_editor__rename.png)-->
 	To define a new command, select <guimenuitem>New Command</guimenuitem> from the context
 	menu. The new command will be created in the group, where the context menu was opened
 	or in the root, if the mouse is outside of any group. Initially, the command will have
@@ -1448,8 +1448,8 @@
 	in the tree view.
       </para>
       <para>
-	<!--cbox(command_editor__execute_on2.png)-->
-	<!--cbox(command_editor__execute_on.png)-->
+	<!--cbox(file: command_editor__execute_on2.png)-->
+	<!--cbox(file: command_editor__execute_on.png)-->
 	A command can be executed on any host or set of hosts in the cluster. The
 	<guilabel>Execute on</guilabel> field governs how that host or set of hosts is
 	constructed. The default is <parameter>User input</parameter>. This means, the user
@@ -1459,8 +1459,8 @@
 	currently evaluates to, is displayed below it.
       </para>
       <para>
-	<!--cbox(command_editor__edit2.png)-->
-	<!--cbox(command_editor__edit.png)-->
+	<!--cbox(file: command_editor__edit2.png)-->
+	<!--cbox(file: command_editor__edit.png)-->
 	Editing the command itself may take a while. To avoid conflicts from concurrent editing
 	attempts by different <application>QluMan</application> users, only one person can edit
 	a command at a time. To start the editing process, click the
@@ -1473,9 +1473,9 @@
 	additional arguments for the command, as explained in more detail below.
       </para>
       <para>
-	<!--cbox(command_editor__edit5.png)-->
-	<!--cbox(command_editor__edit4.png)-->
-	<!--cbox(command_editor__edit3.png)-->
+	<!--cbox(file: command_editor__edit5.png)-->
+	<!--cbox(file: command_editor__edit4.png)-->
+	<!--cbox(file: command_editor__edit3.png)-->
 	Sometimes it is necessary, to pass some input to a pre-defined command. This can be
 	done by clicking the <guibutton>Input</guibutton> check-box. It will bring up an input
 	text-box, where the desired input text can be entered.
@@ -1487,7 +1487,7 @@
 	placeholders and updates the entries in the <classname>Arguments</classname> box.
       </para>
       <para>
-	<!--cbox(command_editor__arguments.png)-->
+	<!--cbox(file: command_editor__arguments.png)-->
 	The definition of command arguments use the same mechanism as detailed for the
 	<literal>Execute on</literal> definition. They can either be left up to the user to
 	fill in, when the command is executed or be specified by a filter selectable from the
@@ -1498,7 +1498,7 @@
 	remove an argument, edit the command text and remove the placeholder.
       </para>
       <para>
-	<!--cbox(command_editor__testing_command.png)-->
+	<!--cbox(file: command_editor__testing_command.png)-->
 	In the screenshot example, the test command is defined to execute on all head-nodes
 	(<systemitem class="systemname">qlu-dev</systemitem> is the only head node in the
 	cluster). It has some input and two extra arguments. The first one is fixed to a
@@ -1516,7 +1516,7 @@
     <section xml:id="HostFilterEditor">
       <title>Host Filter Editor</title>
       <para>
-	<!--cbox(filter_editor.png)-->
+	<!--cbox(file: filter_editor/main.png)-->
 	Host filters define a set of hosts by specifying any number of criteria. The set of
 	hosts defined by a filter is dynamic: Changes made to the properties of hosts are
 	automatically reflected in the hostlist a filter evaluates to. Every time a filter is
@@ -1547,7 +1547,7 @@
 	</itemizedlist>
       </para>
       <para>
-	<!--cbox(filter_editor__select_filter.png)-->
+	<!--cbox(file: filter_editor__select_filter.png)-->
 	The filter editor window is split into two areas. At the top the definition of the
 	currently selected filter is shown. You can select the filter to be displayed from the
 	dropdown menu. At the bottom the hosts that pass all the filters are displayed in the
@@ -1557,11 +1557,11 @@
 	Wiki</link> has a detailed discussion on the syntax).
       </para>
       <para>
-	<!--cbox(filter_editor__new3.png)-->
-	<!--cbox(filter_editor__new2.png)-->
-	<!--cbox(filter_editor__new.png)-->
-	<!--cbox(filter_editor__new5.png)-->
-	<!--cbox(filter_editor__new4.png)-->
+	<!--cbox(file: filter_editor__new3.png)-->
+	<!--cbox(file: filter_editor__new2.png)-->
+	<!--cbox(file: filter_editor__new.png)-->
+	<!--cbox(file: filter_editor__new5.png)-->
+	<!--cbox(file: filter_editor__new4.png)-->
       </para>
       <para>
 	Select <guimenuitem>new filter</guimenuitem> from the dropdown menu to start defining a
@@ -1585,7 +1585,7 @@
 	Types of Filters
       </bridgehead>
       <para>
-	<!--cbox(filter_editor__new3.png)-->
+	<!--cbox(file: filter_editor__new3.png)-->
 	A filter can be added from the context menu (right mouse click) in the top area.  For a
 	host to show up in the filtered list (bottom part), it must pass all the filters added.
 	Each filter narrows down the list. Any number of filters can be added and they do not
@@ -1602,9 +1602,9 @@
 	  Hostname Filter
 	</bridgehead>
 	<para>
-	  <!--cbox(filter_editor__2_hostnames2.png)-->
-	  <!--cbox(filter_editor__add__hostname.png)-->
-	  <!--cbox(filter_editor__2_hostnames1.png)-->
+	  <!--cbox(file: filter_editor__2_hostnames2.png)-->
+	  <!--cbox(file: filter_editor__add__hostname.png)-->
+	  <!--cbox(file: filter_editor__2_hostnames1.png)-->
 	  Adding a Hostname filter opens up a pop-up dialog asking for the hostname or a
 	  regular expression to filter for. The input must be a regular expression in
 	  <literal>python</literal> syntax and is matched against the beginning of the
@@ -1628,11 +1628,11 @@
 	  Host Template Filter
 	</bridgehead>
 	<para>
-	  <!--cbox(filter_editor__hotstemplate__add_template1.png)-->
-	  <!--cbox(filter_editor__hotstemplate.png)-->
-	  <!--cbox(filter_editor__add_hosttemplate.png)-->
-	  <!--cbox(filter_editor__hotstemplate2.png)-->
-	  <!--cbox(filter_editor__hotstemplate__add_template2.png)-->
+	  <!--cbox(file: filter_editor__hotstemplate__add_template1.png)-->
+	  <!--cbox(file: filter_editor__hotstemplate.png)-->
+	  <!--cbox(file: filter_editor__add_hosttemplate.png)-->
+	  <!--cbox(file: filter_editor__hotstemplate2.png)-->
+	  <!--cbox(file: filter_editor__hotstemplate__add_template2.png)-->
 	  Adding a Host Template filter does not pop up a dialog. Instead it adds an empty Host
 	  Template filter. This simply selects all hosts with an assigned Host Template. Hosts
 	  that do not have a Host Template will not pass this filter. The filter can be made
@@ -1650,10 +1650,10 @@
 	  Enclosure Filter
 	</bridgehead>
 	<para>
-	  <!--cbox(filter_editor__enclosure.png)-->
-	  <!--cbox(filter_editor__add__enclosure.png)-->
-	  <!--cbox(filter_editor__enclosure2.png)-->
-	  <!--cbox(filter_editor__enclosure__add.png)-->
+	  <!--cbox(file: filter_editor__enclosure.png)-->
+	  <!--cbox(file: filter_editor__add__enclosure.png)-->
+	  <!--cbox(file: filter_editor__enclosure2.png)-->
+	  <!--cbox(file: filter_editor__enclosure__add.png)-->
 	  Adding an Enclosure filter also does not bring up a dialog. Like a Host Template
 	  filter, it selects all hosts that are part of an enclosure. Unlike the Hostname and
 	  Host Template filters though, an Enclosure filter allows for two different
@@ -1679,9 +1679,9 @@
 	  whole filter.
 	</para>
 	<para>
-	  <!--cbox(filter_editor__invert_filter.png)-->
-	  <!--cbox(filter_editor__invert_pattern.png)-->
-	  <!--cbox(filter_editor__invert.png)-->
+	  <!--cbox(file: filter_editor__invert_filter.png)-->
+	  <!--cbox(file: filter_editor__invert_pattern.png)-->
+	  <!--cbox(file: filter_editor__invert.png)-->
 	  Besides the obvious, this can also be useful in finding hosts that are not configured
 	  correctly. For example, adding an empty Host Template filter and inverting it, will
 	  show all hosts without a Host Template. Adding a second filter, that selects all
@@ -1695,7 +1695,7 @@
 	  Additive versus subtractive
 	</bridgehead>
 	<para>
-	  <!--cbox(filter_editor__subtractive.png)-->
+	  <!--cbox(file: filter_editor__subtractive.png)-->
 	  When constructing a filter, it is important to remember, that all top-level filters
 	  are subtractive. A host must pass all top-level filters to show up in the result. On
 	  the other hand, all patterns and sub-filters are additive. Matching any one of them
@@ -1719,128 +1719,132 @@
 	<application>QluMan</application> operations. Once defined, they can be assigned to a
 	user.
       </para>
-      <bridgehead xml:id="User-Manage">
-	Managing QluMan Users
-      </bridgehead>
-      <para>
-	<!--cbox(users.png)-->
-	<!--cbox(users__select.png)-->
-	The <literal>admin user</literal> is pre-defined and has the <literal>admin
-	role</literal>, meaning all possible rights. Roles for the admin user can not be
-	changed, just like the root user in a Linux system always has all rights. When running
-	<application>QluMan</application> for the first time, you should set the right email
-	address for the admin user.
-      </para>
-      <para>
-	<!--cbox(users__new3.png)-->
-	<!--cbox(users__new2.png)-->
-	<!--cbox(users__select.png)-->
-	<!--cbox(users__new.png)-->
-	To create a new user, click <guibutton>New User</guibutton> and enter the name for the
-	new user to create it. Then select the user from the drop-down menu and fill out the
-	remaining fields. The changes will be saved automatically when <keycap>return</keycap>
-	is pressed or the input field looses the focus. New users have no roles assigned to
-	them and will have no rights to change anything. They can look but not touch. See <xref
-	linkend="Permission-Manage" endterm="Permission-Manage"/> for how to create new roles
-	and assign them to the user by checking the respective checkboxes. If the
-	<guibutton>New User</guibutton> button is not selectable then the user lacks sufficient
-	rights to create new users. The roles buttons will then also be disabled preventing an
-	unauthorized user to give himself or others extra roles.
-      </para>
-      <para xml:id="one-time-token">
-	<!--cbox(users__new_auth_token.png)-->
-	The new is also created without login credentials, so initially, he can't log
-	in. Hence, the next step is to generate a one-time token for the user by clicking
-	<guibutton>New Auth Token</guibutton>.  Generating the one-time token may take a little
-	to generate while before the <classname>New Auth Token</classname> dialog opens and
-	shows a certificate containing the generated one-time token as well as the other login
-	informations required to connect to the server. The certificate is protected by an 8
-	digit password so that it can be transfered over unencrypted communications channels
-	like email or jabber. In such a case the password should be send over a second,
-	different, communication channel, e.g. read over the phone. As a special case, when a
-	user clicks <guibutton>New Auth Token</guibutton> for itself, the generated token is
-	imported into the running client and replaces the current login credentials. A
-	reconnect is then triggered forcing the client to generate a new random public/private
-	key pair and use the one-time token to authenticate itself to the server. This should
-	be used to invalidate the old keys and replace them with fresh ones when a user
-	suspects the certificate safe might have been compromised by an attacker.
-      </para>
-      <para>
-	<!--cbox(users__new_auth_token_2.png)-->
-	The <classname>New Auth Token</classname> dialog also has 3 usefull buttons at the
-	right bottom corner. The <guibutton>Import</guibutton> button allows adding the
-	certificate directly to the running client. The use case for this is when creating a
-	user account for oneself when working as admin. It is recommendd that for clusters with
-	multiple users with admin role that every user has their own user account and the admin
-	user is only used to create those.
-	<!--cbox(users__new_auth_token__mailed.png)-->
-	<!--cbox(users__new_auth_token__saved.png)-->
-	The <guibutton>Save</guibutton> button allows saving the certificate into a file and
-	the <guibutton>Mail</guibutton> button sends the certificate to the email configured
-	for the user. In both cases only the certificate is saved or mailed and the password
-	needs to be send separately.
-      </para>
-      <para>
-	For the best security it is recommened to leave any new user without roles until they
-	have logged in using the one-time token. That way if the certificate was intercepted it
-	has become useless to an attacker. Or if the attacker manages to intercept and use the
-	certificate before the real user then the real user won't be able to use it. Meanwhile
-	the attacker won't be able to change anything in the cluster.
-      </para>
-      <note>
+      <section xml:id="sec-User-Manage">
+	<title>Managing QluMan Users</title>
 	<para>
-	  The certificate contains the information about the cluster telling the client how to
-	  connect to it and the public key of the <systemitem
-	  class="systemname">qlumand</systemitem> server that ensures the client will only talk
-	  to the right server and can't be eavesdropped. It also contains a one-time token
-	  allowing any client to log in exactly once within the next 48 hours. On the first
-	  login with a correct one-time token the clients public key (generated randomly and
-	  unique to use cluser and user) is stored by the server and used to authenticate the
-	  user in the future. The clients and servers public and private keys are also used
-	  when connecting to safely exchange session keys for encryption with perfect forward
-	  security.
+	  <!--cbox(file: users/main.png)-->
+	  <!--cbox(file: users__select.png)-->
+	  The <literal>admin user</literal> is pre-defined and has the <literal>admin
+	  role</literal>, meaning all possible rights. Roles for the admin user can not be
+	  changed, just like the root user in a Linux system always has all rights. When
+	  running <application>QluMan</application> for the first time, you should set the
+	  correct email address for the admin user.
 	</para>
-      </note>
-      <para>
-	<!--cbox(users__delete2.png>-->
-	<!--cbox(users__delete.png>-->
-	An user other than admin can be deleted by clicking the <guibutton>Delete
-	User</guibutton> button. Just like the <guibutton>New User</guibutton> button it is
-	only enabled if the current user has sufficient rights.
-      </para>
-      <bridgehead xml:id="Permission-Manage">
-	Managing User Roles/Permissions
-      </bridgehead>
-      <para>
-	The <application>QluMan</application> server performs <emphasis role="bold">many
-	individual rights</emphasis> checks, before it allows/performs an operation. Many of
-	those correspond directly to a specific window in the GUI, giving the user the right to
-	alter settings in that window. For example, the right to configure UnionFS groups
-	corresponds directly to operations available from the <literal>UnionFS Groups</literal>
-	window under <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>UnionFS
-	Groups</guimenuitem>. Others govern the right to specific actions or to alter specific
-	properties. For example, the right to configure OpenSM on hosts enables the user to
-	add, alter or delete the <literal>OpenSM Ports</literal> and <literal>OpenSM
-	Options</literal> property of hosts in the <classname>Enclosure View</classname>.
-      </para>
-      <para>
-	The rights are grouped into 4 categories: <literal>Admin rights</literal> covers rights
-	with global impact and root access to nodes, <literal>Booting</literal> covers all
-	settings that affect how nodes will boot, <literal>Services</literal> covers the
-	configuration of daemons and <literal>Host Config</literal> covers the general
-	configuration of hosts.
-      </para>
-      <para>
-	<!--cbox(roles__manager.png)-->
-	<!--cbox(roles__new.png)-->
-	<!--cbox(roles__empty.png)-->
-	Creating and editing roles is simple. Click <guibutton>New</guibutton> to create a new
-	role, fill in a name and description for it and click <guibutton>OK</guibutton>. To
-	change the rights associated with a role, first select it using the dropdown menu at
-	the top. Next click the checkmark boxes to the left of the rights you want to change,
-	grant or remove from the role. Click <guibutton>Save</guibutton> to save the changes or
-	<guibutton>>Undo</guibutton> to reset the rights to the last saved settings.
-      </para>
+	<para>
+	  <!--cbox(file: users__new3.png)-->
+	  <!--cbox(file: users__new2.png)-->
+	  <!--cbox(file: users__select.png)-->
+	  <!--cbox(file: users__new.png)-->
+	  To create a new user, click <guibutton>New User</guibutton> and enter the name for
+	  the new user to create it. Then select the user from the drop-down menu and fill out
+	  the remaining fields. The changes will be saved automatically when
+	  <keycap>return</keycap> is pressed or the input field looses the focus. New users
+	  have no roles assigned to them and will have no rights to change anything. They can
+	  look but not touch. See <xref linkend="sec-Permission-Manage"
+	  endterm="sec-Permission-Manage"/> for how to create new roles and assign them to the
+	  user by checking the respective checkboxes. If the <guibutton>New User</guibutton>
+	  button is not selectable then the user lacks sufficient rights to create new
+	  users. The roles buttons will then also be disabled preventing an unauthorized user
+	  to give himself or others extra roles.
+	</para>
+	<para xml:id="para-one-time-token">
+	  <!--cbox(file: users__new_auth_token.png)-->
+	  The new is also created without login credentials, so initially, he can't log
+	  in. Hence, the next step is to generate a one-time token for the user by clicking
+	  <guibutton>New Auth Token</guibutton>.  Generating the one-time token may take a
+	  little to generate while before the <classname>New Auth Token</classname> dialog
+	  opens and shows a certificate containing the generated one-time token as well as the
+	  other login informations required to connect to the server. The certificate is
+	  protected by an 8 digit password so that it can be transfered over unencrypted
+	  communications channels like email or jabber. In such a case the password should be
+	  send over a second, different, communication channel, e.g. read over the phone. As a
+	  special case, when a user clicks <guibutton>New Auth Token</guibutton> for itself,
+	  the generated token is imported into the running client and replaces the current
+	  login credentials. A reconnect is then triggered forcing the client to generate a new
+	  random public/private key pair and use the one-time token to authenticate itself to
+	  the server. This should be used to invalidate the old keys and replace them with
+	  fresh ones when a user suspects the certificate safe might have been compromised by
+	  an attacker.
+	</para>
+	<para>
+	  <!--cbox(file: users__new_auth_token_2.png)-->
+	  The <classname>New Auth Token</classname> dialog also has 3 usefull buttons at the
+	  right bottom corner. The <guibutton>Import</guibutton> button allows adding the
+	  certificate directly to the running client. The use case for this is when creating a
+	  user account for oneself when working as admin. It is recommendd that for clusters
+	  with multiple users with admin role that every user has their own user account and
+	  the admin user is only used to create those.
+	  <!--cbox(file: users__new_auth_token__mailed.png)-->
+	  <!--cbox(file: users__new_auth_token__saved.png)-->
+	  The <guibutton>Save</guibutton> button allows saving the certificate into a file and
+	  the <guibutton>Mail</guibutton> button sends the certificate to the email configured
+	  for the user. In both cases only the certificate is saved or mailed and the password
+	  needs to be send separately.
+	</para>
+	<para>
+	  For the best security it is recommened to leave any new user without roles until they
+	  have logged in using the one-time token. That way if the certificate was intercepted
+	  it has become useless to an attacker. Or if the attacker manages to intercept and use
+	  the certificate before the real user then the real user won't be able to use
+	  it. Meanwhile the attacker won't be able to change anything in the cluster.
+	</para>
+	<note>
+	  <para>
+	    The certificate contains the information about the cluster telling the client how
+	    to connect to it and the public key of the <systemitem
+	    class="systemname">qlumand</systemitem> server that ensures the client will only
+	    talk to the right server and can't be eavesdropped. It also contains a one-time
+	    token allowing any client to log in exactly once within the next 48 hours. On the
+	    first login with a correct one-time token the clients public key (generated
+	    randomly and unique to use cluser and user) is stored by the server and used to
+	    authenticate the user in the future. The clients and servers public and private
+	    keys are also used when connecting to safely exchange session keys for encryption
+	    with perfect forward security.
+	  </para>
+	</note>
+	<para>
+	  <!--cbox(file: users__delete2.png>-->
+	  <!--cbox(file: users__delete.png>-->
+	  An user other than admin can be deleted by clicking the <guibutton>Delete
+	  User</guibutton> button. Just like the <guibutton>New User</guibutton> button it is
+	  only enabled if the current user has sufficient rights.
+	</para>
+      </section>
+      <section xml:id="sec-Permission-Manage">
+	<title>Managing User Roles/Permissions</title>
+	<para>
+	  The <application>QluMan</application> server performs <emphasis role="bold">many
+	  individual rights</emphasis> checks, before it allows/performs an operation. Many of
+	  those correspond directly to a specific window in the GUI, giving the user the right
+	  to alter settings in that window. For example, the right to configure UnionFS groups
+	  corresponds directly to operations available from the <literal>UnionFS
+	  Groups</literal> window under <guimenuitem>Manage
+	  Configs</guimenuitem>-><guimenuitem>UnionFS Groups</guimenuitem>. Others govern the
+	  right to specific actions or to alter specific properties. For example, the right to
+	  configure OpenSM on hosts enables the user to add, alter or delete the
+	  <literal>OpenSM Ports</literal> and <literal>OpenSM Options</literal> property of
+	  hosts in the <classname>Enclosure View</classname>.
+	</para>
+	<para>
+	  The rights are grouped into 4 categories: <literal>Admin rights</literal> covers
+	  rights with global impact and root access to nodes, <literal>Booting</literal> covers
+	  all settings that affect how nodes will boot, <literal>Services</literal> covers the
+	  configuration of daemons and <literal>Host Config</literal> covers the general
+	  configuration of hosts.
+	</para>
+	<para>
+	  <!--cbox(file: roles__manager.png)-->
+	  <!--cbox(file: roles__new.png)-->
+	  <!--cbox(file: roles__empty.png)-->
+	  Creating and editing roles is simple. Click <guibutton>New</guibutton> to create a
+	  new role, fill in a name and description for it and click
+	  <guibutton>OK</guibutton>. To change the rights associated with a role, first select
+	  it using the dropdown menu at the top. Next click the checkmark boxes to the left of
+	  the rights you want to change, grant or remove from the role. Click
+	  <guibutton>Save</guibutton> to save the changes or <guibutton>>Undo</guibutton> to
+	  reset the rights to the last saved settings.
+	</para>
+      </section>
     </section>
     <section xml:id="Look-And-Feel">
       <title>Customizing the Look&amp;Feel</title>
@@ -1869,7 +1873,7 @@
 	Colors
       </bridgehead>
       <para>
-	<!--cbox(system_settings_colors.png)-->
+	<!--cbox(file: look-and-feel/system_settings_colors.png)-->
 	Click on the <guiicon>Colors</guiicon> icon and choose the
 	<guimenuitem>Colors</guimenuitem> tab. There you can adjust the color of the different
 	elements of the <application>QluMan GUI</application>. You can narrow down the color
@@ -1894,11 +1898,14 @@
 	Widget Style
       </bridgehead>
       <para>
-	<!--cbox(qtconfig.png)-->
+	<!--cbox(file: look-and-feel/qtconfig.png)-->
 	Changing the widget style can be a little more involved. First you need to start the QT
-	configurator and choose a GUI style (default is QtCurve).
+	configurator <application>qtconfig</application> and choose a GUI style (default is
+	QtCurve). The following assumes you're running <application>qluman-qt</application> on
+	the head- or FE node. In case you have it installed on your workstation, just execute
+	<application>qtconfig</application> there.
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 user@workstation ~ $</prompt>
 <command>ssh -X root@servername qtconfig</command>
 	</screen>
       </para>
@@ -1909,18 +1916,19 @@
 	widget style (note that only some styles are configurable, among them QtCurve), you can
 	now go back to the <classname>Application Appearance</classname> Dialog (see above),
 	click on the <guiicon>Style</guiicon> icon, choose the
-	<!--cbox(system-settings-style.png)-->
+	<!--cbox(file: look-and-feel/system_settings_style.png)-->
 	style you've selected in qtconfig as <literal>Widget style</literal> and press the
 	<guibutton>Configure...</guibutton> button. You'll see a large number of options for
-	customization. When you're satisfied with your modifications, press the <guibutton>OK</guibutton> button and
-	finally the <guibutton>Apply</guibutton> button of the <classname>Style - System Settings</classname> window. Note, that you will
-	see the resulting changes only after performing some actions (pressing a button, etc.)
-	in the <application>QluMan GUI</application>.
+	customization. When you're satisfied with your modifications, press the
+	<guibutton>OK</guibutton> button and finally the <guibutton>Apply</guibutton> button of
+	the <classname>Style - System Settings</classname> window. Note, that you will see the
+	resulting changes only after performing some actions (pressing a button, etc.)  in the
+	<application>QluMan GUI</application>.
       </para>
       <para>
 	To have more options for changing the widget style from the default of QtCurve, you can
 	install additional kde-style packages (.e.g <package>kde-style-oxygen</package>) on the
-	head-node.
+	machine, where you're executing the <application>QluMan GUI</application>.
       </para>
     </section>
   </chapter>
