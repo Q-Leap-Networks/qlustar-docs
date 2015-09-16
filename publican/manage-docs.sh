@@ -515,13 +515,41 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path
+  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path rel_path
+  local rel_dir product create_thumb img_list
   local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
   local colorbox_js=$QL_BRAND_DIR/$QL_LANG/javascript/jquery.colorbox-min.js
 
   cd "$WEB_DIR_PATH"
-  [ -d $tmpdir ] && rm -rf $tmpdir
-  cp -r ${WEB_TOC_PATH} $tmpdir
+  echo_bullet -i "--- Updating thumbnails ---"
+  # Create/update thumbnails
+  img_paths=$(find $WEB_TOC_PATH -name images | grep html-single)
+  for img_path in $img_paths; do
+    rel_path=${img_path#*en-US/}
+    product=${rel_path%%/*}
+    rel_path=${rel_path#*html-single/}
+    echo_bullet -i "Creating thumbnails for $product\t- ${rel_path%%/*}"
+    thumb_path=$img_path/thumbnails
+    img_list="$(find ${img_path} ! -wholename "*thumbnails*" -name "*.png")"
+    if [ -n "$img_list" ]; then
+      [ -d $thumb_path ] || mkdir $thumb_path
+      for f in $imgList; do
+	rel_path=${f#*images/}
+	rel_dir=""
+	dest_path=${thumb_path}/${f##*/}
+	if [[ $rel_path =~ / ]]; then
+	  rel_dir=${rel_path%/*.png}
+	  [ -d ${thumb_path}/${rel_dir} ] || mkdir -p ${thumb_path}/${rel_dir}
+	  dest_path=${thumb_path}/${rel_dir}/${f##*/}
+	fi
+	create_thumb=true
+	[ $f -ot $dest_path ] && create_thumb=false
+	$create_thumb && convert $f -resize 128x $dest_path
+      done
+    fi
+  done
+  echo_bullet -i "Copying content to temporary dir"
+  rsync -a --delete ${WEB_TOC_PATH}/ ${tmpdir}
   # Make simple substitutions
   find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
