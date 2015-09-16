@@ -551,25 +551,15 @@ update_site() {
   echo_bullet -i "Copying content to temporary dir"
   rsync -a --delete ${WEB_TOC_PATH}/ ${tmpdir}
   # Make simple substitutions
-  find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
+  echo_bullet -i "Fixing search boxes"
+  find $tmpdir -name "*.html" | xargs sed -i \
+    -e 's,%%%http-site%%%,'$site_url',g' \
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
     -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
     -e 's/___blank___"/" target="_blank"/g'
   # Apply converter
   for f in $(find $(find $tmpdir -name html-single) -name index.html); do
-    echo "Converting ${f##*/html-single/}"
-    ../convert-html.py -i $f
-  done
-  # Create thumbnails
-  img_paths=$(find . -name images | grep html-single)
-  for img_path in $img_paths; do
-    thumb_path=$img_path/thumbnails
-    if ls ${img_path}/*.png > /dev/null 2>&1; then
-      [ -d $thumb_path ] || mkdir $thumb_path
-      for f in ${img_path}/*.png; do
-	convert $f -resize 128x ${thumb_path}/${f##*/}
-      done
-    fi
+    echo_bullet -i "$(../convert-html.py -i $f)"
   done
   for f in $site_css $colorbox_js; do
     if [ -r $f ]; then
