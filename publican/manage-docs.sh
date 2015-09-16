@@ -570,11 +570,13 @@ update_site() {
     fi
   done
   cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
-  ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
-  tar zcf - $tmpdir | ssh root@${host} \
-    "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
-     chown -R root:root $site_path"
-  rm -rf $tmpdir
+  echo_bullet -i "Starting upload"
+  rsync --rsh='ssh -x' -az --delete ${tmpdir}/ www-data@${host}:$site_path
+  ssh -x www-data@${host} "chown -R www-data:www-data $site_path"
+  #ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
+  #tar zcf - $tmpdir | ssh root@${host} \
+  #  "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path;
+  #   chown -R root:root $site_path"
 }
 
 declare -a execute_args
