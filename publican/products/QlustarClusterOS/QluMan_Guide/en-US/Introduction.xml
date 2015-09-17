@@ -78,8 +78,8 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    <xref linkend="Config-Classes"/> handle more complex
-	    configurations like boot/disk configs, DHCP, etc.
+	    <xref linkend="chap-Config-Classes"/> handle more complex configurations like
+	    boot/disk configs, DHCP, etc.
 	  </para>
 	</listitem>
 	<listitem>
@@ -114,8 +114,7 @@
       and/or individual properties/config classes to it. In case of conflicts, values from
       individual properties/config classes have highest priority followed by set values and
       finally the Host Template values. For more details on this see <xref
-      linkend="Configuring-a-Host"/>.
+      linkend="sec-Configuring-Hosts"/>.
     </para>
   </section>
 </chapter>
-

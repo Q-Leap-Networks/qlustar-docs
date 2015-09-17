@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-Enclosures">
+  <title>Enclosures</title>
+  <section xml:id="sec-Enclosure-View">
+    <title>Enclosure View</title>
+    <para>
+      <!--cbox(file: enclosure_view/startup.png)-->
+      The <classname>Enclosure View</classname> shows an overview of the cluster in a tree
+      structure.  The tree structure is designed to reflect the physical structure of the
+      cluster. At the lowest level are the hosts. A host can be a head, storage or compute
+      node but also a switch e.g. In general, anything in the cluster that has a name, IP and
+      MAC address is a host. A host is represented by its <literal>bare board</literal> and
+      should be placed into a <firstterm> host enclosure</firstterm>. 1U, 2U, 3U or 4U
+      enclosures contain exactly one board, while others like a Twin or Blade chassis can
+      have multiple boards. Once defined, host enclosures can be placed into
+      <firstterm>racks</firstterm>, racks grouped into rows, rows into rooms and so on. The
+      tree has a simple drag&amp;drop interface. E.g. you can select a number of nodes (by
+      holding the <keycap>CTRL</keycap> key and clicking or holding the <keycap>shift
+      key</keycap> and dragging the mouse) and drag&amp;drop them into a <firstterm>Blade
+      enclosure</firstterm>.
+    </para>
+    <para>
+      <!--cbox(file: enclosure_view__select_host.png)-->
+      Selecting a node in the tree displays its configuration info on the right hand side:
+      The hostname, IP and MAC can be edited and saved by pressing
+      <keycap>return</keycap>. The check-mark to the right of the field shows the state of
+      the change. If the entered value is not valid, the check-box is cleared
+      <!--cbox(file: checkbox_unchecked.png)-->
+      The check-boxes tool-tip (you'll see it when the mouse moves on top of it) gives the
+      reason why the entered value is invalid. If the entered value is valid but has not yet
+      been saved, the check-box is checked but ghosted
+      <!--cbox(file: checkbox_ghostchecked.png)-->
+      Finally, after the value has been saved in the database, the check-box shows a solid
+      check.
+      <!--cbox(file: checkbox_checked.png)-->
+    </para>
+    <para>
+      For nodes that are not part of a <literal>multi-host enclosure</literal> (like a Blade
+      or Twin chassis) the enclosure type can be changed to one of the single-slot host
+      enclosures (1U, 2U, etc.). A new enclosure of the chosen type will then be created if
+      the node is not already part of one. If a node is included in a multi-host enclosure,
+      this field will be ghosted.
+    </para>
+    <para>
+      The template field allows to select a so-called <link linkend="Host-Templates">Host
+      Template</link> for the node. Usually, large groups of nodes have an identical hardware
+      and software configuration and will use the same template. Deviations from the
+      properties coming from the template can be set for individual hosts by direct
+      assignment of either a property set or individual properties directly to the host
+      through its context menu. In case of unique properties direct assignments override
+      settings from the template (or property set), for non-unique properties this is
+      additive.
+      <note>
+	<para>
+	  Any changes made in the configuration only affects the active node (as indicated by
+	  the hostname in the info part of the enclosure view), and not all selected
+	  nodes. Configurations for all selected nodes can be made by using the context menu
+	  (right click) in the tree view.
+	</para>
+      </note>
+    </para>
+  </section>
+  <section xml:id="sec-Managing-Enclosures">
+    <title>Managing Enclosures</title>
+    <para>
+      <!--cbox(file: enclosure_view__select_twin2.png)-->
+      Similar to host nodes, selecting an enclosure entry displays the physical layout of the
+      corresponding enclosure on the right. Controls to select the visibility level and
+      special slots are available at the top of the display. See below for more details about
+      these. The name of the enclosure and its type (in brackets) is shown in the title. In
+      the above case, both name and type are "Twin². Below the title you have a
+      representation of the physical layout of the enclosure. For this example, you see the
+      2x2 slots that are characteristic of a
+      <!--cbox(file: enclosure_view__select_rack_specials.png)-->
+      Twin² enclosure. Two slots are filled with <systemitem
+      class="systemname">beo-01</systemitem> and <systemitem
+      class="systemname">beo-02</systemitem> and two slots remain empty, showing only the
+      number of each slot in brackets.
+    </para>
+    <para>
+      Selecting a rack shows a more complex picture. The current example rack holds ten
+      enclosures in its central 19 inch slots: A FatTwin, a Twin, a Twin², a Blade 1, 3 Blade
+      2, another Twin² and two 1U enclosures containing <systemitem
+      class="systemname">beo-11</systemitem> and <systemitem
+      class="systemname">beo-12</systemitem>. The special top, left, right and bottom (not
+      visible) slots are empty. In future versions a network switch or power controller, that
+      is mounted at some special position of the rack, can be placed into these special
+      slots.
+    </para>
+    <para>
+      <!--cbox(file: enclosure_view__select_rack_deep.png)-->
+      <!--cbox(file: enclosure_view__select_rack.png)-->
+      Now let's explain the effect of the two controls at the top in more detail: The
+      <guibutton>Show special slots</guibutton> check-box controls the visibility of the top,
+      left, right and bottom special slots. Especially if these slots are empty, this will
+      provide a more compact view of the interesting central slots. The other control, the
+      visibility level, controls how many levels of the enclosure hierarchy are shown:
+      Selecting a depth of 2 shows not only the selected rack with its slots but also the
+      contents of the enclosures in each slot. Since the current version of
+      <application>QluMan</application> only supports host enclosures (Twin, Blade, ...) and
+      racks, a depth larger than 2 has no effect yet. In future versions, it will be possible
+      to group racks into rows, rows into rooms, rooms into buildings and so on. This will
+      allow you to reflect the physical layout of your cluster in as much detail as you like.
+    </para>
+    <section xml:id="sec-Populating-Enclosures">
+      <title>Populating Enclosures</title>
+      <para>
+	New enclosures can be added through the context menu. The new enclosure must be given
+	a name and its type can be selected. Currently, enclosure types cannot be manipulated
+	yet. This will change in a future version.
+      </para>
+      <para>
+	<!--cbox(file: enclosure_view__new_enclosure2.png)-->
+	<!--cbox(file: enclosure_view__new_enclosure.png)-->
+	Suitable for ordinary servers, a host being selected in the enclosure view can be
+	placed into a single slot host enclosure directly by selecting the correct type in
+	the host info part of the window (see <xref linkend="sec-Enclosure-View"/>). For host
+	enclosures that can hold more than one server/node (twin servers, blades etc.),
+	drag&amp;drop may be used to move hosts into them. Moreover, it's also possible to
+	create larger (non-host) enclosures (like racks) and move host enclosures into them
+	also by using using drag&amp;drop. Note that a bare host cannot be placed directly
+	into a non-host enclosure, only if it is already inside a host enclosure.
+      </para>
+      <para>
+	<!--cbox(file: enclosure_view__select_host_enclosure2.png)-->
+	<!--cbox(file: enclosure_view__select_host_enclosure.png)-->
+	Another option to place hosts into enclosures is by selecting a number of them and
+	then choosing a host enclosure from the context menu. This way, a new enclosure of
+	the selected type is automatically created and all selected hosts are moved into
+	it. If more hosts than can fit into a single enclosure of the chosen type are
+	selected, additional enclosures of the same type will be created such that all hosts
+	can be placed into one of them. This makes it easy to position large numbers of
+	identical hosts into their enclosures. If the selected hosts were in an enclosure
+	before and that enclosure becomes empty and is not itself part of a larger enclosure
+	then the empty enclosure is automatically removed.
+      </para>
+      <para>
+	Relocating hosts by selecting a different host enclosure is supported not only on
+	directly selected hosts but also on hosts inside selected enclosures. This allows
+	changing the type of enclosure a group of hosts is in by selecting the old
+	enclosure(s) and choosing a new one from the context menu. Note that this procedure
+	does not change the type of the old enclosure but rather creates a new one, moves all
+	the hosts to it and then deletes the now empty old enclosure(s). Try it out: Place a
+	number of hosts into a large enclosure (like a blade), then select the enclosure and
+	choose a small enclosure (like 1U) to relocate them. In general, such an operation
+	will create one enclosure of the new type and fill all its slots before creating a
+	second one. Hosts that where in different enclosures before can end up in the same
+	enclosure after and hosts that were in the same enclosure before can end up in
+	different enclosures after the operation.
+      </para>
+      <para>
+	<!--cbox(file: enclosure_view__move_to_slot.png)-->
+	<!--cbox(file: enclosure_view__select_host_enclosure3.png)-->
+	When using drag&amp;drop for the relocation, the host or enclosure is always placed
+	into the lowest suitable slot of the target enclosure. This reflects our experience,
+	that usually enclosures are simply filled from left to right and bottom to top. But
+	sometimes this is not the case and a host or enclosure should be in a different slot
+	as compared to the automatic placement. In this case, the host or enclosure can be
+	moved through the context menu. The latter shows all the free slots the host or
+	enclosure can be relocated to and a checked mark indicates the current location. Of
+	course the relocation is only allowed into free slots. Hence, it may require removing
+	(drag&amp;drop out of the enclosure) a host or enclosure temporarily to free space
+	for moving things around.
+      </para>
+      <section xml:id="sec-Host-Selections">
+	<title>Host Selections</title>
+	<para>
+	  There are situations where one wants to change a property or config of a set of
+	  hosts. For example, you may want to change all nodes located in a particular blade
+	  to no longer format their disk on boot. This can be achieved by selecting a set of
+	  host in the enclosure view with the mouse. A range of hosts can be selected by
+	  clicking on the first host and then clicking on the last host while pressing the
+	  shift key. Hosts can also be added or removed from the selection by clicking on a
+	  host while pressing the <keycap>CTRL</keycap> key. Once a set of hosts is selected,
+	  changes can be made to all selected hosts through the context menu. For instance,
+	  this allows changing the Host Template or add/alter a generic property of a set of
+	  hosts.
+	</para>
+	<para>
+	  <!--cbox(file: enclosure_view__selection_button.png)-->
+	  <!--cbox(file: enclosure_view__selection__menu.png)-->
+	  <!--cbox(file: enclosure_view__selection__submenu.png)-->
+	  An alternative and more powerful way to select a set of hosts is available via the
+	  <guibutton>Selection</guibutton> button at the bottom of the <classname>Enclosure
+	  View</classname>. When pressed, at the top of the appearing selection menu you'll
+	  find 3 items: To select all hosts, clear the selection or to invert the
+	  selection. Below these items is a list of filters by which subsets of hosts were
+	  defined according to specific criteria. For more details on how to construct such
+	  host filters see <xref linkend="HostFilterEditor"/>. When pressing
+	  <guibutton>Select</guibutton>, the selection is set to the hosts defined by the
+	  corresponding filter, dropping any previously selected hosts. <guibutton>Add
+	  to</guibutton>> adds, while <guibutton>Remove from</guibutton> removes the hosts
+	  defined by the filter from the current
+	  selection. <guibutton>Intersection</guibutton> sets the selection to only those
+	  hosts in the current selection, that are also part of the set defined by the
+	  filter.
+	</para>
+      </section>
+    </section>
+  </section>
+</chapter>
+
