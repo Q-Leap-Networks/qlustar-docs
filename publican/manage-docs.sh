@@ -43,7 +43,7 @@ CLEANUP=true
 FORMATS=html-single
 
 CFG_FILE="manage-docs.cfg"
-. $CFG_FILE 2> /dev/null ||  exit_with_msg $COLOR_OPT \
+. $CFG_FILE 2> /dev/null || exit_with_msg $COLOR_OPT \
   -m "Missing config file $CFG_FILE" -e $ERR_MISSING_FILE
 
 # Vars derived from defaults in $CFG_FILE
@@ -54,16 +54,18 @@ WEB_CFG_PATH="${WEB_DIR_PATH}/${WEB_CFG}.cfg"
 WEB_TOC_PATH="${WEB_DIR_PATH}/html"
 # Other global vars
 PRODUCT_HOME=product-home
+FAVICON="${PWD}/qlustar-favicon.ico"
 
 # cmdline handling
 ALLOWED_ACTIONS=$(concat_string "create-document,update-document," \
                                 "create-portal,update-portal," \
                                 "create-product,update-product," \
-                                "create-website,update-website," \
+                                "create-website,regenerate-all," \
                                 "update-site")
 ALLOWED_ACTIONS=${ALLOWED_ACTIONS// /} # Remove spaces from concatenation
 ALLOWED_ACTIONS_USAGE="$(echo ${ALLOWED_ACTIONS} \
   | sed -e 's/\,/,\n                          /g')"
+ALLOWED_FORMATS="html,html-single,pdf,epub,txt"
 
 # Scan for products/documents in product dir
 # ------------------------------------------
@@ -186,7 +188,11 @@ USAGE="Usage: ${SCRIPTNAME} [ options ... ]
 
   - Update the product page after editing its content (it got the id prod-02)
     $ ./manage-docs.sh -a update-product -P prod-002
+
+  - Recreate website from scratch
+    $ ./manage-docs.sh -a regenerate-all
 "
+
 while [ $# -gt 0 ]; do
   case "$1" in
     -a|--action)
@@ -218,8 +224,10 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     -f|--formats)
-      check_single_arg "$all_args" "$USAGE" "$1" "$2" \
-	"allowed=$ALLOWED_FORMATS"
+      for format in $(echo "${2//,/ }"); do
+	check_single_arg "$all_args" "$USAGE" "$1" "$format" \
+	  "allowed=$ALLOWED_FORMATS"
+      done
       FORMATS="$2"
       shift
       ;;
@@ -353,6 +361,8 @@ create_website() {
 	$(cat ${WEB_CFG_PATH} | sed -e '/^#/d' -e '/^$/d')
 EOF
   touch ${WEB_TOC_PATH}/site_overrides.css
+  # Add favicon
+  cp "$FAVICON" ${WEB_TOC_PATH}/favicon.ico
   
   # Add common + Qlustar brand
   brand_website
@@ -361,9 +371,55 @@ EOF
   exec_publican update_site --site_config ${WEB_CFG}.cfg
 }
 
-build_and_publish_document() {
-  local book_dir="$1" formats="$2"
+regenerate_all() {
+  local a prod_name prod_dir doc_dir doc_name
 
+  center_string -i " == Starting to regenerate all == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  echo_bullet  -i "Initializing website structure"
+  create_website
+  echo_bullet  -i "Adding site home page"
+  build_and_publish_document "$QL_PORTAL_DIR" "html-single"
+  
+  # Now update all active products
+  center_string -i " == Adding all active produtcs == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  for a in ${AVAILABLE_PROD_ALIASES//,/ }; do
+    prod_name="$(get_prod_name $a)"
+    echo_bullet  -i "Adding product $prod_name"
+    prod_dir="${QL_PRODUCT_DIR}/${prod_name// /}/${PRODUCT_HOME}"
+    build_and_publish_document "$prod_dir" "html-single"
+  done
+  # Now update all active documents
+  center_string -i " == Adding all active documents == " -c BlackOnGrey -a \
+    -A "\n\n" -B "\n"
+  for a in ${AVAILABLE_DOC_ALIASES//,/ }; do
+    doc_dir="$(get_doc_dir $a)"
+    doc_name=${doc_dir##*/}
+    prod_dir=${doc_dir%/*}
+    prod_name=${prod_dir##*/}
+    echo_bullet  -i "Adding document $doc_name of product $prod_name"
+    build_and_publish_document "$doc_dir" $FORMATS
+  done
+}
+
+build_and_publish_document() {
+  local book_dir="$1" formats="$2" carousel active="$1"/active
+
+  if [ -e "$active" ]; then
+    active="$(cat "$active")"
+    if ! $active > /dev/null 2>&1; then
+      center_string -i " == Document/Product not active == " \
+	-c YellowOnBlackBold -a -A "\n\n" -B "\n"
+      echo -e "  -- Activate by changing the content of\n" \
+	"    $(echo $1/active | $SED -e 's,.*publican/,,')\n     to 'true'.\n"
+      return 1
+    fi
+  else
+    exit_with_msg $COLOR_OPT \
+      -m "Missing active file $active" -e $ERR_MISSING_FILE
+  fi
+  
   cd "$book_dir"
   exec_publican build --publish --formats "$formats" \
     --brand_dir="$QL_BRAND_DIR" --embedtoc --langs $QL_LANG
@@ -371,6 +427,10 @@ build_and_publish_document() {
   exec_publican update_site --site_config ${WEB_CFG_PATH}
   if $CLEANUP; then
     exec_publican clean > /dev/null
+  fi
+  if [ "$book_dir" = "$QL_PORTAL_DIR" ]; then
+    carousel="$book_dir/$QL_LANG/carousel.html"
+    [ -e "$carousel" ] && cp -f "$carousel" "$WEB_TOC_PATH"/$QL_LANG
   fi
 }
 
@@ -395,6 +455,7 @@ EOF
     's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
     "$root_file"
   sed -i -e "s,%%title%%,$QL_WEBSITE_TITLE,g" "$root_file"
+  echo true > "$QL_PORTAL_DIR"/active
 
   build_and_publish_document "$QL_PORTAL_DIR" html-single
 }
@@ -423,6 +484,7 @@ EOF
     's,\(.*<para>\),  <title role="producttitle">%%title%%</title>\n\1,g' \
     "$root_file"
   sed -i -e "s,%%title%%,$product,g" "$root_file"
+  echo true > $name/active
 
   build_and_publish_document $name html-single
 }
@@ -443,6 +505,7 @@ create_document() {
   cat <<-EOF > "$cfg"
 	$(cat "$cfg" | sed -e '/^#/d' -e '/^$/d')
 EOF
+  echo true > $name/active
 
   build_and_publish_document $name html-single
 }
@@ -452,16 +515,68 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f
+  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path rel_path
+  local rel_dir product create_thumb img_list
+  local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
+  local colorbox_js=$QL_BRAND_DIR/$QL_LANG/javascript/jquery.colorbox-min.js
 
   cd "$WEB_DIR_PATH"
-  [ -d $tmpdir ] && rm -rf $tmpdir
-  cp -r ${WEB_TOC_PATH} $tmpdir
-  find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g'
-  ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
-  tar zcf - $tmpdir | ssh root@${host} \
-    "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; chown -R root:root $site_path"
-  rm -rf $tmpdir
+  echo_bullet -i "--- Updating thumbnails ---"
+  # Create/update thumbnails
+  img_paths=$(find $WEB_TOC_PATH -name images | grep html-single)
+  for img_path in $img_paths; do
+    rel_path=${img_path#*en-US/}
+    product=${rel_path%%/*}
+    rel_path=${rel_path#*html-single/}
+    echo_bullet -i "Creating thumbnails for $product\t- ${rel_path%%/*}"
+    thumb_path=$img_path/thumbnails
+    img_list="$(find ${img_path} ! -wholename "*thumbnails*" -name "*.png")"
+    if [ -n "$img_list" ]; then
+      [ -d $thumb_path ] || mkdir $thumb_path
+      for f in $imgList; do
+	rel_path=${f#*images/}
+	rel_dir=""
+	dest_path=${thumb_path}/${f##*/}
+	if [[ $rel_path =~ / ]]; then
+	  rel_dir=${rel_path%/*.png}
+	  [ -d ${thumb_path}/${rel_dir} ] || mkdir -p ${thumb_path}/${rel_dir}
+	  dest_path=${thumb_path}/${rel_dir}/${f##*/}
+	fi
+	create_thumb=true
+	[ $f -ot $dest_path ] && create_thumb=false
+	$create_thumb && convert $f -resize 128x $dest_path
+      done
+    fi
+  done
+  echo_bullet -i "Copying content to temporary dir"
+  rsync -a --delete ${WEB_TOC_PATH}/ ${tmpdir}
+  # Make simple substitutions
+  echo_bullet -i "Fixing search boxes"
+  find $tmpdir -name "*.html" | xargs sed -i \
+    -e 's,%%%http-site%%%,'$site_url',g' \
+    -e 's,http://www.google.com/search,https://www.google.com/search,g' \
+    -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
+    -e 's/___blank___"/" target="_blank"/g'
+  # Apply converter
+  for f in $(find $(find $tmpdir -name html-single) -name index.html); do
+    echo_bullet -i "$(../convert-html.py -i $f)"
+  done
+  for f in $site_css $colorbox_js; do
+    if [ -r $f ]; then
+      cp -f $f $tmpdir
+    else
+      exit_with_msg $COLOR_OPT \
+	-m "Missing Qlustar brand file $f" -e $ERR_MISSING_FILE
+    fi
+  done
+  cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
+  echo_bullet -i "Starting upload"
+  rsync --rsh='ssh -x' -az --delete ${tmpdir}/ www-data@${host}:$site_path
+  ssh -x www-data@${host} "chown -R www-data:www-data $site_path"
+  #ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
+  #tar zcf - $tmpdir | ssh root@${host} \
+  #  "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path;
+  #   chown -R root:root $site_path"
 }
 
 declare -a execute_args
@@ -484,6 +599,9 @@ case "$ACTION" in
   create-website)    C_PARS=""
     execute=create_website
     msg="Website creation was succesful.";;
+  regenerate-all)       C_PARS=""
+    execute=regenerate_all
+    msg="All active documents have been regenerated successfully.";;
   update-document)     C_PARS="DOC_ID"
     doc_dir="$(get_doc_dir $DOC_ID)"
     execute=build_and_publish_document
@@ -508,8 +626,6 @@ case "$ACTION" in
 esac
 
 check_args $COLOR_OPT -a "$C_PARS" -s "$SCRIPTNAME" -u "$USAGE"
-$execute "${execute_args[@]}"
-    
-print_message $COLOR_OPT "$msg"
+$execute "${execute_args[@]}" && print_message $COLOR_OPT "$msg"
 
 exit 0

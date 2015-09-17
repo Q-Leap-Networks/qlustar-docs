@@ -1,0 +1,84 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="admin-man-chap-introduction">
+  <title>Introduction</title>
+  <para>
+    Qlustar is a full-fledged Linux distribution based on Debian/Ubuntu. Its main focus is to
+    provide an Operating System (OS) that simplifies the setup, administration, monitoring and
+    general use of Linux clusters. Hence we call it a <firstterm>Cluster
+    OS.</firstterm><indexterm><primary>Operating System</primary><secondary>Cluster
+    OS</secondary></indexterm>
+  </para>
+  <para>
+    A Qlustar cluster typically consists of one or more <firstterm>head-nodes</firstterm>,
+    <indexterm><primary>head-node</primary></indexterm> and a larger number of compute-,
+    storage- or cloud-nodes (in this manual we usually refer to these latter nodes simply as
+    compute-nodes). In an HPC cluster, it is highly advisable to separate user login sessions
+    onto dedicated <firstterm>Front-End (FE) nodes</firstterm><indexterm><primary>Front-End
+    nodes</primary></indexterm>. This leads to higher stability and security of the whole
+    system, since then the head-node(s) (its most critical component), are not subject to
+    problems arising from uncontrolled user activity. The FE node(s) can run on real physical
+    hardware or (especially on small clusters with less activity) in a virtual machine (VM).
+  </para>
+  <note>
+    <para>
+      Qlustar has an installation option that allows the automatic setup/configuration of a KVM
+      FE node.
+    </para>
+  </note>
+  <para>
+    For clusters with advanced file I/O performance requirements, the basic Qlustar
+    configuration providing an NFS based setup to serve user home directories will be
+    insufficient. In this case, a parallel file system like <firstterm>Lustre</firstterm> or
+    <firstterm>BeeGFS</firstterm> will be needed. With QluMan, it's easy to add storage nodes
+    to a cluster, that will be able to serve Lustre MDTs and OSTs or BeeGFS server components
+    (if required also in a fail-safe high-availability configuration).
+  </para>
+  <para>
+    Usually, all nodes in a cluster are connected through one or more dedicated internal
+    Ethernet networks. If fast inter-node communication is required, an additional high-speed
+    interconnect network like <firstterm>Infiniband</firstterm> may be used.
+  </para>
+  <para>
+    <mediaobject>
+      <imageobject><imagedata fileref="./images/hpc-cluster-basic.png" align="center"
+      width="300px" format="PNG"/></imageobject>
+      <textobject><phrase>
+	Basic Qlustar HPC Cluster
+      </phrase></textobject>
+      <caption><para>
+	Schematic view of a basic Qlustar HPC Cluster.
+      </para></caption>
+    </mediaobject>
+    Most of the time, compute and cloud nodes are stripped-down servers with SATA hard disk
+    drives (sometimes also disk-less), often without keyboard and mouse connection. These days,
+    servers typically have a remote management interface (<firstterm>IPMI</firstterm>), that
+    allows to perform most hardware related tasks of a node (like reset, power cycling etc.)
+    over the network. In addition, IPMI provides remote access to a nodes console.
+  </para>
+  <para>
+    The above figure shows a schematic description of the components building a basic HPC
+    Cluster. The head-node typically requires a more powerful hardware configuration than the
+    compute nodes to guarantee higher availability and to accommodate central disk storage. A
+    Gigabit Ethernet and/or Infiniband network are the most common network interconnects of HPC
+    clusters today.
+  </para>
+  <para>
+    <mediaobject>
+      <imageobject><imagedata fileref="./images/hpc-cluster-advanced.png" align="center"
+      width="400px" format="PNG"/></imageobject>
+      <textobject><phrase>
+	Advanced Qlustar HPC Cluster
+      </phrase></textobject>
+      <caption><para>
+	Schematic view of an advanced Qlustar HPC Cluster.
+      </para></caption>
+    </mediaobject>
+    While the above entry-level hardware configurations will be sufficient for departmental
+    clusters, a compute center will often have to provide a system with guaranteed up-time,
+    scalable file I/O, as well as a high throughput / low latency network to satisfy the needs
+    of demanding users. A schematic description of a hardware setup for such a scenario is
+    shown in the following figure. Qlustar is equally capable to deploy such advanced
+    configurations with little effort.
+  </para>
+</chapter>

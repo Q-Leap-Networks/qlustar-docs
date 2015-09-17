@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE info [
+<!ENTITY % BOOK_ENTITIES SYSTEM "First_Steps_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<info version="5.0"
+      xml:id="info-Qlustar_Cluster_OS-First_Steps_Guide"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>First Steps Guide</title>
+  <subtitle>
+    This document describes the first steps to perform after a fresh install of a Qlustar
+    head-node.
+  </subtitle>
+  <productname>Qlustar Cluster OS</productname>
+  <productnumber>9.1</productnumber>
+  <abstract>
+    <para>
+      This document describes the first steps to perform after a fresh install of a Qlustar
+      head-node.
+    </para>
+  </abstract>
+  <corpauthor>
+    <inlinemediaobject>
+      <imageobject>
+	<imagedata fileref="Common_Content/images/qlustar-logo.png" format="PNG" />
+      </imageobject>
+    </inlinemediaobject>
+  </corpauthor>
+  <xi:include href="Common_Content/Legal_Notice.xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="Common_Content/Author_Group.xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude" />
+</info>

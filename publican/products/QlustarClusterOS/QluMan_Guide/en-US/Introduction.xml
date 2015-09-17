@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Introduction">
+  <title>Introduction</title>
+  <section xml:id="sec-Introduction">
+    <title>Qlustar Clusters</title>
+    <para>
+      A Qlustar HPC cluster is designed to boot and manage compute or storage nodes (hosts)
+      over the network and make them run a minimal OS (Operating System) image in RAM. Local
+      disks (if present) are only used to preserve log files across boots and for temporary
+      storage (e.g. for compute jobs). One or more head-nodes deliver the boot images to the
+      nodes. Additionally, a small <firstterm>NFS</firstterm> share containing part of the
+      configuration space for the nodes is exported from one of the head-nodes. Optionally, the
+      RAM-based root FS (file-system) can be supplemented by a global <xref
+      linkend="UnionFS-Chroots" endterm="UnionFS-Chroots"/> to support software not already
+      contained in the boot images themselves. The head-node(s) of the cluster typically
+      provides <firstterm>TFTP/PXE boot services</firstterm>, <firstterm>DHCP
+      service</firstterm>, <firstterm>NIS service</firstterm>, <firstterm>torque</firstterm> or
+      <firstterm>slurm resource management</firstterm> etc. to the cluster. The management of
+      these and all cluster-related components of a <productname>Qlustar</productname>
+      installation in general can easily be accomplished through a single administration
+      interface: <application>QluMan</application>, the <literal>Qlustar Management
+      interface</literal>.
+    </para>
+    <para>
+      The <application>QluMan</application> GUI is <parameter>multi-user</parameter> as well as
+      <parameter>multi-cluster</parameter> capable: Different users are allowed to work
+      simultaneously with the GUI. Changes made by one user are updated and visible in
+      real-time in the windows opened by all the other users. On the other hand, it is possible
+      to manage a virtually unlimited number of clusters within a single instance of the
+      <application>QluMan</application> GUI at the same time. Each cluster is shown in a tab or
+      in a separate main window.
+    </para>
+  </section>
+  <section xml:id="sec-functionality-overview">
+    <title>Functionality Overview</title>
+    <para>
+      A central part of Qlustar are its pre-configured <literal>modular OS
+      images</literal>. Different nodes may have different hardware or need to provide specific
+      and varying functionality/services. Therefore, to optimize the use of hardware resources
+      and increase stability/security, Qlustar does not come with just one boot image that
+      covers every use-case. Instead, a number of <literal>image modules</literal> with
+      different software components are provided from which <literal>individual custom OS
+      images</literal> can be created as needed. A Qlustar OS image just contains what is
+      actually required to accomplish the tasks of a node, nothing more. See below for more
+      details about configuring <xref linkend="Qlustar-OS-Images"
+      endterm="Qlustar-OS-Images"/>)
+    </para>
+    <para>
+      But providing different OS images is still not enough for a flexible yet easily
+      manageable cluster: A node booting a generated image also receives extra configuration
+      options via DHCP and via NFS at boot time, thus allowing to fine-tune the OS
+      configuration at run-time. E.g. it is possible to determine how the local disks are to
+      be used (if any are present), whether additional services like
+      <firstterm>OpenSM</firstterm> or <firstterm>samba</firstterm> should be
+      enabled/disabled and a lot more. Four different configuration/property categories exist
+      in <application>QluMan</application>:
+    </para>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <xref linkend="Generic-Properties" endterm="Generic-Properties"/> are simple
+	    on/off options or key+value pairs applicable to groups of nodes, e.g. to flag the
+	    reformatting of the local disks at the next boot, add torque node properties,
+	    etc.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="Config-Classes"/> handle more complex
+	    configurations like boot/disk configs, DHCP, etc.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="Hardware-Properties" endterm="Hardware-Properties"/> are not used
+	    to configure the nodes themselves but describe their hardware configuration and
+	    are of importance e.g. for the slurm or torque resource managers and/or inventory
+	    management.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Finally, <xref linkend="Specific-Properties" endterm="Specific-Properties"/> are
+	    properties that are unique to a particular node, like its serial
+	    number. Therefore, these properties can only be assigned to individual nodes.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      Of course, one can configure every host in a cluster individually. But in most
+      clusters, there are large groups of hosts that should be configured
+      identically. However, even if there are several groups, they might share some
+      properties/configurations but not all of them. To provide a simple handling of such
+      scenarios, <application>QluMan</application> allows to combine generic properties,
+      hardware properties and config classes each into sets. Moreover, it is possible to
+      combine exactly one generic property, one hardware property and one config set into a
+      <classname>Host Template</classname>. Assigning a Host Template to a group of hosts
+      makes it possible to specify their complete properties and configuration settings with
+      a single click. Nonetheless, for maximum flexibility, it is also allowed to override or
+      extend the settings from the template of a host by assigning either one of the sets
+      and/or individual properties/config classes to it. In case of conflicts, values from
+      individual properties/config classes have highest priority followed by set values and
+      finally the Host Template values. For more details on this see <xref
+      linkend="Configuring-a-Host"/>.
+    </para>
+  </section>
+</chapter>
+

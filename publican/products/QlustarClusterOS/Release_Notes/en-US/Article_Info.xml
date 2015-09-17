@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE info [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Release_Notes.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<info version="5.0" xml:id="info-Qlustar_Cluster_OS-Release_Notes-Release_Notes" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Release Notes</title>
+	<subtitle>Enter a short description here.</subtitle>
+	<productname>Qlustar Cluster OS</productname>
+	<productnumber>9.1</productnumber>
+	<edition>0</edition>
+	<abstract>
+		<para>
+			A short overview and summary of the book's subject and purpose, traditionally no more than one paragraph long. Note: the abstract will appear in the front matter of your book and will also be placed in the description field of the book's RPM spec file.
+		</para>
+	</abstract>
+	<orgname>
+	<inlinemediaobject>
+		<imageobject>
+			<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
+		</imageobject>
+	</inlinemediaobject>
+	</orgname>
+	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</info>
+

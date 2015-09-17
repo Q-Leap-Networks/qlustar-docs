@@ -1,0 +1,71 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-ganglia">
+  <title>Ganglia</title>
+  <indexterm><primary>Ganglia</primary></indexterm>
+  
+  <para>
+    This section describes the Qlustar Ganglia setup.
+  </para>
+  
+  <para>
+    Nagios in combination with Ganglia is used to monitor the hardware of the compute
+    nodes as well as the head node.
+  </para>
+  
+  <section id="admin-man-sect-upgr">
+    <title>Upgade from older installations</title>
+    <indexterm><primary>Ganglia</primary>
+    <secondary>Upgrade from older installations</secondary></indexterm>
+
+    <para>
+      In older installations a process ql-hwmonitor was responsible to check the ganglia
+      metrics against the thresholds defined in the files
+      <filename>/etc/ql-lib/hw-monitor/resources</filename> and
+      <filename>/etc/ql-lib/hw-monitor/resources.ganglia</filename>. This was completely
+      replaced by a Nagios configuration. It turned out that that did not scale very well, so a
+      new daemon process ql-hwmonitord in combination with Nagios is used now.  This daemon now
+      checks the information provided in ganglia, checks them against service limits and sends
+      the results to Nagios.
+    </para>
+    
+  </section>
+
+  <section id="admin-man-sect-monit-the-nodes">
+    <title>Monitoring the nodes</title>
+    <indexterm><primary>Ganglia</primary>
+    <secondary>Monitoring the nodes</secondary></indexterm>
+
+    <para>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./images/ganglia-overview.png" format="PNG" width="70%" />
+	</imageobject>
+	<textobject><phrase>
+	  Cluster Monitoring Web Interface over Ganglia
+	</phrase></textobject>
+	<caption><para>
+	Cluster Monitoring Web Interface over Ganglia</para></caption>
+      </mediaobject>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./images/ganglia-node.png" format="PNG" width="70%" />
+	</imageobject>
+	<textobject><phrase>
+	  Node Monitoring with Ganglia
+	</phrase></textobject>
+	<caption><para>
+	Node Monitoring with Ganglia</para></caption>
+      </mediaobject>
+      Each node sends sensor data and other information such as swap usage, fill level of file
+      systems and S.M.A.R.T. data of the hard disks to a multicast address where the head node
+      can collect them. The way each node collects the sensor data depends on the hardware
+      type. The Qlustar Cluster Suite detects the type that is suitable for a specific compute
+      node. You can list the current metrics by running <command>ganglia --help</command>.  The
+      package <package>ganglia-webfrontend</package> allows to view the state of your cluster
+      and each node from within a web-browser. It suffices to visit the Link
+      <literal>http://<replaceable>head-node</replaceable>/ganglia</literal>.
+    </para>
+  </section>
+</section>

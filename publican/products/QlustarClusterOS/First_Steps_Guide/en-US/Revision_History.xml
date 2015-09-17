@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE appendix>
+<appendix xmlns="http://docbook.org/ns/docbook">
+  <title>Revision History</title>
+  <revhistory>
+    <revision>
+      <revnumber>9.1-0</revnumber>
+      <date>Thu Jul 31 2015</date>
+      <author>
+	<personname><firstname>Qlustar</firstname>
+	<surname>Doc Team</surname></personname>
+	<email>qlustar-docs@q-leap.com</email>
+      </author>
+      <revdescription>
+	<simplelist>
+	  <member>Initial version</member>
+	</simplelist>
+      </revdescription>
+    </revision>
+  </revhistory>
+</appendix>

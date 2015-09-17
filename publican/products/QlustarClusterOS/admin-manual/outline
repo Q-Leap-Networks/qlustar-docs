@@ -1,0 +1,117 @@
+-*- mode: orgstruct++ -*-
+
+Navid's ToDo:
+-------------
+Next sections to be copied from qlustar-admin.pdf:
+
+Infiniband Stuff to be taken from:
+http://www.slideshare.net/mellanox/deploying-hpc-cluster-with-mellanox-infini-band-interconnect-solutions-rev10-1?ref=http://www.mellanox.com/blog/2013/09/deploying-hpc-clusters-with-mellanox-infiniband-interconnect-solutions/
+
+===> File hw-configuration/infiniband.xml
+
+  - [X] Commands from 5.3 / 5.4 in section admin-man-sect-hw-IB-diag
+
+ZFS stuff to be taken from:
+http://pthree.org/2012/12/04/zfs-administration-part-i-vdevs/
+
+Section Zpool Administration
+
+  - [X] VDEVs
+  - [X] RAIDZ
+  - [X] Exporting and Importing Storage Pools
+  - [X] Scrub and Resilver
+  - [X] Getting and Setting Properties
+  - [X] Best Practices and Caveats
+
+Section ZFS Administration
+
+  - [X] Creating Filesystems
+  - [X] Compression and Deduplication (only take Compression) ->
+        Subsection Compression
+  - [X] Snapshots and Clones
+  - [X] Sending and Receiving Filesystems
+  - [X] ZVOLs
+
+
+
+Roland's ToDo:
+--------------
+Next sections to be polished:
+
+  - [ ] Node Boot Process -> node-manage/boot-process.xml
+  - [ ] Node Customization -> node-manage/customize.xml
+  - [ ] Node Remote Control -> node-manage/remote-control.xml
+  - [ ] Network -> base-configuration/network.xml
+  - [ ] Base Configs/Services -> base-configuration/services.xml
+  - [ ] Ganglia -> monitoring/ganglia.xml
+  - [ ] Nagios -> monitoring/nagios.xml
+  - [ ] SLURM -> slurm.xml
+  - [ ] torque -> torque.xml
+  - [ ] User Management -> user-management.xml
+  - [ ] Storage Management -> storage-management.xml
+
+Stuff to be added:
+
+  - [ ] ZFS pools / filesystems -> storage-management.xml
+
+Done sections:
+
+  - [X] OS package Management
+
+=============================================================================
+
+* Intro
+
+* Qlustar Architecture
+
+* OS base config, components/services
+
+  + Network
+    - Physical config
+    - Bonding
+    - NAT
+    - DNS
+
+  + Disk configuration and File-systems
+  + NIS
+  + DHCP
+    - Special dhcp options
+  + NFS
+  + Samba
+  + Automounter
+  + Time server
+  + SSH - Secure Shell
+  + Mail Server
+
+* Monitoring
+
+  + Ganglia
+  + Nagios
+
+* Global configuration space
+  + /etc/qlustar/common
+
+* Lustre
+
+* General Administration Tasks
+
+  + User Management
+
+    - Adding user accounts
+    - Removing user accounts
+    - Managing user restrictions
+    - Shell Setup
+      1. Bash setup
+      2. Tcsh Setup
+
+  + Storage management
+    - RAID
+      - Kernel Software RAID
+    - [ ] Logical Volume Manager
+    - [ ] ZFS
+      - [ ] Pools/RAID Levels
+      - [ ] Filesystem
+
+  + OS package management
+
+  + [ ] Starting and Stopping the whole cluster

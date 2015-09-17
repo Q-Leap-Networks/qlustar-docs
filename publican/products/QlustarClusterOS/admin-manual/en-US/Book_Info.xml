@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE info [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<info version="5.0"
+      xml:id="info-Qlustar_Cluster_OS-admin-manual"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title role="producttitle">Administration Manual</title>
+  <subtitle>
+    Manual for the configuration, customization and operation of Qlustar clusters.
+  </subtitle>
+  <productname>Qlustar Cluster OS</productname>
+  <productnumber>9.1</productnumber>
+  <abstract>
+    <para>
+      Qlustar is a complete Linux distribution based on Debian/Ubuntu. Its main purpose is to
+      provide an Operating System (OS) that simplifies the setup, administration, monitoring
+      and general use of HPC, Storage and Virtualization/Cloud Linux clusters. Hence we call
+      Qlustar a <emphasis>Cluster OS</emphasis>.
+    </para>
+  </abstract>
+  <corpauthor>
+    <inlinemediaobject>
+      <imageobject>
+	<imagedata fileref="Common_Content/images/qlustar-logo.png" format="PNG" />
+      </imageobject>
+    </inlinemediaobject>
+  </corpauthor>
+  <xi:include href="Common_Content/Legal_Notice.xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</info>

@@ -1,0 +1,218 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-stor-man">
+  <title>Storage Management</title>
+  <indexterm><primary>Storage Management</primary></indexterm>
+  <section id="admin-man-sect-raid">
+    <title>Raid</title>
+    <indexterm><primary>Storage Management</primary><secondary>Raid</secondary></indexterm>
+    <section id="admin-man-sect-kernel-sftw-raid">
+      <title>Kernel Software RAID</title>
+      <indexterm><primary>Storage Management</primary><secondary>Raid</secondary>
+      <tertiary>Kernel Software Raid</tertiary></indexterm>
+      <para>
+	Software RAID is part of the Linux kernel. RAID configuration is done with the 
+	<command>mdadm</command> command. It is used to manage the RAID devices (see man page).
+	Status information is obtained form <filename>/proc/mdstat.</filename>
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>How to replace a failed Disk in a Software RAID Setup</term>
+	  <listitem>
+	    <para>
+	      In case of a disk failure use <command>mdadm</command> to remove the failed disk
+	      from the raid-array, and after replacing the disk first partition it as the old
+	      one and again use mdadm to include the new disk into the raid-array. A failed 
+	      disk is marked with a (F) in <filename>/proc/mdstat.</filename>
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	Example:
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+cat /proc/mdstat</command>
+
+Personalities : [raid0] [raid1] [raid5] [multipath]
+read_ahead 1024 sectors
+md0 : active raid1 sdb1[1] sda1[0]
+104320 blocks [2/2] [UU]
+md1 : active raid1 sdb2[0](F) sda2[1]
+17414336 blocks [2/1] [_U]
+md2 : active raid1 sdb3[1] sda3[0]
+18322048 blocks [2/2] [UU]
+unused devices: &lt;none&gt;
+      </screen>
+      <para>
+	So disk <filename>/dev/sdb</filename> has failed. In the example, the disk error
+	affected only <filename>/dev/md1</filename>, but partitions of the faulty disk are also
+	part of <filename>/dev/md0</filename> and <filename>/dev/md2</filename>. So they need
+	to be removed as well before the disk can be replaced. Hence, the following commands
+	need to be executed:
+      </para>
+      <para>
+	To remove the faulty partition:
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md1 -r /dev/sdb2</command>
+      </screen>
+      <para>
+	To mark the other affected partitions on the disk as faulty and remove them:
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -f /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -r /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -f /dev/sdb3</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -r /dev/sdb3</command>
+      </screen>
+      <para>
+	Now the disk is not accessed any more and can be removed. After the new disk has
+	been inserted, repartition it:
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+sfdisk -d /dev/sda | sfdisk /dev/sdb</command>
+      </screen>
+      <para>
+	Now start the resync
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md0 -a /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md1 -a /dev/sdb2</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mdadm --manage /dev/md2 -a /dev/sdb3</command>
+      </screen>
+      <para>
+	To watch the resync process, you can enter:
+      </para>
+      <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+watch --differences=cumulative cat /proc/mdstat</command> 
+      </screen>
+      <para>
+	Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to exit the
+	display
+      </para>
+    </section>
+  </section>
+  <section id="admin-man-sect-vol-man">
+    <title>Logical Volume Management</title>
+    <indexterm><primary>Storage Management</primary>
+    <secondary>Logical Volume Management</secondary></indexterm>
+    <para>
+      The Linux Logical Volume Manager (LVM) provides a convenient and flexible way of
+      managing storage. Storage devices like hard discs or RAID sets are registered as
+      <literal>physical volumes</literal>, and are then assigned to volume groups. 
+      Volume groups contain one or more <literal>logical volumes</literal>,
+      which can be resized according to the storage space available in the
+      volume group. New physical volumes can be added to or removed from a volume group
+      at any time, thereby transparently enlarging or reducing the storage space available in
+      a volume group. Filesystems are created on top of logical volumes.
+    </para>
+    <para>
+      Examples:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+pvcreate /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+vgcreate vg0 /dev/sdb1</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvcreate -n scratch -L 1GB vg0</command>
+    </screen>
+    <para>
+      These commands declare <filename>/dev/sdb1</filename> as a physical volume, create the
+      volume group vg0 with the physical volume <filename>/dev/sdb1</filename>, and create a
+      logical volume <filename>/dev/vg0/scratch</filename> of size 1GB. You can now create a
+      filesystem on this logical volume and mount it:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+mkfs.ext4 /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount /dev/vg0/scratch /scratch</command>
+    </screen>
+    <para>
+      To increase the size of the filesystem you do not have to unmount it but you have to
+      increase the logical volume before resizing the filesystem:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvextend -L +1G /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+resize2fs /dev/vg0/scratch</command>
+    </screen>
+    <para>
+      This increased the filesystem by 1 Gb. If you want to decrease the size of the filesystem
+      you first need to unmount it. After that decrease the filesystem and finally reduce the
+      logical volume:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+unmount /scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+e2fsck -f /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+resize2fs /dev/vg0/scratch 500M</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+lvreduce -L 500M /dev/vg0/scratch</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+mount /dev/vg0/scratch /scratch</command>
+    </screen>
+    <para>
+      This decreased the filesystem to 500Mb. To check how much space is left in a volume
+      group use the command <command>vgdisplay</command>. Look for a line showing Free Size.
+    </para>
+    <para>
+      Frequent commands:
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Physical volumes: <command>pvcreate</command>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Volume groups: <command>vgscan</command>, <command>vgchange</command>,
+	    <command>vgdisplay</command>, <command>vgcreate</command>,
+	    <command>vgremove</command>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Logical volumes: <command>lvdisplay</command>,<command>lvcreate</command>,
+	    <command>lvextend</command>, <command>lvreduce</command>,
+	    <command>lvremove</command>
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <xi:include href="zfs.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</section>
+
+<!--  LocalWords:  sdb
+-->

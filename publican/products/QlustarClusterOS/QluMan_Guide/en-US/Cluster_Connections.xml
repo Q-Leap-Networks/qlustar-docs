@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Cluster-Connections">
+  <title>Cluster Connections</title>
+  <section xml:id="sec-connecting-to-cluster">
+    <title>Connecting to a Cluster</title>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/connect_cluster_dialog/enter_password_safe.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Enter Password
+        </phrase></textobject>
+        <caption><para>
+          Enter Password
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/connect_cluster_dialog/enter_password_safe_remember.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Remember Password
+        </phrase></textobject>
+        <caption><para>
+          Remember Password
+        </para></caption>
+      </mediaobject>
+      When starting <application>qluman-qt</application>, it requests the password for your
+      <firstterm>certificate safe</firstterm>. This safe holds the login information for your
+      clusters together with the private keys for the corresponding QluMan user account. The
+      password for the certificate safe is required on every start and whenever changes to the
+      safe need to be written. You can have the client remember the password for the duration
+      it is running by checking the <classname>Remember password</classname> check-box. Without
+      enabling this, you will have to input the password again, whenever changes to the safe
+      need to be written. If you are starting <application>qluman-qt</application> for the
+      first time and therefore have no certificate safe yet, this dialog is skipped and an
+      empty <classname>Connect Cluster</classname> dialog opens directly. See <xref
+      linkend="sec-add-cluster"/> below about how to add a new cluster.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/connect_cluster_dialog/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Connect Cluster Dialog
+        </phrase></textobject>
+        <caption><para>
+          Connect Cluster Dialog
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/connect_cluster_dialog/select_cluster.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Select a Cluster Connection
+        </phrase></textobject>
+        <caption><para>
+          Select a Cluster Connection
+        </para></caption>
+      </mediaobject>
+      Having entered the correct password for the certificate safe the <classname>Connect
+      Cluster</classname> dialog opens. The last cluster used will be pre-selected but a
+      different cluster can be selected from the drop-down menu. Click the
+      <guibutton>Connect</guibutton> button to connect to the selected cluster.  If this is the
+      first time you connect to this cluster, the client generates a random public/private key
+      pair. These keys will eventually be used for permanent authentification of the chosen
+      user with this cluster. Following this, a connection to the server is made with an
+      attempt to authenticate the client using the one-time token. On success, the server
+      stores the public key of the client for future logins and the client stores both the
+      private and public keys in the certificate safe. This finalizes the initial handshake.
+      <note>
+	<para>
+	  The GUI client asks for the password of the certificate safe to store the generated
+	  public/private key pair. It will only do so, when you initially connect with a
+	  one-time token. For future connections, it will use the stored key pair to connect
+	  and authenticate. The safe contents will then not be changed again.
+	</para>
+      </note>
+    </para>
+  </section>
+  <section xml:id="sec-manage-cluster">
+    <title>Managing Clusters</title>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/first_steps/connect_cluster_1.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Starting the connection editor
+        </phrase></textobject>
+        <caption><para>
+          Starting the connection editor
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_clusters_dialog/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The connection editor
+        </phrase></textobject>
+        <caption><para>
+          The connection editor
+        </para></caption>
+      </mediaobject>	
+      The <classname>Manage Clusters</classname> dialog manages all your accounts on different
+      clusters or as different users on the same cluster. It allows adding new cluster
+      connections, editing existing and removing obsolete ones as well as changing the
+      password for the certificate safe. It can be opened by clicking
+      <guibutton>Edit</guibutton> in the <classname>Connect Cluster</classname> dialog.
+    </para>
+    <section xml:id="sec-add-cluster">
+      <title>
+	Adding a new Cluster
+      </title>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps/manage_clusters_new.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a new cluster connection
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a new cluster connection
+	  </para></caption>
+	</mediaobject>
+	To add a new cluster click the <guibutton>New</guibutton> button and select
+	<guibutton>New Cluster (paste)</guibutton> or <guibutton>New Cluster (file)</guibutton>
+	from the menu depending on whether you want to paste the one-time token or load it from
+	a file. If you don't have a one-time token for the cluster see <xref
+	linkend="para-one-time-token"/>.
+      </para>
+      <para>
+	Paste the one-time token data into the dialog and click <guibutton>Decrypt</guibutton>
+	or select the file containing the token. When asked for the password, enter the pin
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps_new_cluster/paste_1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Pasting the one-time token
+	  </phrase></textobject>
+	  <caption><para>
+	    Pasting the one-time token
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps_new_cluster/file_1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Using a token from a file
+	  </phrase></textobject>
+	  <caption><para>
+	    Using a token from a file
+	  </para></caption>
+	</mediaobject>
+	that was used when creating the token (in case you didn't generate the token yourself,
+	you should have been told the pin by your main cluster administrator). The dialog
+	should then show the cluster/head-node infos that where packed into the one-time
+	token. If you started <application>qluman-qt</application> on your workstation, then
+	you might have to change the <parameter>Local Hostname</parameter> to use the external
+	hostname of the head-node. Similarly, if you changed the port for qlumand or if you're
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps_new_cluster/2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Entering the pin
+	  </phrase></textobject>
+	  <caption><para>
+	    Entering the pin
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps_new_cluster/3.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Customizing the connection
+	  </phrase></textobject>
+	  <caption><para>
+	    Customizing the connection
+	  </para></caption>
+	</mediaobject>
+	connecting via port forwarding, you have to adjust that too. The
+	<parameter>Alias</parameter> is the name this cluster will be shown as, when using the
+	drop-down menu in the <classname>Connect Cluster</classname> dialog. Click
+	<guibutton>Ok</guibutton> to add the cluster connection.
+      </para>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps/manage_clusters_save.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Saving the cluster connection
+	  </phrase></textobject>
+	  <caption><para>
+	    Saving the cluster connection
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps/manage_clusters_password.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Certificate password
+	  </phrase></textobject>
+	  <caption><para>
+	    Certificate password
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/first_steps/manage_clusters_confirm.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Confirm password
+	  </phrase></textobject>
+	  <caption><para>
+	    Confirm password
+	  </para></caption>
+	</mediaobject>
+	After adding the new cluster select <guibutton>Save</guibutton> to save the changes. If
+	this is your first cluster then it will create the certificate safe and ask you to
+	enter and confirm a password. Otherwise it will ask for the existing password unless
+	the <guibutton>Remember password</guibutton> check-box was enabled.
+      </para>
+    </section>
+    <section xml:id="sec-sorting-clusters">
+      <title>
+	Sorting multiple clusters
+      </title>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/new_menu.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a connection group
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a connection group
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/group.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Naming a connection group
+	  </phrase></textobject>
+	  <caption><para>
+	    Naming a connection group
+	  </para></caption>
+	</mediaobject>
+	If multiple cluster connections are registered, the corresponding entries can
+	be reordered using drag&amp;drop. This allows to move them to the desired location in
+	the list. Clusters can also be grouped in sub-menus by first creating a new group
+	(sub_menu) and then dragging cluster entries into it. The tree structure of the
+	<classname>Manage Clusters</classname> dialog will be reflected in the drop-down menu
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/group2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Moving a connection to a group
+	  </phrase></textobject>
+	  <caption><para>
+	    Moving a connection to a group
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/connect_cluster_dialog/select_cluster_group.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Selecting a cluster in a group
+	  </phrase></textobject>
+	  <caption><para>
+	    Selecting a cluster in a group
+	  </para></caption>
+	</mediaobject>
+	of the <classname>Connect Cluster</classname> dialog. This allows a nicely structured
+	layout when dealing with a larger number of clusters as e.g. in the case of service
+	providers. Standard cluster admins will most likely not need this feature.
+      </para>
+    </section>
+    <section xml:id="sec-change-certificate-safe-password">
+      <title>
+	Changing the certificate safe password
+      </title>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/changing_password.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Select changing the password
+	  </phrase></textobject>
+	  <caption><para>
+	    Select changing the password
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/change_password.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Change password dialog
+	  </phrase></textobject>
+	  <caption><para>
+	    Change password dialog
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/manage_clusters_dialog/change_password_mismatch.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    OK button disabled if mismatch
+	  </phrase></textobject>
+	  <caption><para>
+	    OK button disabled if mismatch
+	  </para></caption>
+	</mediaobject>
+	The <classname>Manage Clusters</classname> dialog allows changing the password for the
+	certificate safe. This requires entering the old password for the safe as well as the
+	new password and a confirmation of the new password. The <guibutton>Ok</guibutton>
+	button will only be selectable if the new password and confirmation matches.
+      </para>
+    </section>
+  </section>
+</chapter>
+

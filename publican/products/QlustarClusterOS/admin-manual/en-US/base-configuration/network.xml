@@ -1,0 +1,216 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-network">
+  <title>Network Configuration and Services</title>
+  <indexterm><primary>Network Configuration</primary></indexterm>
+  <indexterm><primary>Network Services</primary></indexterm>
+  <para>
+    This section describes the basic network configuration and services of a
+    Qlustar cluster.
+  </para>
+  
+  <section id="admin-man-sect-ntwrk-config">
+    <title>Basic Network Configuration</title>
+    <indexterm><primary>Network Configuration</primary>
+    <secondary>Basic Network Configuration</secondary></indexterm>
+    
+    <para>
+      The IP configuration of the head-node is defined in the file
+      <filename>/etc/network/interfaces</filename> (type <command>man interfaces</command> for
+      details), while <filename>/etc/resolv.conf</filename> is the key-control file regarding
+      the DNS configuration (see <xref linkend="admin-man-sect-dns"/>). Network interfaces can
+      be brought up or down using the commands <command>ifup</command> and
+      <command>ifdown</command> (see also the corresponding man pages). Typically, the
+      head-node has at least two network interfaces, one for the external LAN and one for the
+      internal cluster network. For all cluster-internal networks (boot/NFS, optional
+      Infiniband and/or IPMI)<indexterm><primary>Network Configuration</primary>
+      <secondary>cluster-internal networks</secondary></indexterm>, unofficial (not routed) IP
+      addresses are used, usually in the range
+      <parameter>192.168.x.0/255.255.255.0</parameter>, while for larger clusters the range
+      <parameter>172.16.y.0/255.255.0.0</parameter> is often used. In the latter case,
+      <parameter>y</parameter> might indicate the rack number.
+    </para>
+    <note>
+      <para>
+        The cluster-internal network ranges can be conveniently chosen during installation.
+      </para>
+    </note>
+    
+  </section>
+  <section id="admin-man-sect-dns">
+    <title>DNS</title>
+     <indexterm><primary>Network Configuration</primary><secondary>DNS</secondary></indexterm>
+     
+     <para>
+       This section describes how to configure the Domain Name System (DNS).
+     </para>
+
+     <para>
+       The file <filename>/etc/resolv.conf</filename> contains the addresses of the DNS 
+       servers to use and a list of domain names to search when looking up a short
+       (not fully qualified) hostname.
+       Example:
+     </para>
+     
+     <screen>search your.domain
+nameserver 10.0.0.252
+nameserver 10.0.0.253
+     </screen>
+     <para>
+       where 10.0.0.252 and 10.0.0.253 are the addresses of the DNS servers and your.domain is
+       the DNS domain name.
+     </para>
+     <note>
+       <para>
+	 Recent versions of Qlustar allow the DNS configuration to be configured directly in
+	 <filename>/etc/network/interfaces</filename>. To make use of this,
+	 <parameter>dns-</parameter> option lines need to be added to the relevant iface
+	 stanza. The following option names are supported:
+	 <parameter>dns-nameservers</parameter>, <parameter>dns-search</parameter>, and
+	 <parameter>dns-sortlist</parameter>. Get more details on these options by executing
+	 <command>man resolvconf</command>.The <parameter>dns-nameservers</parameter> entry is
+	 added and configured automatically during installation.
+       </para>
+     </note>
+     <para>
+       If the compute-nodes also need DNS access, they should use the head-node(s) as a
+       forward-only DNS server. In that case the package <package>bind9</package> should be
+       installed and the addresses of the DNS servers be entered in the file
+       <filename>/etc/bind/named.conf.options</filename>. Example:
+     </para>
+     <screen>
+options {
+  ...
+  forwarders {
+    10.0.0.252;
+    10.0.0.253;
+  };
+  ...
+     </screen>
+
+     <para>
+       The compute-nodes must then use the cluster-internal address of the head-node
+       (192.168.52.254 in the example below) as their DNS server. This and the DNS domain name
+       have to be entered in the DHCP template file of QluMan as follows, so that the
+       compute-nodes may receive the required information via DHCP:
+     </para>
+     
+     <screen>...
+option domain-name "your.domain";
+option domain-name-servers 192.168.52.254;
+...
+     </screen>
+   </section>
+  
+  <section id="admin-man-sect-dhcp">
+    <title>DHCP</title>
+    <indexterm><primary>Network Configuration</primary><secondary>DHCP</secondary></indexterm>
+
+    <para>
+      The IP configuration of the compute-nodes is done using the Dynamic Host Control Protocol
+      (DHCP). The DHCP server is not only responsible to automatically supply the IP address
+      and netmask to these nodes, but also additional configuration options like the gateway
+      and DNS server addresses, DNS domain name and many other parameters. The DHCP server
+      configuration file is <filename>/etc/dhcp/dhcpd.conf</filename> (type <command>man
+      dhcpd.conf</command>) and is auto-generated by QluMan. There is a general or global
+      section and a per node section in this file. The global section determines values that
+      are to be applied to all the nodes registered within the <filename>dhcpd.conf</filename>
+      file. On the contrary, the contents of a node section applies only to that specific
+      machine and is created from the corresponding host info of the QluMan database. The
+      following listing shows the default global section that is automatically generated by
+      QluMan during the installation of a Qlustar cluster:
+    </para>
+
+    <screen>option qlustar-cfgmnt code 132 = text;
+option qlustar-cfgmnt "-t nfs -o rw,hard,intr 192.168.52.1:/srv/ql-common";
+next-server 192.168.52.1;
+filename "pxelinux.0";
+option nis-domain "beo-cluster";
+option nis-servers 192.168.52.1;
+option routers 192.168.52.1;
+option subnet-mask 255.255.255.0;
+option ntp-servers 192.168.52.1;
+option lpr-servers 192.168.52.1;
+subnet 192.168.52.0 netmask 255.255.255.0 {
+}
+    </screen>
+     <note>
+       <para>
+	 If a cluster has additional internal networks (e.g. Infiniband), the IP address of a
+	 node in that network is derived from its basic DHCP address and set automatically
+	 during boot. The addresses of additional networks can be specified during installation
+	 and in QluMan. Check the &QLUMANGUIDE; for more details.
+       </para>
+     </note>
+    
+    <section id="admin-man-sect-spcl-dhcp-opt">
+      <title>Special DHCP options</title>
+      <indexterm><primary>Network Configuration</primary>
+      <secondary>DHCP</secondary>
+      <tertiary>Special DHCP options</tertiary></indexterm>
+
+      <para>
+	You can set the name of the auto-mount master map with the DHCP option 128 (the default
+	name is auto.master). To modify it, include a line in the
+	<filename>dhcpd.conf</filename> header as follows:
+      </para>
+
+      <screen>
+option option-128 code 128 = text;
+option option-128 "auto.master";
+      </screen>
+
+    </section>
+  </section>
+  
+  <section id="admin-man-sect-ip-msq">
+    <title>IP Masquerading (NAT)</title>
+    <indexterm><primary>Network Configuration</primary>
+    <secondary>IP Masquerading</secondary></indexterm>
+    
+  <para>
+    IP masquerading (NAT) is configured by default on the head-node(s) during installation, to
+    allow the compute-nodes direct TCP/IP connections to machines outside of the internal
+    cluster network. This could be necessary e.g., when applications running on the
+    compute-nodes need to contact a license server in the public LAN. All IP packets with
+    unofficial sender IP addresses and a destination in the public LAN are then translated by
+    the head-node to packets with its own official IP address. When a reply packet arrives, it
+    is translated back to the unofficial IP address of the originating node inside of the
+    cluster. The head-node works as a router in this case. The following section in
+    <filename>/etc/network/interfaces</filename> shows, how masquerading is activated on boot
+    and disabled on shutdown:
+  </para>
+
+  <screen>
+iface eth1 inet static
+  address 4.4.4.123
+  netmask 255.255.0.0
+  broadcast 4.4.255.255
+  gateway 4.4.255.254
+  up iptables -t nat -A POSTROUTING -s 192.168.52.0/24 \
+    -o eth1 -j MASQUERADE
+  down iptables -t nat -D POSTROUTING -s 192.168.52.0/24 \
+    -o eth1 -j MASQUERADE
+  </screen>
+  </section>
+
+  <section id="admin-man-sect-time-server">
+    <title>Time Server</title>
+    <indexterm><primary>Network Configuration</primary>
+    <secondary>Time Server</secondary></indexterm>
+    
+    <para>
+      Synchronized system time throughout the cluster is very crucial for its flawless
+      operation. It is achieved using the Network Time Protocol (NTP) daemon. If the head-node
+      has direct Internet access, publicly available time-servers on the Internet can be
+      contacted and used as an accurate time reference. In order to set a list of time-servers,
+      edit the file <filename>/etc/ntp.conf</filename> and add a line for every ntp-server to
+      be contacted:
+    </para>
+
+    <screen>server ntpserver
+    </screen>
+      
+  </section>
+</section>

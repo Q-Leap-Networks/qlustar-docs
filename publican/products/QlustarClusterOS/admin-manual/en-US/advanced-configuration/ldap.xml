@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-adv-conf-ldap">
+  <title>LDAP integration</title>
+  <indexterm><primary>LDAP integration</primary></indexterm>
+  <para>
+    Qlustar supports LDAP as a source for user, group and automount data.
+  </para>
+  <section id="admin-man-sect-avd-conf-ldap-basic">
+    <title>General configuration</title>
+    <indexterm><primary>LDAP integration</primary><secondary>General</secondary></indexterm>
+    <para>
+      A couple of manual steps are necessary to configure general LDAP support. Some of them
+      concern the integration of the head-node(s) and others the integration of net-boot nodes.
+    </para>
+    <section id="admin-man-sect-avd-conf-ldap-basic-head">
+      <title>Headnode integration</title>
+      <para>
+	- ldap.conf
+	- lib
+      </para>
+    </section>
+  </section>
+  <section id="admin-man-sect-avd-conf-ldap-user">
+    <title>LDAP User/Group integration</title>
+    <indexterm><primary>LDAP integration</primary><secondary>Users</secondary></indexterm>
+    <para>
+      A couple of manual steps are necessary to configure LDAP support. Some of them concern
+      the integration of the head-node(s) and others the integration of net-boot nodes.
+    </para>
+  </section>
+  <section id="admin-man-sect-avd-conf-ldap-automount">
+    <title>LDAP autmount integration</title>
+    <indexterm><primary>LDAP integration</primary><secondary>Automount</secondary></indexterm>
+    <para>
+      A couple of manual steps are necessary to configure LDAP support. Some of them concern
+      the integration of the head-node(s) and others the integration of net-boot nodes.
+    </para>
+  </section>
+</section>

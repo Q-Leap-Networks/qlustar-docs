@@ -1,0 +1,57 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="admin-man-chap-gpu">
+  <title>GPU computing</title>
+  <indexterm><primary>GPU computing</primary></indexterm>
+  <para>
+    Qlustar supports the most common GPU hardware types for GPU computing. There are hardware
+    dependent packages and general development tools.
+  </para>
+  <section id="admin-man-sect-gpu-nvidia">
+    <title>Nvidia CUDA GPU Platform</title>
+    <indexterm><primary>GPU computing</primary><secondary>Nvidia GPUs</secondary></indexterm>
+    <para>
+      To support the CUDA GPU hardware platform, Nvidia provides the necessary kernel drivers
+      as well as the user-space <emphasis>CUDA Toolkit</emphasis> for software
+      development. Pre-built, up-to-date 
+      Nvidia kernel modules are available for all Qlustar Kernels and the <emphasis>Qlustar
+      Nvidia image module </emphasis> can be added to Qlustar images for full support of the
+      newset Nvidia hardware on GPU enabled compute nodes. Within Qlustar, the functionality of
+      the CUDA Toolkit is split into a number of different packages.
+    </para>
+    <section id="admin-man-sect-gpu-nvidia-hwsupport">
+      <title>Hardware support</title>
+      <indexterm><primary>GPU computing</primary><secondary>Nvidia Hardware
+      support</secondary></indexterm>
+      <para>
+	- nvidia-smi
+	- nvidia-tdk
+	- nvidia-ml-py
+      </para>
+    </section>
+    <section id="admin-man-sect-gpu-nvidia-cuda">
+      <title>CUDA</title>
+      <indexterm><primary>CUDA</primary></indexterm>
+      <para>
+	The packages for development are split
+	Need: nvidia-cuda-toolkit, nvidia-cuda-dev
+      </para>
+    </section>
+  </section>
+  <section id="admin-man-sect-gpu-amd">
+    <title>AMD GPUs</title>
+    <para>
+    </para>
+  </section>
+  <section id="admin-man-sect-gpu-intel">
+    <title>Intel GPUs</title>
+    <para>
+    </para>
+  </section>
+  <section id="admin-man-sect-gpu-opencl">
+    <title>Developing with OpenCL</title>
+    <indexterm><primary>OpenCL</primary></indexterm>
+    <para>
+    </para>
+  </section>
+</chapter>

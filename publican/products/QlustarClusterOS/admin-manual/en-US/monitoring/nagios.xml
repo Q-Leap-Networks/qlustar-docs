@@ -1,0 +1,362 @@
+<?xml version='1.0'?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<section id="admin-man-sect-nagios">
+  <title>Nagios</title>
+  <indexterm><primary>Nagios</primary></indexterm>
+  
+  <para>
+    This section describes the Qlustar Nagios setup.
+  </para>
+  
+  <section id="admin-man-sect-nag-plug-ins">
+    <title>Nagios Plugins</title>
+    <indexterm><primary>Nagios</primary><secondary>Nagios Plugins</secondary></indexterm>
+
+    <para>
+      The package <package>ql-nagios-plugins</package> contains the tools required to process
+      the data received from ganglia. The thresholds, services and nodes to monitor and group
+      definitions are set in files located in the directory
+      <filename>/etc/nagios3/conf.d/ql</filename>. The file <filename>nodes.cfg</filename>
+      lists the nodes. A few lines are required for each node:
+    </para>
+
+    <screen>
+define host {
+             host_name      beo-01 
+             use            generic-node
+             register       1
+            }
+define host {
+             host_name      beo-10
+             use            generic-node
+             register       1
+            }
+    </screen>
+
+    <para>
+      The file <filename>hostgroup-definitions.cfg</filename> defines which nodes belong to
+      which hostgroup:
+    </para>
+    
+    <screen>
+define hostgroup {
+       hostgroup_name        ganglia-nodes
+       members               beo-0.
+       register              1
+       }
+    </screen>
+
+    <para>
+      The regular expression <systemitem class="systemname">beo-0</systemitem>. specifies that
+      all nodes whose hostname match the expression belong to this group. If you need to create
+      another group because not all metrics are available for all nodes, or some metrics
+      require different thresholds than you can do so here:
+    </para>
+
+    <screen>
+define hostgroup {
+       hostgroup_name          opterons
+       members                 beo-1
+       register                1 
+       }
+    </screen>
+
+    <para>
+      The file <filename>service-definitions.cfg</filename> lists all metrics that should be
+      monitored. It includes the threholds, and for which groups each service is defined. It
+      should be a passive check, and ql-hwmonitord should be configured to
+      send the data. The following example defines a service only for the members of the group
+      opterons:
+    </para>
+
+<screen>
+define service {
+       use                      generic-service
+       hostgroup_name           opterons
+       service_description      Ganglia fan1
+       check_command            return-ok
+       passive_checks_enabled   1
+       active_checks_enabled    0
+       register                 1
+       }
+</screen>
+
+   <para>
+     The check_command will be ignored, only the information from ql-hwmonitord will be
+     used. The following example defines the service for the members of both groups:
+   </para>
+   
+<screen>
+define service {
+       use                      generic-service
+       hostgroup_name           ganglia-nodes,opterons
+       service_description      Ganglia fan1
+       check_command            return-ok
+       passive_checks_enabled   1
+       active_checks_enabled    0
+       register                 1
+       }
+ </screen>
+
+   <para>
+     The following additional configuration parameters should be set to enable passive service
+     checks in <filename>nagios.cfg</filename>: 
+   </para>
+
+   <screen>
+check_external_commands=1
+accept_passive_service_checks=1
+log_external_comamnds=0
+log_passive_checks=0
+   </screen>
+   
+   <para>
+     Then run as root:
+   </para>
+
+<screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3</command>
+</screen>
+   
+   <para>
+     The process ql-hwmonitord uses the configuration file
+     <filename>/etc/qlustar/lib/hw-monitor/services</filename>. Each line in this file is
+     either a comment that starts with a ’#’ is an empty line or contains six space separated
+     fields (a tab will not work!):
+   </para>
+
+   <screen>
+&lt;hostlist&gt; &lt;label&gt; &lt;desc&gt; &lt;type&gt; &lt;warn&gt; &lt;crit&gt;
+   </screen>
+
+   <para>
+     where
+   </para>
+   
+   <variablelist>
+     <varlistentry>
+       <term>
+	 &lt;hostlist&gt;
+       </term>
+       <listitem>
+	 <para>
+	   is in the hostlist format used by slurm
+	 </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry>
+       <term>
+	 &lt;label&gt;
+       </term>
+       <listitem>
+	 <para>
+	   is the name of the ganglia metric
+	 </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry>
+       <term>
+	 &lt;desc&gt;
+       </term>
+       <listitem>
+	 <para>
+	   is the service description used in the nagios configuration
+	 </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry>
+       <term>
+	 &lt;type&gt;
+       </term>
+       <listitem>
+	 <para>
+	    is the type of the metric, one of: string, regex, increase or decrease
+	 </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry>
+       <term>
+	 &lt;warn&gt;
+       </term>
+       <listitem>
+	 <para>
+	   is the warning level
+	 </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry>
+       <term>
+	 &lt;crit&gt;
+       </term>
+       <listitem>
+	 <para>
+	   is the critical level
+	 </para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+   
+   <para>
+     An example line looks like this:
+   </para>
+   
+   <screen>
+beo-[01-06]-[01-30],beo-07-[01-27] temp1 "System Temp" increase "85" "90"
+   </screen>
+   
+   <para>
+     Note that you can use quotes to group a field that contains spaces. You can modify the
+     start options that are used at boot time in
+     <filename>/etc/default/ql-hwmonitord</filename>. For example to increase the interval the
+     metrics are checked to 300 seconds:
+   </para>
+
+   <screen>
+DAEMON_ARGS="--interval 300"
+   </screen>
+   
+   <para>
+     Torque Healthcheck An additional value provided by Ganglia on the nodes is the Health
+     check of Torque Mom. If this parameter is in an error state the node
+     can be set offline to prevent any jobs from running on this node. The following section in
+     the file <filename>service-definitions.cfg</filename> defines this service for all nodes
+     in the group ganglia-nodes:
+   </para>
+
+<screen>
+define service {
+       use                       generic-service
+       hostgroup_name            ganglia-nodes
+       service_description       Torque Health check
+       check_command             return-ok
+       passive_checks_enabled    1
+       active_checks_enabled     0
+       event_handler             offline-pbsnode!$HOSTNAME$
+       register                  1
+       }
+</screen>
+   
+<para>
+  The event handler offline-pbsnode will set the node offline if the state changes from OK to
+  CRITICAL and back online if the state changes from CRITICAL to OK. This event handler is
+  defined in <filename>/etc/nagios-plugins/config/ql/event-handlers.cfg</filename>:
+</para>
+
+<screen>
+define command {
+        command_name       offline-pbsnode
+        command_line       \
+           /usr/lib/ql-lib/libexec/nagios/offline-pbsnode \
+           $ARG1$ $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$
+}
+</screen>
+
+</section>
+
+<section id="admin-man-sect-head-node">
+  <title>head node</title>
+  <indexterm><primary>Nagios</primary><secondary>head node</secondary></indexterm>
+
+  <para>
+    The file <filename>localhost.cfg</filename> lists the services that should be monitored for
+    the head node.  The definitions are different because the data is not collected through
+    ganglia.
+  </para>
+
+   <variablelist>
+     <varlistentry>
+       <term>
+	 RAID devices
+       </term>
+       <listitem>
+	 <para>
+	   The RAID devices are monitored by mdadm and mail is sent to root if a device
+	   fails. The RAID devices are not monitored with the nagios setup by default.
+	 </para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+   
+ </section>
+ 
+ <section id="admin-man-sect-web-interface">
+   <title>Webinterface</title>
+   <indexterm><primary>Nagios</primary><secondary>Webinterface</secondary></indexterm>
+   
+   <para>
+     You can open the Webinterface at the address
+     <literal>http://<replaceable>head-node</replaceable>/nagios3/</literal>. Login as
+     nagiosadmin. You can change the password by executing the command
+   </para>
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+htpasswd /etc/nagios3/htpasswd.users nagiosadmin</command>
+   </screen>
+   <para>
+     as root.
+   </para>
+   
+ </section>
+ 
+ <section id="admin-man-sect-restart">
+   <title>Restart</title>
+   <indexterm><primary>Nagios</primary><secondary>Restart</secondary></indexterm>
+
+   <para>
+     Nagios uses the information collected by Ganglia. When this information source is not
+     available then nagios will send warning mails. To avoid the sending of these mails when
+     you need to restart ganglia you should first stop nagios:
+   </para>
+
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/nagios3 stop</command>
+   </screen>
+   
+   <para>
+     Then you can restart ganglia:
+   </para>
+   
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/ganglia-monitor restart</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/gmetad restart</command>
+   </screen>
+
+   <para>
+    After restarting Ganglia on the head node you need to restart ganglia on the compute
+    nodes as well:
+   </para>
+
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/ganglia-monitor restart</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/gmetric stop</command>
+
+<prompt>0 root@cl-head ~ #</prompt><command>
+dsh -a /etc/init.d/gmetric start</command>
+   </screen>
+
+   <para>
+     Finally you can start Nagios again
+   </para>
+
+   <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+/etc/init.d/nagios3 start</command>
+   </screen>
+   
+ </section>
+</section>
+
+<!--  LocalWords:  hwmonitord
+-->

@@ -1,0 +1,424 @@
+/* ------------------ Product-View ------------------ */
+/* Increased font-size from description and line height of product-view */
+.bottom_books .subtitle {
+    font-size: 16px !important;
+    margin-top: 11px !important;
+}
+
+/* Increased font-size from title of product-view */
+.titles a {
+    font-size: 20px !important;
+}
+
+/* Added font-color for title of product-view */
+.version_bottom_box .titles a, .product_bottom_box .titles a,
+  .grouper .titles a {
+    color: #639E00;
+}
+
+/* Added font-color hover for title of product-view */
+.version_bottom_box .titles a:hover, .product_bottom_box .titles a:hover,
+  .grouper .titles a:hover {
+    color: #666666;
+}
+
+/* Changed border of product-view */
+.bottom_books {
+    border-bottom: 1px solid #666666 !important;
+}
+/* Set color of version-number-title */
+.title a {
+    color: #c5e236 !important;
+}
+/* -------------------------------------------------- */
+
+/* --------------- Version-number Box --------------- */
+/* Changed background-color and font-color of version-number box */
+version_tabs span {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-weight: normal;
+}
+
+/* Changed background-color and font-color of version-number box when active*/
+/*span.active {*/
+.version_tabs span.active {
+    background-color: #666666 !important;
+    color: #c5e326 !important;
+    font-weight: normal;
+}
+
+/* Color and font-weight for 'All' button */
+.groups.active span{
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+/* Added hover for background-color and font-color of all button */
+.bottom_versions_list span.link:hover {
+    background-color: #666666 !important;
+    color: #c5e236 !important;
+}
+/* -------------------------------------------------- */
+
+/* --------------------- Menu ----------------------- */
+/* Changed background-color of menu and increased shadow*/
+#menu {
+    background-color: #c5e236 !important;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.15) !important;
+    color: #000000 !important;
+}
+/**/
+#menu:after {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    height: 98% !important;
+}
+
+/* Set active font-color of menu */
+#menu a:active,
+.breadcrumb_active > div,
+#lang_menu_2:active > div,
+#book_format_menu:active > div,
+#book_lang_menu:active > div {
+    color: #c5e236 !important;
+}
+
+
+/* Set hover font-color and background-color of menu */
+#menu a:hover,
+.breadcrumb:hover > div,
+#lang_menu_2:hover > div,
+#book_format_menu:hover > div,
+#book_lang_menu:hover > div {
+    background-color: #666666 !important;
+    color: #c5e236 !important;
+}
+
+/* Set the background-color for the language button */
+.breadcrumb > ul,
+#lang_menu_2 > ul,
+#book_format_menu > ul,
+#book_lang_menu > ul {
+    background-color: #666666 !important;
+}
+
+/* Set fixed font sizes */
+#lang_menu,
+#product_menu,
+#version_menu,
+#book_menu,
+#book_format_menu,
+#book_lang_menu {
+    font-size: 16px !important;
+    #padding: 1px 0px !important;
+}
+
+/* Dont show language in menu */
+#book_lang_menu, #lang_menu_2 {
+    display: none;
+}
+
+/* Set color of visited menu points */
+#menu a:visited {
+  color: #FFFFFF;
+}
+
+/* Set 'Qlustar Docs' button font-color to black*/
+#lang_menu > a {
+    color: #000000 !important;
+}
+/* -------------------------------------------------- */
+
+/* ----------------- side-bar menu ------------------ */
+/* Highlight box, if a product is choosen from the side_product menu */
+.side_products div.link a.active {
+    box-shadow: 0px 0px 17px black !important;  
+}
+
+/* Adjust side-bar menu */
+.side_products {
+    left: 32px;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set color and font-settings for side-bar menu */
+.side_products div.link a {
+    background-color: #c5e236 !important;
+    color: #000000 !important;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Set color for side-bar menu hover*/
+.side_products div.link a:hover {
+    background-color: #5a5a5a !important;
+    color: #c5e236 !important;
+}
+/* -------------------------------------------------- */
+
+/* --------------------- Body ----------------------- */
+/* Set Background-color of Body*/
+body {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Disable shadow and set background-color of body */
+body > #wrapper {
+    box-shadow: none !important;
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set background-color of language-bottom-box (on frontpage) */
+.lang_bottom_box {
+    background-color: rgba(250, 250, 250, 1) !important;
+}
+
+/* Set Font-size of bridgehead tag*/
+.itemizedlist h2 {
+    font-size: 16px;
+}
+
+/* Set the position of the image descriptions */
+.caption .para {
+    margin-top: 0px;
+}
+
+/* Set color of specified tags to blue */
+.guimenu strong, .guisubmenu strong,
+.guibutton strong, .guimenuitem strong,
+.guilabel strong, .keycap strong{
+    color: rgb(60, 104, 203);
+    font-weight: normal !important;
+}
+
+/* Set the distance between the title and the para from a
+   variablelist */
+.variablelist .para {
+    padding-bottom: 8px;
+}
+
+/* Set font-size of h5 headings */
+h5 {
+    font-size: 15px !important;
+}
+
+/* Set font-size of h6 headings */
+h6 {
+    font-size: 15px;
+    margin-left: -4px;
+}
+/* -------------------------------------------------- */
+
+/* Set Background-color + opacity of Index-toc*/
+#floatingtoc .toc {
+    background-color: #222222 !important;
+    opacity: 0.98;
+    bottom: 46px !important;
+}
+
+/* Set line-height for toc in manual */
+.toc dt {
+    line-height: 17px !important;
+}
+
+/* -------------------- Admonitions ------------------ */
+/* Background-color of notes*/
+.note .admonition {
+    background-color: rgba(110, 148, 0, 0.2) !important;
+}
+
+/* Background-color of importants*/
+.important .admonition {
+    background-color: rgba(193, 132, 18, 0.22) !important;
+}
+
+/* Background-color of warnings*/
+.warning .admonition {
+    background-color: rgba(127, 0, 0, 0.12) !important;
+}
+/* -------------------------------------------------- */
+
+/* ------------------- Index-panel -------------------- */
+/* Set color of arrow to black */
+.home:after {
+    border-color: transparent transparent black !important;
+}
+
+/* Set Background-color of index-panel to qlustar with low opacity + fixed size */
+.docnav {
+    background-color: rgba(197, 226, 54, 0.9) !important;
+    height: 42px !important;
+    padding: 0em 0em 0em;
+    border-radius: 2.5em 2.5em 0 0 !important;
+}
+
+/* Set Font-color of index-panel to black*/
+.docnav .home {
+    color: #000000 !important;
+    font-size: 16px !important;
+    top: 0.7em !important;
+}
+
+/* Set Font-color of index-panel when hover to grey */
+.docnav .home:hover {
+    color: #474747 !important;
+}
+
+/* Set Font-color and fixed font-size for index-links to green */
+.toc a {
+    color: #639E00 !important;
+    font-size: 16px;
+}
+
+/* Underline index-links when hover */
+.toc a:hover {
+    text-decoration: underline;
+}
+/* -------------------------------------------------- */
+
+/* -------------------- Links ----------------------- */
+/* Set Font-color of e-mail links to green */
+a.email {
+    color: #639E00 !important;
+}
+
+/* Added hover to e-mail links for underlines */
+a.email:hover {
+    text-decoration: underline;
+}
+/* -------------------------------------------------- */
+
+/* ---------------- Paras & Screens ----------------- */
+/* Increase line distance of para's*/
+.para {
+    line-height: 1.35em;
+}
+
+/* Set Font-color of links to green and disable underlines*/
+.para a {
+    color: #639E00 !important;
+    text-decoration: none !important;
+}
+
+/* Underline links when hover */
+.para a:hover {
+    text-decoration: underline !important;
+}
+
+/* Set color + opacity + line distance for screens */
+.screen {
+    background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
+}
+
+/* Set color + opacity + line distance for programlistings */
+.programlisting {
+    background-color: rgba(197, 226, 54, 0.2);
+    line-height: 1.3em;
+}
+
+/* ----------------- Hide Elements ------------------ */
+/* Disable RSS feed */
+a.rss.link {
+    display: none;
+}
+
+/* Hide Slideshow-arrows */
+.jcarousel-prev {
+    display: none !important;
+}
+
+.jcarousel-next {
+    display: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------- Colorbox Styling ------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+/* Core Style: */
+#colorbox, #cboxOverlay, #cboxWrapper {position:absolute; top:0; left:0;
+z-index:9999; overflow:hidden;}
+/* Move colorbox close to top */
+#colorbox {top: 5% !important;}
+#cboxWrapper {max-width:none; background-color: rgb(255, 255, 255);
+border-radius: 15px;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0;
+width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none;
+-ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0; padding:0;
+margin:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box;
+-moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+
+/* User Style: Ordered & tabbed in a way that represents the nesting of the
+   generated HTML. */
+#cboxOverlay{background:#000;}
+#colorbox{outline:0;}
+#cboxTopLeft{width:14px; height:14px;
+background:url(images/controls.png) no-repeat 0 0;}
+#cboxTopCenter{height:14px;
+background:url(images/border.png) repeat-x top left;}
+#cboxTopRight{width:14px; height:14px;
+background:url(images/controls.png) no-repeat -36px 0;}
+#cboxBottomLeft{width:14px; height:43px;
+background:url(images/controls.png) no-repeat 0 -32px;}
+#cboxBottomCenter{height:43px; background:url(images/border.png) repeat-x bottom left;}
+#cboxBottomRight{width:14px; height:43px;
+background:url(images/controls.png) no-repeat -36px -32px;}
+#cboxMiddleLeft{width:14px;
+background:url(images/controls.png) repeat-y -175px 0;}
+#cboxMiddleRight{width:14px;
+background:url(images/controls.png) repeat-y -211px 0;}
+#cboxContent{background:#fff; overflow:visible;}
+.cboxIframe{background:#fff;}
+#cboxError{padding:50px; border:1px solid #ccc;}
+#cboxLoadedContent{margin-bottom:5px;}
+#cboxLoadingOverlay{
+background:url(images/loading_background.png) no-repeat center center;}
+#cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
+#cboxTitle{position:absolute; bottom:-25px; left:0; text-align:center;
+width:100%; font-weight:bold; color:rgb(60, 60, 60);}
+#cboxCurrent{position:absolute; bottom:-25px; left:58px; font-weight:bold;
+color:rgb(60, 60, 60);}
+
+/* these elements are buttons, and may need to have additional styles reset to
+   avoid unwanted base styles */
+#cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0;
+margin:0; overflow:visible;  position:absolute; bottom:-29px;
+background:url(images/controls.png) no-repeat 0px 0px; width:23px; height:23px;
+text-indent:-9999px;}
+/* avoid outlines on :active (mouseclick), but preserve outlines on
+   :focus (tabbed navigating) */
+#cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active,
+#cboxClose:active {outline:0;}
+#cboxPrevious{left:0px; background-position: -51px -25px;}
+#cboxPrevious:hover{background-position:-51px 0px;}
+#cboxNext{left:27px; background-position:-75px -25px;}
+#cboxNext:hover{background-position:-75px 0px;}
+#cboxClose{right:0; background-position:-100px -25px;}
+#cboxClose:hover{background-position:-100px 0px;}
+
+.cboxSlideshow_on #cboxSlideshow{background-position:-125px 0px; right:27px;}
+.cboxSlideshow_on #cboxSlideshow:hover{background-position:-150px 0px;}
+.cboxSlideshow_off #cboxSlideshow{background-position:-150px -25px; right:27px;}
+.cboxSlideshow_off #cboxSlideshow:hover{background-position:-125px 0px;}
+
+body .colorbox img {
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+body div.colorbox {
+    float: right;
+}
