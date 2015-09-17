@@ -85,8 +85,8 @@ see <a href="#Configuring-a-Host">below</a>.
 When starting <strong>qluman-qt</strong>, it asks for the password to your certificate safe.
 The certificate safe contains the login informations for your clusters and private keys for
 each account. The password for the certificate safe is required on every start and whenever
-changes to the safe need to be safed. You can have the client remember the password for the
-duration it is running by checking the <em>Remember password</em> checkbox. If you are starting
+changes to the safe need to be saved. You can have the client remember the password for the
+duration it is running by checking the <em>Remember password</em> check-box. If you are starting
 <strong>qluman-qt</strong> for the first time and therefore have no certificate safe yet this
 dialog is skipped and an empty <strong>Connect Cluster</strong> dialog opens directly. See <a
 href="#manage-cluster-dialog">Managing Clusters</a> below to add your cluster.
@@ -95,9 +95,9 @@ href="#manage-cluster-dialog">Managing Clusters</a> below to add your cluster.
 <!--cbox(connect_cluster_dialog.png)-->
 <!--cbox(connect_cluster_dialog__select_cluster.png)-->
 Having entered the correct password for the certificate safe the <strong>Connect
-Cluster</strong> dialog opens. The last cluster used will be pre selectedor a different cluster
-can be selected from the drop-down menu. Click the <em>Connect</em> button to connect to the
-selected cluster.
+Cluster</strong> dialog opens. The last cluster used will be pre selected or a different
+cluster can be selected from the drop-down menu. Click the <em>Connect</em> button to connect
+to the selected cluster.
 <!--cbox(first_steps__saving_key.png)-->
 If this is the first time you connect to the cluster then at this point the client generates a
 random public and private key pair for use with this cluster and user. It then connect to the
@@ -114,9 +114,9 @@ changed.
 <p>
 <!--cbox(first_steps__connect_cluster_1.png)-->
 <!--cbox(manage_clusters_idalog.png)-->
-The <strong>Manage Clusters</strong> dialog manages all your acounts on different clusters or
-as different users. It allows adding new cluster acounts, editing existing acounts or removing
-obsolete acounts as well as changing the password for the certificate safe. It can be opened by
+The <strong>Manage Clusters</strong> dialog manages all your accounts on different clusters or
+as different users. It allows adding new cluster accounts, editing existing accounts or removing
+obsolete accounts as well as changing the password for the certificate safe. It can be opened by
 clicking <em>Edit</em> in the <strong>Connect Cluster</strong> dialog.
 </p>
 <h3 >Adding a new Cluster</h3>
@@ -124,7 +124,7 @@ clicking <em>Edit</em> in the <strong>Connect Cluster</strong> dialog.
 <!--cbox(first_steps__manage_clusters_new.png)-->
 To add a new cluster click the <em>New</em> button and select <em>New Cluster (paste)</em> or
 <em>New Cluster (file)</em> from the menu depending on whether you want to paste the one-time
-token or load it from a file. If you don't have a ont-time token for the cluster see <a
+token or load it from a file. If you don't have a one-time token for the cluster see <a
 href="#one-time-token">below</a>.
 </p>
 <p>
@@ -148,7 +148,7 @@ will use in the drop-down menu in the <strong>Connect Cluster</strong> dialog. C
 After adding the new cluster select <em>Save</em> to save the changes. If this is your first
 cluster then it will create the certificate safe and ask you to enter and confirm a
 password. Otherwise it will ask for the existing password unless the <em>Remember password</em>
-checkbox was enabled.
+check-box was enabled.
 </p>
 <h3 >Sorting multiple clusters</h3>
 <!--cbox(manage_clusters_dialog.png)-->
@@ -161,7 +161,7 @@ them to the desired location in the list. Clusters can also be grouped together 
 creating a new group and then dragging the cluster into the group. The tree structure in the
 <strong>Manage Clusters</strong> dialog will be reflected in the drop-down menu in the
 <strong>Connect Cluster</strong> dialog. This allows even large installations with multiple
-cluster to remain managable for the admin. Normal users will most likely not need this feature.
+cluster to remain manageable for the admin. Normal users will most likely not need this feature.
 <h3 >Changing the certificate safe password</h3>
 <p>
 <!--cbox(manage_clusters_dialog__changing_password.png)-->
@@ -169,7 +169,7 @@ cluster to remain managable for the admin. Normal users will most likely not nee
 <!--cbox(manage_clusters_dialog__change_password_mismatch.png)-->
 The <strong>Manage Clusters</strong> dialog allows changing the password for the certificate
 safe. This requires entering the old password for the safe as well as the new password and a
-confirmation of the new password. The <em>Ok</em> button will only be selectable if the new
+confirmation of the new password. The <em>OK</em> button will only be selectable if the new
 password and confirmation matches.
 </p>
 <!--btt-->
@@ -193,7 +193,7 @@ before, the window will come up mostly empty.
 <!--cbox(license_key__empty.png)-->
 To request a license key, click the <em>Request Key</em> button and a <strong>Key Info
 Dialog</strong> will open asking you for your name and address info. If you intend to use
-<strong>Qlustar Basic Edition</strong>, checkmark <em>Free / non-profit license</em> at the
+<strong>Qlustar Basic Edition</strong>, check-mark <em>Free / non-profit license</em> at the
 bottom of the dialog. Select <em>OK</em> to continue saving the key request in a file. Enter a
 file-name and save. You will now have to send an e-mail specifying the required number of nodes
 and features (see <a href="/order"> our order page</a>) with this key file attached to <a
@@ -253,9 +253,9 @@ and adjust each of them manually.
   <!--cbox(network_config__proxy.png)-->
   If the head-node does not have direct access to the Internet, a <strong>http proxy</strong>
   must be configured. Qluman uses this proxy to download packages from the Qlustar repository,
-  when creating a new chroot. Click the checkmark before <strong>Http Proxy</strong> to enable
+  when creating a new chroot. Click the check-mark before <strong>Http Proxy</strong> to enable
   proxy support and enter the hostname together with the port of the proxy. If the proxy
-  requires authentication, click the checkmark before <strong>Authenticate</strong> and enter a
+  requires authentication, click the check-mark before <strong>Authenticate</strong> and enter a
   username and password. Like usual, the new settings will only take affect, when you click the
   <strong>Save</strong> button.
 </p>
@@ -1164,7 +1164,7 @@ Property Set (or to a host directly) and then edit the value.
   up to the user. In that case, a combo-box is shown, followed by the evaluation of the
   specified input shown as plain text. When hosts were selected in the <strong>Enclosure
   View</strong>, the combo-box will contain the hostlist corresponding to the selection as
-  default. The text can be edited directly or a filter can be chosen from the dropdown
+  default. The text can be edited directly or a filter can be chosen from the drop-down
   menu. Any argument starting with "%" is assumed to be a filter. If this is not intended, the
   "%" must be escaped by another "%", but only at the start of an argument. For more details
   about specifying arguments in pre-defined commands see <a href="#CommandEditor">below</a>.
@@ -1339,7 +1339,7 @@ Property Set (or to a host directly) and then edit the value.
   on</strong> field governs how that host or set of hosts is constructed. The default is
   <em>&lt;User input&gt;</em>. This means, the user will have to choose the hostlist, where the
   command will run, at the time, when it will be executed. Alternatively, the hostlist of the
-  command can be preset by selecting one of the filters from the dropdown menu. If a filter is
+  command can be preset by selecting one of the filters from the drop-down menu. If a filter is
   selected, the hostlist, it currently evaluates to, is displayed below it.
 </p>
 <p>
@@ -1373,7 +1373,7 @@ Property Set (or to a host directly) and then edit the value.
   <!--cbox(command_editor__arguments.png)-->
   The definition of command arguments use the same mechanism as detailed for the
   <strong>Execute on</strong> definition. They can either be left up to the user to fill in,
-  when the command is executed or be specified by a filter selectable from the dropdown
+  when the command is executed or be specified by a filter selectable from the drop-down
   menu. When executed, the <strong>%&lt;num&gt;</strong> placeholders in the command text are
   replaced by the user specified arguments or the resulting hostlist of the filter. There are
   always as many arguments as there are placeholders in the command. To add an argument, edit
@@ -1419,7 +1419,7 @@ Property Set (or to a host directly) and then edit the value.
 <p>
   <!--cbox(filter_editor__select_filter.png)-->
   The filter editor window is split into two areas. At the top the definition of the currently
-  selected filter is shown. You can select the filter to be displayed from the dropdown
+  selected filter is shown. You can select the filter to be displayed from the drop-down
   menu. At the bottom the hosts that pass all the filters are displayed in the compact HostList
   format. This format is used by a number of other programs including pdsh and SLURM (the
   <a href="https://code.google.com/p/pdsh/wiki/HostListExpressions" target="_blank">
@@ -1438,7 +1438,7 @@ Property Set (or to a host directly) and then edit the value.
     </div>
   </div>
 <p>
-  Select <strong>&lt;new filter&gt;</strong> from the dropdown menu to start defining a new
+  Select <strong>&lt;new filter&gt;</strong> from the drop-down menu to start defining a new
   filter. Then add filters from the context menu, until the desired subset of hosts is
   displayed in the bottom half of the window. Using their context menu, filters can be edited
   or removed and sub-filters be added. The <strong>Reset filter</strong> menu item clears the
@@ -1447,7 +1447,7 @@ Property Set (or to a host directly) and then edit the value.
 </p>
 <h3 id="HostFilterEditorEdit">Editing a Filter</h3>
 <p>
-  Editing a filter is similar to creating a new one. First select the filter from the dropdown
+  Editing a filter is similar to creating a new one. First select the filter from the drop-down
   menu to display it's current definition. Then add, edit or remove individual filters as
   desired. Finally click <strong>Save as</strong> to save the altered filter, Using an existing
   name will replace the old filter. Using a different name will create a new filter.
@@ -1584,7 +1584,7 @@ it. Then select the user from the drop-down menu and fill out the remaining
 fields. The changes will be saved automatically when return it pressed or the input field
 looses the focus. New users have no roles assigned to them and will have no rights to change
 anything. They can look but not touch. See <a href="#Permission-Manage">below</a> for how to
-create new roles and assign them to the user by checking the respective checkboxes. If the
+create new roles and assign them to the user by checking the respective check-boxes. If the
 <em>New User</em> button is not selectable then the user lacks sufficient rights to create new
 users. The roles buttons will then also be disabled preventing an unauthorized user to give
 himself or others extra roles.
@@ -1596,7 +1596,7 @@ next step is to generate a one-time token for the user by clicking <em>New Auth 
 Generating the one-time token may take a little to generate while before the <strong>New Auth
 Token</strong> dialog opens and shows a certificate containing the generated one-time token as
 well as the other login informations required to connect to the server. The certificate is
-protected by an 8 digit password so that it can be transfered over unencrypted communications
+protected by an 8 digit password so that it can be transferred over unencrypted communications
 channels like email or jabber. In such a case the password should be send over a second,
 different, communication channel, e.g. read over the phone. As a special case, when a user
 clicks <em>New Auth Token</em> for itself, the generated token is imported into the running
@@ -1608,10 +1608,10 @@ an attacker.
 </p>
 <p>
 <!--cbox(users__new_auth_token_2.png)-->
-The <strong>New Auth Token</strong> dialog also has 3 usefull buttons at the right bottom
+The <strong>New Auth Token</strong> dialog also has 3 useful buttons at the right bottom
 corner. The <em>Import</em> button allows adding the certificate directly to the running
 client. The use case for this is when creating a user account for oneself when working as
-admin. It is recommendd that for clusters with multiple users with admin role that every user
+admin. It is recommended that for clusters with multiple users with admin role that every user
 has their own user account and the admin user is only used to create those.
 <!--cbox(users__new_auth_token__mailed.png)-->
 <!--cbox(users__new_auth_token__saved.png)-->
@@ -1620,7 +1620,7 @@ sends the certificate to the email configured for the user. In both cases only t
 is saved or mailed and the password needs to be send separately.
 </p>
 <p>
-For the best security it is recommened to leave any new user without roles until they have
+For the best security it is recommended to leave any new user without roles until they have
 logged in using the one-time token. That way if the certificate was intercepted it has become
 useless to an attacker. Or if the attacker manages to intercept and use the certificate before
 the real user then the real user won't be able to use it. Meanwhile the attacker won't be able
@@ -1631,10 +1631,10 @@ Note: The certificate contains the information about the cluster telling the cli
 connect to it and the public key of the <strong>qlumand</strong> server that ensures the client
 will only talk to the right server and can't be eavesdropped. It also contains a one-time token
 allowing any client to log in exactly once within the next 48 hours. On the first login with a
-correct one-time token the clients public key (generated randomly and unique to use cluser and
-user) is stored by the server and used to authenticate the user in the future. The clients and
-servers public and private keys are also used when connecting to safely exchange session keys
-for encryption with perfect forward security.
+correct one-time token the clients public key (generated randomly and unique to each cluster
+and user) is stored by the server and used to authenticate the user in the future. The clients
+and servers public and private keys are also used when connecting to safely exchange session
+keys for encryption with perfect forward security.
 </p>
 <p>
 <!--cbox(users__delete2.png>-->
@@ -1666,7 +1666,7 @@ affect how nodes will boot, <strong>Services</strong> covers the configuration o
 <!--cbox(roles__empty.png)-->
 Creating and editing roles is simple. Click <em>New</em> to create a new role, fill in a name
 and description for it and click <em>OK</em>. To change the rights associated with a role,
-first select it using the dropdown menu at the top. Next click the checkmark boxes to the left
+first select it using the drop-down menu at the top. Next click the check-mark boxes to the left
 of the rights you want to change, grant or remove from the role. Click <em>Save</em> to save
 the changes or <em>Undo</em> to reset the rights to the last saved settings.
 </p>
