@@ -498,10 +498,11 @@
 	  <para>
 	    <itemizedlist>
 	      <listitem>
-		<bridgehead>Edge Platform Selection</bridgehead>
+		<bridgehead xml:id="Edge-Platform-Selection">Edge Platform
+		Selection</bridgehead>
 		<para>
 		  Starting from version 8.1.1 Qlustar supports multiple so-called
-		  <link xlink:href="http://qlustar.com/book/qlustar/platform/___blank___">
+		  <link xlink:href="https://qlustar.com/intro/platform___blank___">
 		  Edge Platforms</link>. Currently the choices are 
 		  <emphasis role="bold">Ubuntu/Precise</emphasis> and 
 		  <emphasis role="bold">Debian/Wheezy</emphasis>. Please select your
@@ -509,13 +510,14 @@
 		  be selected.
 		</para>
 		<para>
-		  In essence, this option corresponds to the choice of what Linux
-		  distribution you (or your users, if you're an administrator) like to
-		  work with/develop for. Note that you can always add support for a
-		  previously unselected edge platform later on by creating corresponding
-		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#UnionFS-Chroots___blank___">chroots</link> 
-		  and
-		  <link xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images___blank___">Qlustar images</link> using QluMan.
+		  In essence, this option corresponds to the choice of what Linux distribution
+		  you (or your users, if you're an administrator) like to work with/develop
+		  for. Note that you can always add support for a previously unselected edge
+		  platform later on by creating corresponding <link
+		  xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">chroots</link>
+		  and <link
+		  xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">Qlustar
+		  images</link> using QluMan.
 		</para>
 		<para>
 		  <mediaobject>
@@ -528,17 +530,18 @@
 		      Choose network adapter
 		    </para></caption>
 		  </mediaobject>
-		  Technically, choosing a specific edge platform (e.g. Debian/Wheezy)
-		  will cause Qlustar images based on Debian/Wheezy to be created along
-		  with an associated chroot. The latter will hold a complete Debian/Wheezy
-		  installation in which you can later
-		  <link xlink:href="http://qlustar.com/book/docs/first-steps#Adding-Software/__blank___">add packages</link>. By assigning such an image to some nodes later on, you will
+		  Technically, choosing a specific edge platform (e.g. Debian/Wheezy) will
+		  cause Qlustar images based on Debian/Wheezy to be created along with an
+		  associated chroot. The latter will hold a complete Debian/Wheezy installation
+		  in which you can later <link
+		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">add
+		  packages</link>. By assigning such an image to some nodes later on, you will
 		  have a <emphasis role="bold">full-featured</emphasis> Debian Wheezy
 		  installation available on these nodes, once they have booted over the
-		  network. Since multiple edge platforms are available, it is fully
-		  supported and easily achieved to have subsets of nodes running
-		  Ubuntu/Precise and Debian/Wheezy
-		  <emphasis role="bold">simultaneously</emphasis> in the same cluster.
+		  network. Since multiple edge platforms are available, it is fully supported
+		  and easily achieved to have subsets of nodes running Ubuntu/Precise and
+		  Debian/Wheezy <emphasis role="bold">simultaneously</emphasis> in the same
+		  cluster.
 		</para>
 	      </listitem>
 	      <listitem>
