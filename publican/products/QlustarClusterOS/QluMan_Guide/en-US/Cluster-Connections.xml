@@ -143,7 +143,7 @@
 	<guibutton>New Cluster (paste)</guibutton> or <guibutton>New Cluster (file)</guibutton>
 	from the menu depending on whether you want to paste the one-time token or load it from
 	a file. If you don't have a one-time token for the cluster see <xref
-	linkend="para-one-time-token"/>.
+	linkend="sec-User-Auth-Token"/>.
       </para>
       <para>
 	Paste the one-time token data into the dialog and click <guibutton>Decrypt</guibutton>

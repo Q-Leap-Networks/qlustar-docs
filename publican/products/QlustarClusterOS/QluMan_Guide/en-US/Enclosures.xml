@@ -197,7 +197,7 @@
 	  find 3 items: To select all hosts, clear the selection or to invert the
 	  selection. Below these items is a list of filters by which subsets of hosts were
 	  defined according to specific criteria. For more details on how to construct such
-	  host filters see <xref linkend="HostFilterEditor"/>. When pressing
+	  Host Filters see <xref linkend="chap-Host-Filters"/>. When pressing
 	  <guibutton>Select</guibutton>, the selection is set to the hosts defined by the
 	  corresponding filter, dropping any previously selected hosts. <guibutton>Add
 	  to</guibutton>> adds, while <guibutton>Remove from</guibutton> removes the hosts

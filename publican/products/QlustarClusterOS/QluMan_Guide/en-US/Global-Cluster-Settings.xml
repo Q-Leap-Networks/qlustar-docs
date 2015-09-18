@@ -12,7 +12,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xml:id="chap-Global-Cluster-Settings">
   <title>Global Cluster Settings</title>
-  <section xml:id="sec-license-installation">
+  <section xml:id="sec-License-Installation">
     <title>License Installation</title>
     <para>
       <!--cbox(file: license_key/menu.png)-->
@@ -55,7 +55,7 @@
       the <classname>Enclosure View</classname> window.
     </para>
   </section>
-  <section xml:id="Configuring-the-Network">
+  <section xml:id="sec-Configuring-the-Network">
     <title>Configuring Network Parameters</title>
     <para>
       <!--cbox(file: main_window__network_config.png)-->

@@ -60,9 +60,9 @@
       be one tab for each file.
     </para>
     <para>
-      Checking the optional <guibutton>Force</guibutton> button will initiate a rewrite of
-      all config files, even if they haven't changed. Note also, that the actual write
-      command is performed via the <xref linkend="Comand-execution"/>. This allows for
+      Checking the optional <guibutton>Force</guibutton> button will initiate a rewrite of all
+      config files, even if they haven't changed. Note also, that the actual write command is
+      performed via the <link linkend="chap-RX-Engine">Qlustar RXEngine</link>. This allows for
       <emphasis role="bold">consistent management of multiple head-nodes</emphasis> e.g. in a
       high-availability configuration.
     </para>
@@ -70,12 +70,11 @@
   <section xml:id="sec-Boot-Configs">
     <title>Boot Configs</title>
     <para>
-      The "Boot Config" dialog allows to define settings for the PXE/tftp boot server.  A
-      boot configuration determines which <xref linkend="Qlustar-OS-Images"
-      endterm="Qlustar-OS-Images"/> is delivered to a node and optionally permits the
-      specification of <firstterm>PXELinux</firstterm> commands and/or Linux kernel
-      parameters. When opened, the <classname>Boot Config</classname> window shows a list of
-      all boot configs currently
+      The "Boot Config" dialog allows to define settings for the PXE/tftp boot server. A boot
+      configuration determines which <link linkend="sec-Qlustar-OS-Images">Qlustar OS
+      image</link> is delivered to a node and optionally permits the specification of
+      <firstterm>PXELinux</firstterm> commands and/or Linux kernel parameters. When opened, the
+      <classname>Boot Config</classname> window shows a list of all boot configs currently
       <!--cbox(file: boot_config__collapsed.png)-->
       defined sorted by their names. Note that the default config is special in the sense
       that it applies to any node that has no specific boot config assigned (either through a

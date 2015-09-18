@@ -21,8 +21,8 @@
       storage (e.g. for compute jobs). One or more head-nodes deliver the boot images to the
       nodes. Additionally, a small <firstterm>NFS</firstterm> share containing part of the
       configuration space for the nodes is exported from one of the head-nodes. Optionally, the
-      RAM-based root FS (file-system) can be supplemented by a global <xref
-      linkend="UnionFS-Chroots" endterm="UnionFS-Chroots"/> to support software not already
+      RAM-based root FS (file-system) can be supplemented by a global <link
+      linkend="sec-UnionFS-Chroots">UnionFS chroot</link> to support software not already
       contained in the boot images themselves. The head-node(s) of the cluster typically
       provides <firstterm>TFTP/PXE boot services</firstterm>, <firstterm>DHCP
       service</firstterm>, <firstterm>NIS service</firstterm>, <firstterm>torque</firstterm> or
@@ -53,8 +53,7 @@
       different software components are provided from which <literal>individual custom OS
       images</literal> can be created as needed. A Qlustar OS image just contains what is
       actually required to accomplish the tasks of a node, nothing more. See below for more
-      details about configuring <xref linkend="Qlustar-OS-Images"
-      endterm="Qlustar-OS-Images"/>)
+      details about configuring <link linkend="sec-Qlustar-OS-Images">OS images</link>)
     </para>
     <para>
       But providing different OS images is still not enough for a flexible yet easily

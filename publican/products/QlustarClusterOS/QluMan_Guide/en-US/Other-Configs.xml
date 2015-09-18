@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Other-Configs">
+  <title>Other Configs</title>
+  <section xml:id="sec-Qlustar-OS-Images">
+    <title>Qlustar OS Images</title>
+    <para>
+      <!--cbox(file: qlustar_images/main.png)-->
+      Qlustar OS images can be defined and configured in the <classname>Qlustar
+      Images</classname> dialog accessible via <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>Qlustar Images</guimenuitem>. Each image has a unique
+      name, a flavor (e.g. <classname>trusty</classname>), a version, a <link
+      linkend="sec-UnionFS-Chroots">chroot</link> and one or more image modules.
+    </para>
+    <section xml:id="sec-Image-Versioning">
+      <title>Image Versioning</title>
+      <para>
+	Currently available image versions are 9, 9.0 (both meta-versions) and 9.0.0. Note,
+	that selecting meta-versions has implications on the update process. They allow
+	tracking the newest x.y (x.y.z) releases automatically. Example: If you have
+	installed version 9 of the modules, you will currently get the 9.0 (most recent 9.y)
+	versions, but when 9.1 will be
+	<!--cbox(file: qlustar_images__modules.png)-->
+	available, <code>apt-get dist-upgrade</code> will update to 9.1 versions
+	automatically. So with this choice, updates will usually include larger changes,
+	since new <emphasis role="bold">feature</emphasis> releases (like 9.1) will
+	automatically be installed.
+      </para>
+      <para>
+	Similar, if you have selected the 9.0 version (currently default after a fresh
+	installation) you will currently get 9.0.0 (most recent 9.0.z version) and
+	<code>apt-get dist-upgrade</code> will update the modules/images to 9.0.1
+	automatically once available. So this choice will update to new <emphasis
+	role="bold">maintenance</emphasis> releases automatically. The most conservative
+	choice would be to explicitly select a x.y.z version (currently 9.0.0), since then
+	images will only receive bug fix updates without explicitly changing the version in
+	<productname>Qlustar</productname>. See also the discussion in the general <link
+	xlink:href="https://qlustar.com/book/docs/qlustar-update-procedure/___blank___">
+	Qlustar Update Guide</link>
+      </para>
+    </section>
+    <section xml:id="sec-Image-Properties">
+      <title>Image Properties</title>
+      <para>
+	<!--cbox(file: qlustar_images__new.png)-->
+	A couple of images are pre-defined during the installation process. The dialog shows
+	the images sorted by their names. Expanding an entry shows its configuration and
+	allows to select a UnionFS chroot via the drop-down menu. Each image must contain at
+	least the core module. Additional modules can be added or removed using the context
+	menu when hovering over an entry. Only modules that are not already chosen are
+	available for selection.
+      </para>
+      <para>
+	New images can be added through the context menu or by pressing the
+	<guibutton>New</guibutton> button at the bottom of the dialog. Like before, you
+	should then enter the name for the new config, choose a UnionFS group and optionally
+	provide a description for the new image. Existing images can be removed via the
+	context menu.
+      </para>
+    </section>
+  </section>
+  <section xml:id="sec-NIS-Hosts">
+    <title>NIS hosts</title>
+    <para>
+      <!--cbox(file: nis/host_header.png)-->
+      NIS (Network Information System) is used to manage hostname resolution within the
+      cluster. For all hosts that are managed within <application>QluMan</application>
+      itself, a corresponding NIS entry is created automatically. However, administrators
+      might want to add other hosts external to the cluster to the NIS database as well. To
+      achieve this, the creation of the NIS hosts database is split into a header part that
+      can be freely edited by the admin, and a part that is auto-created with the hosts
+      managed by <application>QluMan</application>. To edit the header part, choose
+      <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>NIS Host Header</guimenuitem>
+      from the main menu. The top part of the window popping up can then freely be
+      edited. Note that entries for the head-node are automatically created upon installation
+      and should remain unchanged unless one of the head-nodes IP changes. The resulting NIS
+      hosts file can then be previewed and written to disk by pressing the corresponding
+      dialogs at the bottom of the dialog. Upon writing the file, the NIS database is
+      automatically rebuilt on the NIS master server.
+    </para>
+  </section>
+  <section xml:id="sec-SSH-Hosts">
+    <title>SSH host files</title>
+    <para>
+      <!--cbox(file: ssh_hosts__known.png)-->
+      To simplify ssh remote logins to cluster nodes, three ssh configuration files are
+      provided and managed by <application>QluMan</application>: (a)
+      <filename>ssh_known_hosts</filename> (holds ssh host keys of cluster nodes), (b)
+      <filename>shosts.equiv</filename> (enables login without password between machines
+      within the cluster) and (c) <filename>authorized_keys</filename>, which is used to
+      allow password-less root login to nodes with the specified ssh public keys. The first
+      two config files consist of a configurable header part, where additional hosts can
+      freely be entered and an auto-generated part for the hosts managed by
+      <application>QluMan</application>. The last one just has the configurable part. Ssh
+      host info for the head-node and a possibly configured frontend-node are automatically
+      inserted during the installation process.
+    </para>
+    <para>
+      <!--cbox(file: ssh_hosts__authorized_keys.png)-->
+      <!--cbox(file: ssh_hosts__equiv.png)-->
+      Management of the three configs is similar to the <classname>NIS hosts</classname>
+      dialog: To edit the header part of either config, select <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>SSH Configs</guimenuitem> from the main menu. Then
+      choose the config to work on by using the drop-down menu at the bottom left. The top
+      part of the window popping up can then freely be edited. Finally, the resulting ssh
+      host files can be previewed and written to disk by pressing the corresponding dialogs
+      at the bottom of the dialog.
+      <note>
+	<para>
+	  There is no preview of the <filename>authorized_keys</filename> file, as this is
+	  automatically written during the boot phase on hosts, that are not head-nodes.
+	</para>
+      </note>
+    </para>
+  </section>
+  <section xml:id="sec-UnionFS-Chroots">
+    <title>UnionFS Chroots</title>
+    <para>
+      In most practical cases, a <productname>Qlustar</productname> image should be
+      configured with an associated UnionFS chroot. Exceptions are single purpose images
+      e.g. for Lustre servers. By design, images are stripped down to the functionality
+      (programs) that is most often needed on a compute/storage node. This keeps them small
+      while still providing fast, network-independent access to programs/files typically
+      used.
+    </para>
+    <para>
+      To complement the image and provide the full richness of the packages/programs
+      available in the chosen Linux distribution, the UnionFS chroot (holding a full
+      installation of e.g. Ubuntu) is exported via NFS by one of the head-nodes and
+      technically <emphasis role="bold">merged below</emphasis> the content of the
+      <classname>Qlustar OS image</classname>. In practice, this means that all files
+      belonging to the chroot will be available on the nodes configured to use it, but if a
+      file/program is also in the node's image, that one will be used. Hence, this method
+      combines the <emphasis role="bold">compactness and speed</emphasis> of the imaging
+      approach with the <emphasis role="bold">completeness</emphasis> of a full OS
+      installation to give you the best of all worlds.
+    </para>
+    <para>
+      <!--cbox(file: manage_chroots/main.png)-->
+      <!--cbox(file: menu-manage_cluster__manage_chroots.png)-->
+      The chroot associated with a Qlustar image is easily selectable as explained (<xref
+      linkend="sec-Qlustar-OS-Images"/>). Management of the chroots themselves is possible
+      via the <classname>Manage Chroots</classname> dialog which is accessible via the main
+      menu <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Manage
+      Chroots</guimenuitem>. It provides a number of actions related to chroots. Manipulation
+      of the contents of chroots is explained <link xlink:href=
+      "../First_Steps_Guide/index.html#sec-Adding-Software___blank___">elsewhere</link>.
+    </para>
+    <para>
+      <!--cbox(file: manage_chroots__select_chroot.png)-->
+      To <emphasis role="bold">specify a chroot to operate on</emphasis>, select it via the
+      corresponding pull-down menu. This will show its description, as well as its properties
+      like the NFS server that hosts it, the filesystem path on the server, the flavor (edge
+      platform, precise/wheezy/...)  and the version of the
+      <productname>Qlustar</productname> feature release (always being of the form x.y, e.g
+      8.1).
+    </para>
+    <para>
+      <!--cbox(file: manage_chroots__new2.png)-->
+      <!--cbox(file: manage_chroots__new1.png)-->
+      When <emphasis role="bold">generating a new chroot</emphasis>, a name for the chroot
+      must be specified and optionally a description of its purpose. Furthermore, you can
+      select an NFS server where the chroot will be located (currently only one option), a
+      flavor (aka edge platform) and <productname>Qlustar</productname> version. Finally you
+      have the possibility to select <classname>Qlustar tasks</classname>. These are topic
+      package bundles, each consisting of a collection of packages relevant to a certain
+      field of HPC applications. Pressing the <guibutton>OK</guibutton> button then starts
+      the generation of the chroot. You can follow the rather lengthy process (count a couple
+      of minutes) in its own window.
+    </para>
+    <para>
+      <!--cbox(file: manage_chroots__edit.png)-->
+      <!--cbox(file: manage_chroots__clone2.png)-->
+      <!--cbox(file: manage_chroots__clone1.png)-->
+      <emphasis role="bold">Cloning an existing chroot</emphasis> is mostly useful when you
+      want to test an upgrade to a new release or for other tests. Pressing the
+      <guibutton>Clone</guibutton> button opens a sub-window in which you can specify the
+      name of the new cloned chroot and optionally a description of its purpose. Pressing the
+      <guibutton>OK</guibutton> button then starts the cloning process. You can again watch
+      it in its own window. Editing a chroot let's you edit it's description.
+    </para>
+    <para>
+      <!--cbox(file: manage_chroots__remove3.png)-->
+      <!--cbox(file: manage_chroots__remove2.png)-->
+      <!--cbox(file: manage_chroots__remove1.png)-->
+      <emphasis role="bold">Removal of a chroot</emphasis> by pressing the
+      <guibutton>Remove</guibutton> button first asks you for a final confirmation. If you
+      then press the <guibutton>Delete</guibutton> button, the chroot will be removed
+      provided it is not still in use by a Qlustar image. If it is still in use, a list of
+      images that are associated with the chroot is given. You would then first have to
+      reconfigure these images to use another chroot before trying to remove again. <emphasis
+      role="bold">Renaming of a chroot</emphasis> is not supported directly. To rename you'd
+      have to clone the original chroot giving the clone the new desired name and afterwards
+      remove the old chroot.
+    </para>
+  </section>
+  <section xml:id="sec-Configuring-IB">
+    <title>Infiniband network</title>
+    <para>
+      For most practical purposes, Infiniband (IB) adapters need to be configured with an IP
+      address (IPoIB) just like Ethernet adapters. If you have chosen to configure an IB
+      network during installation, this section is mostly about how to review or change the
+      initial
+      <!--cbox(file: network_config__infiniband.png)-->
+      settings. If not, IB first has to be activated in the <link
+      linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. An IB Network
+      address IP and netmask can then be chosen. The Infiniband network must not collide with
+      the Cluster (Ethernet) or IPMI network. This is prevented automatically in the settings
+      dialog. The Infiniband IP of each host is computed by mapping the host part of its
+      Cluster Network IP to the IB Network. Example: IP Cluster Network 192.168.52.100 - IP IB
+      network 192.168.53.100. Note, that this mechanism requires the IB netmask to be at least
+      as large as the Cluster Network netmask. Hence, smaller values won't be selectable.
+    </para>
+    <para>
+      <!--cbox(file: hardware_property_set__ib.png)-->
+      To actually have a node's IB adapter be configured during the boot process, additional
+      steps are necessary. It is not uncommon, that a cluster consists of hosts with IB and
+      hosts without. Therefore, the pre-defined hardware property <parameter>IB
+      Adapter</parameter> with a value of <parameter>true</parameter> must be assigned to a
+      host, to explicitly enable IB for it. This is done most conveniently, by adding this
+      property to the Hardware Property Set(s) used in the Host Template(s) for nodes with
+      IB. If this assignment exists, Infiniband modules will be loaded and IP-over-IB will be
+      configured during the boot process of the corresponding nodes with the IP mapping
+      described above.
+    </para>
+    <section xml:id="sec-Configuring-OpenSM">
+      <title>Activating/configuring OpenSM</title>
+      <para>
+	In an IB fabric, at least one node (or switch) has to run a subnet manager to manage
+	the routing tables. Qlustar provides <application>OpenSM</application> for this
+	task. If the head-node is also part of the IB network, it's usually best to configure
+	it to run OpenSM. This might have
+	<!--cbox(file: opensm__port_all.png)-->
+	been chosen during installation, in which case there is nothing more to be done. If
+	not, you have the option to run OpenSM on ordinary nodes too. In this case, it is
+	advisable to run OpenSM on two or three nodes (not more) for redundancy reasons. It
+	is therefore best, to configure this directly for the chosen hosts, rather than using
+	a Host Template or generic property set.  After selecting the host or hosts where
+	OpenSM should run in the Enclosure View, open the context menu and select
+	<guimenuitem>Set Generic Property</guimenuitem>-><guimenuitem>OpenSM
+	Ports</guimenuitem>-><guimenuitem>ALL</guimenuitem>. The next time the hosts boots,
+	the OpenSM daemon will be started on all its Infiniband ports.
+      </para>
+      <para>
+	<!--cbox(file: opensm__port_create_1.png)-->
+	<!--cbox(file: opensm__port_1.png)-->
+	If a host has more than one IB port, OpenSM can also be configured to run only on a
+	specific port instead of all of them. The port can be specified by its number or by
+	its unique ID. As this is an uncommon configuration and the unique ID is unknown
+	beforehand, there is no preset value for this. To create a new value, first select an
+	existing value, e.g. ALL, for the generic property <literal>OpenSM
+	Ports</literal>. You can then edit the value in the <classname>Generic
+	Properties</classname> box of a host. Editing the line and pressing
+	<keycap>return</keycap> will create the new value. Beware that this will only affect
+	one shown host. To assign the new value to other hosts, select them and then change
+	the OpenSM Ports property through the context menu.
+      </para>
+      <para>
+	<!--cbox(file: opensm__option_edit.png)-->
+	<!--cbox(file: opensm__option_add.png)-->
+	In some circumstances it might be necessary to run OpenSM with extra options. This
+	can also be configured via generic properties. The only preset value is the empty
+	string, so you need to create a new value for the options you require. First add the
+	empty value of the generic property <classname>OpenSM Options</classname> to one
+	host. Edit the value to your requirements and press <keycap>return</keycap> to create
+	it. Finally add/change the OpenSM Options generic property to all relevant hosts.
+      </para>
+    </section>
+  </section>
+  <section xml:id="sec-IPMI-Settings">
+    <title>IPMI settings</title>
+    <para>
+      <!--cbox(file: network_config__ipmi.png)-->
+      Configuring IPMI is similar to Infiniband and also involves multiple steps, because
+      there are a number of options to set. If you have chosen to configure an IPMI network
+      during installation, a larger part of this section is about how to review or change the
+      initial settings. If not, IPMI first has to be activated in the <link
+      linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. There you
+      can set the IPMI Network address IP and netmask. The IPMI address of a host is then
+      determined with the same mapping as used when <link
+      linkend="sec-Configuring-IB">configuring IB</link> and the same restrictions for the
+      choice of netmask apply.
+    </para>
+    <para>
+      <!--cbox(file: hardware_property_set__ipmi.png)-->
+      Often not all nodes in a cluster have IPMI. Therefore, in
+      <application>QluMan</application> per default no host is configured to setup IPMI,
+      unless it is assigned the hardware property <literal>IPMI Adapter</literal> with a
+      value of <parameter>true</parameter>. The easiest way to achieve this, is to add the
+      <literal>IPMI Adapter</literal> property to the Hardware Property Set(s) used in the
+      Host Template(s) for the nodes with IPMI. With this assignment, a node is ready for
+      monitoring its temperature and fan speeds.
+    </para>
+    <para>
+      <!--cbox(file: generic_property_set__ipmi_channel_add.png)-->
+      <!--cbox(file: generic_property_set__ipmi_initialize_add.png)-->
+      Enabling IPMI nodes for remote control involves two more settings. The first one is the
+      generic property <parameter>Initialize IPMI</parameter>. Per default the settings of
+      the IPMI cards are not touched by <productname>Qlustar</productname>. However, while
+      the <parameter>Initialize IPMI</parameter> generic property is assigned and set to
+      <parameter>true</parameter>, the IPMI card settings of the corresponding host will be
+      reset every time it boots. Changing the value of this property to
+      <parameter>true</parameter> and after booting back to <parameter>false</parameter>
+      allows a one-time setup of the cards properties.
+    </para>
+    <para>
+      <!--cbox(file: generic_property_set__ipmi_channel_edit.png)-->
+      The second generic property is the <parameter>IPMI Channel</parameter> to use. Per
+      default channel 1 is used and this is the only preset value for the property. If you
+      need to use a different channel, first add the generic property <parameter>IPMI
+      Channel</parameter> to the <classname>Generic Property Set</classname> (or to a host
+      directly) and then edit the value.
+    </para>
+  </section>
+</chapter>
+
