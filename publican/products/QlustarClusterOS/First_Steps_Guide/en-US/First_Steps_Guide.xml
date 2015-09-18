@@ -432,10 +432,10 @@ Server infos and one-time login token for user 'admin' saved as 'token'
 	  a lot of other packages that qluman-qt depends on, which will slow down updates. If
 	  you have the possibility, <link linkend="sec-QluMan-Workstation">install qluman-qt on
 	  your workstation</link> and work from there. If not, you can launch qluman-qt
-	  remotely on the node, where it is installed (FE or head-node) per ssh (with X11
+	  remotely on the node, where it is installed (FE or head-node), per ssh (with X11
 	  forwarding enabled / <parameter>-X</parameter> option) as follows:
 	  <screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 user@workstation ~ $</prompt>
 <command>ssh -X root@servername qluman-qt</command>
 	  </screen>
 	  This should bring up the <firstterm>Management Console</firstterm>.  Using the
@@ -536,14 +536,14 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	"hello world" test programs (one in C the other one in FORTRAN90) as the test user you
 	created earlier: Login on the front-end node as this user and execute
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpicc.openmpi-gcc -o hello-world-c hello-world.c</command>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpif90.openmpi-gcc -o hello-world-f hello-world.f90</command>
 	</screen>
 	After this you should have created two executables. Check it with
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>ls -l hello-world-?</command>
 	</screen>
 	Now we're prepared to test the queuing system with the two programs.
@@ -556,7 +556,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	can submit the two "hello world" programs created previously as follows (commands are
 	given for slurm):
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>OMPI_MCA_btl="tcp,self" salloc -N 2 --ntasks-per-node=2 -p demo \
 srun hello-world-c</command>
 	</screen>
@@ -592,7 +592,7 @@ salloc: Job allocation 19 has been revoked.
 	<filename>hello-world-f90-slurm.sh</filename> (to see the output, execute <command>cat
 	slurm-<replaceable>job#</replaceable>.out</command> after the job has finished):
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 -p demo hello-world-f90-slurm.sh</command>
 	</screen>
 	Note that the environment variable <envar>OMPI_MCA_btl="tcp,self"</envar> is used in
@@ -627,34 +627,33 @@ btl = tcp,self
 	<filename>$HOME/.bash/alias</filename>. Example submission (assuming you have 4 running
 	demo nodes):
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>linp-4-demo-nodes</command>
 	</screen>
 	Check that the job is started (output should be similar):
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>squeue</command>
 JOBID PARTITION     NAME     USER  ST  TIME  NODES  NODELIST(REASON)
    27      demo linstres     test   R  2:46      4     beo-[201-204]
-
-ssh to one of the nodes in the NODELIST and check with top that Linpack is running at full
-steam, like:
-
+	</screen>
+	ssh to one of the nodes in the <literal>NODELIST</literal> and check with top that
+	Linpack is running at full steam, like:
+	<screen>
+<prompt>0 testuser@cl-front ~ $</prompt>
+<command>top</command>
   PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                 
 18307 test  20   0  354m 280m 2764 R  100 28.0   6:42.92 xhpl-openblas           
 18306 test  20   0  354m 294m 2764 R   99 29.3   6:45.09 xhpl-openblas
 	</screen>
 	You can check the output of each Linpack run in the files:
+	<filename>$HOME/bench/hpl/run/job-<replaceable>jobid</replaceable>-*/openblas/job-<replaceable>jobid</replaceable>-*-<replaceable>run#</replaceable>.out</filename>
+	where <replaceable>jobid</replaceable> is the slurm <literal>JOBID</literal> (see the
+	squeue command above) and <replaceable>run#</replaceable> is an integer starting from
+	1. The way the script is designed, it will run indefinitely, restarting Linpack in an
+	infinite loop. So to stop it, you need to cancel the job like
 	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
-<command>HOME/bench/hpl/run/job-<replaceable>jobid</replaceable>-*/openblas/job-<replaceable>jobid</replaceable>-*-<replaceable>run#</replaceable>.out</command>
-	</screen>
-	where <replaceable>jobid</replaceable> is the slurm JOBID (see squeue command above)
-	and <replaceable>run#</replaceable> is an integer starting from 1. The way the script
-	is designed, it will run indefinitely, restarting Linpack in an infinite loop. So to
-	stop it, you need to cancel the job like
-	<screen>
-<prompt>0 root@cl-head ~ #</prompt>
+<prompt>0 testuser@cl-front ~ $</prompt>
 <command>scancel <replaceable>jobid</replaceable></command>
 	</screen>
       </para>
