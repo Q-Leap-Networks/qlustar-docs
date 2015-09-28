@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Look-Feel">
+  <title>Customizing the Look&amp;Feel</title>
+  <section xml:id="sec-Look-Feel-Overview">
+    <title>Overview</title>
+    <para>
+      There are three aspects of <application>QluMan's</application> appearance that can be
+      customized: Fonts, colors and widget style. Since QluMan is a QT application, it's
+      Look&amp;Feel can be controlled with <link
+      xlink:href="http://www.kde.org/___blank___">KDE</link> tools. Select the
+      <guimenuitem>Manage Cluster->Preferences</guimenuitem> menu entry to bring up the KDE
+      <classname>System Settings</classname> dialog. Now click on the <classname>Application
+      Appearance</classname> icon and you'll have the options to modify fonts, colors and
+      style.
+    </para>
+  </section>
+  <section xml:id="sec-Look-Feel-Fonts">
+    <title>Customizing Fonts</title>
+    <para>
+      When you click on the <guiicon>Fonts</guiicon> icon, you'll see a list of different font
+      identifiers for which you can change the font settings.  The relevant identifiers to be
+      adjusted for <application>QluMan</application> are <literal>General</literal>,
+      <literal>Menu</literal> and <literal>Window Title</literal>. Changing one of the values
+      and clicking the <guibutton>Apply</guibutton> button changes the corresponding font on
+      the fly.
+    </para>
+  </section>
+  <section xml:id="sec-Look-Feel-Colors">
+    <title>Customizing Colors</title>
+    <para>
+      <!--cbox(file: look-and-feel/system_settings_colors.png)-->
+      Click on the <guiicon>Colors</guiicon> icon and choose the
+      <guimenuitem>Colors</guimenuitem> tab. There you can adjust the color of the different
+      elements of the <application>QluMan GUI</application>. You can narrow down the color
+      identifiers to the ones affecting particular GUI elements by choosing a specific color
+      set with the corresponding pull-down menu. Changing one of the values and clicking the
+      <guibutton>Apply</guibutton> button changes the corresponding color on the fly.
+    </para>
+  </section>
+  <section xml:id="sec-Look-Feel-Clone">
+    <title>Cloning KDE Settings</title>
+    <para>
+      If you're using <firstterm>KDE4</firstterm> on you're desktop, instead of configuring
+      using the <classname>System Settings</classname> dialog, you can also move
+      <filename>/root/.kde/share/config</filename> to
+      <filename>/root/.kde/share/config.bak</filename> and copy your personal configured
+      <filename>.kde/share/config</filename> directory to
+      <filename>/root/.kde/share</filename>. As long as you're not using any non-standard KDE
+      themes, this should just apply the favorite desktop settings you're familiar with to
+      <application>QluMan</application> (restart of QluMan GUI required).
+    </para>
+  </section>
+  <section xml:id="sec-Look-Feel-Widget">
+    <title>Customizing the Widget Style</title>
+    <para>
+      <!--cbox(file: look-and-feel/qtconfig.png)-->
+      Changing the widget style can be a little more involved. First you need to start the QT
+      configurator <application>qtconfig</application> and choose a GUI style (default is
+      QtCurve). The following assumes you're running <application>qluman-qt</application> on
+      the head- or FE node. In case you have it installed on your workstation, just execute
+      <application>qtconfig</application> there.
+      <screen>
+<prompt>0 user@workstation ~ $</prompt>
+<command>ssh -X root@servername qtconfig</command>
+      </screen>
+    </para>
+    <para>
+      When you're done, select <guimenuitem>File</guimenuitem>-><guimenuitem>Save</guimenuitem>
+      and you'll already see the changes. After this you can exit qtconfig. If you want further
+      customization of the widget style (note that only some styles are configurable, among
+      them QtCurve), you can now go back to the <classname>Application Appearance</classname>
+      Dialog (see above), click on the <guiicon>Style</guiicon> icon, choose the
+      <!--cbox(file: look-and-feel/system_settings_style.png)-->
+      style you've selected in qtconfig as <literal>Widget style</literal> and press the
+      <guibutton>Configure...</guibutton> button. You'll see a large number of options for
+      customization. When you're satisfied with your modifications, press the
+      <guibutton>OK</guibutton> button and finally the <guibutton>Apply</guibutton> button of
+      the <classname>Style - System Settings</classname> window. Note, that you will see the
+      resulting changes only after performing some actions (pressing a button, etc.)  in the
+      <application>QluMan GUI</application>.
+    </para>
+    <para>
+      To have more options for changing the widget style from the default of QtCurve, you can
+      install additional kde-style packages (.e.g <package>kde-style-oxygen</package>) on the
+      machine, where you're executing the <application>QluMan GUI</application>.
+    </para>
+  </section>
+</chapter>
+

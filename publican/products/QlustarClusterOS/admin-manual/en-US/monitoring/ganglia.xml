@@ -38,6 +38,26 @@
     <secondary>Monitoring the nodes</secondary></indexterm>
 
     <para>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./images/ganglia-overview.png" format="PNG" width="70%" />
+	</imageobject>
+	<textobject><phrase>
+	  Cluster Monitoring Web Interface over Ganglia
+	</phrase></textobject>
+	<caption><para>
+	Cluster Monitoring Web Interface over Ganglia</para></caption>
+      </mediaobject>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./images/ganglia-node.png" format="PNG" width="70%" />
+	</imageobject>
+	<textobject><phrase>
+	  Node Monitoring with Ganglia
+	</phrase></textobject>
+	<caption><para>
+	Node Monitoring with Ganglia</para></caption>
+      </mediaobject>
       Each node sends sensor data and other information such as swap usage, fill level of file
       systems and S.M.A.R.T. data of the hard disks to a multicast address where the head node
       can collect them. The way each node collects the sensor data depends on the hardware
@@ -47,21 +67,5 @@
       and each node from within a web-browser. It suffices to visit the Link
       <literal>http://<replaceable>head-node</replaceable>/ganglia</literal>.
     </para>
-    <para></para>
-    <mediaobject>
-      <imageobject>
-	<imagedata fileref="./images/ganglia-overview.png" format="PNG" width="70%" />
-      </imageobject>
-      <caption> Cluster Monitoring Web Interface over Ganglia</caption>
-    </mediaobject>
-    <para></para>
-
-    <mediaobject>
-      <imageobject>
-	<imagedata fileref="./images/ganglia-node.png" format="PNG" width="70%" />
-      </imageobject>
-      <caption>Node Monitoring with Ganglia</caption>
-    </mediaobject>
-      
   </section>
 </section>

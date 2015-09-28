@@ -515,33 +515,51 @@ update_site() {
   local site_host_var=QL_${site}_HOST site_path_var=QL_${site}_PATH
   local site_var=QL_${site}_SITE
   local host=${!site_host_var} site_path=${!site_path_var} site_url=${!site_var}
-  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path
+  local tmpdir=update-tmp f conv_files img_paths img_path thumb_path rel_path
+  local rel_dir product create_thumb img_list
   local site_css=$QL_BRAND_DIR/$QL_LANG/css/site_overrides.css
   local colorbox_js=$QL_BRAND_DIR/$QL_LANG/javascript/jquery.colorbox-min.js
 
   cd "$WEB_DIR_PATH"
-  [ -d $tmpdir ] && rm -rf $tmpdir
-  cp -r ${WEB_TOC_PATH} $tmpdir
+  echo_bullet -i "--- Updating thumbnails ---"
+  # Create/update thumbnails
+  img_paths=$(find $WEB_TOC_PATH -name images | grep html-single)
+  for img_path in $img_paths; do
+    rel_path=${img_path#*en-US/}
+    product=${rel_path%%/*}
+    rel_path=${rel_path#*html-single/}
+    echo_bullet -i "Creating thumbnails for $product\t- ${rel_path%%/*}"
+    thumb_path=$img_path/thumbnails
+    img_list="$(find ${img_path} ! -wholename "*thumbnails*" -name "*.png")"
+    if [ -n "$img_list" ]; then
+      [ -d $thumb_path ] || mkdir $thumb_path
+      for f in $imgList; do
+	rel_path=${f#*images/}
+	rel_dir=""
+	dest_path=${thumb_path}/${f##*/}
+	if [[ $rel_path =~ / ]]; then
+	  rel_dir=${rel_path%/*.png}
+	  [ -d ${thumb_path}/${rel_dir} ] || mkdir -p ${thumb_path}/${rel_dir}
+	  dest_path=${thumb_path}/${rel_dir}/${f##*/}
+	fi
+	create_thumb=true
+	[ $f -ot $dest_path ] && create_thumb=false
+	$create_thumb && convert $f -resize 128x $dest_path
+      done
+    fi
+  done
+  echo_bullet -i "Copying content to temporary dir"
+  rsync -a --delete ${WEB_TOC_PATH}/ ${tmpdir}
   # Make simple substitutions
-  find $tmpdir -type f | xargs sed -i -e 's,%%%http-site%%%,'$site_url',g' \
+  echo_bullet -i "Fixing search boxes"
+  find $tmpdir -name "*.html" | xargs sed -i \
+    -e 's,%%%http-site%%%,'$site_url',g' \
     -e 's,http://www.google.com/search,https://www.google.com/search,g' \
     -e '/class.*searchtxt/s/\(value="" \)/\1\n\t\t\t\tplaceholder="Search"/' \
     -e 's/___blank___"/" target="_blank"/g'
   # Apply converter
   for f in $(find $(find $tmpdir -name html-single) -name index.html); do
-    echo "Converting ${f##*/html-single/}"
-    ../convert-html.py -i $f
-  done
-  # Create thumbnails
-  img_paths=$(find . -name images | grep html-single)
-  for img_path in $img_paths; do
-    thumb_path=$img_path/thumbnails
-    if ls ${img_path}/*.png > /dev/null 2>&1; then
-      [ -d $thumb_path ] || mkdir $thumb_path
-      for f in ${img_path}/*.png; do
-	convert $f -resize 128x ${thumb_path}/${f##*/}
-      done
-    fi
+    echo_bullet -i "$(../convert-html.py -i $f)"
   done
   for f in $site_css $colorbox_js; do
     if [ -r $f ]; then
@@ -552,11 +570,13 @@ update_site() {
     fi
   done
   cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
-  ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
-  tar zcf - $tmpdir | ssh root@${host} \
-    "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path; 
-     chown -R root:root $site_path"
-  rm -rf $tmpdir
+  echo_bullet -i "Starting upload"
+  rsync --rsh='ssh -x' -az --delete ${tmpdir}/ www-data@${host}:$site_path
+  ssh -x www-data@${host} "chown -R www-data:www-data $site_path"
+  #ssh root@${host} "if [ -d $site_path ]; then rm -rf $site_path; fi"
+  #tar zcf - $tmpdir | ssh root@${host} \
+  #  "cd ${site_path%/*}; tar zxf -; mv $tmpdir $site_path;
+  #   chown -R root:root $site_path"
 }
 
 declare -a execute_args

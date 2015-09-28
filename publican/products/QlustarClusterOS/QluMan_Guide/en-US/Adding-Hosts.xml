@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Adding-Hosts">
+  <title>Adding/Configuring Hosts</title>
+  <section xml:id="sec-Adding-Hosts">
+    <title>Adding Hosts</title>
+    <para>
+      To add new hosts to the cluster you can either select "New Hosts" from the context menu
+      in the Enclosure View tree or from the "Manage Hosts" menu. This opens the "Hosts
+      Window".
+      <!--cbox(file: new_host_window.png)-->
+    </para>
+    <para>
+      Adding a new host requires the specification of an IP address, hostname and MAC in the
+      corresponding three text fields of the dialog. The entered values are checked for
+      their validity. If one of them is not valid, the check-box to its right remains
+      cleared <!--checkbox_unchecked.png-->.  The tool-tip of the check-box will then show,
+      why it is invalid. If all the values are valid, all check-boxes will show a solid
+      check <!--checkbox_checked.png--> and the <guibutton>Add Host</guibutton> button will
+      become selectable. For convenience and if it makes sense, the IP address and the
+      numeric part of the hostname (if there is one) will automatically be incremented by
+      one, after a host was added. So in most cases, these fields will not have to be
+      changed manually to add the next host. Only the new MAC will need to be entered.
+    </para>
+    <para>
+      <!--cbox(file: new_host_window-select.png)-->
+      To help adding new hosts, qlumand scans the <filename>DHCP log file</filename> for
+      unknown hosts that have requested an IP address. For each unknown host found in the
+      logs, the table at the top of the window shows the time of the first and last
+      appearance in the log, its MAC address as well as the hardware vendor this MAC is
+      assigned too (if known). Selecting a MAC in the table copies it into the MAC text field
+      at the bottom and a double-click adds the host with the selected MAC. One can also
+      select multiple lines (by holding the <keycap>CTRL</keycap> key and clicking or holding
+      the <keycap>shift</keycap> key and dragging the mouse) and then click the
+      <guibutton>Add Selected</guibutton> button at the bottom to add them all using the
+      auto-increment feature for the IP address and hostname. If unsure, try adding a single
+      host first and check the auto-increment does the right thing before adding a group of
+      hosts. One easy way to add groups of hosts is to power them on one at a time with a
+      <!--cbox(file: new_host_window-template.png)-->
+      short delay (say 30 seconds). The hosts will then appear in the Unknown MACs table in
+      the order they were powered on and can be added as a group with the click of a single
+      button.
+    </para>
+    <para>
+      At the bottom of the window a <xref linkend="Host-Templates" endterm="Host-Templates"/>
+      can be selected that will be used as the default for new hosts. Most of the time, no
+      additional configuration is needed for a new host.
+    </para>
+  </section>
+  <section xml:id="sec-Configuring-Hosts">
+    <title>Configuring Hosts</title>
+    <para>
+      The configuration of a host consists of the definition and assignment of different
+      types of properties and config classes. Properties are always a key + value pair and
+      are further split into generic, hardware and specific properties.
+    </para>
+    <bridgehead xml:id="Hardware-Properties">Hardware Properties</bridgehead>
+    <para>
+      <literal>Hardware properties</literal> are used to describe the hardware of a
+      host. Amongst others, hardware properties like the amount of RAM or number of CPU cores
+      are used to configure resource management systems like slurm or torque, so jobs can be
+      assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
+      purely informational and might be used for inventory management.
+    </para>
+    <bridgehead xml:id="Generic-Properties">Generic Properties</bridgehead>
+    <para>
+      A property that is not hardware related and not specific to a host is called generic.
+      <literal>Generic properties</literal> can be configuration options, like 'OpenSM Host',
+      or purely informational, like 'Paid by'. While hardware properties are meant to be more
+      rigid typically with a configurable set of fixed values, generic properties are more
+      flexible and can be defined at will. This will become more apparent in future versions
+      of <application>QluMan</application>. <literal>Generic properties</literal> are also
+      not necessarily unique, making it possible to assign multiple values for a single
+      generic property. This is useful e.g. to add multiple torque host tags or to put hosts
+      in multiple groups for dsh/pdsh (via the 'Host tag').
+    </para>
+    <bridgehead xml:id="Specific-Properties">Specific Properties</bridgehead>
+    <para>
+      As the name suggests, <literal>specific properties</literal> are specific to a single
+      host. The best example for such a property is the serial number of the host.
+    </para>
+    <bridgehead xml:id="PropConf-Sets">Property/Config Sets</bridgehead>
+    <para>
+      <!--cbox(file: enclosure_view__select_template.png)-->
+      Individual generic properties, hardware properties and config classes can be used to
+      define generic property sets, hardware property sets and config sets. This is simply a
+      means of grouping them together so they can be used as a single entity. A <literal>Host
+      Template</literal> can then be created by choosing one generic property set, one
+      hardware property set and one config set.
+    </para>
+    <bridgehead xml:id="Host-Templates">Host Templates</bridgehead>
+    <para>
+      When a correct <literal>Host Template</literal> exists, a host can be configured by
+      selecting the desired template in the <classname>Enclosure View</classname> window.
+      For a single host, this can be done by selecting it in the tree view. This brings up
+      the host <!--cbox(file: enclosure_view__select_template2.png)--> information on the left and
+      the template can be selected from the drop-down menu. To configure multiple hosts, you
+      would select them in the tree view and choose a <literal>Host Template</literal> from
+      the context menu. The check-marks in the sub-menu indicate which <literal>Host
+      Templates</literal> are currently assigned (if any) for the selected nodes. This action
+      will override the previous assignment.
+    </para>
+    <para>
+      <literal>Generic properties</literal> can also be assigned to a host individually. Such
+      assigned properties take precedence over ones of the same type selected through the
+      <literal>Host Template</literal>. This is useful when a property should be changed
+      temporarily for some hosts or when a property should not be
+      <!--cbox(file: enclosure_view__select_generic_property.png)-->
+      changeable globally through the Host Template. Note that by default, every new host has
+      the generic property <parameter>Schedule Format: always</parameter>, which is required
+      to format the disk on the first boot. This should be removed after the first successful
+      boot of the host so that log files will be preserved across boots in the future.
+    </para>
+  </section>
+</chapter>

@@ -1,0 +1,412 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Config-Classes">
+  <title>Config Classes</title>
+  <section xml:id="sec-Config-Classes-Overview">
+    <title>Overview</title>
+    <para>
+      <!--cbox(file: write_files__with_changes.png)-->
+      <!--cbox(file: write_files/main.png)-->
+      Config Classes manage configurations that are too complex to fit into the key + value
+      scheme used by properties. Therefore, there is no common interface to configure all
+      classes. Instead each class has its own configuration dialog presenting the specific
+      options it provides. Furthermore, some classes depend on sub-classes
+      (e.g. <classname>Boot Configs</classname> depend on "Qlustar Images"). Only the top-level
+      config classes can be assigned to a host template. Sub-classes are assigned indirectly
+      via their parent class. Most of the functional subsystems of
+      <productname>Qlustar</productname> have a dedicated config class. Currently there are
+      four of them: <classname>Boot Configs</classname>, <classname>DHCP Configs</classname>,
+      <classname>Disk Configs</classname> and <classname>Slurm Configs</classname> and the
+      sub-class <classname>Qlustar Images</classname>.
+    </para>
+  </section>
+  <section xml:id="sec-Writing-Config-Files">
+    <title>Writing Config Files</title>
+    <para>
+      The configurations managed via config classes and sub-classes in the
+      <application>QluMan</application> GUI are translated into automatically generated
+      configuration files on the head-node(s). While <application>QluMan</application>
+      <!--cbox(file: preview_diff__diff_one.png)-->
+      <!--cbox(file: preview_diff__diff_many.png)-->
+      <!--cbox(file: preview_diff__view.png)-->
+      configuration options are usually saved in the <application>QluMan</application>
+      database immediately after they have been entered in the GUI, the write process of the
+      real configuration files on disk is a separate step that needs to be specifically
+      initiated and confirmed.
+    </para>
+    <para>
+      Each configuration dialog of a config class has a <guibutton>Preview</guibutton> and
+      <guibutton>Write</guibutton> button for its own config files. Additionally, there is
+      also a dedicated dialog for writing and previewing <emphasis role="bold">all</emphasis>
+      configuration files. You can access it from <guimenuitem>Manage
+      Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or the <guibutton>Write
+      Files</guibutton> button at the bottom of the main window. If a config class has no
+      pending changes, the <guibutton>Preview</guibutton> button becomes a
+      <guibutton>View</guibutton> button and the <guibutton>Write</guibutton> button becomes
+      ghosted. The Preview window shows both, the new version of the config file that will be
+      written, as well as a <parameter>context diff</parameter> of the changes compared to
+      the current file on disk (if there are any differences). If a config class changes only
+      one file, the file will be shown directly. If multiple files are involved, there will
+      be one tab for each file.
+    </para>
+    <para>
+      Checking the optional <guibutton>Force</guibutton> button will initiate a rewrite of all
+      config files, even if they haven't changed. Note also, that the actual write command is
+      performed via the <link linkend="chap-RX-Engine">Qlustar RXEngine</link>. This allows for
+      <emphasis role="bold">consistent management of multiple head-nodes</emphasis> e.g. in a
+      high-availability configuration.
+    </para>
+  </section>
+  <section xml:id="sec-Boot-Configs">
+    <title>Boot Configs</title>
+    <para>
+      The "Boot Config" dialog allows to define settings for the PXE/tftp boot server. A boot
+      configuration determines which <link linkend="sec-Qlustar-OS-Images">Qlustar OS
+      image</link> is delivered to a node and optionally permits the specification of
+      <firstterm>PXELinux</firstterm> commands and/or Linux kernel parameters. When opened, the
+      <classname>Boot Config</classname> window shows a list of all boot configs currently
+      <!--cbox(file: boot_config__collapsed.png)-->
+      defined sorted by their names. Note that the default config is special in the sense
+      that it applies to any node that has no specific boot config assigned (either through a
+      template or directly) to itself. This means that in the simplest configuration (all
+      nodes should boot identically), it is sufficient to just have the "default" boot config
+      without any specific assignment. By expanding a boot config item, the configured
+      <productname>Qlustar</productname> image, PXELinux command
+      <!--cbox(file: boot_config__context_menu.png)-->
+      and kernel parameters become visible. You can change any of the values by simply
+      selecting a different option from the drop-down menus. In case of kernel parameters,
+      you can also directly edit the entry and save the result by pressing
+      <keycap>return</keycap>. Furthermore, it is possible to add more kernel parameters or
+      remove them through the context menu.
+    </para>
+    <para>
+      <!--cbox(file: boot_config__new.png)-->
+      The context menu also lets you create new boot configs as well as edit or delete an
+      existing one. Alternatively a new boot config can be created by clicking the
+      <guibutton>New</guibutton> button at the bottom of the dialog. Both the context menu
+      and the button bring up the <classname>New Boot Config</classname> dialog.  Simply
+      enter the name for the new config, select a Qlustar image and (optionally) a PXELinux
+      command, enter a description and press <guibutton>OK</guibutton> to create it. The new
+      config then appears in the <classname>Boot Config</classname> window and is ready for
+      use.  
+      <note>
+	<para>
+	  Note that additional kernel parameters can not be added in the <classname>New Boot
+	  Config</classname> dialog or when editing an entry. This is only allowed via the
+	  context menu, once the mouse is over the boot config to be changed.
+	</para>
+      </note>
+    </para>
+  </section>
+  <section xml:id="sec-DHCP-Config">
+    <title>DHCP Config</title>
+    <para>
+      <!--cbox(file: dhcp_config__global.png)-->
+      The <classname>DHCP config</classname> dialog allows the configuration of the DHCP
+      server and is provide by the main menu <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>DHCP Configs</guimenuitem>. The final DHCP server
+      configuration file on disk is assembled from the header which defines global settings
+      and the host part which contains the MAC/IP address and hostname of all the hosts
+      registered with <application>QluMan</application>. The header can freely be edited in
+      the <classname>Global DHCP Template</classname> part of the dialog. An initial version
+      of it is created during installation and in most cases doesn't need to be changed. It
+      contains many important parameters required for the cluster to function
+      properly. Please consult the documentation of the DHCP server and the
+      <filename>dhcpd.conf</filename> man page for the syntax of this file.
+    </para>
+    <para>
+      <!--cbox(file: dhcp_config__edit_global.png)-->
+      To prevent multiple persons from editing at the same time and overwriting each others
+      changes accidentally you must acquire a lock for the template by clicking the
+      <guibutton>Edit</guibutton> button. If another user is already editing the file the
+      button will be ghosted and the tool tip will show which user is holding a lock for the
+      template.
+    </para>
+    <para>
+      <!--cbox(file: dhcp_config__save_global.png)-->
+      After having finished editing a template don't forget to save your changes by clicking
+      the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
+      save. You can undo all your changes up to the last time the template was saved by
+      clicking the <guibutton>Undo</guibutton> button. In case another admin has made changes
+      to a template while you are viewing or editing it, the <guibutton>Refresh</guibutton>
+      button will become enabled. By clicking it, the updated template is shown and you loose
+      any unsaved changes you have already made in your own edit field. To delete a template
+      click the <guibutton>Delete</guibutton> button.
+      <note>
+	<para>
+	  Note that the "Global Template" can not be deleted, since it is needed for the
+	  DHCP server to function correctly.
+	</para>
+      </note>
+    </para>
+    <para>
+      <!--cbox(file: template__lock_expire.png)-->
+      The template lock expires automatically after some time without activity so that the
+      template is not deadlocked if someone forgets to release the lock. In such a case the
+      above dialog will be shown notifying you about it. By selecting
+      <guibutton>OK</guibutton> a new lock will be requested. If another user is editing the
+      template at that time though the request will fail and an error dialog will inform you
+      of the failure.
+    </para>
+    <para>
+      <!--cbox(file: dhcp_config__menu.png)-->
+      DHCP options can also be set in separate group templates and targeted to specific
+      hosts. For simple clusters, this is hardly ever needed, but for large clusters e.g. you
+      might want to have more than one boot server to speed up cluster boot time. In this
+      case you could assign different groups of hosts to different boot servers using this
+      method. The defined group templates are available as configs to be added to config sets
+      or hosts directly. You can select a group template from the drop-down menu at the
+      bottom to view or edit it. As an example 2 templates specifying different boot-servers
+      are included.
+    </para>
+    <para>
+      <!--cbox(file: dhcp_config__edit_new.png)-->
+      <!--cbox(file: dhcp_config__new.png)-->
+      The drop-down menu also lets you create new templates by selecting the <guimenuitem>new
+      DHCP group</guimenuitem> entry. Enter the name of the template in the text field and
+      fill in the contents and description of the template. Pressing <keycap>return</keycap>
+      after entering the name will automatically acquire a lock for the new template and go
+      into edit mode. You can then enter the contents of the new template. Don't forget to
+      click the <guibutton>Save</guibutton> button at the end.
+    </para>
+    <para>
+      When you are satisfied with your changes, you can preview the resulting
+      <filename>dhcpd.conf</filename> file together with a diff to the old version on disk by
+      clicking the <guibutton>Preview</guibutton> button. The changes will only take full
+      effect when you click the <guibutton>Write</guibutton> button. This will also tell the
+      DHCP server to reload its configuration. The same can also be done through the main
+      menus <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem>
+      entry or the <guibutton>Write Files</guibutton> button at the bottom of the cluster
+      window and then selecting <guibutton>Preview</guibutton> or
+      <guibutton>Write</guibutton> button in the DHCP Configs row.
+    </para>
+  </section>
+  <section xml:id="sec-Disk-Configs">
+    <title>Disk Configs</title>
+    <para>
+      <productname>Qlustar</productname> has a powerful mechanism to manage the configuration
+      of disks on a node. This mechanism is partly based on the setup_storage module of <link
+      xlink:href="http://fai-project.org/___blank___">FAI</link>. It basically allows for any
+      automatic setup of your hard drives including kernel software RAID (md) and
+      <firstterm>LVM</firstterm> setups. A detailed description of the syntax for disk
+      configurations is <link xlink:href="http://fai-project.org/doc/man/setup-storage.html">
+      available</link>. Since the OS of a <productname>Qlustar</productname> node is always
+      running from RAM, a disk-less configuration is obviously also possible. Note, that for
+      flawless operation this requires some extra configuration (handling of log messages and
+      in/output of batch jobs) that will be explained in the
+      <productname>Qlustar</productname> admin guide. Valid configurations require
+      definitions for two filesystems /var and /scratch as well as swap space (see
+      examples). To permit the initial formatting of a new disk configuration on a node, it
+      must have assigned the <parameter>Schedule Format: always</parameter> generic property
+      during the initial boot (see the discussion <xref linkend="PropConf-Sets"
+      endterm="PropConf-Sets"/>.
+    </para>
+    <para>
+      <!--cbox(file: disk_config/main.png)-->
+      Disk configurations can be managed using the <classname>Disk Configs</classname> dialog
+      accessible from the main menu <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>Disk Configs</guimenuitem>. You can select the
+      config to be viewed/edited from the drop-down menu at the bottom left. A couple of
+      example configurations are created during the installation. Note that there are two
+      special configs: (a) "disk-less" (not editable or deletable) and (b) "default"
+      (editable but not deletable). The default config is used for any node that doesn't have
+      a specific assignment to a disk config (via a Host Template, config set). The
+      configuration itself can be edited in the text field at the top of the dialog and
+      should conform to setup_storage syntax (see above). New configs can be created by
+      choosing <guimenuitem>new disk config</guimenuitem> from the drop-down menu. As usual,
+      enter the name of the new config in the text field and fill in the contents and
+      description.
+    </para>
+  </section>
+  <section xml:id="sec-Slurm-Config">
+    <title>Slurm Config</title>
+    <section xml:id="sec-Slurm-Overview">
+      <title>Overview</title>
+      <para>
+	The slurm configuration module comes in three parts:
+      </para>
+      <para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      The overall slurm configuration being controlled through two templates in the
+	      <classname>Config Header</classname> tab.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The configuration of slurm nodes done via the <classname>Node Groups</classname>
+	      tab.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The configuration of partitions achieved by using the
+	      <classname>Partitions</classname> tab.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+      <para>
+	Assignment of hosts to node groups and/or partitions is possible by adding the latter
+	to the relevant <classname>Config Sets</classname> and <classname>Host
+	Templates</classname> or by direct assignment through the generic property context
+	menu.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Config-Header">
+      <title>Slurm Config Header</title>
+      <para>
+	<!--cbox(file: slurm__preview.png)-->
+	<!--cbox(file: slurm_config__cgroups.png)-->
+	<!--cbox(file: slurm_config__editing.png)-->
+	<!--cbox(file: slurm_config__config.png)-->
+	The overall slurm configuration is split into two templates, the slurm config and
+	<filename>cgroups.conf</filename>. On write, <application>QluMan</application> adds
+	the NodeName and PartitionName lines at the end of the slurm config template to
+	generate the <filename>slurm.conf</filename> file, while the
+	<filename>cgroup.conf</filename> file gets written as is. For the syntax of both
+	templates, please refer to the slurm documentation (e.g. <code>man
+	slurm.conf</code>). To edit one of the templates, select it, click the
+	<guibutton>Edit</guibutton> button and start making changes. Click
+	<guibutton>Save</guibutton> to save the changes or <guibutton>Undo</guibutton> to
+	discard them. Use the <guibutton>Preview</guibutton> button to check changes before
+	writing them.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Node-Groups">
+      <title>Slurm Node Groups</title>
+      <para>
+	<!--cbox(file: slurm__node_groups.png)-->
+	Slurm node properties are configured from two sources:
+      </para>
+      <para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      The <xref linkend="Hardware-Properties" endterm="Hardware-Properties"/>
+	      assigned to a host. The number of CPUs, sockets, cores and the size of its main
+	      memory is taken from there.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The second source are the slurm node groups. Every host can belong to at most one
+	      such group. The membership is defined (see <xref
+	      linkend="sec-Slurm-Assign-Hosts"/>) by adding the desired group to the <link
+	      linkend="PropConf-Sets">Config Set</link> that is assigned to the node via its
+	      <link linkend="Host-Templates">Host Template</link>. Each Node Group is a
+	      collection of slurm node properties, that will be set for the members of the
+	      group. Per default, only the <code>MemSpecLimit</code> property is defined, but
+	      other properties like <parameter>Feature</parameter> or
+	      <parameter>Goes</parameter> can be added by using the <link
+	      linkend="sec-Slurm-Property-Editor">Slurm Property Editor</link>.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+      <para>
+	<!--cbox(file: slurm__node_groups__new3.png)-->
+	<!--cbox(file: slurm__node_groups__new2.png)-->
+	<!--cbox(file: slurm__node_groups__new1.png)-->
+	A new node group can be created by clicking the <guibutton>New Node Group</guibutton>
+	button or selecting <guimenuitem>New Node Group</guimenuitem> from the context
+	menu. This opens a dialog asking for the name of the new group.  An existing node
+	group can be renamed or deleted from the context menu.
+      </para>
+      <para>
+	<!--cbox(file: slurm__node_groups__change_property.png)-->
+	<!--cbox(file: slurm__node_groups__add_property1.png)-->
+	<!--cbox(file: slurm__node_groups__rename2.png)-->
+	<!--cbox(file: slurm__node_groups__rename1.png)-->
+	The context menu also allows to add properties to a group. Note, that some properties
+	are <emphasis role="bold">unique</emphasis>, i.e. only one value can be selected for
+	the property. Adding a second value of the same property will automatically replace
+	the old value in that case. Other properties are not unique. Adding multiple values
+	to such properties results in a comma separated list of values in the
+	<filename>slurm.conf</filename> file. An example for this is the
+	<parameter>Feature</parameter> property. Properties can also be changed directly
+	using the pull-down menu. If a change will cause a duplicate value, the previous
+	(duplicate) value is automatically removed.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Partitions">
+      <title>Slurm Partitions</title>
+      <para>
+	<!--cbox(file: slurm__partitions.png)-->
+	The management of Slurm partitions works exactly the same way as with slurm node
+	groups. Please see <xref linkend="sec-Slurm-Node-Groups"/> for how to create, rename
+	and change partitions.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Property-Editor">
+      <title>Slurm Property Editor</title>
+      <para>
+	The Slurm property editor for node or partition properties can be opened by clicking
+	the <guibutton>Properties</guibutton> button at the bottom of the Slurm main
+	dialog. If the <classname>Node Groups</classname> tab is selected, the editor for
+	node properties will be opened. If the <classname>Partitions</classname> tab is
+	selected, the editor for partition properties will be opened.
+      </para>
+      <para>
+	<!--cbox(file: slurm__node_groups__property_editor.png)-->
+	<!--cbox(file: slurm__node_groups__properties1.png)-->
+	To add a new property, enter the name of the property in the name field. If the name
+	does not already exist, the <guibutton>New Property</guibutton> button will be
+	enabled. Click on it to create the property. <application>QluMan</application> has a
+	white-list of known valid properties, e.g. <parameter>Gres</parameter> and allows
+	adding such a property without further questions. In this case,
+	<application>QluMan</application> will also set the unique flag and add all known
+	property values automatically.
+      </para>
+      <para>
+	<!--cbox(file: slurm__node_groups__property_editor__new_bad.png)-->
+	<!--cbox(file: slurm__node_groups__property_editor__new.png)-->
+	When a property is created that is not on the white-list (<parameter>Gres</parameter>
+	in the screenshot) a dialog opens up, asking for confirmation. Note that adding an
+	unknown property can lead to a failure when trying to restart slurm. Therefore make
+	sure to only add properties you are certain slurm will know about. A property without
+	values can be deleted by clicking the <guibutton>Delete</guibutton> button.
+      </para>
+      <para>
+	<!--cbox(file: slurm__node_groups__property_editor__delete_value.png)-->
+	<!--cbox(file: slurm__node_groups__property_editor__add_value.png)-->
+	<!--cbox(file: slurm__node_groups__property_editor__delete.png)-->
+	<!--cbox(file: slurm__node_groups__property_editor__new_good.png)-->
+	To add values to a property, first select the desired property using the pull-down
+	menu from the name. Then enter the new property using <guibutton>Add
+	Value</guibutton> at the bottom and press <keycap>return</keycap> to add it. To
+	delete a value, select <guimenuitem>Delete value</guimenuitem> from the context menu.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Assign-Hosts">
+      <title>Assigning Hosts to Slurm Node Groups and Partitions</title>
+      <para>
+	<!--cbox(file: slurm__assign_host3.png)-->
+	<!--cbox(file: slurm__assign_host2.png)-->
+	<!--cbox(file: slurm__assign_host1.png)-->
+	Host are assigned to Slurm <classname>Node Groups</classname> and <emphasis
+	role="bold">Partitions</emphasis> by use of a <link linkend="Host-Templates">Host
+	Template</link> and its corresponding <link linkend="PropConf-Sets">Config
+	Set</link>. A <classname>Config Set</classname> may contain at most one <classname>Node
+	Group</classname> but any number of <emphasis role="bold">Partitions</emphasis>, since
+	a host can be member of an arbitrary number of slurm
+	<!--cbox(file: slurm__assign_host5.png)-->
+	<!--cbox(file: slurm__assign_host4.png)-->
+	partitions. Both can be added by selecting them via <guimenuitem>Add
+	Config</guimenuitem> in the context menu of the <classname>Config Set</classname>.
+      </para>
+    </section>
+  </section>
+</chapter>
+
