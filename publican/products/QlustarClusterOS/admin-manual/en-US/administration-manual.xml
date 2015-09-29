@@ -19,6 +19,7 @@
   <xi:include href="node-manage/node-manage.xml"/>
   <xi:include href="monitoring/monitoring.xml"/>
   <xi:include href="general-administration/general-administration.xml"/>
+  <xi:include href="general-administration/update-guide.xml"/>
   <xi:include href="Revision_History.xml"/>
   <index />
 </book>
