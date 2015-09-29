@@ -218,9 +218,32 @@ h6 {
     bottom: 46px !important;
 }
 
-/* Set line-height for toc in manual */
+/* Modification for Chapter in Preface */
 .toc dt {
-    line-height: 17px !important;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+/* Modification for Sections in Preface */
+.toc dd, .toc dd dl {
+    margin-top: 0em !important;
+    margin-bottom: 0.3em !important;
+}
+
+/* Modification for Sectionname in Preface */
+.toc dd dl dt {
+    margin-top: 0em !important;
+    margin-bottom: 0.3em !important;
+}
+
+/* Modification for Undersections in Preface */
+.toc dd dl dd {
+    margin-top: 0em !important;
+}
+
+/* Modification for Undersectionname in Preface */
+.toc dd dl dd dl dt {
+    margin-bottom: 0em !important;
 }
 
 /* -------------------- Admonitions ------------------ */
