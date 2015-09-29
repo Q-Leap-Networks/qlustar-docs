@@ -569,6 +569,9 @@ update_site() {
 	-m "Missing Qlustar brand file $f" -e $ERR_MISSING_FILE
     fi
   done
+  sed -i -e 's/left: 25% !important;/left: 30% !important;/g' \
+    -e 's/max-width: 50% !important;/max-width: 40% !important;/g' \
+    ${tmpdir}/db4.css
   cp -f $QL_BRAND_DIR/$QL_LANG/images/colorbox/* ${tmpdir}/images
   echo_bullet -i "Starting upload"
   rsync --rsh='ssh -x' -az --delete ${tmpdir}/ www-data@${host}:$site_path
