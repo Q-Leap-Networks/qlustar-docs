@@ -1,13 +1,22 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-user-manage">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-user-manage">
   <title>User Management</title>
   <indexterm><primary>User Management</primary></indexterm>
   <para>
     Currently user management is done on the command line.
   </para>
-  <section id="admin-man-sect-add-user">
+  <section xml:id="admin-man-sect-add-user">
     <title>Adding User Accounts</title>
     <indexterm><primary>User Management</primary>
     <secondary>Adding users</secondary></indexterm>
@@ -29,7 +38,7 @@
     system accounts.
     </para>
   </section>
-  <section id="admin-man-sect-rem-user">
+  <section xml:id="admin-man-sect-rem-user">
     <title>Removing User Accounts</title>
     <indexterm><primary>User Management</primary>
     <secondary>Removing users</secondary></indexterm>
@@ -57,7 +66,7 @@ removeuser.sh -r <replaceable>username</replaceable></command>
       <filename>/etc/qlustar/common/adduser.cf</filename> for default values.
       </para>
   </section>
-  <section id="admin-man-sect-man-user-restr">
+  <section xml:id="admin-man-sect-man-user-restr">
     <title>Managing user restrictions</title>
     <indexterm><primary>User Management</primary>
     <secondary>Managing restrictions</secondary></indexterm>
@@ -113,7 +122,7 @@ admgroup::2001:usr1,usr2
       to run commands according to their system rights.
     </para>
   </section>
-  <section id="admin-man-sect-shell-stp">
+  <section xml:id="admin-man-sect-shell-stp">
     <title>Shell Setup</title>
     <indexterm><primary>Shell setup</primary></indexterm>
     <para>
@@ -173,7 +182,7 @@ VISUAL vi
       </varlistentry>
     </variablelist>
  
-    <section id="admin-man-sect-bash-setup">
+    <section xml:id="admin-man-sect-bash-setup">
       <title>Bash Setup</title>
       <indexterm><primary>Shell setup</primary><secondary>Bash Setup</secondary></indexterm>
       <para>
@@ -244,7 +253,7 @@ VISUAL vi
 	</itemizedlist>
       </para>
     </section>
-    <section id="admin-man-sect-tcsh-setup">
+    <section xml:id="admin-man-sect-tcsh-setup">
       <title>Tcsh Setup</title>
       <indexterm><primary>Shell setup</primary><secondary>Tcsh Setup</secondary></indexterm>
       <para>

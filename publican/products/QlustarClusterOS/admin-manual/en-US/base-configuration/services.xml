@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-base-conf-serv">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-base-conf-serv">
   <title>Basic Services</title>
   <indexterm><primary>Services</primary></indexterm>
   
@@ -9,7 +18,7 @@
     This section describes the basic services running on a typical Qlustar cluster.
   </para>
   
-  <section id="admin-man-sect-disk-part-file-sys">
+  <section xml:id="admin-man-sect-disk-part-file-sys">
     <title>Disk Partitions and File-systems</title>
     <indexterm><primary>Services</primary>
     <secondary>Disk Partitions and File-systems</secondary></indexterm>
@@ -44,7 +53,7 @@
 
   </section>
 
-  <section id="admin-man-sect-nis">
+  <section xml:id="admin-man-sect-nis">
     <title>NIS</title>
     <indexterm><primary>Services</primary>
     <secondary>NIS</secondary></indexterm>
@@ -100,7 +109,7 @@
 
   </section>
 
-  <section id="admin-man-sect-nfs-sect">
+  <section xml:id="admin-man-sect-nfs-sect">
     <title>NFS</title>
     <indexterm><primary>Services</primary>
     <secondary>NFS</secondary></indexterm> 
@@ -159,7 +168,7 @@
     
   </section>
 
-  <section id="admin-man-sect-auto-mounter">
+  <section xml:id="admin-man-sect-auto-mounter">
     <title>Automounter</title>
     <indexterm><primary>Services</primary><secondary>Automounter</secondary></indexterm>
 
@@ -210,7 +219,7 @@ option option-130 "nfsserver";
 
   </section>
 
-  <section id="admin-man-sect-ssh">
+  <section xml:id="admin-man-sect-ssh">
     <title>SSH - Secure Shell</title>
     <indexterm><primary>Services</primary><secondary>SSH - Secure Shell</secondary></indexterm>
     
@@ -264,7 +273,7 @@ option option-130 "nfsserver";
 
   </section>
 
-  <section id="admin-man-sect-mail-server-postfix">
+  <section xml:id="admin-man-sect-mail-server-postfix">
     <title>Mail server - Postfix</title>
     <indexterm><primary>Services</primary>
     <secondary>Mail server - Postfix</secondary></indexterm>
@@ -281,6 +290,5 @@ option option-130 "nfsserver";
       linkend="admin-man-sect-mail-trans-agent"/> to find out, how to configure mail on the
       compute-nodes.
     </para>
-
   </section>
 </section>

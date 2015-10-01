@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-os-pkg-man">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-os-pkg-man">
   <title>OS Package Management</title>
   <indexterm><primary>Package Management</primary></indexterm>
   <para>
@@ -16,7 +25,7 @@
     that one is taken, if it is found in more than one, then the package with the newest
     version is installed.
   </para>
-  <section id="admin-man-sect-pkg-srcs">
+  <section xml:id="admin-man-sect-pkg-srcs">
     <title>Package sources</title>
     <indexterm><primary>Package Management</primary>
     <secondary>Package sources</secondary></indexterm>
@@ -44,7 +53,7 @@ deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty-proposed-updates main univers
       </para>
     </note>
   </section>
-  <section id="admin-man-sect-dpkg">
+  <section xml:id="admin-man-sect-dpkg">
     <title>dpkg</title>
     <indexterm><primary>Package Management</primary>
     <secondary>dpkg</secondary></indexterm>
@@ -55,7 +64,7 @@ deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty-proposed-updates main univers
       not capable of automatically resolving package dependencies.
     </para>
   </section>
-  <section id="admin-man-sect-apt">
+  <section xml:id="admin-man-sect-apt">
     <title>apt</title>
     <indexterm><primary>Package Management</primary><secondary>apt</secondary></indexterm>
     <para>
@@ -86,7 +95,7 @@ apt-get dist-upgrade.</command>
       or removed upon confirmation.
     </para>
   </section>
-  <section id="admin-man-sect-debian-pkg-altern">
+  <section xml:id="admin-man-sect-debian-pkg-altern">
     <title>Debian Package Alternatives</title>
      <indexterm><primary>Package Management</primary>
      <secondary>alternatives</secondary></indexterm>

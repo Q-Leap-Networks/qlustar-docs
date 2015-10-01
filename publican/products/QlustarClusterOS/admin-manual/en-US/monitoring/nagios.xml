@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-nagios">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-nagios">
   <title>Nagios</title>
   <indexterm><primary>Nagios</primary></indexterm>
   
@@ -9,7 +18,7 @@
     This section describes the Qlustar Nagios setup.
   </para>
   
-  <section id="admin-man-sect-nag-plug-ins">
+  <section xml:id="admin-man-sect-nag-plug-ins">
     <title>Nagios Plugins</title>
     <indexterm><primary>Nagios</primary><secondary>Nagios Plugins</secondary></indexterm>
 
@@ -258,7 +267,7 @@ define command {
 
 </section>
 
-<section id="admin-man-sect-head-node">
+<section xml:id="admin-man-sect-head-node">
   <title>head node</title>
   <indexterm><primary>Nagios</primary><secondary>head node</secondary></indexterm>
 
@@ -284,7 +293,7 @@ define command {
    
  </section>
  
- <section id="admin-man-sect-web-interface">
+ <section xml:id="admin-man-sect-web-interface">
    <title>Webinterface</title>
    <indexterm><primary>Nagios</primary><secondary>Webinterface</secondary></indexterm>
    
@@ -303,7 +312,7 @@ htpasswd /etc/nagios3/htpasswd.users nagiosadmin</command>
    
  </section>
  
- <section id="admin-man-sect-restart">
+ <section xml:id="admin-man-sect-restart">
    <title>Restart</title>
    <indexterm><primary>Nagios</primary><secondary>Restart</secondary></indexterm>
 

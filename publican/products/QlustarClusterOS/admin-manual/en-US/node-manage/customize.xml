@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-node-customize">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-node-customize">
   <title>Node Customization</title>
   <indexterm><primary>Node Customization</primary></indexterm>
   
@@ -10,7 +19,7 @@
     cluster-nodes.
   </para>
   
-  <section id="admin-man-sect-node-options">
+  <section xml:id="admin-man-sect-node-options">
     <title>Dynamic Configuration Settings</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Dynamic Configuration Settings</secondary></indexterm>
@@ -36,7 +45,7 @@
      </note>
   </section>
 
-  <section id="admin-man-sect-DHCP-client">
+  <section xml:id="admin-man-sect-DHCP-client">
     <title>DHCP-Client</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>DHCP-Client</secondary></indexterm>
@@ -112,7 +121,7 @@ dhcp_ifaces=br0:eth0
      </variablelist>
   </section>
   
-  <section id="admin-man-sect-config-dir">
+  <section xml:id="admin-man-sect-config-dir">
     <title>Cluster-wide Configuration Directory</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Cluster-wide Configuration Directory</secondary></indexterm>
@@ -140,7 +149,7 @@ option qlustar-cfgmnt "-t nfs -o rw,hard,intr 192.168.52.254:/srv/ql-common";
 
   </section>
 
-  <section id="admin-man-sect-NFS-boot-scripts">
+  <section xml:id="admin-man-sect-NFS-boot-scripts">
     <title>NFS boot scripts</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>NFS boot scripts</secondary></indexterm>
@@ -154,7 +163,7 @@ option qlustar-cfgmnt "-t nfs -o rw,hard,intr 192.168.52.254:/srv/ql-common";
      </para>
   </section>
 
-  <section id="admin-man-sect-add-dirs-files-links">
+  <section xml:id="admin-man-sect-add-dirs-files-links">
     <title>Adding directories, files, links</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Adding directories, files, links</secondary></indexterm>
@@ -221,7 +230,7 @@ version3: beo-[05-08]
      
    </section>
 
-   <section id="admin-man-sect-hard-disc-init">
+   <section xml:id="admin-man-sect-hard-disc-init">
      <title>Hard disc initialization</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Hard disc initialization</secondary></indexterm>
@@ -316,7 +325,7 @@ primary   /scratch       1000-      ;
 
    </section>
 
-   <section id="admin-man-sect-mail-trans-agent">
+   <section xml:id="admin-man-sect-mail-trans-agent">
      <title>Mail Transport Agent</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Mail Transport Agent</secondary></indexterm>
@@ -414,7 +423,7 @@ user:user@mailprovider.com:mailserver.mailprovider.com
 
    </section>
 
-   <section id="admin-man-sect-infiniband">
+   <section xml:id="admin-man-sect-infiniband">
      <title>Infiniband</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Infiniband</secondary></indexterm>

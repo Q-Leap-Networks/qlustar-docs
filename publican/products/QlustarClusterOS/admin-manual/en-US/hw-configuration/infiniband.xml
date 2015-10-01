@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-hw-IB">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-hw-IB">
   <title>Infiniband Networks</title>
   <indexterm><primary>Infiniband</primary></indexterm>
   <para>
@@ -11,7 +20,7 @@
     stack</link>. The basic configuration for Infiniband networks is explained later in <xref
     linkend="admin-man-sect-infiniband"/>.
   </para>
-  <section id="admin-man-sect-hw-IB-diag">
+  <section xml:id="admin-man-sect-hw-IB-diag">
     <title>IB Fabric Verification/Diagnosis</title>
     <indexterm><primary>Infiniband</primary>
     <secondary>Network diagnosis</secondary></indexterm>
@@ -229,7 +238,7 @@ ibcheckwidth
     </screen>
 
   </section>
-  <section id="admin-man-sect-hw-IB-opensm">
+  <section xml:id="admin-man-sect-hw-IB-opensm">
     <title>OpenSM Configuration</title>
     <indexterm><primary>Infiniband</primary><secondary>OpenSM</secondary></indexterm>
     <para>

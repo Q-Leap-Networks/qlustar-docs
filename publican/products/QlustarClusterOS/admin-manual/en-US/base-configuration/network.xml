@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-network">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-network">
   <title>Network Configuration and Services</title>
   <indexterm><primary>Network Configuration</primary></indexterm>
   <indexterm><primary>Network Services</primary></indexterm>
@@ -10,7 +19,7 @@
     Qlustar cluster.
   </para>
   
-  <section id="admin-man-sect-ntwrk-config">
+  <section xml:id="admin-man-sect-ntwrk-config">
     <title>Basic Network Configuration</title>
     <indexterm><primary>Network Configuration</primary>
     <secondary>Basic Network Configuration</secondary></indexterm>
@@ -38,7 +47,7 @@
     </note>
     
   </section>
-  <section id="admin-man-sect-dns">
+  <section xml:id="admin-man-sect-dns">
     <title>DNS</title>
      <indexterm><primary>Network Configuration</primary><secondary>DNS</secondary></indexterm>
      
@@ -103,7 +112,7 @@ option domain-name-servers 192.168.52.254;
      </screen>
    </section>
   
-  <section id="admin-man-sect-dhcp">
+  <section xml:id="admin-man-sect-dhcp">
     <title>DHCP</title>
     <indexterm><primary>Network Configuration</primary><secondary>DHCP</secondary></indexterm>
 
@@ -144,7 +153,7 @@ subnet 192.168.52.0 netmask 255.255.255.0 {
        </para>
      </note>
     
-    <section id="admin-man-sect-spcl-dhcp-opt">
+    <section xml:id="admin-man-sect-spcl-dhcp-opt">
       <title>Special DHCP options</title>
       <indexterm><primary>Network Configuration</primary>
       <secondary>DHCP</secondary>
@@ -164,7 +173,7 @@ option option-128 "auto.master";
     </section>
   </section>
   
-  <section id="admin-man-sect-ip-msq">
+  <section xml:id="admin-man-sect-ip-msq">
     <title>IP Masquerading (NAT)</title>
     <indexterm><primary>Network Configuration</primary>
     <secondary>IP Masquerading</secondary></indexterm>
@@ -195,7 +204,7 @@ iface eth1 inet static
   </screen>
   </section>
 
-  <section id="admin-man-sect-time-server">
+  <section xml:id="admin-man-sect-time-server">
     <title>Time Server</title>
     <indexterm><primary>Network Configuration</primary>
     <secondary>Time Server</secondary></indexterm>

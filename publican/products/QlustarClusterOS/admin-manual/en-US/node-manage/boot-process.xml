@@ -1,7 +1,16 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-boot-process">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-boot-process">
   <title>Boot Process</title>
   <indexterm><primary>Boot Process</primary></indexterm>
   
@@ -9,7 +18,7 @@
     This section describes the boot process of Qlustar cluster-nodes.
   </para>
   
-  <section id="admin-man-sect-comp-node-boot">
+  <section xml:id="admin-man-sect-comp-node-boot">
     <title>Compute-node booting</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>Compute-node booting</secondary></indexterm>
@@ -49,7 +58,7 @@
     
   </section>
 
-  <section id="admin-man-sect-tftp-boot-serv">
+  <section xml:id="admin-man-sect-tftp-boot-serv">
     <title>TFTP Boot Server</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>TFTP Boot Server</secondary></indexterm>
@@ -80,7 +89,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 
   </section>
 
-  <section id="admin-man-sect-RAM-disk-img">
+  <section xml:id="admin-man-sect-RAM-disk-img">
     <title>RAM-disk image</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>RAM-disk image</secondary></indexterm>
@@ -129,7 +138,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 
   </section>
     
-  <section id="admin-man-sect-qluman-execd">
+  <section xml:id="admin-man-sect-qluman-execd">
     <title>QluMan Remote Execution Server</title>
     <indexterm><primary>QluMan</primary>
     <secondary>Remote Execution Server</secondary></indexterm>
@@ -139,7 +148,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       for executing remote commands as well as writing configurations to disk.
     </para>
 
-    <section id="admin-man-sect-execd-dynamic-boot-scripts">
+    <section xml:id="admin-man-sect-execd-dynamic-boot-scripts">
       <title>Dynamic Boot Script Excecution</title>
       <indexterm><primary>Boot Process</primary>
       <secondary>Dynamic Execution</secondary></indexterm>

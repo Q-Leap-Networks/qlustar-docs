@@ -1,13 +1,22 @@
-<?xml version='1.0'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<section id="admin-man-sect-stor-man">
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section [
+<!ENTITY % BOOK_ENTITIES SYSTEM "administration-manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xml:id="admin-man-sect-stor-man">
   <title>Storage Management</title>
   <indexterm><primary>Storage Management</primary></indexterm>
-  <section id="admin-man-sect-raid">
+  <section xml:id="admin-man-sect-raid">
     <title>Raid</title>
     <indexterm><primary>Storage Management</primary><secondary>Raid</secondary></indexterm>
-    <section id="admin-man-sect-kernel-sftw-raid">
+    <section xml:id="admin-man-sect-kernel-sftw-raid">
       <title>Kernel Software RAID</title>
       <indexterm><primary>Storage Management</primary><secondary>Raid</secondary>
       <tertiary>Kernel Software Raid</tertiary></indexterm>
@@ -110,7 +119,7 @@ watch --differences=cumulative cat /proc/mdstat</command>
       </para>
     </section>
   </section>
-  <section id="admin-man-sect-vol-man">
+  <section xml:id="admin-man-sect-vol-man">
     <title>Logical Volume Management</title>
     <indexterm><primary>Storage Management</primary>
     <secondary>Logical Volume Management</secondary></indexterm>
