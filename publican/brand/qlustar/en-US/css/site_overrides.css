@@ -216,24 +216,42 @@ h6 {
     background-color: #222222 !important;
     opacity: 0.98;
     bottom: 46px !important;
+    left: 30% !important;
+    max-width: 40% !important;
+}
+
+.book .toc dd dl dd dl dt{
+    margin-bottom: -0.3em !important;
+}
+
+.book .toc dd dl dd {
+    margin-bottom: 0.3em !important;
+}
+
+.chapter .toc dd dl {
+    margin-bottom: 0.3em !important;
+}
+
+.chapter .toc dd dl dt {
+    margin-bottom: -0.3em !important;
 }
 
 /* Modification for Chapter in Preface */
 .toc dt {
-    margin-top: 0.2em;
-    margin-bottom: 0.2em;
+    margin-top: 0em;
+    margin-bottom: 0em;
 }
 
 /* Modification for Sections in Preface */
 .toc dd, .toc dd dl {
     margin-top: 0em !important;
-    margin-bottom: 0.3em !important;
+    margin-bottom: 0em !important;
 }
 
 /* Modification for Sectionname in Preface */
 .toc dd dl dt {
     margin-top: 0em !important;
-    margin-bottom: 0.3em !important;
+    margin-bottom: 0em !important;
 }
 
 /* Modification for Undersections in Preface */
@@ -292,7 +310,7 @@ h6 {
 /* Set Font-color and fixed font-size for index-links to green */
 .toc a {
     color: #639E00 !important;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 /* Underline index-links when hover */
