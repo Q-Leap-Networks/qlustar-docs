@@ -533,7 +533,7 @@ update_site() {
     img_list="$(find ${img_path} ! -wholename "*thumbnails*" -name "*.png")"
     if [ -n "$img_list" ]; then
       [ -d $thumb_path ] || mkdir $thumb_path
-      for f in $imgList; do
+      for f in $img_list; do
 	rel_path=${f#*images/}
 	rel_dir=""
 	dest_path=${thumb_path}/${f##*/}
