@@ -90,7 +90,7 @@
       onto a DVD or be loaded onto a USB flash-drive. This section explains the USB
       method. If you already have an up-to-date Qlustar USB drive you can skip this
       step. But make sure that you have the latest installer to be found at
-      <link xlink:href="http://qlustar.com/download/___blank___">www.qlustar.com</link>.
+      <link xlink:href="http://qlustar.com/download/___blank___">qlustar.com</link>.
     </para>
     <important>
       <para>
@@ -418,11 +418,11 @@
 	    connected to a switch, you can enter the network address parameters that will be
 	    used to configure its IP address. Again, the host part of the IPMI adapters IP will
 	    be derived from its cluster network IP (see above). Additional, host specific IPMI
-	    configuration options can be set in <link xlink:href=
-	    "http://qlustar.com/book/docs/qluman-guide/___blank___">QluMan</link>.  Please
-	    note, that the configuration of IPMI adapters is hardware dependent.  The method,
-	    we use, works on most systems, but we can't give any guarantee, that it will work
-	    on yours. Please contact us in case of problems.
+	    configuration options can be set in <link
+	    xlink:href="../QluMan_Guide/index.html#sec-IPMI-Settings___blank___">QluMan</link>.
+	    Please note, that the configuration of IPMI adapters is hardware dependent.  The
+	    method, we use, works on most systems, but we can't give any guarantee, that it
+	    will work on yours. Please contact us in case of problems.
 	  </para>
 	</step>
 	<step>
@@ -563,20 +563,20 @@
 		  workload managers: Slurm and Torque. If you don't have a strong preference,
 		  we suggest to use Slurm. In particular, if you intend to follow all the
 		  instructions in the
-		  <link xlink:href="http://qlustar.com/book/docs/first-steps/___blank___">
-		    First Steps Guide</link>, Slurm is a requirement and is also sufficient
-		    for a basic evaluation setup.
+		  <link 
+		      xlink:href="../First_Steps_Guide/index.html#sec-Qlustar-Initial-Config___blank___">
+		    First Steps Guide</link>, Slurm is a requirement and is also sufficient for
+		    a basic evaluation setup.
 		</para>
 		<note>
 		<para>
 		  Beware, that you should choose Lustre as an option here, only if the
 		  head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).  If you
 		  merely intend to try out Lustre, it is recommended to <link
-		  xlink:href="http://qlustar.com/book/docs/qluman-guide#Qlustar-OS-Images/___blank___">configure
-		  an image</link> with Lustre support in QluMan, and assign it to some nodes of
-		  the
-		  <link xlink:href="http://qlustar.com/#add-settings/___blank___">
-		    virtual demo-cluster</link>
+		  xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
+		  configure an image</link> with Lustre support in QluMan, and assign it to
+		  some nodes of the <link 
+		  xlink:href="../First_Steps_Guide/index.html#sec-Starting-Virtual-Demo-Cluster___blank___"> virtual demo-cluster</link>
 		</para>
 		</note>
 		<note>
@@ -585,11 +585,11 @@
 		  only be installed on the head-node. Selecting and generating boot-image
 		  modules as well as the process of general package installation for
 		  compute/storage nodes booting from the network must be done elsewhere. This
-		  is discussed in the
-		  <link xlink:href="http://qlustar.com/book/docs/first-steps/___blank___">
-		    First Steps</link> and the
-		    <link xlink:href="http://qlustar.com/book/docs/qluman-guide/___blank___">
-		      QluMan Guide</link>
+		  is discussed in the <link
+		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">
+		  First Steps</link> and the
+		  <link xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
+		  QluMan Guide</link>
 		</para>
 		</note>
 	      </listitem>
