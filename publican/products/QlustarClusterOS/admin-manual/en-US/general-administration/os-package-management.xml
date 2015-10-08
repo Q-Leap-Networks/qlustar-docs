@@ -83,9 +83,7 @@ apt-get dist-upgrade.</command>
     </screen>
     <para>
       Detailed upgrade instructions for a Qlustar system can be found
-      in the <link
-      xlink:href="http://qlustar.com/book/docs/qlustar-update-procedure">>Qlustar
-      Update Guide</link>.
+      in the <xref linkend="sec-Qlustar" xrefstyle="template:Qlustar Update Section"/>
     </para>
     <para>
       New packages can be installed by running 

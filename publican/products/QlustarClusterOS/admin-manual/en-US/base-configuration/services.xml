@@ -287,8 +287,8 @@ option option-130 "nfsserver";
       <filename>/etc/aliases</filename> (initial aliases were configured during
       installation). A change in this file requires execution of the command <command>postalias
       /etc/aliases</command> to activate the changes. Have a look at <xref
-      linkend="admin-man-sect-mail-trans-agent"/> to find out, how to configure mail on the
-      compute-nodes.
+      linkend="admin-man-sect-mail-trans-agent" xrefstyle="template:Mail Transport Agent"/> to
+      find out, how to configure mail on the compute-nodes.
     </para>
   </section>
 </section>

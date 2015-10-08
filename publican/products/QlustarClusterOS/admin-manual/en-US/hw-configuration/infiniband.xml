@@ -244,10 +244,12 @@ ibcheckwidth
     <para>
       A functional IB fabric needs at least one node with a running subnet manager. This can be
       a switch or any other node connected to the fabric. In the latter case, OpenSM will be
-      used. Please check the &QLUMANGUIDE; for details about how to setup
-      OpenSM on a compute-node. If OpenSM should run on a head-node, you will have to install
-      the package <package>opensm</package> and configure it manually, if necessary (for
-      simple networks, the default configuration will be sufficient).
+      used. Please check the <link
+      xlink:href="../QluMan_Guide/index.html#sec-Configuring-OpenSM___blank___">QluMan
+      Guide</link> for details about how to setup OpenSM on a compute-node. If OpenSM should
+      run on a head-node, you will have to install the package <package>opensm</package> and
+      configure it manually, if necessary (for simple networks, the default configuration will
+      be sufficient).
     </para>
   </section>
 </section>

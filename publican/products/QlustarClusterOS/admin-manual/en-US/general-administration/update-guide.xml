@@ -37,7 +37,7 @@ aptitude dist-upgrade</command>
 	 This will update all packages. In most cases, if new versions of the
 	 <productname>Qlustar</productname> image module packages are available, this will also
 	 automatically rebuild the images defined in <application>QluMan</application>. We
-	 elaborate on this <xref linkend="image-update" endterm="below"/>.
+	 elaborate on this <xref linkend="image-update" xrefstyle="template: below"/>.
        </para>
        <para>
 	 If the kernel was updated by this process reboot the head-node(s) after executing the
@@ -48,8 +48,10 @@ aptitude dist-upgrade</command>
        <title>Updating the chroot(s)</title>
        <para>
 	 This is also a standard Debian upgrade as explained in the
-	 <link xlink:href="http://docs-dev.qlustar.com/en-US/Qlustar_Cluster_OS/9.1/html-single/First_Steps_Guide//___blank___">First Step Guide</link>. If you have setup multiple chroots,
-	 you'll have to update all of them.
+	 <link
+	 xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">First
+	 Step Guide</link>. If you have setup multiple chroots, you'll
+	 have to update all of them.
        </para>
      </section>
      <section xml:id="updating-nodes">
@@ -96,8 +98,9 @@ qlustar-image-update -s &lt;image name&gt; &lt;hostname&gt;</command>
 	 <title>When will images be updated/rebuilt?</title>
 	 <para>
 	   There are a couple of cases to distinguish, depending on what version is selected
-	   for an image in QluMan (see also the corresponding section in the
-	   <link xlink:href="http://docs-dev.qlustar.com/en-US/Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/___blank___">QluMan Guide</link>
+	   for an image in QluMan (see also the corresponding section in the <link
+	   xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">QluMan
+	   Guide</link>
 	 </para>
 	 <orderedlist>
 	   <listitem>

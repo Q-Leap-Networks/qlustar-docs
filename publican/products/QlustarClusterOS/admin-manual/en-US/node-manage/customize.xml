@@ -30,7 +30,8 @@
        nodes root filesystem. Usual BASH shell syntax is used for the options. An example for
        the latter are the configuration settings for a nodes Infiniband stack. They will be
        placed in the file <filename>ib</filename>, which is created on the fly by the QluMan
-       execd process while booting (see also the previous section and <xref
+       execd process while booting (see also the <xref linkend="admin-man-sect-qluman-execd"
+       xrefstyle="template:previous section"/> and <xref
        linkend="admin-man-sect-infiniband"/>).
      </para>
      <note>

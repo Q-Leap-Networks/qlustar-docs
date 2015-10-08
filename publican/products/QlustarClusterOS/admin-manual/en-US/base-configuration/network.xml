@@ -149,7 +149,9 @@ subnet 192.168.52.0 netmask 255.255.255.0 {
 	 If a cluster has additional internal networks (e.g. Infiniband), the IP address of a
 	 node in that network is derived from its basic DHCP address and set automatically
 	 during boot. The addresses of additional networks can be specified during installation
-	 and in QluMan. Check the &QLUMANGUIDE; for more details.
+	 and in QluMan. Check the <link
+	 xlink:href="../QluMan_Guide/index.html#sec-DHCP-Config___blank___">QluMan Guide</link>
+	 for more details.
        </para>
      </note>
     

@@ -83,8 +83,8 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       a custom boot configuration, QluMan adds a symbolic link pointing to the actual
       configuration file. The links are named after the node's <parameter>Hostid</parameter>,
       which you can find out with the <command>gethostip</command> command. For more details
-      about how to define boot configurations see the corresponding section of the
-      &QLUMANGUIDE;.
+      about how to define boot configurations see the corresponding section of the <link
+      xlink:href="../QluMan_Guide/index.html#sec-Boot-Configs___blank___">QluMan Guide</link>.
     </para>
 
   </section>
@@ -98,9 +98,11 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       The RAM-disk image is the file-system holding the node OS that is mounted as the root
       filesystem of the compute-nodes. It is assembled on the head-node(s) from the image
       modules, you are able to select in QluMan. Every RAM-disk image contains at least the
-      core module. See the corresponding section of the &QLUMANGUIDE; for more details. All
-      available image modules are displayed and selectable in QluMan and the configuration and
-      assembly of images is done automatically from within QluMan.
+      core module. See the corresponding section of the <link
+      xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">QluMan
+      Guide</link> for more details. All available image modules are displayed and selectable
+      in QluMan and the configuration and assembly of images is done automatically from within
+      QluMan.
     </para>
 
     <note>
@@ -193,7 +195,8 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       </variablelist>
       <para>
 	For details about the configuration of the above components, see the corresponding
-	section of the &QLUMANGUIDE;.
+	section of the <link
+      xlink:href="../QluMan_Guide/index.html#chap-RX-Engine___blank___">QluMan Guide</link>.
       </para>
       <note>
 	<para>
