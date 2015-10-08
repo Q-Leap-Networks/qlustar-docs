@@ -45,7 +45,7 @@
 	choice would be to explicitly select a x.y.z version (currently 9.0.0), since then
 	images will only receive bug fix updates without explicitly changing the version in
 	<productname>Qlustar</productname>. See also the discussion in the general <link
-	xlink:href="https://qlustar.com/book/docs/qlustar-update-procedure/___blank___">
+	xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
 	Qlustar Update Guide</link>
       </para>
     </section>
@@ -148,12 +148,12 @@
     <para>
       <!--cbox(file: manage_chroots/main.png)-->
       <!--cbox(file: menu-manage_cluster__manage_chroots.png)-->
-      The chroot associated with a Qlustar image is easily selectable as explained (<xref
-      linkend="sec-Qlustar-OS-Images"/>). Management of the chroots themselves is possible
-      via the <classname>Manage Chroots</classname> dialog which is accessible via the main
-      menu <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Manage
-      Chroots</guimenuitem>. It provides a number of actions related to chroots. Manipulation
-      of the contents of chroots is explained <link xlink:href=
+      The chroot associated with a Qlustar image is easily selectable as explained (see <xref
+      linkend="sec-Qlustar-OS-Images"/>). Management of the chroots themselves is possible via
+      the <classname>Manage Chroots</classname> dialog which is accessible via the main menu
+      <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Manage Chroots</guimenuitem>. It
+      provides a number of actions related to chroots. Manipulation of the contents of chroots
+      is explained <link xlink:href=
       "../First_Steps_Guide/index.html#sec-Adding-Software___blank___">elsewhere</link>.
     </para>
     <para>

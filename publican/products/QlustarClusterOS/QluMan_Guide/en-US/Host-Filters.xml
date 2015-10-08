@@ -57,7 +57,7 @@
       dropdown menu. At the bottom the hosts that pass all the filters are displayed in the
       compact HostList format. This format is used by a number of other programs including
       pdsh and SLURM (the <link
-      xlink:href="https://code.google.com/p/pdsh/wiki/HostListExpressions/___blank___">pdsh
+      xlink:href="https://code.google.com/p/pdsh/wiki/HostListExpressions___blank___">pdsh
       Wiki</link> has a detailed discussion on the syntax).
     </para>
     <para>

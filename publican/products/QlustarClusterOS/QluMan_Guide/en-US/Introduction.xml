@@ -69,30 +69,30 @@
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <xref linkend="Generic-Properties" endterm="Generic-Properties"/> are simple
-	    on/off options or key+value pairs applicable to groups of nodes, e.g. to flag the
-	    reformatting of the local disks at the next boot, add torque node properties,
-	    etc.
+	    <xref linkend="Generic-Properties" xrefstyle="template:Generic Properties"/> are
+	    simple on/off options or key+value pairs applicable to groups of nodes, e.g. to
+	    flag the reformatting of the local disks at the next boot, add torque node
+	    properties, etc.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <xref linkend="chap-Config-Classes"/> handle more complex configurations like
-	    boot/disk configs, DHCP, etc.
+	    <xref linkend="chap-Config-Classes" xrefstyle="template:Config Classes"/> handle
+	    more complex configurations like boot/disk configs, DHCP, etc.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <xref linkend="Hardware-Properties" endterm="Hardware-Properties"/> are not used
-	    to configure the nodes themselves but describe their hardware configuration and
-	    are of importance e.g. for the slurm or torque resource managers and/or inventory
-	    management.
+	    <xref linkend="Hardware-Properties" xrefstyle="template:Hardware Properties"/> are
+	    not used to configure the nodes themselves but describe their hardware
+	    configuration and are of importance e.g. for the slurm or torque resource managers
+	    and/or inventory management.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    Finally, <xref linkend="Specific-Properties" endterm="Specific-Properties"/> are
-	    properties that are unique to a particular node, like its serial
+	    Finally, <xref linkend="Specific-Properties" xrefstyle="template:Specific
+	    Properties"/> are properties that are unique to a particular node, like its serial
 	    number. Therefore, these properties can only be assigned to individual nodes.
 	  </para>
 	</listitem>
