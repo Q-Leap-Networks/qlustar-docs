@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-HWwizard">
+  <title>Hardware Wizard</title>
+  <section xml:id="sec-HWwizard-purpose">
+    <title>Purpose</title>
+    <para>
+      When setting up new hosts, 
+      <!--cbox(file: hw-wizard1.png)-->
+    </para>
+  </section>
+  <section xml:id="sec-HWwizard-host-selection">
+    <title>Selecting Hosts</title>
+    <para>
+      The hosts to be configured ...
+      <!--cbox(file: hw-wizard2.png)-->
+    </para>
+  </section>
+</chapter>

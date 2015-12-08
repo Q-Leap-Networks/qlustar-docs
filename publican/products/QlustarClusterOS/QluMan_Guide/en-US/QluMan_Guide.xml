@@ -20,6 +20,7 @@
   <xi:include href="Global-Cluster-Settings.xml"/>
   <xi:include href="Enclosures.xml"/>
   <xi:include href="Adding-Hosts.xml"/>
+  <xi:include href="HW-Wizard.xml"/>
   <xi:include href="Config-Classes.xml"/>
   <xi:include href="Other-Configs.xml"/>
   <xi:include href="RX-Engine.xml"/>
