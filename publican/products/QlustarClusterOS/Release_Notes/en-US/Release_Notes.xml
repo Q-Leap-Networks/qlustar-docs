@@ -308,7 +308,10 @@
 <prompt>0 root@cl-head ~ #</prompt>
 <command>qluman-cli --gencert</command>
 	    </screen>
-	    You'll be prompted for a pin when generating the token.
+	    You'll be prompted for a pin when generating the token. This step is explained
+	     <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/First_Steps_Guide/index.html#sec-QluMan-Token___blank___">
+	    elsewhere in more detail</link>.
 	  </para>
 	  <para>
 	    With this one-time token, you can proceed to register yourself using the QluMan GUI
