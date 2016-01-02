@@ -15,148 +15,141 @@
   <section xml:id="sec-HWwizard-purpose">
     <title>Purpose</title>
     <para>
-      When setting up new hosts there are a number of configurations
-      to create to specify what hardware the host has or how it should
-      boot. All the steps can be done by hand or later changed through
-      the various dialogs from the main window but the Wizard gives
-      you a guiding hand. The Hardware Wizard takes you through this
-      step by step with a special eye on the hardware configuration
-      and uses the detected hardware of hosts to suggest the best
-      configuration option it sees.
+      When setting up new hosts, there are a number of configuration or other settings to be
+      made. They are used to specify their hardware configuration, to determine what OS they
+      should boot and to fine-tune the behavior of applications running on them. All the
+      necessary steps for the desired configuration of the nodes can be done manually and also
+      be changed later through the various dialogs from the main window.
+    </para>
+    <para>
+      As a convenient alternative, the <classname>Hardware Wizard</classname> guides you
+      through the necessary configuration steps with a special emphasis on the hardware
+      configuration. It uses the auto-detected hardware properties of hosts to suggest their
+      optimal configuration options. Furthermore, it tries to keep a balance between the
+      available configuration strategies: Using templates, property/config sets or individual
+      properties/config classes.
     </para>
   </section>
   <section xml:id="sec-HWwizard-host-selection">
     <title>Selecting Hosts</title>
     <para>
-      As first step the host that should be configured have to be
-      selected. At the start the lists of hosts to configure is empty
-      and one or more of the four buttons at the bottom have to be
-      pressed to pre-select hosts that should be considered.
-      <!--cbox(file: hw_wizard/host_selection.png)-->
-      The Unconfigured button adds all hosts that do not have any
-      hardware configured at all. A freshly added hosts will fall into
-      this category. The Partially Configured button adds hosts that
-      already have some hardware configured correctly but not all of
-      it. The Wrongly Configured button adds hosts where the
-      configured hardware does not match the hardware detected at
-      boot, e.g. when nodes have been updated with more ram. Last the
-      Selected button adds host that have been selected in the
-      enclosure view, including hosts that are configured correctly
-      already.
+     <mediaobject>
+       <imageobject><imagedata
+       fileref="images/hw_wizard/host_selection.png"
+       width="85%" format="PNG"/></imageobject>
+       <textobject><phrase>
+         Selecting hosts for configuration
+       </phrase></textobject>
+       <caption><para>
+         Selecting hosts for configuration
+       </para></caption>
+     </mediaobject>
+      The first step is to select the hosts that should be configured . Initially, the lists of
+      hosts is empty. One or more of the four buttons at the bottom have to be pressed to
+      pre-select hosts that should be considered. The <guibutton>Unconfigured</guibutton>
+      button adds all hosts that do not have any hardware configured at all. A freshly added
+      host without an assigned <classname>Host Template</classname> will fall into this
+      category. The <guibutton>Partially Configured</guibutton> button adds hosts that already
+      have some hardware configured correctly but not all of it. The <guibutton>Wrongly
+      Configured</guibutton> button adds hosts, where the configured hardware properties do not
+      match the hardware detected at boot, e.g. when nodes have been updated with more
+      ram. Finally, the <guibutton>Selected</guibutton> button adds hosts, that have been
+      selected in the enclosure view, including hosts that are configured correctly already.
     </para>
     <para>
-      Once one or more of the buttons are pressed hosts should show up
-      in the table. To keep the table short hosts with identical
-      detected hardware are groups together and shown in hostlist
-      syntax. Per default all shown groups are selected and will be
-      configured using a single Host Template and therefore single
-      Hardware Property Set, Generic Property Set and Config Set. The
-      differences in hardware will be handled by the wizard with the
-      per host settings. If not all the groups should use the
-      same Host Template then groups can be selected or deselected
-      individually and the rest can be configured by running the
-      wizard again later. Groups of hosts with identical hardware
-      can't be split up though. For this select the hosts individually
-      in the Enclosure View and use only the Selected button. If the
-      right groups of hosts are selected click Next to continue
-      configuring just those hosts.
+      Once one or more of the buttons are pressed, the affected hosts will show up in the
+      table. To keep things compact, hosts with identically detected hardware are grouped
+      together and shown in <emphasis>hostlist syntax</emphasis>. By default, all shown groups
+      are selected and will be configured using a single <classname>Host Template</classname>
+      and therefore single <classname>Hardware Property</classname>, <classname>Generic
+      Property</classname> and <classname>Config Set</classname>. The possible differences in
+      hardware configurations within the list of selected hosts will be handled by the wizard
+      with the <emphasis>per host</emphasis> settings. In case all the groups shouldn't use the
+      same <classname>Host Template</classname>, groups may be selected or deselected
+      individually and the remaining ones can be configured by running the wizard again
+      later. Groups of hosts with identical hardware can't be split up though. If this is
+      required, select the hosts individually in the <classname>Enclosure View</classname> and
+      use only the <guibutton>Selected</guibutton> button. Once the desired groups of hosts
+      have been selected click <guibutton>Next</guibutton> to continue configuring them.
     </para>
   </section>
   <section xml:id="sec-HWwizard-template">
     <title>Configure Host Template</title>
     <para>
-      The main configuration of hosts comes from the Host
-      Template. This determines what Hardware Property Set, Generic
-      Property Set and Config Set is used for each host. The wizard
-      tries to find an existing Host Template that matches the
-      hardware detected for at least some of the selected hosts. If it
-      does this Host Template will be pre selected and the "Use
-      existing Host Template" choice will be active.
+      The main configuration of hosts comes from the Host Template. This determines what
+      Hardware Property Set, Generic Property Set and Config Set is used for each host. The
+      wizard tries to find an existing Host Template that matches the hardware detected for at
+      least some of the selected hosts. If it does this Host Template will be pre selected and
+      the "Use existing Host Template" choice will be active.
       <!--cbox(file: hw_wizard/template-existing.png)-->
-      The resulting configuration, if left unaltered, is shown below
-      in tree form. The Hardware Properties in the Hardware Property
-      Set for the Host Template are color coded to show how well they
-      fit the groups of hosts being configured. Hovering over a
-      Hardware property brings up a helpful tool-tip explaining the coloring.
+      The resulting configuration, if left unaltered, is shown below in tree form. The Hardware
+      Properties in the Hardware Property Set for the Host Template are color coded to show how
+      well they fit the groups of hosts being configured. Hovering over a Hardware property
+      brings up a helpful tool-tip explaining the coloring.
       <!--cbox(file: hw_wizard/template-existing-tooltip.png)-->
-      A green bulb means that the property matches the detected value
-      for all hosts. A yellow bulb means that is matches some hosts
-      but not all of them. This happens when hosts have different
-      hardware and is acceptable. A red bulb means that the value
-      matches none of the hosts and is a bad fit. The property value
-      should be changed in the follow up pages or a different Host
-      Template should be selected.
+      A green bulb means that the property matches the detected value for all hosts. A yellow
+      bulb means that is matches some hosts but not all of them. This happens when hosts have
+      different hardware and is acceptable. A red bulb means that the value matches none of the
+      hosts and is a bad fit. The property value should be changed in the follow up pages or a
+      different Host Template should be selected.
     </para>
     <para>
-      The pre selected Host Template might not be the desired choice
-      and a different one can be selected from the drop-down
-      menu. The choices are colored showing how well a Host Template
-      matches the hosts.
+      The pre selected Host Template might not be the desired choice and a different one can be
+      selected from the drop-down menu. The choices are colored showing how well a Host
+      Template matches the hosts.
       <!--cbox(file: hw_wizard/template-existing-menu.png)-->
-      Here a green bulb means that the Host Template matches the
-      detected hardware of at least one host perfectly. A yellow bulb
-      means that not all hardware for the hosts is configured but at
-      least nothing is configured wrong. A red bulb means the Host
-      Template includes a hardware property that matches none of the
-      hosts and would be a bad fit. None the less it can be the right
-      choice and it can be modified to fit in the followup page or the
-      correct hardware properties can be set on a per host basis by
-      the wizard.
+      Here a green bulb means that the Host Template matches the detected hardware of at least
+      one host perfectly. A yellow bulb means that not all hardware for the hosts is configured
+      but at least nothing is configured wrong. A red bulb means the Host Template includes a
+      hardware property that matches none of the hosts and would be a bad fit. None the less it
+      can be the right choice and it can be modified to fit in the followup page or the correct
+      hardware properties can be set on a per host basis by the wizard.
     </para>
     <para>
-      If none of the existing Host Templates are suitable then a new
-      Host Template can be created in one of two ways. An existing
-      Host Template can be cloned or a completely new Host Template can
-      be created.
+      If none of the existing Host Templates are suitable then a new Host Template can be
+      created in one of two ways. An existing Host Template can be cloned or a completely new
+      Host Template can be created.
       <!--cbox(file: hw_wizard/template-clone.png)-->
       <!--cbox(file: hw_wizard/template-new.png)-->
-      In both cases a name for the new Host Template must be
-      given. The difference in the 2 choices is that clone will pre
-      select the Hardware Property Set, Generic Property Set and
+      In both cases a name for the new Host Template must be given. The difference in the 2
+      choices is that clone will pre select the Hardware Property Set, Generic Property Set and
       Config Set of the existing Host Template for use in the new one.
     </para>
   </section>
   <section xml:id="sec-HWwizard-hw-prop-set">
     <title>Select Hardware Property Set</title>
     <para>
-      This page selects the Hardware Property Set used in the selected
-      Host Template and is the main source for hardware
-      configuration. Like in the previous page an existing Hardware
-      Property Set can be used, can be cloned or a new Hardware
-      Property Set can be created. Most likely an existing Hardware
-      Property Set will be pre selected. A different existing Hardware
-      Property Set can be selected from the drop-down menu and again
-      the choices are color coded for how well they fit the hosts.
+      This page selects the Hardware Property Set used in the selected Host Template and is the
+      main source for hardware configuration. Like in the previous page an existing Hardware
+      Property Set can be used, can be cloned or a new Hardware Property Set can be
+      created. Most likely an existing Hardware Property Set will be pre selected. A different
+      existing Hardware Property Set can be selected from the drop-down menu and again the
+      choices are color coded for how well they fit the hosts.
       <!--cbox(file: hw_wizard/hw_prop_set-existing.png)-->
       <!--cbox(file: hw_wizard/hw_prop_set-existing-menu.png)-->
-      Changing the Hardware Property Set affects the selected Host
-      Template. If an existing Host Template was chosen in the last
-      page then changing it might affect hosts other than the ones
-      being configured in the wizard. In such a case the wizard will
-      ask for confirmation that that is desired.
+      Changing the Hardware Property Set affects the selected Host Template. If an existing
+      Host Template was chosen in the last page then changing it might affect hosts other than
+      the ones being configured in the wizard. In such a case the wizard will ask for
+      confirmation that that is desired.
       <!--cbox(file: hw_wizard/hw_prop_set-modify_template.png)-->
-      The existing Hardware Property Set can be replaced with the
-      auto-detected Hardware Properties on the bottom right for a
-      better fit. If multiple groups of hosts are being configured at
-      the same time the properties where hosts differ will have a
-      drop-down menu to select the most suitable value.
+      The existing Hardware Property Set can be replaced with the auto-detected Hardware
+      Properties on the bottom right for a better fit. If multiple groups of hosts are being
+      configured at the same time the properties where hosts differ will have a drop-down menu
+      to select the most suitable value.
       <!--cbox(file: hw_wizard/hw_prop_set-existing-select_hw_prop.png)-->
-      Once the right selection is made the properties can be copied
-      over the existing Hardware Property Set by clicking the &lt;&lt;
-      button. The wizard will ask for confirmation if this impacts
-      hosts not currently being configured and then set the Hardware
-      Property Set on the bottom left into edit mode, same as it is
-      when cloning or creating a new Hardware Property Set.
+      Once the right selection is made the properties can be copied over the existing Hardware
+      Property Set by clicking the &lt;&lt; button. The wizard will ask for confirmation if
+      this impacts hosts not currently being configured and then set the Hardware Property Set
+      on the bottom left into edit mode, same as it is when cloning or creating a new Hardware
+      Property Set.
       <!--cbox(file: hw_wizard/hw_prop_set-existing-copied.png)-->
-      The difference between cloning an existing Hardware Property
-      Set and creating a new one is just what Hardware Properties are
-      pre selected. Cloning will start with the properties the cloned
-      set has while creating a new one start with a blank slate.
+      The difference between cloning an existing Hardware Property Set and creating a new one
+      is just what Hardware Properties are pre selected. Cloning will start with the properties
+      the cloned set has while creating a new one start with a blank slate.
       <!--cbox(file: hw_wizard/hw_prop_set-clone.png)-->
       <!--cbox(file: hw_wizard/hw_prop_set-new.png)-->
-      In all 3 cases the Hardware Property Set can be further edited
-      by selecting different values for properties, adding properties
-      or removing properties.
+      In all 3 cases the Hardware Property Set can be further edited by selecting different
+      values for properties, adding properties or removing properties.
       <!--cbox(file: hw_wizard/hw_prop_set-new-add_property.png)-->
       <!--cbox(file: hw_wizard/hw_prop_set-new-remove_property.png)-->
       Once the right Hardware Properties are selected click Next to continue.
@@ -165,79 +158,68 @@
   <section xml:id="sec-HWwizard-resolve-conflict">
     <title>Resolve Hardware Conflict</title>
     <para>
-      If more than one group of hosts is being configured at the same
-      time or when the selected Hardware Property Set is insufficient
-      to correctly configure the hosts then the Resolve Hardware
-      Conflict page comes next. At the bottom the conflicting or
-      missing hardware properties are listed showing the correct value
-      for each group. If only one property is missing then the wizard
-      will suggest to add the property individually per host.
+      If more than one group of hosts is being configured at the same time or when the selected
+      Hardware Property Set is insufficient to correctly configure the hosts then the Resolve
+      Hardware Conflict page comes next. At the bottom the conflicting or missing hardware
+      properties are listed showing the correct value for each group. If only one property is
+      missing then the wizard will suggest to add the property individually per host.
       <!--cbox(file: hw_wizard/resolve_hardware_conflict.png)-->
-      On the other hand if multiple properties are missing adding a
-      Hardware Property Set per host might be a better way and will be
-      pre selected.
+      On the other hand if multiple properties are missing adding a Hardware Property Set per
+      host might be a better way and will be pre selected.
       <!--cbox(file: hw_wizard/resolve_hardware_conflict-sets.png)-->
-      Which option is chosen is a matter of taste and there is no
-      wrong choice here. One can also choose "configure manually
-      later" to tell the wizard to ignore the conflict. Note that this
-      will result in hosts that are only partially or wrongly
-      configured which will need to be corrected later.
+      Which option is chosen is a matter of taste and there is no wrong choice here. One can
+      also choose "configure manually later" to tell the wizard to ignore the conflict. Note
+      that this will result in hosts that are only partially or wrongly configured which will
+      need to be corrected later.
     </para>
   </section>
   <section xml:id="sec-HWwizard-per-host-hw-prop-set">
     <title>Additional per Host Hardware Property Set</title>
     <para>
-      If per host Hardware Property Sets was chosen in the previous
-      page then the set to be used for each group will be picked here.
       <!--cbox(file: hw_wizard/per_host_hw_prop_set.png)-->
-      The Wizard will look for an existing Hardware Property Set for
-      each group that contains the right Hardware Properties
-      already. If one is found it will be pre selected. Otherwise a
-      name for a new set must be entered before one can continue.
+      If per host Hardware Property Sets was chosen in the previous page then the set to be
+      used for each group will be picked here.
+      The Wizard will look for an existing Hardware Property Set for each group that contains
+      the right Hardware Properties already. If one is found it will be pre selected. Otherwise
+      a name for a new set must be entered before one can continue.
     </para>
   </section>
   <section xml:id="sec-HWwizard-gen-prop-set">
     <title>Select Generic Property Set / Select Config Set</title>
     <para>
-      To complete the Host Template a Generic Property Set and Config
-      Set must be selected. The two pages are very much alike and
-      similar to selecting the Hardware Property Set. Again there are
-      3 main options: Use existing set, clone existing set and new
-      empty set. Since there is no auto-detection for the values in
-      each set there is no color coding of the choices.
+      To complete the Host Template a Generic Property Set and Config Set must be selected. The
+      two pages are very much alike and similar to selecting the Hardware Property Set. Again
+      there are 3 main options: Use existing set, clone existing set and new empty set. Since
+      there is no auto-detection for the values in each set there is no color coding of the
+      choices.
       <!--cbox(file: hw_wizard/gen_prop_set.png)-->
       <!--cbox(file: hw_wizard/config_set.png)-->
-      An existing set can not be modified in the current version but
-      when clone existing set or new empty set is chosen then
-      properties and configs can be added to or removed from the set.
+      An existing set can not be modified in the current version but when clone existing set or
+      new empty set is chosen then properties and configs can be added to or removed from the
+      set.
       <!--cbox(file: hw_wizard/gen_prop_set-add_property.png)-->
       <!--cbox(file: hw_wizard/config_set-add_property.png)-->
-      In the Select Generic Property Set page if the hosts have IPMI
-      then the IPMI properties deserve consideration. In the
-      Select Config Set page the Boot Config, Disk Config and UnionFS
-      Chroot configs are usually set.
+      In the Select Generic Property Set page if the hosts have IPMI then the IPMI properties
+      deserve consideration. In the Select Config Set page the Boot Config, Disk Config and
+      UnionFS Chroot configs are usually set.
     </para>
   </section>
   <section xml:id="sec-HWwizard-summary">
     <title>Summary</title>
     <para>
-      This is the last page of the wizard and the final confirmation
-      of all the choices made before the data is actually stored in
-      the database.
+      This is the last page of the wizard and the final confirmation of all the choices made
+      before the data is actually stored in the database.
+      At the top the common configuration for all host from the Host Template is shown in tree
+      form. At the bottom the additional Hardware Properties or Hardware Property Sets that
+      will be set for each group of hosts on a per host basis to override the host template is
+      shown. Host groups with no per host overrides are not shown.
       <!--cbox(file: hw_wizard/summary.png)-->
-      At the top the common configuration for all host from the Host
-      Template is shown in tree form. At the bottom the additional
-      Hardware Properties or Hardware Property Sets that will be set
-      for each group of hosts on a per host basis to override the host
-      template is shown. Host groups with no per host overrides are
-      not shown.
     </para>
     <para>
-      If an existing Host Template or existing Hardware Property
-      Set was modified then this is the last chance to not save that
-      change. By clicking Finish all the modifications are made and
-      the configuration is assigned to all hosts. The hosts should
-      then be fully configured and ready to boot.
+      If an existing Host Template or existing Hardware Property Set was modified then this is
+      the last chance to not save that change. By clicking Finish all the modifications are
+      made and the configuration is assigned to all hosts. The hosts should then be fully
+      configured and ready to boot.
     </para>
   </section>
 </chapter>
