@@ -34,8 +34,8 @@
 	      elimination of passwords combined with the new initial user registration based on
 	      one-time tokens provides an exceptionally high level of security needed for
 	      confidential connections over public networks. <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-add-cluster___blank___">
-	    More details &hellipsis;</link>
+	      xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___"> More details
+	      &hellipsis;</link>
 	    </para></listitem>
 	  </varlistentry>
 	  <varlistentry>
@@ -45,8 +45,8 @@
 	      password protected certificate safe. This safe may contain an unlimited number of
 	      connection certificates for different clusters and can easily be managed using
 	      the new <classname>Connection Manager</classname>. <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-connecting-to-cluster___blank___">
-	    More details &hellipsis;</link>
+	      xlink:href="../QluMan_Guide/index.html#sec-connecting-to-cluster___blank___">
+	      More details &hellipsis;</link>
 	    </para></listitem>
 	  </varlistentry>
 	  <varlistentry>
@@ -56,7 +56,7 @@
 	      or un-configured hosts and guides through the config steps to set them up in a
 	      correct and optimal way. A new type of icon in the <classname>Enclosure
 	      View</classname> marks hosts that need reconfiguration. <link
-	      xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#chap-HWwizard___blank___">
+	      xlink:href="../QluMan_Guide/index.html#chap-HWwizard___blank___">
 	      More details &hellipsis;</link>
 	    </para></listitem>
 	  </varlistentry>
@@ -112,8 +112,8 @@
 	    <term>OFED Infiniband stack</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 ships the recently released OFED 3.18-1 Infiniband stack including all
-		necessary components.
+		Qlustar 9.1 ships the recently released OFED 3.18-1 Infiniband stack including
+		all necessary components.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -261,14 +261,14 @@
 	    (<filename>/etc/qlustar/common/slurm-llnl/slurm.conf</filename>) to a safe
 	    place before starting. In Qlustar 9.x, the Slurm config is managed by QluMan and
 	    needs to be setup from scratch (see <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Slurm-Config___blank___">
+	    xlink:href="../QluMan_Guide/index.html#sec-Slurm-Config___blank___">
 	    the corresponding section in the QluMan guide</link>). Use the settings in your
 	    backed up config file to accomplish this. 
 	  </para></note>
 	  <note><para>
 	    Make sure that you have no unwritten changes in the QluMan database. If you do,
 	    write them to disk as described in the <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
 	    QluMan Guide</link> before proceeding with the update.
 	  </para></note>
 	</step>
@@ -289,7 +289,7 @@
 	  <title>Update packages</title>
 	  <para>
 	    Now proceed as explained in the <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
+	    xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
 	    Qlustar Administration Manual</link>.
 	  </para>
 	</step>
@@ -310,13 +310,13 @@
 	    </screen>
 	    You'll be prompted for a pin when generating the token. This step is explained
 	     <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/First_Steps_Guide/index.html#sec-QluMan-Token___blank___">
+	    xlink:href="../First_Steps_Guide/index.html#sec-QluMan-Token___blank___">
 	    elsewhere in more detail</link>.
 	  </para>
 	  <para>
 	    With this one-time token, you can proceed to register yourself using the QluMan GUI
 	    as explained in the <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-manage-cluster___blank___">
+	    xlink:href="../QluMan_Guide/index.html#sec-manage-cluster___blank___">
 	    QluMan Guide</link>.
 	  </para>
 	</step>
@@ -325,7 +325,7 @@
 	  <para>
 	    The update might have introduced changes in the QluMan database. These need to be
 	    written to disk. Check the QluMan Guide about <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
 	    how to write such changes</link>.
 	  </para>
 	</step>
@@ -335,7 +335,7 @@
 	    Most likely you will also have to regenerate your Qlustar images with the 9.1 image
 	    modules. To accomplish this, you'll have to select <emphasis>Version 9.1</emphasis>
 	    in the QluMan <link
-	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
+	    xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
 	    Qlustar Images dialog</link>.
 	  </para>
 	</step>
