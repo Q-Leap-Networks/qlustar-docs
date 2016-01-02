@@ -15,23 +15,73 @@
   <section xml:id="sec-License-Installation">
     <title>License Installation</title>
     <para>
-      <!--cbox(file: license_key/menu.png)-->
-      <!--cbox(file: license_key/expired.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/expired.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Expired license key
+        </phrase></textobject>
+        <caption><para>
+          Expired license key
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/menu.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Opening the license key window 
+        </phrase></textobject>
+        <caption><para>
+          Opening the license key window 
+        </para></caption>
+      </mediaobject>
       To be able to configure your cluster with <application>QluMan</application>, a license
       key needs to be installed. Without a valid key, an error will be displayed upon
       start-up and the QluMan daemon will only allow read-only operations. In read-only mode,
       you can have a look at all the settings, but you can't change anything.
     </para>
     <para>
-      After closing the error dialog the License Key window can be opened by selecting
-      <guimenuitem>File</guimenuitem>-><guimenuitem>License Key</guimenuitem> in the main
-      Menu. If you never installed a license key before, the window will come up mostly
-      empty.
+      After closing the error dialog the <classname>License Key window</classname> can be
+      opened by selecting <guimenuitem>File</guimenuitem>-><guimenuitem>License
+      Key</guimenuitem> in the main Menu. If you never installed a license key before, the
+      window will come up mostly empty.
     </para>
     <para>
-      <!--cbox(file: license_key/request.png)-->
-      <!--cbox(file: license_key/key_info.png)-->
-      <!--cbox(file: license_key/empty.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/empty.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The License Key window
+        </phrase></textobject>
+        <caption><para>
+          The License Key window
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/key_info.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Key Info Dialog
+        </phrase></textobject>
+        <caption><para>
+          The Key Info Dialog
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/request.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Saving the key request file
+        </phrase></textobject>
+        <caption><para>
+          Saving the key request file
+        </para></caption>
+      </mediaobject>
       To request a license key, click the <guibutton>Request Key</guibutton> button and a
       <classname>Key Info Dialog</classname> will open asking you for your name and address
       info. If you intend to use <classname>Qlustar Basic Edition</classname>, checkmark
@@ -43,10 +93,20 @@
       xlink:href="mailto:order@q-leap.com?Subject=License%20request">order@q-leap.com</link>
     </para>
     <para>
-      <!--cbox(file: license_key/key.png)-->
-      After a while, you will receive a license key by mail that you can import using the
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/license_key/key.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The license info
+        </phrase></textobject>
+        <caption><para>
+          The license info
+        </para></caption>
+      </mediaobject>
+      After a while, you will receive a license key by mail, that you can import using the
       <guibutton>Import Key</guibutton> button. If the import was successful, the license
-      information will be displayed and you're ready to start working with
+      terms will be displayed. After accepting the license, you're ready to start working with
       <application>QluMan</application>.
     </para>
     <para>
@@ -58,7 +118,17 @@
   <section xml:id="sec-Configuring-the-Network">
     <title>Configuring Network Parameters</title>
     <para>
-      <!--cbox(file: main_window__network_config.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/main_window/network_config.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Opening the cluster network config dialog
+        </phrase></textobject>
+        <caption><para>
+          Opening the cluster network config dialog
+        </para></caption>
+      </mediaobject>
       During the installation of Qlustar, the configuration parameters for the cluster
       network had to be entered and normally you won't need to change them. For the rare
       circumstances, where they do need to be changed, or in case you just want to verify the
@@ -78,7 +148,17 @@
       Configuring Ethernet
     </bridgehead>
     <para>
-      <!--cbox(file: network_config__ethernet.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_config/ethernet.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The global cluster network config dialog
+        </phrase></textobject>
+        <caption><para>
+          The global cluster network config dialog
+        </para></caption>
+      </mediaobject>
       Changing the Ethernet network configuration is the most involved and requires several
       steps. In the <classname>Global Cluster Network Config</classname> there are 3 settings
       relevant for <firstterm>Ethernet</firstterm>: The Cluster Network IP address, the
@@ -104,7 +184,17 @@
       not change them, so you need to check and adjust each of them manually.
     </para>
     <para>
-      <!--cbox(file: network_config__proxy.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_config/proxy.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Configuring an http proxy
+        </phrase></textobject>
+        <caption><para>
+          Configuring an http proxy
+        </para></caption>
+      </mediaobject>
       If the head-node does not have direct access to the Internet, a <parameter>http
       proxy</parameter> must be configured. Qluman uses this proxy to download packages from
       the <guilabel>Qlustar repository</guilabel>, when creating a new chroot. Click the
