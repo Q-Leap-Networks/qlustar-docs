@@ -29,9 +29,9 @@
        </para>
        <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-aptitude update</command>
+apt-get update</command>
 <prompt>0 root@cl-head ~ #</prompt><command>
-aptitude dist-upgrade</command>
+apt-get dist-upgrade</command>
        </screen>
        <para>
 	 This will update all packages. In most cases, if new versions of the
