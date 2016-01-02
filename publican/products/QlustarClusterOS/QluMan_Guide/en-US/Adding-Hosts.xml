@@ -15,25 +15,47 @@
   <section xml:id="sec-Adding-Hosts">
     <title>Adding Hosts</title>
     <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/new_host/window.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The New Hosts Window
+        </phrase></textobject>
+        <caption><para>
+          The New Hosts Window
+        </para></caption>
+      </mediaobject>
       To add new hosts to the cluster you can either select "New Hosts" from the context menu
       in the Enclosure View tree or from the "Manage Hosts" menu. This opens the "Hosts
       Window".
-      <!--cbox(file: new_host_window.png)-->
     </para>
     <para>
       Adding a new host requires the specification of an IP address, hostname and MAC in the
-      corresponding three text fields of the dialog. The entered values are checked for
-      their validity. If one of them is not valid, the check-box to its right remains
-      cleared <!--checkbox_unchecked.png-->.  The tool-tip of the check-box will then show,
-      why it is invalid. If all the values are valid, all check-boxes will show a solid
-      check <!--checkbox_checked.png--> and the <guibutton>Add Host</guibutton> button will
-      become selectable. For convenience and if it makes sense, the IP address and the
-      numeric part of the hostname (if there is one) will automatically be incremented by
-      one, after a host was added. So in most cases, these fields will not have to be
-      changed manually to add the next host. Only the new MAC will need to be entered.
+      corresponding three text fields of the dialog. The entered values are checked for their
+      validity. If one of them is not valid, the check-box to its right remains cleared.  The
+      tool-tip of the check-box will then show, why it is invalid. If all the values are valid,
+      all check-boxes will show a solid check and the <guibutton>Add Host</guibutton> button
+      will become selectable.
     </para>
     <para>
-      <!--cbox(file: new_host_window-select.png)-->
+      For convenience and if it makes sense, the IP address and the numeric part of the
+      hostname (if there is one) will automatically be incremented by one, after a host was
+      added. So in most cases, these fields will not have to be changed manually to add the
+      next host. Only the new MAC will need to be entered.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/new_host/window-select.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Table of unknown MACs
+        </phrase></textobject>
+        <caption><para>
+          Table of unknown MACs
+        </para></caption>
+      </mediaobject>
       To help adding new hosts, qlumand scans the <filename>DHCP log file</filename> for
       unknown hosts that have requested an IP address. For each unknown host found in the
       logs, the table at the top of the window shows the time of the first and last
@@ -45,16 +67,53 @@
       <guibutton>Add Selected</guibutton> button at the bottom to add them all using the
       auto-increment feature for the IP address and hostname. If unsure, try adding a single
       host first and check the auto-increment does the right thing before adding a group of
-      hosts. One easy way to add groups of hosts is to power them on one at a time with a
-      <!--cbox(file: new_host_window-template.png)-->
+      hosts.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/new_host/window-template.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a template for new hosts
+        </phrase></textobject>
+        <caption><para>
+          Selecting a template for new hosts
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/new_host/window-copy_host.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Select host to copy settings from
+        </phrase></textobject>
+        <caption><para>
+          Select host to copy settings from
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/new_host/window-copy_host2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Copy settings to new hosts
+        </phrase></textobject>
+        <caption><para>
+          Copy settings to new hosts
+        </para></caption>
+      </mediaobject>
+      One easy way to add groups of hosts is to power them on one at a time with a
       short delay (say 30 seconds). The hosts will then appear in the Unknown MACs table in
       the order they were powered on and can be added as a group with the click of a single
       button.
     </para>
     <para>
-      At the bottom of the window a <xref linkend="Host-Templates" endterm="Host-Templates"/>
+      At the bottom of the window a <link linkend="Host-Templates">Host Template</link>
       can be selected that will be used as the default for new hosts. Most of the time, no
-      additional configuration is needed for a new host.
+      additional configuration is needed for a new host. As an alternative way to make settings
+      for the new hosts, one can select an existing properly configured host and choose to copy
+      its settings to the new ones.
     </para>
   </section>
   <section xml:id="sec-Configuring-Hosts">
@@ -75,14 +134,15 @@
     <bridgehead xml:id="Generic-Properties">Generic Properties</bridgehead>
     <para>
       A property that is not hardware related and not specific to a host is called generic.
-      <literal>Generic properties</literal> can be configuration options, like 'OpenSM Host',
-      or purely informational, like 'Paid by'. While hardware properties are meant to be more
-      rigid typically with a configurable set of fixed values, generic properties are more
-      flexible and can be defined at will. This will become more apparent in future versions
-      of <application>QluMan</application>. <literal>Generic properties</literal> are also
-      not necessarily unique, making it possible to assign multiple values for a single
-      generic property. This is useful e.g. to add multiple torque host tags or to put hosts
-      in multiple groups for dsh/pdsh (via the 'Host tag').
+      <literal>Generic properties</literal> can be configuration options, like
+      <parameter>OpenSM Host</parameter>, or purely informational, like <parameter>Paid
+      by</parameter>. While hardware properties are meant to be more rigid, typically with a
+      configurable set of fixed values, generic properties are more flexible and can be defined
+      at will. This will become more apparent in future versions of
+      <application>QluMan</application>. <literal>Generic properties</literal> are also not
+      necessarily unique, making it possible to assign multiple values for a single generic
+      property. This is useful e.g. to add multiple torque host tags or to put hosts in
+      multiple groups for dsh/pdsh (via the 'Host tag').
     </para>
     <bridgehead xml:id="Specific-Properties">Specific Properties</bridgehead>
     <para>
@@ -91,7 +151,17 @@
     </para>
     <bridgehead xml:id="PropConf-Sets">Property/Config Sets</bridgehead>
     <para>
-      <!--cbox(file: enclosure_view__select_template.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/select_template.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a Host Template
+        </phrase></textobject>
+        <caption><para>
+          Selecting a Host Template
+        </para></caption>
+      </mediaobject>
       Individual generic properties, hardware properties and config classes can be used to
       define generic property sets, hardware property sets and config sets. This is simply a
       means of grouping them together so they can be used as a single entity. A <literal>Host
@@ -100,26 +170,46 @@
     </para>
     <bridgehead xml:id="Host-Templates">Host Templates</bridgehead>
     <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/select_template2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a Host Template for multiple hosts
+        </phrase></textobject>
+        <caption><para>
+          Selecting a Host Template for multiple hosts
+        </para></caption>
+      </mediaobject>
       When a correct <literal>Host Template</literal> exists, a host can be configured by
-      selecting the desired template in the <classname>Enclosure View</classname> window.
-      For a single host, this can be done by selecting it in the tree view. This brings up
-      the host <!--cbox(file: enclosure_view__select_template2.png)--> information on the left and
-      the template can be selected from the drop-down menu. To configure multiple hosts, you
-      would select them in the tree view and choose a <literal>Host Template</literal> from
-      the context menu. The check-marks in the sub-menu indicate which <literal>Host
-      Templates</literal> are currently assigned (if any) for the selected nodes. This action
-      will override the previous assignment.
+      selecting the desired template in the <classname>Enclosure View</classname> window.  For
+      a single host, this can be done by selecting it in the tree view. This brings up the host
+      information on the right and a template can be selected from the drop-down menu. To
+      configure multiple hosts, you would select them in the tree view and choose a
+      <literal>Host Template</literal> from the context menu. The check-marks in the sub-menu
+      indicate which <literal>Host Templates</literal> are currently assigned (if any) for the
+      selected nodes. This action will override the previous assignment.
     </para>
     <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/select_generic_property.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a Generic Property
+        </phrase></textobject>
+        <caption><para>
+          Selecting a Generic Property
+        </para></caption>
+      </mediaobject>
       <literal>Generic properties</literal> can also be assigned to a host individually. Such
       assigned properties take precedence over ones of the same type selected through the
       <literal>Host Template</literal>. This is useful when a property should be changed
       temporarily for some hosts or when a property should not be
-      <!--cbox(file: enclosure_view__select_generic_property.png)-->
       changeable globally through the Host Template. Note that by default, every new host has
       the generic property <parameter>Schedule Format: always</parameter>, which is required
       to format the disk on the first boot. This should be removed after the first successful
-      boot of the host so that log files will be preserved across boots in the future.
+      boot of the host, so that log files will be preserved across boots in the future.
     </para>
   </section>
 </chapter>
