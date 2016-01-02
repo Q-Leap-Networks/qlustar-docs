@@ -75,7 +75,7 @@
 	The Qlustar kernel is configured for cluster server hardware. Hence, it's possible,
 	that drivers for some network or storage adapters on Laptops or other non-server PCs
 	are missing. If you run into such problems, please post it in the <link
-	xlink:href="http://qlustar.com/forums/installation/___blank___"> Installation
+	xlink:href="https://qlustar.com/forums/installation/___blank___"> Installation
 	forum</link>. Qlustar also has no support for secure boot (UEFI). If your hardware
 	uses UEFI by default, you need to configure your BIOS to allow so-called
 	<firstterm>legacy boot</firstterm>.
@@ -90,7 +90,7 @@
       onto a DVD or be loaded onto a USB flash-drive. This section explains the USB
       method. If you already have an up-to-date Qlustar USB drive you can skip this
       step. But make sure that you have the latest installer to be found at
-      <link xlink:href="http://qlustar.com/download/___blank___">qlustar.com</link>.
+      <link xlink:href="https://qlustar.com/download/___blank___">the Qlustar website</link>.
     </para>
     <important>
       <para>
@@ -105,7 +105,7 @@
 	installation, since that means the installer is corrupt (either due to hardware errors
 	or a malicious attack). In this case, you should download the image once more. If the
 	problem persists, also after downloading from a different computer, please post the
-	incidence in the <link xlink:href="http://qlustar.com/forum/___blank___">support
+	incidence in the <link xlink:href="https://qlustar.com/forum/___blank___">support
 	forum</link>.
     </para>
     </important>
