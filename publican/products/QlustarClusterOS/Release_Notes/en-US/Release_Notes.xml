@@ -7,12 +7,344 @@
 <!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<article version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<xi:include href="Article_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<para>
-		This is a test paragraph
-	</para>
-	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<index />
+<article xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="Article_Info.xml"/>
+  <section>
+    <title>Basic Info</title>
+      <para>
+	The Qlustar 9.1 <classname>core platform</classname> is based on Ubuntu 14.04.3 and the
+	additional Debian <classname>edge platform</classname> on Debian 7.9. They include all
+	security fixes and other package updates published before December 30th 2015. Available
+	security updates relevant to Qlustar 9.1, that have appeared after this date, will be
+	announced on the Qlustar website and in the Qlustar security news-letter.
+      </para>
+  </section>
+  <section>
+    <title>New features</title>
+    <section>
+      <title>QluMan 2.1</title>
+      <para>
+	<variablelist>
+	  <varlistentry>
+	    <term>Certificate based authentification</term>
+	    <listitem><para>
+	      The authentification of a QluMan user is now established using certificates. The
+	      elimination of passwords combined with the new initial user registration based on
+	      one-time tokens provides an exceptionally high level of security needed for
+	      confidential connections over public networks. <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-add-cluster___blank___">
+	    More details &hellipsis;</link>
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Certificate safe</term>
+	    <listitem><para>
+	      The certificates used to authenticate a QluMan user are stored in an encrypted
+	      password protected certificate safe. This safe may contain an unlimited number of
+	      connection certificates for different clusters and can easily be managed using
+	      the new <classname>Connection Manager</classname>. <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-connecting-to-cluster___blank___">
+	    More details &hellipsis;</link>
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Hardware Wizard</term>
+	    <listitem><para>
+	      The powerful new <classname>HW-Wizard</classname> auto-detects partially, wrongly
+	      or un-configured hosts and guides through the config steps to set them up in a
+	      correct and optimal way. A new type of icon in the <classname>Enclosure
+	      View</classname> marks hosts that need reconfiguration. <link
+	      xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#chap-HWwizard___blank___">
+	      More details &hellipsis;</link>
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>New node property display</term>
+	    <listitem><para>
+	      Assigned host properties and settings are now shown in a transparent tree
+	      structure within the <classname>Enclosure View</classname>. This helps to clearly
+	      identify what settings are active for a given host and where in the config
+	      hierarchy they come from.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Direct node property assignment</term>
+	    <listitem><para>
+	      Any property, setting or set thereof can now be directly assigned to nodes. This
+	      hugely increases flexibility in node setups.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Copy&amp;Paste host configs</term>
+	    <listitem><para>
+	      All assignments of a particular host can now be used to setup a group of other
+	      nodes. This is the most simple and fastest way to get new nodes up and running.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Improved use of filters in RXEngine</term>
+	    <listitem><para>
+	      The RXEngine now allows the use of host filters for all command types. This
+	      allows for extremely speedy selection of the nodes a command should be executed
+	      on.
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+  </section>
+  <section>
+    <title>Major component updates</title>
+      <para>
+	<variablelist>
+	  <varlistentry>
+	    <term>Slurm</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 introduces the Slurm 15.8 series with the current version being
+		15.8.5.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>OFED Infiniband stack</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 ships the recently released OFED 3.18-1 Infiniband stack including all
+		necessary components.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>OpenMPI</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 updates the OpenMPI 1.8 series to the most recent version 1.8.8.
+	      </para>
+	      <para>
+		Package versions (<classname>openmpi-icc</classname>) compiled with the most
+		recent Intel compiler suite were also added (this requires a manual
+		installation of the Intel compilers using the base install path
+		<filename>/apps/prod/intel/ps_xe_2016</filename>).
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Lustre</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 adds the brand-new Lustre 2.8 release with ZFS as the back-end
+		filesystem.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>ZFS Filesystem</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 updates ZFS to version 0.6.5.x bringing many improvements and
+		bug-fixes.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>Nvidia CUDA</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 provides optimal support for Nvidia GPU hardware by supplying
+		pre-compiled and up-to-date kernel drivers as well as CUDA 7.5.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>HA stack</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.1 ships corosync 2.3.4, pacemaker 1.1.12 and crmsh 2.1.1 for
+		reliable High-Availability configurations.
+	      </para>
+	      <para>
+	       Improved Qlustar resource scripts dramatically reduce failover and startup times
+	       of HA resources by more than 80%.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+  </section>
+  <section>
+    <title>Other package version updates</title>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <classname>openblas</classname>: 0.2.15
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>openafs</classname>: 1.6.11.1
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section>
+    <title>General changes/improvements</title>
+      <para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      <classname>Slurm</classname>: The slurmd cgroup RAM limit on compute nodes was
+	      increased from 64MB to 128MB. Previously, slurmd sometimes required more than
+	      64MB and consequently crashed.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Disk auto-setup</classname>: Add config option to limit ZFS arc cache.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Root shell</classname>: New fancy prompt.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Netboot nodes</classname>: Set timezone from head-node's config.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+  </section>
+  <section>
+    <title>Important bug fixes</title>
+      <para>
+	The boot loader grub used to throw the error message <emphasis>Error: diskfilter writes
+	are not supported</emphasis> and hang for a couple of seconds. This is fixed with the
+	upgrade to <classname>grub</classname> version <emphasis>2.02~beta2-9ubuntu1.7</emphasis>.
+      </para>
+  </section>
+  <section>
+    <title>Changelogs</title>
+      <para>
+	A detailed log of changes in the image modules can be found in the directories
+	<filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-9.1.0</filename>.
+	As an example, in the directory
+	<filename>/usr/share/doc/qlustar-module-core-precise-amd64-9.1.0</filename> you will
+	find a summary changelog in <filename>core.changelog</filename>, a complete list of
+	packages with version numbers entering the current core module in
+	<filename>core.packages.version.gz</filename>, a complete changelog of the core modules
+	package versions in <filename>core.packages.version.gz</filename> and finally a
+	complete log of changed files in <filename>core.contents.changelog.gz</filename>.
+      </para>
+      <para>
+	As usual, individual changelogs of packages can be found on an installed head-node in
+	the directories <filename>/usr/share/doc/&#60;package name&#62;</filename>.
+      </para>
+  </section>
+  <section>
+    <title>Update instructions</title>
+    <task>
+      <title></title>
+      <procedure>
+	<step>
+	  <title>Preparations</title>
+	  <para>
+	    Upgrading to Qlustar 9.1 is only supported from a 9.0.x or a 8.1.x release.
+	  </para>
+	  <note><para>
+	    When updating from Qlustar 8.1 you'll have to backup your Slurm config file
+	    (<filename>/etc/qlustar/common/slurm-llnl/slurm.conf</filename>) to a safe
+	    place before starting. In Qlustar 9.x, the Slurm config is managed by QluMan and
+	    needs to be setup from scratch (see <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Slurm-Config___blank___">
+	    the corresponding section in the QluMan guide</link>). Use the settings in your
+	    backed up config file to accomplish this. 
+	  </para></note>
+	  <note><para>
+	    Make sure that you have no unwritten changes in the QluMan database. If you do,
+	    write them to disk as described in the <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
+	    QluMan Guide</link> before proceeding with the update.
+	  </para></note>
+	</step>
+	<step>
+	  <title>Update to 9.1 package sources list</title>
+	  <para>
+	    The Qlustar apt sources list needs to be changed as follows both on the
+	    head-node(s) and in all chroot(s) that should be updated.
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>apt-get update</command>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>apt-get install qlustar-sources-list-9.1</command>
+	    </screen>
+	  </para>
+	</step>
+	<step>
+	  <title>Update packages</title>
+	  <para>
+	    Now proceed as explained in the <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
+	    Qlustar Administration Manual</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Reboot head-node(s)</title>
+	  <para>
+	    Initially only reboot the head-node(s).
+	  </para>
+	</step>
+	<step>
+	  <title>Generate a one-time token</title>
+	  <para>
+	    After having updated and rebooted the head-node, you'll have to generate a one-time
+	    token with which you'll be able to establish authentification with QluMan.
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>qluman-cli --gencert</command>
+	    </screen>
+	    You'll be prompted for a pin when generating the token.
+	  </para>
+	  <para>
+	    With this one-time token, you can proceed to register yourself using the QluMan GUI
+	    as explained in the <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-manage-cluster___blank___">
+	    QluMan Guide</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Write config file changes</title>
+	  <para>
+	    The update might have introduced changes in the QluMan database. These need to be
+	    written to disk. Check the QluMan Guide about <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
+	    how to write such changes</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Regenerating Qlustar images</title>
+	  <para>
+	    Most likely you will also have to regenerate your Qlustar images with the 9.1 image
+	    modules. To accomplish this, you'll have to select <emphasis>Version 9.1</emphasis>
+	    in the QluMan <link
+	    xlink:href="../../../../Qlustar_Cluster_OS/9.1/html-single/QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
+	    Qlustar Images dialog</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Reboot all netboot node(s)</title>
+	  <para>
+	    After the regeneration of the images is complete, you can reboot all other nodes in
+	    the cluster, including virtual FE nodes. This completes the update procedure.
+	  </para>
+	</step>
+      </procedure>
+    </task>
+  </section>
 </article>
 

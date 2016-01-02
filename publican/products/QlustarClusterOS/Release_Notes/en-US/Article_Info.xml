@@ -8,24 +8,25 @@
 %DOCBOOK_ENTS;
 ]>
 <info version="5.0" xml:id="info-Qlustar_Cluster_OS-Release_Notes-Release_Notes" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<title>Release Notes</title>
-	<subtitle>Enter a short description here.</subtitle>
-	<productname>Qlustar Cluster OS</productname>
-	<productnumber>9.1</productnumber>
-	<edition>0</edition>
-	<abstract>
-		<para>
-			A short overview and summary of the book's subject and purpose, traditionally no more than one paragraph long. Note: the abstract will appear in the front matter of your book and will also be placed in the description field of the book's RPM spec file.
-		</para>
-	</abstract>
-	<orgname>
-	<inlinemediaobject>
-		<imageobject>
-			<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
-		</imageobject>
-	</inlinemediaobject>
-	</orgname>
-	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <title>Release Notes</title>
+  <subtitle></subtitle>
+  <productname>Qlustar Cluster OS</productname>
+  <productnumber>9.1</productnumber>
+  <edition>0</edition>
+  <abstract>
+    <para>
+      Qlustar 9.1 is a major feature release of the 9.x series. It ships QluMan 2.1 packed with
+      new features and improvements. The highlights among the numerous component updates and
+      bug fixes are: Slurm 15.8.5, OpenMPI 1.8.8, ZFS 0.6.5, OFED 3.18-1, Lustre 2.8 and CUDA
+      7.5.
+    </para>
+  </abstract>
+  <corpauthor>
+    <inlinemediaobject>
+      <imageobject>
+	<imagedata fileref="Common_Content/images/qlustar-logo.png" format="PNG" />
+      </imageobject>
+    </inlinemediaobject>
+  </corpauthor>
 </info>
 
