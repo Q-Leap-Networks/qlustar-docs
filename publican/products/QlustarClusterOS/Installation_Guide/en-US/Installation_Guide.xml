@@ -446,27 +446,34 @@
 	    <emphasis role="bold">virtual FE node</emphasis> as a virtual machine running
 	    on the head-node. If you decide not to do so, we advise to assign a physical
 	    machine as a FE node at a later stage. The suggestions for the network
-	    parameters of the FE VM are derived from the head-nodes values. Again, if you
+	    parameters of the FE VM are derived from the head-node's values. Again, if you
 	    select DHCP as the configuration method for the public interface, make sure to
 	    add its IP address later to the NIS and ssh related header configurations in
-	    the graphical QluMan management interface. The name of the FEs cluster-internal
+	    the graphical QluMan management interface. The name of the FE's cluster-internal
 	    interface would be <code>login-c</code>.
 	  </para>
 	  <para>
 	    You also have the option to create a <emphasis role="bold">virtual demo-cluster
 	    </emphasis> on the head-node, provided the latter has enough main memory.
 	    When choosing the number of demo-nodes, keep in mind, that each one of them will
-	    be configured with 1GB of main memory. Even if configured, the VMs will not be
+	    be configured with 1.5GB of main memory. Even if configured, the VMs will not be
 	    started automatically though, so the head-node will be able to boot, even if an
 	    insane number of demo VMs are chosen.
 	  </para>
 	  <note>
 	  <para>
-	    Please note, that if you choose neither the option for the virtual FE node,
-	    nor the virtual demo-cluster, the necessary network pre-configurations
-	    (bridge setup, etc.) for starting VMs will not be done. This means, that
-	    you'll have to do a number of non-trivial manual steps after installation,
-	    in case you find out, that you need support for VMs later on.
+	    If you choose neither the option for the virtual FE node, nor the virtual
+	    demo-cluster, the necessary network pre-configurations (bridge setup, etc.) for
+	    starting VMs will not be done. This means, that you'll have to do a number of
+	    non-trivial manual steps after installation, in case you find out, that you need
+	    support for VMs later on.
+	  </para>
+	  </note>
+	  <note>
+	  <para>
+	    If you intend to follow all the instructions in the
+	    <link  xlink:href="../First_Steps_Guide/index.html#First-boot___blank___">
+	      First Steps Guide</link>, a virtual demo-cluster is a requirement.
 	  </para>
 	  </note>
 	  <para>
@@ -564,7 +571,7 @@
 		  we suggest to use Slurm. In particular, if you intend to follow all the
 		  instructions in the
 		  <link 
-		      xlink:href="../First_Steps_Guide/index.html#sec-Qlustar-Initial-Config___blank___">
+		      xlink:href="../First_Steps_Guide/index.html##First-boot___blank___">
 		    First Steps Guide</link>, Slurm is a requirement and is also sufficient for
 		    a basic evaluation setup.
 		</para>
@@ -581,7 +588,7 @@
 		</note>
 		<note>
 		<para>
-		  Note, that apart from Nvidia Cuda software, the packages selected here will
+		  Apart from Nvidia Cuda software, the packages selected here will
 		  only be installed on the head-node. Selecting and generating boot-image
 		  modules as well as the process of general package installation for
 		  compute/storage nodes booting from the network must be done elsewhere. This
