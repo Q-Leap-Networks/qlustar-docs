@@ -88,12 +88,12 @@
         </para></caption>
       </mediaobject>
       As explained in <xref linkend="sec-Configuring-Hosts"/> the major part of a hosts
-      configuration is derived from a <classname>Host Template</classname>. The wizard's goal
-      is, to find an existing <classname>Host Template</classname> with a <classname>Hardware
-      Property set</classname> that optimally matches the detected hardware for at least some
-      of the selected hosts. If such a <classname>Host Template</classname> is found, it will
-      be pre-selected and the <guibutton>Use existing Host Template</guibutton> choice will be
-      active.
+      configuration is derived from a <classname>Host Template</classname>. One of the wizard's
+      goals is, to find an existing <classname>Host Template</classname> with a
+      <classname>Hardware Property set</classname> that optimally matches the detected hardware
+      for at least some of the selected hosts. If such a <classname>Host Template</classname>
+      is found, it will be pre-selected and the <guibutton>Use existing Host
+      Template</guibutton> choice will be active.
     </para>
     <para>
       The settings inherited from this template, are shown underneath in tree format and below
@@ -179,109 +179,312 @@
     </para>
   </section>
   <section xml:id="sec-HWwizard-hw-prop-set">
-    <title>Select Hardware Property Set</title>
+    <title>Selecting a Hardware Property Set</title>
     <para>
-      This page selects the Hardware Property Set used in the selected Host Template and is the
-      main source for hardware configuration. Like in the previous page an existing Hardware
-      Property Set can be used, can be cloned or a new Hardware Property Set can be
-      created. Most likely an existing Hardware Property Set will be pre selected. A different
-      existing Hardware Property Set can be selected from the drop-down menu and again the
-      choices are color coded for how well they fit the hosts.
-      <!--cbox(file: hw_wizard/hw_prop_set-existing.png)-->
-      <!--cbox(file: hw_wizard/hw_prop_set-existing-menu.png)-->
-      Changing the Hardware Property Set affects the selected Host Template. If an existing
-      Host Template was chosen in the last page then changing it might affect hosts other than
-      the ones being configured in the wizard. In such a case the wizard will ask for
-      confirmation that that is desired.
-      <!--cbox(file: hw_wizard/hw_prop_set-modify_template.png)-->
-      The existing Hardware Property Set can be replaced with the auto-detected Hardware
-      Properties on the bottom right for a better fit. If multiple groups of hosts are being
-      configured at the same time the properties where hosts differ will have a drop-down menu
-      to select the most suitable value.
-      <!--cbox(file: hw_wizard/hw_prop_set-existing-select_hw_prop.png)-->
-      Once the right selection is made the properties can be copied over the existing Hardware
-      Property Set by clicking the &lt;&lt; button. The wizard will ask for confirmation if
-      this impacts hosts not currently being configured and then set the Hardware Property Set
-      on the bottom left into edit mode, same as it is when cloning or creating a new Hardware
-      Property Set.
-      <!--cbox(file: hw_wizard/hw_prop_set-existing-copied.png)-->
-      The difference between cloning an existing Hardware Property Set and creating a new one
-      is just what Hardware Properties are pre selected. Cloning will start with the properties
-      the cloned set has while creating a new one start with a blank slate.
-      <!--cbox(file: hw_wizard/hw_prop_set-clone.png)-->
-      <!--cbox(file: hw_wizard/hw_prop_set-new.png)-->
-      In all 3 cases the Hardware Property Set can be further edited by selecting different
-      values for properties, adding properties or removing properties.
-      <!--cbox(file: hw_wizard/hw_prop_set-new-add_property.png)-->
-      <!--cbox(file: hw_wizard/hw_prop_set-new-remove_property.png)-->
-      Once the right Hardware Properties are selected click Next to continue.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-existing.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Using an existing HW Property Set
+        </phrase></textobject>
+        <caption><para>
+          Using an existing HW Property Set
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-existing-menu.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Choose an alternative HW Property Set
+        </phrase></textobject>
+        <caption><para>
+          Choose an alternative HW Property Set
+        </para></caption>
+      </mediaobject>
+      This page selects the <classname>HW Property Set</classname> to be used in the selected
+      <classname>Host Template</classname>. It is the main source for the node's hardware
+      configuration. Like in the previous page an existing <classname>HW Property
+      Set</classname> can be used/cloned or a new one may be created. Most likely an existing
+      set will be suggested by the wizard. Alternatives are selectable from the drop-down menu.
+      The available choices are again color-coded indicating how well they match the detected
+      host properties.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-modify_template.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Confirm HW Property Set modification
+        </phrase></textobject>
+        <caption><para>
+          Confirm HW Property Set modification
+        </para></caption>
+      </mediaobject>
+      Changing the <classname>HW Property Set</classname> at this stage, will affect the
+      selected <classname>Host Template</classname>. If an existing <classname>Host
+      Template</classname> was chosen in the previous page, changing it might affect hosts
+      other than the ones being configured in the wizard. In such a case, the wizard will ask
+      for confirmation that such a change is desired.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-existing-select_hw_prop.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Select alternative values for HW properties
+        </phrase></textobject>
+        <caption><para>
+          Select alternative values for HW properties
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-existing-copied.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          HW Property Set in edit-mode
+        </phrase></textobject>
+        <caption><para>
+          HW Property Set in edit-mode
+        </para></caption>
+      </mediaobject>
+      A selected existing <classname>HW Property Set</classname> may be modified for a better
+      fit by using the auto-detected <classname>HW Properties</classname> displayed at the
+      bottom right. If multiple groups of hosts are being configured at the same time, the
+      properties, where hosts differ, will have a drop-down menu to select the most suitable
+      value. Once the desired selection is made, the properties can be copied over the
+      existing <classname>HW Property Set</classname> by clicking the
+      <guibutton>&lt;&lt;</guibutton> button. The wizard will ask for confirmation, in case
+      this would impact hosts not currently being configured. Finally, it will set the
+      <classname>HW Property Set</classname> displayed at the bottom left into edit-mode.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-clone.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Cloning a HW Property Set
+        </phrase></textobject>
+        <caption><para>
+          Cloning a HW Property Set
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating an empty new HW Property Set
+        </phrase></textobject>
+        <caption><para>
+          Creating an empty new HW Property Set
+        </para></caption>
+      </mediaobject>
+      The described behavior is analogous when cloning or creating a new set. The difference
+      between the two cases lies merely in the <classname>HW Properties</classname>
+      that will be pre-selected: While cloning will start with the properties of the cloned set, creating a new one initially will have none.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-new-add_property.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Adding a new HW Property
+        </phrase></textobject>
+        <caption><para>
+          Adding a new HW Property
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/hw_prop_set-new-remove_property.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Removing a HW Property
+        </phrase></textobject>
+        <caption><para>
+          Removing a HW Property
+        </para></caption>
+      </mediaobject>
+      In all three cases, the <classname>HW Property Set</classname> can be further edited by
+      selecting different values for properties, adding new ones or by removing some of them
+      (both from the context-menu).  Once the desired <classname>HW Properties</classname> are
+      selected, click <guibutton>Next</guibutton> to continue.
     </para>
   </section>
   <section xml:id="sec-HWwizard-resolve-conflict">
-    <title>Resolve Hardware Conflict</title>
+    <title>Resolving Hardware Conflicts</title>
     <para>
-      If more than one group of hosts is being configured at the same time or when the selected
-      Hardware Property Set is insufficient to correctly configure the hosts then the Resolve
-      Hardware Conflict page comes next. At the bottom the conflicting or missing hardware
-      properties are listed showing the correct value for each group. If only one property is
-      missing then the wizard will suggest to add the property individually per host.
-      <!--cbox(file: hw_wizard/resolve_hardware_conflict.png)-->
-      On the other hand if multiple properties are missing adding a Hardware Property Set per
-      host might be a better way and will be pre selected.
-      <!--cbox(file: hw_wizard/resolve_hardware_conflict-sets.png)-->
-      Which option is chosen is a matter of taste and there is no wrong choice here. One can
-      also choose "configure manually later" to tell the wizard to ignore the conflict. Note
-      that this will result in hosts that are only partially or wrongly configured which will
-      need to be corrected later.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/resolve_hardware_conflict.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Resolving conflicts by direct property assignment
+        </phrase></textobject>
+        <caption><para>
+          Resolving conflicts by direct property assignment
+        </para></caption>
+      </mediaobject>
+      If more than one group of hosts is being configured at the same time or if the selected
+      <classname>HW Property Set</classname> doesn't match all properties of the hosts to be
+      configured, then the <classname>Resolve Hardware Conflict</classname> page will appear
+      next. At the bottom of it, the conflicting or missing <classname>HW
+      Properties</classname> are listed showing the detected value for each group of hosts. If
+      only a single property is missing, the wizard will suggest to add this property
+      individually per host.
     </para>
-  </section>
-  <section xml:id="sec-HWwizard-per-host-hw-prop-set">
-    <title>Additional per Host Hardware Property Set</title>
     <para>
-      <!--cbox(file: hw_wizard/per_host_hw_prop_set.png)-->
-      If per host Hardware Property Sets was chosen in the previous page then the set to be
-      used for each group will be picked here.
-      The Wizard will look for an existing Hardware Property Set for each group that contains
-      the right Hardware Properties already. If one is found it will be pre selected. Otherwise
-      a name for a new set must be entered before one can continue.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/resolve_hardware_conflict-sets.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Resolving conflicts by direct property set assignment
+        </phrase></textobject>
+        <caption><para>
+          Resolving conflicts by direct property set assignment
+        </para></caption>
+      </mediaobject>
+      On the other hand, if multiple properties are missing, adding a directly assigned
+      <classname>HW Property Set</classname> per host might be preferable and will be the
+      pre-selected choice. There is not really a wrong choice here. To some extent, the chosen
+      option is a matter of taste.
     </para>
+    <note>
+      <para>
+	One can also choose <guibutton>configure manually later</guibutton> to tell the wizard
+	to ignore the conflict. Be aware, that this will result in hosts that are only
+	partially or wrongly configured and hence will need to be corrected later.
+      </para>
+    </note>
+    <section xml:id="sec-HWwizard-per-host-hw-prop-set">
+      <title>Resolving by per-host Hardware Property Sets</title>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/hw_wizard/per_host_hw_prop_set.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Selecting or creating a HW Property Set 
+	  </phrase></textobject>
+	  <caption><para>
+	    Selecting or creating a HW Property Set 
+	  </para></caption>
+	</mediaobject>
+	If per-host <classname>HW Property Sets</classname> was chosen in the previous page,
+	the set to be used for each group must be picked here. The Wizard will try to find an
+	existing <classname>HW Property Set</classname> that already contains the correct
+	<classname>Hardware Properties</classname> for each group. If such a set is found, it
+	will be pre-selected. Otherwise, the only option is to generate a new set, for which a
+	name must be entered, before it's possible to continue.
+      </para>
+    </section>
   </section>
   <section xml:id="sec-HWwizard-gen-prop-set">
-    <title>Select Generic Property Set / Select Config Set</title>
+    <title>Selecting a Generic Property Set / Config Set</title>
     <para>
-      To complete the Host Template a Generic Property Set and Config Set must be selected. The
-      two pages are very much alike and similar to selecting the Hardware Property Set. Again
-      there are 3 main options: Use existing set, clone existing set and new empty set. Since
-      there is no auto-detection for the values in each set there is no color coding of the
-      choices.
-      <!--cbox(file: hw_wizard/gen_prop_set.png)-->
-      <!--cbox(file: hw_wizard/config_set.png)-->
-      An existing set can not be modified in the current version but when clone existing set or
-      new empty set is chosen then properties and configs can be added to or removed from the
-      set.
-      <!--cbox(file: hw_wizard/gen_prop_set-add_property.png)-->
-      <!--cbox(file: hw_wizard/config_set-add_property.png)-->
-      In the Select Generic Property Set page if the hosts have IPMI then the IPMI properties
-      deserve consideration. In the Select Config Set page the Boot Config, Disk Config and
-      UnionFS Chroot configs are usually set.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/gen_prop_set.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a Generic Property Set
+        </phrase></textobject>
+        <caption><para>
+          Selecting a Generic Property Set
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/config_set.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a Config Set
+        </phrase></textobject>
+        <caption><para>
+          Selecting a Config Set
+        </para></caption>
+      </mediaobject>
+      To complete the setup of the <classname>Host Template</classname>, a <classname>Generic
+      Property Set</classname> and a <classname>Config Set</classname> must be selected. The
+      two wizard pages handling this are very much alike, and similar to the one for
+      selecting the <classname>HW Property Set</classname>. Again, there are three main
+      options: Using/cloning an existing set, or creating a new empty one. Since there is no
+      auto-detection for the values in these two types of sets, there is no color-coding of the
+      choices in this case.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/gen_prop_set-add_property.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting Generic Properties
+        </phrase></textobject>
+        <caption><para>
+          Selecting Generic Properties
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/config_set-add_property.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting values for Config Classes
+        </phrase></textobject>
+        <caption><para>
+          Selecting values for Config Classes
+        </para></caption>
+      </mediaobject>
+      An existing set can not be modified in the current <classname>QluMan</classname> version,
+      but if <guibutton>clone existing set</guibutton> or <guibutton>new empty set</guibutton>
+      is chosen, the properties and configs can be added to or removed from the new set. If the
+      hosts have IPMI, the IPMI properties might need to be set in the <classname>Select
+      Generic Property Set</classname> page. On the other hand, in the <classname>Select Config
+      Set</classname> page, the Boot, Disk, and Slurm configs, are the most likely candidates
+      for settings that need to be selected and fine-tuned.
     </para>
   </section>
   <section xml:id="sec-HWwizard-summary">
-    <title>Summary</title>
+    <title>Summary Page</title>
     <para>
-      This is the last page of the wizard and the final confirmation of all the choices made
-      before the data is actually stored in the database.
-      At the top the common configuration for all host from the Host Template is shown in tree
-      form. At the bottom the additional Hardware Properties or Hardware Property Sets that
-      will be set for each group of hosts on a per host basis to override the host template is
-      shown. Host groups with no per host overrides are not shown.
-      <!--cbox(file: hw_wizard/summary.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hw_wizard/summary.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The wizard's summary page
+        </phrase></textobject>
+        <caption><para>
+          The wizard's summary page
+        </para></caption>
+      </mediaobject>
+      This is the concluding page of the wizard. It asks for the final confirmation of all the
+      choices made, before the corresponding settings will actually be stored in the
+      database. At the top of the page, the configurations derived from the <classname>Host
+      Template</classname> (hence common to all hosts) are shown in tree-form. At the bottom,
+      the additional <classname>Hardware Properties</classname> and/or <classname>Hardware
+      Property Sets</classname>, that will be set for each group of hosts on a per-host basis,
+      are listed. In case of conflicts, they potentially override the values of the
+      <classname>Host Template</classname>. Host groups with no per-host overrides are not
+      shown here.
     </para>
-    <para>
-      If an existing Host Template or existing Hardware Property Set was modified then this is
-      the last chance to not save that change. By clicking Finish all the modifications are
-      made and the configuration is assigned to all hosts. The hosts should then be fully
-      configured and ready to boot.
-    </para>
+    <note>
+      <para>
+	If an existing <classname>Host Template</classname> or <classname>Hardware Property
+	Set</classname> was modified during the wizard procedure, then this is the last chance
+	to drop out. By clicking <guibutton>Finish</guibutton>, all the modifications are made
+	permanent, and the configuration settings will be assigned to the selected hosts. The
+	latter should then be fully configured, and after writing the changes (see <xref
+	linkend="sec-Writing-Config-Files"/>), will be ready to (re)boot.
+      </para>
+    </note>
   </section>
 </chapter>
