@@ -256,15 +256,59 @@
 	  <para>
 	    Upgrading to Qlustar 9.1 is only supported from a 9.0.x or a 8.1.x release.
 	  </para>
-	  <note><para>
-	    When updating from Qlustar 8.1 you'll have to backup your Slurm config file
-	    (<filename>/etc/qlustar/common/slurm-llnl/slurm.conf</filename>) to a safe
-	    place before starting. In Qlustar 9.x, the Slurm config is managed by QluMan and
-	    needs to be setup from scratch (see <link
-	    xlink:href="../QluMan_Guide/index.html#sec-Slurm-Config___blank___">
-	    the corresponding section in the QluMan guide</link>). Use the settings in your
-	    backed up config file to accomplish this. 
-	  </para></note>
+	  <note>
+	    <para>
+	      When updating from Qlustar 8.1 you'll have to do some further preparation:
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    Backup Slurm Config
+		  </term>
+		  <listitem>
+		    <para>
+		      Backup your Slurm config file
+		      (<filename>/etc/qlustar/common/slurm-llnl/slurm.conf</filename>) to a
+		      safe place before starting. In Qlustar 9.x, the Slurm config is managed
+		      by QluMan and needs to be setup from scratch (see <link
+		      xlink:href="../QluMan_Guide/index.html#sec-Slurm-Config___blank___"> the
+		      corresponding section in the QluMan guide</link>). Use the settings in
+		      your backed up config file to accomplish this.
+		    </para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>
+		    Remove conflicting packages
+		  </term>
+		  <listitem>
+		    <para>
+		      Execute the following command as root on the head-node:
+		      <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>dpkg -l | grep -q kvm-ipxe &amp;&amp; dpkg --purge kvm-ipxe</command>
+		      </screen>
+		    </para>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>
+		    Fix munge startup
+		  </term>
+		  <listitem>
+		    <para>
+		      Execute the following commands as root on the head-node:
+		      <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>cfg=/etc/default/munge</command>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>[ -w $cfg ] &amp;&amp; echo "OPTIONS=--force" >> $cfg</command>
+		      </screen>
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </note>
 	  <note><para>
 	    Make sure that you have no unwritten changes in the QluMan database. If you do,
 	    write them to disk as described in the <link
