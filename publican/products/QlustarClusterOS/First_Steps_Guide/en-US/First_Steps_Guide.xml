@@ -457,15 +457,27 @@ Server infos and one-time login token for user 'admin' saved as 'token'
 	  the following as root on your workstation.
 	  <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>dpkg -l | grep python-software-properties > /dev/null 2>&amp;1 || apt-get install python-software-properties</command>
+<command>dpkg -l software-properties-common > /dev/null 2>&amp;1 || apt-get install software-properties-common</command>
 <prompt>0 root@workstation ~ #</prompt>
 <command>gpg --no-default-keyring --primary-keyring /etc/apt/trusted.gpg --recv-keys E6BA110F3C0BC307</command>
 	  </screen>
-	  The second command should have imported the <firstterm>Qlustar PGP key</firstterm>
+	  On a <literal>Debian/Wheezy</literal> workstation, you should use
+	  <application>python-software-properties</application> instead of
+	  <application>software-properties-common</application> in the first command. The
+	  second one should have imported the <firstterm>Qlustar PGP archive key</firstterm>,
 	  and must output a line like:
 	  <screen>
 gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@q-leap.com>" imported
 	  </screen>
+	</para>
+	<note>
+	  <para>
+	    The <application>gpg</application> command above might fail, the first time you
+	    execute it. This happens, if <application>gpg</application> has never been executed
+	    before for the root user. In this case, simply execute it a second time.
+	  </para>
+	</note>
+	<para>
 	  Then if you have <literal>Ubuntu/Trusty</literal> execute:
 	  <screen>
 <prompt>0 root@workstation ~ #</prompt>
@@ -488,8 +500,15 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 <prompt>0 root@workstation ~ #</prompt>
 <command>apt-get install qluman-qt</command>
 	  </screen>
-	  Note, that on Ubuntu you need to have the universe repository enabled in your sources
-	  list for the above command to succeed. Finally, the QluMan GUI can then be launched
+	</para>
+	<note>
+	  <para>
+	    On Ubuntu you need to have the <literal>universe repository</literal> enabled in
+	    your <literal>apt sources list</literal> for the above command to succeed.
+	  </para>
+	</note>
+	<para>
+	  Finally, the QluMan GUI can then be launched
 	  as an ordinary user in a shell on the workstation:
 	  <screen>
 <prompt>0 user@workstation ~ $</prompt>
@@ -497,7 +516,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	  </screen>
 	  <important>
 	    <para>
-	      Please note that the versions of the QluMan packages on the workstation should be
+	      The versions of the QluMan packages on the workstation should be
 	      the same as on the head-node(s) to ensure correct operation. Some unequal version
 	      combinations might work too, but are usually not well tested.
 	    </para>
