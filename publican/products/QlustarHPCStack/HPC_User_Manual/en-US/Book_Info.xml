@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE info [
+<!ENTITY % BOOK_ENTITIES SYSTEM "HPC_User_Manual.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<info version="5.0"
+      xml:id="info-Qlustar_HPC_Stack-HPC_User_Manual"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>HPC User Manual</title>
+  <subtitle>User Manual for Qlustar HPC Clusters</subtitle>
+  <productname>Qlustar HPC Stack</productname>
+  <productnumber>9.1</productnumber>
+  <abstract>
+    <para>
+      This is the user manual for Qlustar HPC Clusters.
+    </para>
+  </abstract>
+  <corpauthor>
+    <inlinemediaobject>
+      <imageobject>
+	<imagedata fileref="Common_Content/images/qlustar-logo.png" format="PNG" />
+      </imageobject>
+    </inlinemediaobject>
+  </corpauthor>
+  <xi:include href="Common_Content/Legal_Notice.xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="Common_Content/Author_Group.xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude" />
+</info>
+
