@@ -8,104 +8,199 @@
 %DOCBOOK_ENTS;
 ]>
 <chapter xmlns="http://docbook.org/ns/docbook"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      xmlns:xi="http://www.w3.org/2001/XInclude"
-      xml:id="chap-Config-Classes">
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-Config-Classes">
   <title>Config Classes</title>
   <section xml:id="sec-Config-Classes-Overview">
     <title>Overview</title>
     <para>
-      <!--cbox(file: write_files__with_changes.png)-->
-      <!--cbox(file: write_files/main.png)-->
-      Config Classes manage configurations that are too complex to fit into the key + value
-      scheme used by properties. Therefore, there is no common interface to configure all
-      classes. Instead each class has its own configuration dialog presenting the specific
-      options it provides. Furthermore, some classes depend on sub-classes
-      (e.g. <classname>Boot Configs</classname> depend on "Qlustar Images"). Only the top-level
-      config classes can be assigned to a host template. Sub-classes are assigned indirectly
-      via their parent class. Most of the functional subsystems of
-      <productname>Qlustar</productname> have a dedicated config class. Currently there are
-      four of them: <classname>Boot Configs</classname>, <classname>DHCP Configs</classname>,
-      <classname>Disk Configs</classname> and <classname>Slurm Configs</classname> and the
-      sub-class <classname>Qlustar Images</classname>.
+      <classname>Config Classes</classname> manage configurations that are too complex to fit
+      into the key + value scheme used by properties. Therefore, there is no common interface
+      to configure all classes. Instead, each class has its own configuration dialog,
+      presenting the specific options it provides. Furthermore, some classes depend on
+      sub-classes (e.g. <classname>Boot Configs</classname> depend on <classname>Qlustar
+      Images</classname>). Only the top-level <classname>Config Classes</classname> are
+      directly assignable to a <classname>Config Set</classname> or a host. Sub-classes are
+      assigned indirectly via their parent class. Most of the functional subsystems of
+      <productname>Qlustar</productname> have a dedicated <classname>Config
+      Class</classname>. Currently, there are four of them: <classname>Boot</classname>,
+      <classname>DHCP</classname>, <classname>Disk</classname>, and <classname>Slurm
+      Configs</classname> complemented by a single sub-class, <classname>Qlustar
+      Images</classname>.
     </para>
   </section>
   <section xml:id="sec-Writing-Config-Files">
     <title>Writing Config Files</title>
     <para>
-      The configurations managed via config classes and sub-classes in the
-      <application>QluMan</application> GUI are translated into automatically generated
-      configuration files on the head-node(s). While <application>QluMan</application>
-      <!--cbox(file: preview_diff__diff_one.png)-->
-      <!--cbox(file: preview_diff__diff_many.png)-->
-      <!--cbox(file: preview_diff__view.png)-->
-      configuration options are usually saved in the <application>QluMan</application>
-      database immediately after they have been entered in the GUI, the write process of the
-      real configuration files on disk is a separate step that needs to be specifically
-      initiated and confirmed.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Write Files dialog
+        </phrase></textobject>
+        <caption><para>
+          The Write Files dialog
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/with_changes.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Write Files dialog with pending changes
+        </phrase></textobject>
+        <caption><para>
+          The Write Files dialog with pending changes
+        </para></caption>
+      </mediaobject>
+      The configurations managed in the <application>QluMan</application> GUI via
+      <classname>Config Classes</classname> and sub-classes, are translated into automatically
+      generated configuration files on the head-node(s). While
+      <application>QluMan</application> configuration options are usually saved in the
+      <application>QluMan</application> database immediately after they have been entered in
+      the GUI, the write process of the real configuration files on disk is a separate step,
+      that needs to be specifically initiated and confirmed.
     </para>
     <para>
-      Each configuration dialog of a config class has a <guibutton>Preview</guibutton> and
-      <guibutton>Write</guibutton> button for its own config files. Additionally, there is
-      also a dedicated dialog for writing and previewing <emphasis role="bold">all</emphasis>
-      configuration files. You can access it from <guimenuitem>Manage
-      Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or the <guibutton>Write
-      Files</guibutton> button at the bottom of the main window. If a config class has no
-      pending changes, the <guibutton>Preview</guibutton> button becomes a
-      <guibutton>View</guibutton> button and the <guibutton>Write</guibutton> button becomes
-      ghosted. The Preview window shows both, the new version of the config file that will be
-      written, as well as a <parameter>context diff</parameter> of the changes compared to
-      the current file on disk (if there are any differences). If a config class changes only
-      one file, the file will be shown directly. If multiple files are involved, there will
-      be one tab for each file.
+      Each configuration dialog of a config class has a <guibutton>Preview</guibutton> and a
+      <guibutton>Write</guibutton> button for its own config files. Additionally, there is a
+      dedicated dialog for writing and previewing <emphasis role="bold">all</emphasis>
+      configuration files. You can access the latter from <guimenuitem>Manage
+      Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
+      Files</guibutton> button at the bottom right of the main window.
     </para>
     <para>
-      Checking the optional <guibutton>Force</guibutton> button will initiate a rewrite of all
-      config files, even if they haven't changed. Note also, that the actual write command is
-      performed via the <link linkend="chap-RX-Engine">Qlustar RXEngine</link>. This allows for
-      <emphasis role="bold">consistent management of multiple head-nodes</emphasis> e.g. in a
-      high-availability configuration.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/preview_diff/view.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Display of a config's content
+        </phrase></textobject>
+        <caption><para>
+          Display of a config's content
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/preview_diff/diff_one.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Display of a single config's content including a diff
+        </phrase></textobject>
+        <caption><para>
+          Display of a single config's content including a diff
+        </para></caption>
+      </mediaobject>
+       <mediaobject>
+        <imageobject><imagedata
+        fileref="images/preview_diff/diff_many.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Display of multiple configs including their diffs
+        </phrase></textobject>
+        <caption><para>
+          Display of multiple configs including their diffs
+        </para></caption>
+      </mediaobject>
+      If a config class has no pending changes, the <guibutton>Preview</guibutton> button
+      becomes a <guibutton>View</guibutton> button and the <guibutton>Write</guibutton> button
+      becomes ghosted. The Preview window shows both, the new version of the config file that
+      will be written, as well as a <parameter>context diff</parameter> of the changes compared
+      to the current file on disk (if there are any differences). If a <classname>Config
+      Class</classname> changes only one file, that file will be shown directly. If multiple
+      files are involved, there will be one tab for each file.
     </para>
+    <note>
+      <para>
+	Checking the optional <guibutton>Force</guibutton> button, will initiate a rewrite of
+	all config files, even if they haven't changed.
+      </para>
+    </note>
+    <note>
+      <para>
+	The actual write command is performed via the <link linkend="chap-RX-Engine">Qlustar
+	RXEngine</link>. This allows for <emphasis role="bold">consistent management</emphasis>
+	of multiple head-nodes e.g. in a high-availability configuration.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-Boot-Configs">
     <title>Boot Configs</title>
     <para>
-      The "Boot Config" dialog allows to define settings for the PXE/tftp boot server. A boot
-      configuration determines which <link linkend="sec-Qlustar-OS-Images">Qlustar OS
-      image</link> is delivered to a node and optionally permits the specification of
-      <firstterm>PXELinux</firstterm> commands and/or Linux kernel parameters. When opened, the
-      <classname>Boot Config</classname> window shows a list of all boot configs currently
-      <!--cbox(file: boot_config__collapsed.png)-->
-      defined sorted by their names. Note that the default config is special in the sense
-      that it applies to any node that has no specific boot config assigned (either through a
-      template or directly) to itself. This means that in the simplest configuration (all
-      nodes should boot identically), it is sufficient to just have the "default" boot config
-      without any specific assignment. By expanding a boot config item, the configured
-      <productname>Qlustar</productname> image, PXELinux command
-      <!--cbox(file: boot_config__context_menu.png)-->
-      and kernel parameters become visible. You can change any of the values by simply
-      selecting a different option from the drop-down menus. In case of kernel parameters,
-      you can also directly edit the entry and save the result by pressing
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/boot_config/collapsed.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Boot Config dialog
+        </phrase></textobject>
+        <caption><para>
+          Boot Config dialog
+        </para></caption>
+      </mediaobject>
+      The <classname>Boot Config</classname> dialog allows to define settings for the PXE/tftp
+      boot server. A boot configuration determines which <link
+      linkend="sec-Qlustar-OS-Images">Qlustar OS image</link> is delivered to a node, and
+      optionally permits the specification of <firstterm>PXELinux</firstterm> commands and/or
+      Linux kernel parameters. When opened, the <classname>Boot Config</classname> window shows
+      a collapsed tree-list of all boot configs currently defined, sorted by their names.
+    </para>
+    <note>
+      <para>
+	Note that the <classname>default config</classname> is special: It applies to any node
+	without a specifically assigned (either through a template or directly) <classname>Boot
+	Config</classname>. This means, that in the simplest configuration, where all nodes
+	should boot identically, having just the <classname>default config</classname> will be
+	sufficient.
+      </para>
+    </note>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/boot_config/context_menu.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Changing a Boot Config
+        </phrase></textobject>
+        <caption><para>
+          Changing a Boot Config
+        </para></caption>
+      </mediaobject>
+      By expanding a <classname>Boot Config</classname> item, the configured <productname>Qlustar</productname> image,
+      PXELinux command, and kernel parameters become visible. You can change any of the values,
+      by simply selecting a different option from the drop-down menus. In case of kernel
+      parameters, you can also directly edit the entry and save the result by pressing
       <keycap>return</keycap>. Furthermore, it is possible to add more kernel parameters or
       remove them through the context menu.
     </para>
     <para>
-      <!--cbox(file: boot_config__new.png)-->
-      The context menu also lets you create new boot configs as well as edit or delete an
-      existing one. Alternatively a new boot config can be created by clicking the
-      <guibutton>New</guibutton> button at the bottom of the dialog. Both the context menu
-      and the button bring up the <classname>New Boot Config</classname> dialog.  Simply
-      enter the name for the new config, select a Qlustar image and (optionally) a PXELinux
-      command, enter a description and press <guibutton>OK</guibutton> to create it. The new
-      config then appears in the <classname>Boot Config</classname> window and is ready for
-      use.  
-      <note>
-	<para>
-	  Note that additional kernel parameters can not be added in the <classname>New Boot
-	  Config</classname> dialog or when editing an entry. This is only allowed via the
-	  context menu, once the mouse is over the boot config to be changed.
-	</para>
-      </note>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/boot_config/new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating new Boot Configs
+        </phrase></textobject>
+        <caption><para>
+          Creating new Boot Configs
+        </para></caption>
+      </mediaobject>
+      The context menu also lets you create new <classname>Boot Configs</classname> and edit or
+      delete an existing one. Alternatively, a new <classname>Boot Config</classname> can be
+      created by clicking the <guibutton>New</guibutton> button at the bottom of the
+      dialog. Both, the context menu and the button bring up the <classname>New Boot
+      Config</classname> dialog. Simply enter the name and description for the new config,
+      select a Qlustar image and (optionally) a PXELinux command. Finally press
+      <guibutton>OK</guibutton> to create it. The new config will then appear in the
+      <classname>Boot Config</classname> window and will be ready for use.
+    </para>
+    <para>
+      Pressing the <guibutton>Boot Parameter Editor</guibutton> button at the bottom of the
+      dialog, will bring up a small edit dialog, where kernel parameters can be created,
+      edited, or deleted.
     </para>
   </section>
   <section xml:id="sec-DHCP-Config">
