@@ -15,32 +15,10 @@
   <indexterm><primary>Ganglia</primary></indexterm>
   
   <para>
-    This section describes the Qlustar Ganglia setup.
+    This section describes the Qlustar Ganglia setup. Nagios in combination with Ganglia is
+    used to monitor the hardware of the compute nodes as well as the head-node.
   </para>
   
-  <para>
-    Nagios in combination with Ganglia is used to monitor the hardware of the compute
-    nodes as well as the head node.
-  </para>
-  
-  <section xml:id="admin-man-sect-upgr">
-    <title>Upgade from older installations</title>
-    <indexterm><primary>Ganglia</primary>
-    <secondary>Upgrade from older installations</secondary></indexterm>
-
-    <para>
-      In older installations a process ql-hwmonitor was responsible to check the ganglia
-      metrics against the thresholds defined in the files
-      <filename>/etc/ql-lib/hw-monitor/resources</filename> and
-      <filename>/etc/ql-lib/hw-monitor/resources.ganglia</filename>. This was completely
-      replaced by a Nagios configuration. It turned out that that did not scale very well, so a
-      new daemon process ql-hwmonitord in combination with Nagios is used now.  This daemon now
-      checks the information provided in ganglia, checks them against service limits and sends
-      the results to Nagios.
-    </para>
-    
-  </section>
-
   <section xml:id="admin-man-sect-monit-the-nodes">
     <title>Monitoring the nodes</title>
     <indexterm><primary>Ganglia</primary>
@@ -68,13 +46,13 @@
 	Node Monitoring with Ganglia</para></caption>
       </mediaobject>
       Each node sends sensor data and other information such as swap usage, fill level of file
-      systems and S.M.A.R.T. data of the hard disks to a multicast address where the head node
+      systems and S.M.A.R.T. data of the hard disks to a multicast address where the head-node
       can collect them. The way each node collects the sensor data depends on the hardware
       type. The Qlustar Cluster Suite detects the type that is suitable for a specific compute
       node. You can list the current metrics by running <command>ganglia --help</command>.  The
       package <package>ganglia-webfrontend</package> allows to view the state of your cluster
       and each node from within a web-browser. It suffices to visit the Link
-      <literal>http://<replaceable>head-node</replaceable>/ganglia</literal>.
+      <literal>http://<replaceable>&lt;head-node&gt;</replaceable>/ganglia</literal>.
     </para>
   </section>
 </section>
