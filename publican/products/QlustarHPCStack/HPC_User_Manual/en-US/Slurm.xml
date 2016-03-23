@@ -686,5 +686,41 @@ echo "Hi, I am step $SLURM_ARRAY_TASK_ID in this array job $SLURM_ARRAY_JOB_ID"
       For further details please read the Slurm documentation.
     </para>
   </section>
+  <section xml:id="sec-chain-jobs">
+    <title>Chain Jobs</title>
+    <para>
+      You can use <firstterm>chain jobs</firstterm> to create
+      dependencies between jobs. This is often the case if a job
+      relies on the result of one or more preceding jobs. Chain jobs
+      can also be used if the runtime limit of the batch queues is not
+      sufficient for your job. <application>SLURM</application> has an
+      option <parameter>-d</parameter> or
+      <parameter>--dependency</parameter> that allows to specify that
+      a job is only allowed to start if another job finished.
+    </para>
+    <para>
+      Here is an example how a chain job can looks like, the example
+      submits 4 jobs (described in a job file) that will be executed
+      on after each other with different CPU numbers:
+    </para>
+    <screen>
+#!/bin/bash
+TASK_NUMBERS="1 2 4 8"
+DEPENDENCY=""
+JOB_FILE="myjob.slurm"
+
+for TASKS in $TASK_NUMBERS ; do
+    JOB_CMD="sbatch --ntasks=$TASKS"
+    if [ -n "$DEPENDENCY" ] ; then
+        JOB_CMD="$JOB_CMD --dependency afterany:$DEPENDENCY"
+    fi
+    JOB_CMD="$JOB_CMD $JOB_FILE"
+    echo -n "Running command: $JOB_CMD  "
+    OUT=`$JOB_CMD`
+    echo "Result: $OUT"
+    DEPENDENCY=`echo $OUT | awk '{print $4}'`
+done
+    </screen>
+  </section>
 </chapter>
 
