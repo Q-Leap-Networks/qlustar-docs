@@ -623,6 +623,68 @@ echo "DONE"
       that does not exist.
     </para>
     <bridgehead>Check errors for individual commands</bridgehead>
+    <para>
+     A more selective approach involves carefully checking the exit
+     codes of the important parts of a job script. This can be done
+     with conventional if/else statements or with conditional short
+     circuit evaluation often seen in scripts. For example:
+    </para>
+    <screen>
+#! /bin/bash
+
+function fail {
+    echo "FAIL: $@" >&amp;2
+    exit 1  # signal failure
+}
+
+module load GATK/3.4.0 || fail "Could not load GATK module"
+GATK -m 5g -T RealignerTargetCreator ... || fail "RealignerTargetCreator failed"
+echo "DONE"
+    </screen>
+  </section>
+  <section xml:id="sec-array-jobs">
+    <title>Array Jobs</title>
+    <para>
+      Array jobs can be used to create a sequence of jobs that share
+      the same executable and resource requirements, but have
+      different input files, to be submitted, controlled, and
+      monitored as a single unit. The arguments
+      <parameter>-a</parameter> or <parameter>--array</parameter> take
+      an additional parameter that specify the array indices. Within
+      the job you can read the environment variables
+      <envar>SLURM_ARRAY_JOB_ID</envar>, which will be set to the
+      first job ID of the array, and
+      <envar>SLURM_ARRAY_TASK_ID</envar>, which will be set
+      individually for each step.
+    </para>
+    <para>
+      Within an array job, you can use <varname>%a</varname> and
+      <varname>%A</varname> in addition to <varname>%j</varname> and
+      <varname>%N</varname> (described above) to make the output file
+      name specific to the job. <varname>%A</varname> will be replaced
+      by the value of <envar>SLURM_ARRAY_JOB_ID</envar> and
+      <varname>%a</varname> will be replaced by the value of
+      <envar>SLURM_ARRAY_TASK_ID</envar>.
+    </para>
+    <para>
+      Here is an example how an array job can looks like:
+    </para>
+    <screen>
+#!/bin/bash
+#SBATCH -J Science1
+#SBATCH --array 0-9
+#SBATCH -o arraytest-%A_%a.out
+#SBATCH -e arraytest-%A_%a.err
+#SBATCH --ntasks=864
+#SBATCH --mail-type=end
+#SBATCH --mail-user=your.name@tu-dresden.de
+#SBATCH --time=08:00:00
+
+echo "Hi, I am step $SLURM_ARRAY_TASK_ID in this array job $SLURM_ARRAY_JOB_ID"
+    </screen>
+    <para>
+      For further details please read the Slurm documentation.
+    </para>
   </section>
 </chapter>
 
