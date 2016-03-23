@@ -722,5 +722,91 @@ for TASKS in $TASK_NUMBERS ; do
 done
     </screen>
   </section>
+  <section xml:id="sec-monitoring-jobs">
+    <title>Monitoring Jobs</title>
+    <para>
+      <command>squeue</command> will report all jobs on the
+      cluster. <command>squeue -u username</command> will report your
+      running jobs. Slurm commands like squeue are very flexible, so
+      that you can easily create your own aliases.
+    </para>
+    <para>
+      Example of squeue:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>squeue</command>
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+22392     ibfdr meme_sho   susanc PD       0:00      1 (Dependency)
+22393     ibfdr meme_sho   susanc PD       0:00      1 (Dependency)
+22404     ibfdr   stmv-1   susanc  R      10:04      1 cn0414
+22391     ibfdr meme_sho   susanc  R      10:06      1 cn0413
+    </screen>
+  </section>
+  <section xml:id="sec-email-notifications">
+    <title>Email notifications</title>
+    <para>
+      Using the <parameter>--mail-type=&lt;type&gt;</parameter> option
+      to <command>sbatch</command>, users can request email
+      notifications from <application>SLURM</application> as certain
+      events occur. Multiple event types can be specified as a comma
+      separated list. For example:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>sbatch --mail-type=BEGIN,TIME_LIMIT_90,END batch_script.sh</command>
+    </screen>
+    <para>
+      Available event types:
+    </para>
+    <informaltable frame="all">
+      <tgroup cols="2">
+	<thead>
+	  <row>
+	    <entry>Event type</entry>
+	    <entry>Description</entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row>
+	    <entry>BEGIN</entry>
+	    <entry>Job started</entry>
+	  </row>
+	  <row>
+	    <entry>END</entry>
+	    <entry>Job finished</entry>
+	  </row>
+	  <row>
+	    <entry>FAIL</entry>
+	    <entry>Job failed</entry>
+	  </row>
+	  <row>
+	    <entry>REQUEUE</entry>
+	    <entry>Job was requeued</entry>
+	  </row>
+	  <row>
+	    <entry>ALL</entry>
+	    <entry>BEGIN,END,FAIL,REQUEUE</entry>
+	  </row>
+	  <row>
+	    <entry>TIME_LIMIT_50</entry>
+	    <entry>Job reached 50% of its time limit</entry>
+	  </row>
+	  <row>
+	    <entry>TIME_LIMIT_80</entry>
+	    <entry>Job reached 80% of its time limit</entry>
+	  </row>
+	  <row>
+	    <entry>TIME_LIMIT_90</entry>
+	    <entry>Job reached 90% of its time limit</entry>
+	  </row>
+	  <row>
+	    <entry>TIME_LIMIT</entry>
+	    <entry>Job reached its time limit</entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
 </chapter>
 
