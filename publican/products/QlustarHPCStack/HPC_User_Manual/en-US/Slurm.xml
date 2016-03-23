@@ -19,7 +19,7 @@
       script.
     </para>
     <para>
-      Important sbatch flags:
+      <bridgehead>Important sbatch flags:</bridgehead>
       <variablelist>
 	<varlistentry>
 	  <term>--partition=partname</term>
@@ -209,7 +209,7 @@ novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.
       <emphasis role="bold">allocate by core</emphasis>, rather than
       by node. Thus, your job may be
       allocated 4 cores and 8 GB of memory on a node which has 16
-      cores and 32 GB of memory. O ther jobs may be utilizing the
+      cores and 32 GB of memory. Other jobs may be utilizing the
       remaining 12 cores and 24 GB of memory, so that your jobs may
       not have exclusive use of the
       node. <application>Slurm</application> will not allow any job
@@ -237,7 +237,8 @@ novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.
 	    An SMP-parallel job can only run within a node, so it is
 	    necessary to include the options <parameter>-N
 	    1</parameter> and <parameter>-n 1</parameter>. The maximum
-	    number of processors for an SMP-parallel program is 488 on
+	    number of processors for an
+	    <application>SMP-parallel</application> program is 488 on
 	    Venus and 56 on taurus (smp island). Using
 	    <parameter>--cpus-per-task N SLURM</parameter> will start
 	    one task and you will have N CPUs available for your
@@ -297,6 +298,7 @@ srun ./path/to/binary
 # request one GPU
 <prompt>0 root@cl-head ~ #</prompt>
 <command>sbatch --partition=gpu --gres=gpu:k20x:1 script.sh</command>
+
 # request two GPUs
 <prompt>0 root@cl-head ~ #</prompt>
 <command>sbatch --partition=gpu --gres=gpu:k20x:2 script.sh</command>
@@ -325,7 +327,7 @@ srun ./path/to/binary
     </screen>
   </section>
   <section xml:id="sec-interactive-jobs">
-    <title>INTERACTIVE JOBS</title>
+    <title>Interactive Jobs</title>
     <para>
       Interactive activities like editing, compiling etc. are normally
       limited to the login nodes. For longer interactive sessions you
@@ -350,6 +352,7 @@ srun ./path/to/binary
 <command>srun --pty -n 1 -c 4 --time=1:00:00 --mem-per-cpu=1700 bash</command>
 srun: job 13598400 queued and waiting for resources
 srun: job 13598400 has been allocated resources
+
 <prompt>0 root@cl-head ~ #</prompt>
 <command>start interactive work with e.g. 4 cores.</command>
     </screen>
@@ -430,9 +433,14 @@ JOBID               TIME_LIMIT          TIME
       Example:
     </para>
     <screen>
-sbatch --license=matlab  jobscript               (request a single Matlab license)
-sbatch --license=matlab,matlab-stat  jobscript   (request a Matlab + Matlab Stats Toolbox license)
-sinteractive --license=matlab-pde                (interactive job that needs a Matlab license)
+sbatch --license=matlab  jobscript
+(request a single Matlab license)
+
+sbatch --license=matlab,matlab-stat  jobscript
+(request a Matlab + Matlab Stats Toolbox license)
+
+sinteractive --license=matlab-pde
+(interactive job that needs a Matlab license)
     </screen>
     <para>
       The current availability of licenses can be seen on the 
