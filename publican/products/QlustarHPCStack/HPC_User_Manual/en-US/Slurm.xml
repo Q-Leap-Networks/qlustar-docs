@@ -808,5 +808,137 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
       </tgroup>
     </informaltable>
   </section>
+  <section xml:id="sec-modifying-job-after-submission">
+    <title>Modifying a job after submission</title>
+    <para>
+      After a job is submitted, some of the submission parameters can
+      be modified using the <command>scontrol</command>
+      command. Examples:
+    </para>
+    <para>
+      Change the job dependency:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>scontrol update JobId=181766 dependency=afterany:18123</command>
+    </screen>
+    <para>
+      Request a matlab license:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>scontrol update JobId=181755 licenses=matlab</command>
+    </screen>
+    <para>
+      Job was submitted to the norm partition, resend to ccr partition:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>scontrol update JobID=181755 partition=ccr QOS=ccr</command>
+    </screen>
+    <para>
+      Reduce the walltime to 12 hrs:
+    </para>
+    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>scontrol update JobID=181744 TimeLimit=12:00:00</command>
+    </screen>
+    <note>
+      <para>
+	Users can only <emphasis>reduce</emphasis> the walltime of
+	their submitted jobs.
+      </para>
+    </note>
+  </section>
+  <section xml:id="sec-interactive-x11-gui-jobs">
+    <title>Interactive X11/GUI Jobs</title>
+    <para>
+      <application>SLURM</application> will forward your X11
+      credentials to the first (or even all) node for a job with the
+      (undocumented) <parameter>--x11</parameter> option. For example,
+      an interactive session for 1 hour with Matlab using eigth cores
+      can be started with:
+    </para>
+    <screen>
+module load matlab
+srun --ntasks=1 --cpus-per-task=8 --time=1:00:00 --pty --x11=first matlab
+    </screen>
+  </section>
+  <section xml:id="sec-biniding-and-distribution-tasks">
+    <title>Binding and Distribution of Tasks</title>
+    <para>
+      The <application>SLURM</application> provides several binding
+      strategies to place and bind the tasks and/or threads of your
+      job to cores, sockets and nodes.
+    </para>
+    <note>
+      <para>
+	Keep in mind that the distribution method has a direct impact
+	on the execution time of your application. The manipulation of
+	the distribution can either speedup or slow down your
+	application. More detailed information about the binding can
+	be found <link
+	xlink:href="https://doc.zih.tu-dresden.de/hpc-wiki/bin/view/Compendium/BindingAndDistributionOfTasks">here</link>.
+      </para>
+    </note>
+    <para>
+      The default allocation of the tasks/threads for
+      <application>OpenMP</application>,
+      <application>MPI</application> and
+      <application>Hybrid</application> (MPI and OpenMP) are as
+      following.
+    </para>
+    <bridgehead>OpenMP</bridgehead>
+    <para>
+      The illustration below shows the default binding of a pure
+      OpenMP-job on 1 node with 16 cpus on which 16 threads are
+      allocated.
+    </para>
+    <screen>
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=16
+
+export OMP_NUM_THREADS=16
+
+srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./application
+    </screen>
+    <!-- Insert Image Here -->
+    <bridgehead>MPI</bridgehead>
+    <para>
+      The illustration below shows the default binding of a pure
+      MPI-job. In which 32 global ranks are distributed onto 2 nodes
+      with 16 cores each. Each rank has 1 core assigned to it.
+    </para>
+    <screen>
+#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=16
+#SBATCH --cpus-per-task=1
+
+srun --ntasks 32 ./application
+    </screen>
+    <!-- Insert Image Here -->
+    <!-- Insert Image Here -->
+    <bridgehead>Hybrid (MPI and OpenMP)</bridgehead>
+    <para>
+      In the illustration below the default binding of a Hybrid-job is
+      shown. In which 8 global ranks are distributed onto 2 nodes with
+      16 cores each. Each rank has 4 cores assigned to it.
+    </para>
+    <screen>
+#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=4
+#SBATCH --cpus-per-task=4
+
+export OMP_NUM_THREADS=4
+
+srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./application
+    </screen>
+    <!-- Insert Image Here -->
+    <!-- Insert Image Here -->
+  </section>
 </chapter>
 
