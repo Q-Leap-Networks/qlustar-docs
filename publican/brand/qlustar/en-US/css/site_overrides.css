@@ -463,3 +463,30 @@ body .colorbox img {
 body div.colorbox {
     float: right;
 }
+
+/* Styling of Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+}
+
+table thead {
+    border-bottom: 2px solid;
+}
+
+table td {
+    border: 1px solid #98bf21;
+    text-align: left;
+    padding: 3px 7px 2px 7px;
+}
+
+table th {
+    text-align: left;
+    background-color: #597800;
+    color: rgb(255,255,255);
+    padding: 5px 7px 4px 7px;
+}
+
+
