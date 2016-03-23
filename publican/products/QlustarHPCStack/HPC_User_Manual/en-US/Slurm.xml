@@ -940,5 +940,66 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./application
     <!-- Insert Image Here -->
     <!-- Insert Image Here -->
   </section>
+  <section xml:id="sec-accounting">
+    <title>Accounting</title>
+    <para>
+      The <application>SLRUM</application> command
+      <command>sacct</command> provides job statistics like memory
+      usage, CPU time, energy usage etc. Examples:
+    </para>
+    <screen>
+# show all own jobs contained in the accounting database
+<prompt>0 root@cl-head ~ #</prompt>
+<command>sacct</command>
+
+# show specific job
+<prompt>0 root@cl-head ~ #</prompt>
+<command>sacct -j &lt;JOBID&gt;</command>
+
+# specify fields
+<prompt>0 root@cl-head ~ #</prompt>
+<command>sacct -j &lt;JOBID&gt; -o JobName,MaxRSS,MaxVMSize,CPUTime,ConsumedEnergy</command>
+
+# show all fields
+<prompt>0 root@cl-head ~ #</prompt>
+<command>sacct -j &lt;JOBID&gt; -o ALL</command>
+    </screen>
+    <para>
+      Read the manpage (<command>man sacct</command>) for information
+      on the provided fields.
+    </para>
+  </section>
+  <section xml:id="sec-other">
+    <title>Other</title>
+    <bridgehead>Host List</bridgehead>
+    <para>
+      If you want to place you job onto specific nodes, there are two
+      options for doing this. Either use <parameter>-p</parameter> to
+      specify a host group that fits your needs. Or, use
+      <parameter>-w</parameter> or (<parameter>--nodelist</parameter>)
+      with a name node nodes that will work for you.
+    </para>
+    <bridgehead>SLURM EXTERNAL LINKS</bridgehead>
+    <para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <link
+		xlink:href="http://slurm.schedmd.com/hdf5_profile_user_guide.html">
+	      Slurm Profiling
+	    </link>
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <link
+		xlink:href="http://slurm.schedmd.com/sh5util.html">
+	      sh5util
+	    </link>
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>
 </chapter>
 
