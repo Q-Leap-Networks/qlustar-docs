@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE book [
+<!DOCTYPE chapter [
 <!ENTITY % BOOK_ENTITIES SYSTEM "HPC_User_Manual.ent">
 %BOOK_ENTITIES;
 <!ENTITY % sgml.features "IGNORE">
@@ -7,16 +7,14 @@
 <!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xmlns="http://docbook.org/ns/docbook"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-  <xi:include href="Book_Info.xml"/>
-  <xi:include href="Preface.xml"/>
-
-  <!-- Begin real content -->
-  <xi:include href="shell-setup.xml"/>
-  <xi:include href="Slurm.xml"/>
-  <xi:include href="Revision_History.xml"/>
-  <index />
-</book>
-
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-hpc-user-man-shell-setup">
+  <title>Default Shell Setup</title>
+  <section xml:id="sec-Introduction">
+    <title>Shell initialization</title>
+  <para>
+  </para>
+  </section>
+</chapter>
