@@ -871,9 +871,20 @@ srun --ntasks=1 --cpus-per-task=8 --time=1:00:00 --pty --x11=first matlab
       <application>Hybrid</application> (MPI and OpenMP) are as
       following.
     </para>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/Binding_OpenMP.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Default binding of a pure OpenMP-job
+      </phrase></textobject>
+      <caption><para>
+        Default binding of a pure OpenMP-job
+      </para></caption>
+    </mediaobject>
     <bridgehead>OpenMP</bridgehead>
     <para>
-      The illustration below shows the default binding of a pure
+      The illustration shows the default binding of a pure
       OpenMP-job on 1 node with 16 cpus on which 16 threads are
       allocated.
     </para>
@@ -887,10 +898,20 @@ export OMP_NUM_THREADS=16
 
 srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
     </screen>
-    <!-- Insert Image Here -->
     <bridgehead>MPI</bridgehead>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/Binding_MPI.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Default binding of a pure OpenMP-job
+      </phrase></textobject>
+      <caption><para>
+        Default binding of a pure OpenMP-job
+      </para></caption>
+    </mediaobject>
     <para>
-      The illustration below shows the default binding of a pure
+      The illustration shows the default binding of a pure
       MPI-job. In which 32 global ranks are distributed onto 2 nodes
       with 16 cores each. Each rank has 1 core assigned to it.
     </para>
@@ -902,11 +923,20 @@ srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 
 srun --ntasks 32 ./<replaceable>application</replaceable>
     </screen>
-    <!-- Insert Image Here -->
-    <!-- Insert Image Here -->
     <bridgehead>Hybrid (MPI and OpenMP)</bridgehead>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/Binding_Hybrid.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Default binding of a Hybrid-job
+      </phrase></textobject>
+      <caption><para>
+        Default binding of a Hybrid-job
+      </para></caption>
+    </mediaobject>
     <para>
-      In the illustration below the default binding of a Hybrid-job is
+      In the illustration the default binding of a Hybrid-job is
       shown. In which 8 global ranks are distributed onto 2 nodes with
       16 cores each. Each rank has 4 cores assigned to it.
     </para>
@@ -920,8 +950,6 @@ export OMP_NUM_THREADS=4
 
 srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
     </screen>
-    <!-- Insert Image Here -->
-    <!-- Insert Image Here -->
     <section xml:id="sec-detailed-description">
       <title>Detailed Description</title>
       <section xml:id="sec-general">
@@ -957,6 +985,17 @@ srun --ntasks 8 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --
 	<title>MPI Strategies</title>
 	<bridgehead>Default Binding and Distribution Pattern</bridgehead>
 	<para>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/Binding_detailed_MPI_Default.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      The default binding
+	    </phrase></textobject>
+	    <caption><para>
+	      The default binding
+	    </para></caption>
+	  </mediaobject>
 	  The default binding uses
 	  <parameter>--cpu_bind=<replaceable>cores</replaceable></parameter>
 	  in combination with
@@ -966,7 +1005,6 @@ srun --ntasks 8 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --
 	  two in alternation. Resulting in only even ranks on the
 	  first socket of each node and odd on each second socket of
 	  each node.
-	  <!-- Insert Image here -->
 	</para>
 	<screen>
 #!/bin/bash
@@ -988,8 +1026,18 @@ srun --ntasks 32 ./<replaceable>application</replaceable>
 	    <term>Distribution: block:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Core_block_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks linearly to the cores
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks linearly to the cores
+		  </para></caption>
+		</mediaobject>
 		This method allocates the tasks linearly to the cores.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1005,6 +1053,17 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=block
 	    <term>Distribution: cyclic:cyclic</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Core_cyclic_cyclic.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates your tasks in a round robin approach to the cores
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates your tasks in a round robin approach to the cores
+		  </para></caption>
+		</mediaobject>
 		<parameter>--distribution=cyclic:cyclic</parameter>
 		will allocate your tasks to the cores in a round robin
 		approach. It starts with the first socket of the first
@@ -1012,7 +1071,6 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=block
 		one task is placed on every first socket of every
 		node. After that it will place a task on every second
 		socket of every node and so on.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1028,10 +1086,20 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle
 	    <term>Distribution: cyclic:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Core_cyclic_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks in alternation on node level
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks in alternation on node level
+		  </para></caption>
+		</mediaobject>
 		The cyclic:block distribution will allocate the tasks
 		of your job in alternation on node level, starting
 		with first node filling the sockets linearly.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1062,6 +1130,19 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 	    <term>Default Distribution</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Socket_Default.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates one node after another, while filling
+		    socket one and two in alternation
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates one node after another, while filling
+		    socket one and two in alternation
+		  </para></caption>
+		</mediaobject>
 		The default distribution uses
 		<parameter>--cpu_bind=<replaceable>sockets</replaceable></parameter>
 		with
@@ -1071,7 +1152,6 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 		socket one and two in alternation. Resulting in only
 		even ranks on the first socket of each node and odd on
 		each second socket of each node.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1087,8 +1167,18 @@ srun --ntasks 32 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>app
 	    <term>Distribution: block:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Socket_block_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks linearly to the cores
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks linearly to the cores
+		  </para></caption>
+		</mediaobject>
 		This method allocates the tasks linearly to the cores.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1104,10 +1194,20 @@ srun --ntasks 32 --cpu_bind=<replaceable>sockets</replaceable> --distribution=bl
 	    <term>Distribution: cyclic:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Socket_cyclic_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks in alternation between the first and the second node
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks in alternation between the first and the second node
+		  </para></caption>
+		</mediaobject>
 		The cyclic:block distribution will allocate the tasks
 		of your job in alternation between the first node and
 		the second node while filling the sockets linearly.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1126,12 +1226,22 @@ srun --ntasks 32 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyc
 	<bridgehead>Default Binding and Distribution
 	Pattern</bridgehead>
 	<para>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/Binding_detailed_MPI_Hybrid_Default.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Splits the cores allocated to a rank between the sockets of a node 
+	    </phrase></textobject>
+	    <caption><para>
+	      Splits the cores allocated to a rank between the sockets of a node 
+	    </para></caption>
+	  </mediaobject>
 	  The default binding pattern of hybrid jobs will split the
 	  cores allocated to a rank between the sockets of a node. The
 	  example shows that Rank 0 has 4 cores at its disposal. Two
 	  of them on first socket inside the first node and two on the
 	  second socket inside the first node.
-	  <!-- Insert Image here -->
 	</para>
 	<screen>
 #!/bin/bash
@@ -1151,8 +1261,18 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 	    <term>Distribution: block:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Hybrid_Core_block_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks linearly to the cores
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks linearly to the cores
+		  </para></caption>
+		</mediaobject>
 		This method allocates the tasks linearly to the cores.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1170,10 +1290,20 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
 	    <term>Distribution: cyclic:block</term>
 	    <listitem>
 	      <para>
+		<mediaobject>
+		  <imageobject><imagedata
+		  fileref="images/Binding_detailed_MPI_Hybrid_Core_cyclic_block.png"
+		  width="85%" format="PNG"/></imageobject>
+		  <textobject><phrase>
+		    Allocates the tasks in alternation between the first and the second node
+		  </phrase></textobject>
+		  <caption><para>
+		    Allocates the tasks in alternation between the first and the second node
+		  </para></caption>
+		</mediaobject>
 		The cyclic:block distribution will allocate the tasks
 		of your job in alternation between the first node and
 		the second node while filling the sockets linearly.
-		<!-- Insert Image here -->
 	      </para>
 	      <screen>
 #!/bin/bash
