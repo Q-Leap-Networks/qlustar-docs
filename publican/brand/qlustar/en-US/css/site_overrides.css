@@ -121,8 +121,8 @@ version_tabs span {
 }
 
 /* Set color of visited menu points */
-#menu a:visited {
-  color: #FFFFFF;
+#menu a:visited, #menu a {
+   color: #FFFFFF;
 }
 
 /* Set 'Qlustar Docs' button font-color to black*/
