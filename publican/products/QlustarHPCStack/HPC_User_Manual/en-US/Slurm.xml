@@ -885,16 +885,16 @@ srun --ntasks=1 --cpus-per-task=8 --time=1:00:00 --pty --x11=first matlab
     <bridgehead>OpenMP</bridgehead>
     <para>
       The illustration shows the default binding of a pure
-      OpenMP-job on 1 node with 16 cpus on which 16 threads are
+      OpenMP-job on 1 node with 8 cpus on which 8 threads are
       allocated.
     </para>
     <screen>
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=8
 
-export OMP_NUM_THREADS=16
+export OMP_NUM_THREADS=8
 
 srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
     </screen>
@@ -912,16 +912,16 @@ srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
     </mediaobject>
     <para>
       The illustration shows the default binding of a pure
-      MPI-job. In which 32 global ranks are distributed onto 2 nodes
-      with 16 cores each. Each rank has 1 core assigned to it.
+      MPI-job. In which 16 global ranks are distributed onto 2 nodes
+      with 8 cores each. Each rank has 1 core assigned to it.
     </para>
     <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 ./<replaceable>application</replaceable>
+srun --ntasks 16 ./<replaceable>application</replaceable>
     </screen>
     <bridgehead>Hybrid (MPI and OpenMP)</bridgehead>
     <mediaobject>
@@ -937,16 +937,16 @@ srun --ntasks 32 ./<replaceable>application</replaceable>
     </mediaobject>
     <para>
       In the illustration the default binding of a Hybrid-job is
-      shown. In which 8 global ranks are distributed onto 2 nodes with
-      16 cores each. Each rank has 4 cores assigned to it.
+      shown. In which 4 global ranks are distributed onto 2 nodes with
+      8 cores each. Each rank has 4 cores assigned to it.
     </para>
     <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=4
-#SBATCH --cpus-per-task=4
+#SBATCH --tasks-per-node=2
+#SBATCH --cpus-per-task=2
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=2
 
 srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
     </screen>
@@ -969,9 +969,9 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 #!/bin/bash 
 #SBATCH --nodes=2                        # request 2 nodes 
 #SBATCH --cpus-per-task=4                # use 4 cores per task 
-#SBATCH --tasks-per-node=4               # allocate 4 tasks per node - 2 per socket 
+#SBATCH --tasks-per-node=2               # allocate 2 tasks per node - 1 per socket 
 
-srun --ntasks 8 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --ntasks 4 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
 	</screen>
 	<para>
 	  In the following sections there are some selected examples
@@ -1009,10 +1009,10 @@ srun --ntasks 8 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --
 	<screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-nodes=16
+#SBATCH --tasks-per-nodes=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 ./<replaceable>application</replaceable>
+srun --ntasks 16 ./<replaceable>application</replaceable>
 	</screen>
 	<bridgehead>Core Bound</bridgehead>
 	<note>
@@ -1042,10 +1042,10 @@ srun --ntasks 32 ./<replaceable>application</replaceable>
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=block:block <replaceable>./application</replaceable>
+srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=block:block <replaceable>./application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1075,10 +1075,10 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=block
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle:cycle
+srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle:cycle
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1104,10 +1104,10 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=clyclic:block ./<replaceable>application</replaceable>
+srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=clyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1156,10 +1156,10 @@ srun --ntasks 32 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>application</replaceable>
+srun --ntasks 16 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1183,10 +1183,10 @@ srun --ntasks 32 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>app
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
+#SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 --cpu_bind=<replaceable>sockets</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --ntasks 16 --cpu_bind=<replaceable>sockets</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1212,10 +1212,10 @@ srun --ntasks 32 --cpu_bind=<replaceable>sockets</replaceable> --distribution=bl
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCh --tasks-per-node=16
+#SBATCh --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 32 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
+srun --ntasks 16 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1246,12 +1246,12 @@ srun --ntasks 32 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyc
 	<screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=4
+#SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
 export OMP_NUM_THREADS=4
 
-srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
+srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
 	</screen>
       </section>
       <section xml:id="sec-hybrid-core-bound">
@@ -1277,12 +1277,12 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=4
+#SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=2
 
-srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1308,12 +1308,12 @@ srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
 	      <screen>
 #!/bin/bash
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=4
+#SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
 export OMP_NUM_THREADS=4
 
-srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
+srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
