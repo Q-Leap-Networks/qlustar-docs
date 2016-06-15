@@ -14,174 +14,177 @@
   <title>Default Shell Setup</title>
   <section xml:id="sec-Introduction">
     <title>Shell initialization</title>
-  <para>
-    The BeoBox shell setup supports <application>tcsh</application>
-    and <application>bash</application>. There are global
-    initialization files that are used in both shells so the
-    administrator only has to modify one file for environment
-    variables, aliases and path variables. The global files are:
-  </para>
-  <itemizedlist>
-    <listitem>
-      <screen>
-<filename>/etc/qlustar/common/skel/env</filename>
-      </screen>
-      <para>
-	This file is used to add or modify environment variables that are
-	not path variables. The syntax of this file is as follows: lines
-	beginning with a hash sign (<code>#</code>) and empty lines are
-	ignored. Every other line consists of a variable name and the
-	value for this variable separated with a space. Example: the
-	following line sets the variable <varname>VISUAL</varname> to
-	<application>vi</application>:
-      </para>
-    </listitem>
-    <listitem>
-      <screen>
-VISUAL vi
-      </screen>
-      <para>
-	A file <filename>~/.ql-env</filename> in the user home directory
-	can be used to define personal environment variables in the same
-	manner.
-      </para>
-    </listitem>
-    <listitem>
-      <screen>
-<filename>/etc/qlustar/common/skel/alias</filename>
-      </screen>
-      <para>
-	This file is used to define shell aliases. It has the same syntax
-	as the file <filename>env</filename> described above. Again, a
-	personal <filename>~/.ql-alias</filename> file can define personal
-	aliases.
-      </para>
-    </listitem>
-    <listitem>
-      <screen>
-<filename>/etc/qlustar/common/skel/paths</filename>
-      </screen>
-      <para>
-	This directory contains files identified with a name of the form
-	<replaceable>&lt;varname&gt;</replaceable>.Linux. The
-	<replaceable>&lt;varname&gt;</replaceable> is converted to upper
-	case and specifies a ‘PATH like’ environment variable
-	(e.g. <envar>PATH</envar>, <envar>MANPATH</envar>,
-	<envar>LD_LIBRARY_PATH</envar>, <envar>CLASSPATH</envar>,
-	. . . ). Each line in this file is a directory to add to this
-	environment variable. If the line begins with a ’p’ followed by a
-	space followed by a directory, then this directory is prepended to
-	the path variable otherwise it is appended. A user can create
-	his/her own <filename>~/.paths</filename> directory and so can use
-	the same setup.
-      </para>
-    </listitem>
-  </itemizedlist>
-  <section xml:id="sec-bash-setup">
-    <title>Bash Setup</title>
     <para>
-      We provide an extensible <application>bash</application> setup
-      and bash is the recommended login shell. The bash startup
-      consists of global settings and user settings. Global settings
-      are stored in files under
-      <filename>/etc/qlustar/common/skel</filename>. User settings are stored in
-      files in the corresponding home directory.
+      The Qlustar shell setup supports <application>tcsh</application> and
+      <application>bash</application>. There are global initialization files, that affect the
+      setup of both shell types. Hence, the administrator has to modify only a single file to
+      set environment variables, aliases and path variables for both shells and all
+      users. These global files are:
     </para>
     <variablelist>
       <varlistentry>
-	<term>/etc/qlustar/common/skel/bash/bashrc</term>
+	<term>
+	  <filename>/etc/qlustar/common/skel/env</filename>
+	</term>
 	<listitem>
+	  <para>
+	    This file is used to add or modify environment variables that are not path
+	    variables. The syntax of this file is as follows: lines beginning with a hash sign
+	    (<code>#</code>) and empty lines are ignored. Every other line should consist of
+	    the name of an environment variable followed by its value and separated by a
+	    space. Example: the following line sets the environment variable
+	    <varname>VISUAL</varname> to <application>vi</application>:
+	  </para>
+	  <screen>
+VISUAL vi
+	  </screen>
+	  <para>
+	    A file <filename>~/.ql-env</filename> in the user home directory can be used to
+	    define personal environment variables in the same manner.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <filename>/etc/qlustar/common/skel/alias</filename>
+	</term>
+	<listitem>
+	  <para>
+	    This file is used to define shell aliases. It has the same syntax as the file
+	    <filename>env</filename> described above. A file <filename>~/.ql-alias</filename>
+	    in the user home directory may again define personal aliases.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <filename>/etc/qlustar/common/skel/paths</filename>
+	</term>
+	<listitem>
+	  <para>
+	    This directory contains files with a name of the form
+	    <replaceable>&lt;varname&gt;</replaceable>.Linux. The
+	    <replaceable>&lt;varname&gt;</replaceable> is converted to upper case and specifies
+	    a <emphasis>PATH like</emphasis> environment variable (e.g. <envar>PATH</envar>,
+	    <envar>MANPATH</envar>, <envar>LD_LIBRARY_PATH</envar>, <envar>CLASSPATH</envar>,
+	    &hellipsis;). Each line in such a file should be a directory to be added to this
+	    particular environment variable. If the line begins with a <literal>p</literal>
+	    followed by a space followed by a directory, then this directory is prepended to
+	    the path variable, otherwise it is appended. A user may create a personal
+	    <filename>~/.paths</filename> directory, where the same rules apply.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    <section xml:id="sec-bash-setup">
+      <title>Bash Setup</title>
+      <para>
+	Qlustar provides an extensible <application>bash</application> setup and bash is the
+	recommended login shell. The bash initialization procedure consists of global settings
+	and user specific settings. Global settings are stored in files under
+	<filename>/etc/qlustar/common/skel</filename>. User specific settings are stored in
+	files in the corresponding home directory. The following files are used:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>
+	  <filename>/etc/qlustar/common/skel/bash/bashrc</filename>
+	  </term>
+	  <listitem>
 	  <para>
 	    This file sources the other bash files. Do not modify.
 	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/bash/bash-vars</term>
-	<listitem>
-	  <para>
-	    This file is used for setting bash variables.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/bash/alias </term>
-	<listitem>
-	  <para>
-	    This file defines bash aliases
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/bash/functions</term>
-	<listitem>
-	  <para>
-	    This file can be used to make bash functions available to
-	    all users.
-	  </para>
-	</listitem>
-      </varlistentry>
-    </variablelist>
-    <para>
-      The file <filename>~/.bashrc</filename> also sources the
-      following user specific files which have the same purpose as the
-      global bash files.
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/bash/bash-vars</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      This file is used for setting bash variables.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/bash/alias</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      This file defines bash aliases
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/bash/functions</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      This file can be used to make bash functions available to all users.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	The file <filename>~/.bashrc</filename> also sources the following user specific files
+	which have the same purpose as the global bash files.
+      </para>
+      <itemizedlist>
+	<listitem><para><filename>~/.bash/env</filename></para></listitem>
+	<listitem><para><filename>~/.bash/bash-vars</filename></para></listitem>
+	<listitem><para><filename>~/.bash/alias</filename></para></listitem>
+	<listitem><para><filename>~/.bash/functions</filename></para></listitem>
+      </itemizedlist>
+    </section>
+    <section xml:id="sec-tcsh-setup">
+      <title>Tcsh Setup</title>
+      <para>
+	A similar setup exists for the <application>tcsh</application>. The following files are
+	used:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/tcsh/tcshrc</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      This global tcshrc is sourced first and sources other startup files.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/tcsh/tcsh-vars</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      Used to set tcsh variables.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <filename>/etc/qlustar/common/skel/tcsh/alias</filename>
+	  </term>
+	  <listitem>
+	    <para>
+	      Used to define tcsh aliases.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	The file <filename>~/.tcshrc</filename> also sources the following user specific files,
+	which have the same purpose as the global <application>tcsh</application> files.
     </para>
-    <screen>
-<filename>~/.bash/env</filename>
-
-<filename>~/.bash/bash-vars</filename>
-
-<filename>~/.bash/alias</filename>
-
-<filename>~/.bash/functions</filename>
-    </screen>
-  </section>
-  <section xml:id="sec-tcsh-setup">
-    <title>Tcsh Setup</title>
-    <para>
-      A similar setup exists for the
-      <application>tcsh</application>. The following files are used:
-    </para>
-    <variablelist>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/tcsh/tcshrc</term>
-	<listitem>
-	  <para>
-	    This global tcshrc is sourced first and sources other
-	    startup files
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/tcsh/tcsh-vars</term>
-	<listitem>
-	  <para>
-	    Used to set tcsh variables.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>/etc/qlustar/common/skel/tcsh/alias</term>
-	<listitem>
-	  <para>
-	    Used to define tcsh aliases.
-	  </para>
-	</listitem>
-      </varlistentry>
-    </variablelist>
-    <para>
-      The file <filename>~/.tcshrc</filename> also sources the
-      following user specific files which have the same purpose as the
-      global <application>tcsh</application> files.
-    </para>
-    <screen>
-<filename>~/.tcsh/alias</filename>
-
-<filename>~/.tcsh/env</filename>
-
-<filename>~/.tcsh/tcsh-vars</filename>
-    </screen>
-  </section>
+      <itemizedlist>
+	<listitem><para><filename>~/.tcsh/alias</filename></para></listitem>
+	<listitem><para><filename>~/.tcsh/env</filename></para></listitem>
+	<listitem><para><filename>~/.tcsh/tcsh-vars</filename></para></listitem>
+      </itemizedlist>
+    </section>
   </section>
 </chapter>
