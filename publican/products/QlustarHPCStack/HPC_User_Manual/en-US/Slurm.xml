@@ -8,15 +8,14 @@
 %DOCBOOK_ENTS;
 ]>
 <chapter xmlns="http://docbook.org/ns/docbook"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      xmlns:xi="http://www.w3.org/2001/XInclude"
-      xml:id="chap-hpc-user-man-slurm">
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-hpc-user-man-slurm">
   <title>Using the Slurm workload manager</title>
   <section xml:id="sec-Introduction">
     <title>Job Submission</title>
     <para>
-      Use the <command>sbatch</command> command to submit a batch
-      script.
+      Use the <command>sbatch</command> command to submit a batch script.
     </para>
     <para>
       <bridgehead>Important sbatch flags:</bridgehead>
@@ -25,25 +24,45 @@
 	  <term>--partition=<replaceable>partname</replaceable></term>
 	  <listitem>
 	    <para>
-	      Job to run on partition
-	      <replaceable>partname</replaceable>. (default: 'norm')
+	      Job to run on partition <replaceable>partname</replaceable>. If no partition is
+	      specified, the job will run on the cluster's default partition.
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term>--ntasks=&lt;tasks&gt;</term>
+	  <term>-N, --nodes=&lt;<replaceable>minnodes</replaceable>[-<replaceable>maxnodes</replaceable>]&gt;</term>
 	  <listitem>
 	    <para>
-	      Number of tasks (processes) to be run
+	      Minimum number of nodes for the job. A maximum node count may also be specified
+	      with <replaceable>maxnodes</replaceable>. If only one number is specified, this
+	      is used as both the minimum and maximum node count.
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term>--cpus-per-task=&lt;cpus&gt;</term>
+	  <term>--ntasks-per-node=&lt;tasks&gt;</term>
 	  <listitem>
 	    <para>
-	      Number of CPUs required for each task (e.g. '8' for an
-	      8-way multithreaded job)
+	      Number of tasks (processes) to be run per node of the job. Mostly used together
+	      with the <literal>-N</literal> flag.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>-n, --ntasks=&lt;tasks&gt;</term>
+	  <listitem>
+	    <para>
+	      Number of tasks (processes) to be run. Mostly used, if you don't care about how
+	      hour tasks are placed on individual nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>-c, --cpus-per-task=&lt;cpus&gt;</term>
+	  <listitem>
+	    <para>
+	      Number of CPUs required for each task (e.g. <literal>8</literal> for an 8-way
+	      multi-threaded job).
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -51,8 +70,9 @@
 	  <term>--ntasks-per-core=1</term>
 	  <listitem>
 	    <para>
-	      Do not use hyperthreading (this flag typically used for
-	      parallel jobs)
+	      Do not use hyper-threading (this flag is typically used for parallel jobs). Note,
+	      that this is only needed, if the compute nodes in your cluster have activated
+	      hyper-threading. On most clusters, this is not the case.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -60,7 +80,9 @@
 	  <term>--mem=&lt;mem&gt;</term>
 	  <listitem>
 	    <para>
-	      Memory required for the job
+	      Memory required for the job. If your job exceeds this value, it might be
+	      terminated, depending on the general Slurm configuration of your cluster. The
+	      default memory allocation is cluster specific and might also be unlimited.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -68,7 +90,8 @@
 	  <term>--exclusive</term>
 	  <listitem>
 	    <para>
-	      Allocate the node exclusively
+	      Allocate the node exclusively. Only this job will run on the nodes allocated for
+	      it.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -76,8 +99,7 @@
 	  <term>--no-requeue | --requeue</term>
 	  <listitem>
 	    <para>
-	      If an allocated node hangs, whether the job should be
-	      requeued or not.
+	      If an allocated node hangs, determine whether the job should be requeued or not.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -85,10 +107,9 @@
 	  <term>--error=<replaceable>/path/to/dir/filename</replaceable></term>
 	  <listitem>
 	    <para>
-	      Location of <filename>stderr</filename> file (by
-	      default,
-	      <filename>slurm<replaceable>######</replaceable>.out</filename>
-	      in the submitting directory)
+	      Location of <filename>stderr</filename> file (by default,
+	      <filename>slurm<replaceable>&lt;jobid&gt;</replaceable>.out</filename> in the
+	      submitting directory).
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -96,10 +117,9 @@
 	  <term>--output=<replaceable>/path/to/dir/filename</replaceable></term>
 	  <listitem>
 	    <para>
-	      Location of <filename>stdout</filename> file (by
-	      default,
-	      <filename>slurm<replaceable>######</replaceable>.out</filename>
-	      in the submitting directory)
+	      Location of <filename>stdout</filename> file (by default,
+	      <filename>slurm<replaceable>&lt;jobid&gt;</replaceable>.out</filename> in the
+	      submitting directory)
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -107,16 +127,18 @@
 	  <term>--ignore-pbs</term>
 	  <listitem>
 	    <para>
-	      Ignore PBS directives in batch scripts. (by default,
-	      Slurm will try to utilize all PBS directives)
+	      Ignore PBS directives in batch scripts. (by default, Slurm will try to utilize
+	      all PBS directives)
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term>--license=matlab</term>
+	  <term>--license=<replaceable>&lt;license type&gt;</replaceable></term>
 	  <listitem>
 	    <para>
-	      Request a Matlab license
+	      Request a license of type <replaceable>&lt;license type&gt;</replaceable>. Only
+	      applies for clusters where license bookkeeping is set up. If in doubt, ask your
+	      local administrator.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -125,40 +147,38 @@
     <para>
       <variablelist>
 	<varlistentry>
-	  <term>Single-threaded batch job</term>
+	  <term>Submitting a single-threaded batch job</term>
 	  <listitem>
 	    <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch jobscript</command>
+<command>sbatch -N 4 --mem=64G --ntasks-per-node=12 jobscript</command>
 	    </screen>
 	    <para>
-	    This job will be allocated 2 CPUs and 4 GB of memory.
+	      This job will be allocated 4 nodes with 12 CPUs each, and 64 GB of memory.
 	    </para>
 	  </listitem>
 	</varlistentry>
       <varlistentry>
-	<term>Multi-threaded batch job</term>
+	<term>Submitting a multi-threaded batch job</term>
 	<listitem>
 	  <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --cpus-per-task=&lt;cpus&gt; jobscript</command>
+<command>sbatch --cpus-per-task=12 --mem=128G jobscript</command>
 	  </screen>
 	  <para>
-	    The above job will be allocated &lt;cpus&gt; CPUs, and
-	    (&lt;cpus&gt; * 2) GB of memory. e.g. with
-	    --cpus-per-task=4, the default memory allocation is 8 GB
-	    of memory.
+	    The above job will be allocated 16 CPUs, and 128 GB of memory.
 	  </para>
 	  <para>
-	    You should use the Slurm environment variable
-	    <envar>$SLURM_CPUS_PER_TASK</envar> within your script to specify the number
-	    of threads to the program. For example, to run a Novoalign job
-	    with 8 threads, set up a batch script like this:
+	    If required, you may use the Slurm environment variable
+	    <envar>$SLURM_CPUS_PER_TASK</envar> within your job script to specify the number of
+	    threads to your program. For example, to run a job with 8 OpenMP threads of your
+	    program <replaceable>&lt;my_program&gt;</replaceable>, set up a batch script like
+	    this:
 	    <screen>
 #!/bin/bash
 
-module load novocraft
-novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.sam
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<replaceable>&lt;my_program&gt;</replaceable>
 	    </screen>
 	    and submit with:
 	    <screen>
@@ -167,61 +187,40 @@ novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.
 	    </screen>
 	    <note>
 	      <para>
-		When jobs are submitted without specifying the number
-		of CPUs per task explicitly the <envar>$SLURM_CPUS_PER_TASK</envar>
-		environment variable is not set.
+		When jobs are submitted without specifying the number of CPUs per task
+		explicitly, the <envar>$SLURM_CPUS_PER_TASK</envar> environment variable is not
+		set.
 	      </para>
 	    </note>
 	  </para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>Specifying memory:</term>
-	<listitem>
-	  <screen>
-<prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --mem=&lt;mem&gt; jobscript</command>
-	  </screen>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
 	<term>Exclusively allocating nodes</term>
 	<listitem>
 	  <para>
-	    Add <parameter>--exclusive</parameter> to your sbatch command
-	    line to exclusively allocate a node. Note that the batch system
-	    will still limit you to the requested CPUs and memory, or to the
-	    default 2 CPUs and 4 GB if you do not specifically request CPUs and memory.
+	    Add <parameter>--exclusive</parameter> to your sbatch command line to exclusively
+	    allocate a node.
 	  </para>
+	  <note>
+	  <para>
+	    Even if this option is used, Slurm will still limit you to the requested CPUs and
+	    memory, or, if not explicitly set, to the possibly defined default values for your
+	    cluster.
+	  </para>
+	  </note>
 	</listitem>
       </varlistentry>
       <varlistentry>
 	<term>Auto-threading apps</term>
 	<listitem>
 	  <para>
-	    Programs that 'auto-thread' (i.e. attempt to use all available
-	    CPUs on a node) should be run with the
-	    <parameter>--exclusive</parameter> flag. This will give you an
-	    exclusively allocated node with at least 16 CPUs.
+	    Programs that 'auto-thread' (i.e. attempt to use all available CPUs on a node)
+	    should always be run with the <parameter>--exclusive</parameter> flag.
 	  </para>
 	</listitem>
       </varlistentry>
       </variablelist>
-      A major change in the new cluster is that the batch system will
-      <emphasis role="bold">allocate by core</emphasis>, rather than
-      by node. Thus, your job may be
-      allocated 4 cores and 8 GB of memory on a node which has 16
-      cores and 32 GB of memory. Other jobs may be utilizing the
-      remaining 12 cores and 24 GB of memory, so that your jobs may
-      not have exclusive use of the
-      node. <application>Slurm</application> will not allow any job
-      to utilize more memory or cores than were allocated.
-    </para>
-    <para>
-      The default <application>Slurm</application> allocation is 1
-      physical core (2 CPUs) and 4 GB of memory. For any jobs that
-      require more memory or CPU, you need to specify these
-      requirements when submitting the job.
     </para>
   </section>
   <section xml:id="sec-parallel-jobs">
@@ -236,19 +235,15 @@ novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.
 	<term>OpenMP Jobs</term>
 	<listitem>
 	  <para>
-	    An SMP-parallel job can only run within a node, so it is
-	    necessary to include the options <parameter>-N
-	    1</parameter> and <parameter>-n 1</parameter>. The maximum
-	    number of processors for an
-	    <application>SMP-parallel</application> program is 488 on
-	    Venus and 56 on taurus (smp island). Using
-	    <parameter>--cpus-per-task N SLURM</parameter> will start
-	    one task and you will have N CPUs available for your
-	    job. An example job file would look like:
+	    An OpenMP(SMP)-parallel job can only run within a single node, so it necessary to
+	    include the option <parameter>-N 1</parameter>. The maximum number of processors
+	    for such a program is cluster and possibly node
+	    specific. Using <parameter>--cpus-per-task N</parameter>, Slurm will start one task
+	    and you will have N CPUs available for your job. An example job file would look
+	    like:
 	  </para>
 	  <screen>
 #!/bin/bash
-#SBATCH -J Science1
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=8
@@ -256,8 +251,8 @@ novoalign -c $SLURM_CPUS_PER_TASK  -f s_1_sequence.txt -d celegans -o SAM > out.
 #SBATCH --mail-user=<replaceable>user@example.org</replaceable>
 #SBATCH --time=08:00:00
 
-export OMP_NUM_THREADS=8
-./path/to/binary
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<replaceable>&lt;my_program&gt;</replaceable>
 	  </screen>
 	</listitem>
       </varlistentry>
@@ -265,18 +260,16 @@ export OMP_NUM_THREADS=8
 	<term>MPI Jobs</term>
 	<listitem>
 	  <para>
-	    For MPI jobs one typically allocates one core per task
-	    that has to be started.
+	    For MPI jobs, one typically allocates one core per task.
 	  </para>
 	  <screen>
 #!/bin/bash
-#SBATCH -J Science1
-#SBATCH --ntasks=864
+#SBATCH --ntasks=128
 #SBATCH --mail-type=end
 #SBATCH --mail-user=<replaceable>user@example.org</replaceable>
 #SBATCH --time=08:00:00
 
-srun ./path/to/binary
+srun <replaceable>&lt;my_program&gt;</replaceable>
 	  </screen>
 	</listitem>
       </varlistentry>
@@ -285,97 +278,83 @@ srun ./path/to/binary
   <section xml:id="sec-allocating-GPUs">
     <title>Allocating GPUs</title>
     <para>
-      To make use of GPUs, jobs have to be submitted to the gpu
-      partition and specifically request the type and number of
-      GPUs. For example:
+      Allocating GPUs is very much cluster-specific. Depending on your local Slurm setup you
+      might have dedicated GPU partitions, possibly coupled to QOS definitions, or you might
+      have to specify GPUs directly using an option like
+      <literal>--gres=gpu:&lt;gpu_name&gt;:&lt;# of GPUs&gt;</literal>. Ask your local
+      administrator how to optimally submit GPU jobs on your cluster. Examples:
     </para>
     <screen>
-# request one GPU
+# one GPU
 <prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --partition=gpu --gres=gpu:k20x:1 script.sh</command>
+<command>sbatch --partition=gpu --gres=gpu:k80:1 script.sh</command>
 
-# request two GPUs
+# two GPUs
 <prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --partition=gpu --gres=gpu:k20x:2 script.sh</command>
+<command>sbatch --partition=gpu --gres=gpu:k80:2 script.sh</command>
     </screen>
-    <para>
-      The request for the GPU resource is in the form
-      <emphasis role="bold">resourceName:resourceType:number</emphasis>.
-    </para>
-    <para>
-      The maximal number of GPUs available per node is currently 2.
-    </para>
   </section>
   <section xml:id="sec-interactive-jobs">
     <title>Interactive Jobs</title>
     <para>
-      Interactive activities like editing, compiling etc. are normally
-      limited to the login nodes. For longer interactive sessions you
-      can allocate cores on the compute node with the command
-      <command>salloc</command>. It takes the same options like
-      <command>sbatch</command> to specify the required resources.
+      Interactive tasks like editing, compiling etc. are normally limited to the FrontEnd
+      (login) nodes. For longer interactive sessions, one can also allocate resources on
+      compute nodes with the commands <command>salloc</command> or directly
+      <command>srun</command>. To specify the required resources, they mostly take the same
+      options as <command>sbatch</command>.
     </para>
     <para>
-      The difference to <command>LSF</command> is, that
-      <command>salloc</command> returns a new shell on the node, where
-      you submitted the job. You need to use the command
-      <command>srun</command> in front of the following commands to
-      have these commands executed on the allocated resources. If you
-      allocate more than one task, please be aware that
-      <command>srun</command> will run the command on each allocated task!
+      <command>salloc</command> is special in that it returns a new shell on the node, where
+      you submitted the job. You then need to use the command <command>srun</command> in front
+      of the following commands to have them executed on the allocated resources. Please be
+      aware, that if you request more than one task, <command>srun</command> will run the
+      command once for each allocated task.
     </para>
     <para>
-      An example of an interactive session looks like:
+      An example of an interactive session using <command>srun</command> looks as follows:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>srun --pty -n 1 -c 4 --time=1:00:00 --mem-per-cpu=1700 bash</command>
+<command>srun --pty -n 1 -c 4 --time=1:00:00 --mem-per-cpu=4G bash</command>
 srun: job 13598400 queued and waiting for resources
 srun: job 13598400 has been allocated resources
 
-<prompt>0 user@fe-node ~ $</prompt>
-<command>start interactive work with e.g. 4 cores.</command>
+<prompt>0 user@compute-node ~ $</prompt>
+<command>start interactive work with the 4 cores.</command>
     </screen>
   </section>
   <section xml:id="sec-walltime-limits">
     <title>Walltime Limits</title>
     <para>
-      Most partitions have walltime limits. Use
-      <command>batchlim</command> to see the default and max walltime
-      limits for each partition.
+      Often, partitions have walltime limits. Use the command <command>sinfo
+      --summarize</command> to see the most important properties of the partitions in your
+      cluster.
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>batchlim</command>
-Partition        MaxCPUsPerUser     DefWalltime     MaxWalltime
----------------------------------------------------------------
-norm                  1024           04:00:00       10-00:00:00
-interactive             64           08:00:00        1-12:00:00
-largemem               128           04:00:00       10-00:00:00
-ibfdr                  512        10-00:00:00       10-00:00:00
-gpu                    128        10-00:00:00       10-00:00:00
-unlimited              128          UNLIMITED         UNLIMITED
-niddk                  512           04:00:00       10-00:00:00
+<command>sinfo  --summarize</command>
+PARTITION AVAIL  TIMELIMIT   NODES(A/I/O/T)  NODELIST
+demo         up   infinite          0/0/4/4  beo-[201-204]
+long*        up   infinite        9/11/0/20  node-[11-30]
+gpu          up 1-00:00:00         8/2/0/10  node-[01-10]
+short        up   infinite          0/3/0/3  node-[31-36]
     </screen>
     <para>
-      If no walltime is requested on the command line, the walltime
-      set for the job will be the default walltime in the table above.
-      To request a specific walltime, use the
-      <parameter>--time</parameter> option to
-      <command>sbatch</command>. For example:
+      If no walltime is requested on the command line, the walltime set for the job will be the
+      default walltime of the partition. To request a specific walltime, use the
+      <parameter>--time</parameter> option to <command>sbatch</command>. For example:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch  --time=24:00:00  jobscript</command>
+<command>sbatch  --time=36:00:00  jobscript</command>
     </screen>
     <para>
-      will submit a job to the norm partition, and request a walltime
-      of 24 hrs. If the job runs over 24 hrs it will be killed by the
-      batch system.
+      will submit a job to the default partition, and request a walltime of 36 hours. If the
+      job runs over 36 hours, it will be killed by the batch system.
     </para>
     <para>
-      To see the walltime limits and current runtimes for jobs, you
-      can use the <command>squeue</command> command.
+      To check the walltime limits and current runtimes for jobs, you can use the
+      <command>squeue</command> command.
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
@@ -395,43 +374,15 @@ JOBID               TIME_LIMIT          TIME
       For many more <command>squeue</command> options, see the squeue man page.
     </para>
   </section>
-  <section xml:id="sec-licenses">
-    <title>Licenses</title>
-    <para>
-      Several licensed software products are available on the cluster,
-      including <application>Matlab</application> and
-      <application>Mathematica</application>. To use licensed software
-      in your batch job, you must specify the
-      <parameter>--license</parameter> flag when submitting your
-      job. This flag ensures that the batch system will wait until a
-      license is available before starting the job. If you do not
-      specify this flag, there is a risk that the batch system will
-      start your job, the job will then be unable to get a license,
-      and will exit immediately.
-    </para>
-    <para>
-      Example:
-    </para>
-    <screen>
-<prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --license=matlab  jobscript</command>
-(request a single Matlab license)
-
-<prompt>0 user@fe-node ~ $</prompt>
-<command>sbatch --license=matlab,matlab-stat  jobscript</command>
-(request a Matlab + Matlab Stats Toolbox license)
-    </screen>
-  </section>
   <section xml:id="sec-deleting-jobs">
     <title>Deleting Jobs</title>
     <para>
-      The <command>scancel</command> command is used to delete
-      jobs. Examples:
+      The <command>scancel</command> command is used to delete jobs. Examples:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>scancel 232323</command>
-(delete job 232323)
+<command>scancel 2377</command>
+(delete job 2377)
 
 <prompt>0 user@fe-node ~ $</prompt>
 <command>scancel -u <replaceable>username</replaceable></command>
@@ -450,8 +401,8 @@ JOBID               TIME_LIMIT          TIME
 (delete all RUNNING jobs)
 
 <prompt>0 user@fe-node ~ $</prompt>
-<command>scancel --nodelist=cn0005</command>
-(delete any jobs running on node cn0005)
+<command>scancel --nodelist=node-15</command>
+(delete any jobs running on node node-15)
     </screen>
   </section>
   <section xml:id="sec-job-states">
@@ -474,12 +425,12 @@ JOBID               TIME_LIMIT          TIME
 	  </row>
 	  <row>
 	    <entry>PD</entry>
-	    <entry>Pending (Queued). Some possible reasons:
-	    QOSMaxCpusPerUserLimit (User has reached the maximum
-	    allocation) Dependency (Job is dependent on another job
-	    which has not completed) Resources (currently not enough
-	    resources to run the job) Licenses (job is waiting for a
-	    license, e.g. Matlab)</entry>
+	    <entry>
+	      Pending (Queued). Some possible reasons: QOSMaxCpusPerUserLimit (User has reached
+	      the maximum allocation) Dependency (Job is dependent on another job which has not
+	      completed) Resources (currently not enough resources to run the job) Licenses
+	      (job is waiting for a license, e.g. Matlab)
+	    </entry>
 	  </row>
 	  <row>
 	    <entry>CG</entry>
@@ -516,14 +467,14 @@ JOBID               TIME_LIMIT          TIME
 <command>sacct</command>
     </screen>
     <para>
-      Show all jobs that failed since midnight
+      Show all jobs that failed since midnight:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
 <command>sacct --state f</command>
     </screen>
     <para>
-      Show all jobs that failed this month
+      Show all jobs that failed since March 1st 2016:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
@@ -533,82 +484,56 @@ JOBID               TIME_LIMIT          TIME
   <section xml:id="sec-exit-codes">
     <title>Exit codes</title>
     <para>
-      The completion status of a job is essentially the exit status of
-      the job script with all the complications that entails. For
-      example take the following job script:
+      The completion status of a job is essentially the exit status of the job script with all
+      the complications that entails. For example consider the following job script:
     </para>
     <screen>
 #! /bin/bash
 
-module load GATK/2.3.4
-GATK -m 5g -T RealignerTargetCreator ...
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<replaceable>&lt;my_buggy_program&gt;</replaceable>
 echo "DONE"
     </screen>
     <para>
-      This script tries to load a non-existent
-      <application>GATK</application> version and then calls
-      <application>GATK</application>. This will fail. However, bash
-      by default keeps executing even if commands fail, so the script
-      will eventually print 'DONE'. Since the exit status of a bash
-      script is the exit status of the last command and echo returns 0
-      (SUCCESS), the script as a whole will exit with an exit code of
-      0, signalling sucess and the job state will show COMPLETED since
-      SLURM uses the exit code to judge if a job completed
-      sucessfully.
+      This script tries to run <replaceable>my_buggy_program</replaceable> which fails with an
+      exit code 1. However, bash by default keeps executing, even if a command fails, so the
+      script will eventually print 'DONE'. Since the exit status of a bash script is the exit
+      status of the last command in the script, and echo returns 0 (SUCCESS), the script as a
+      whole will exit with an exit code of 0. This signals sucess and the job state will show
+      COMPLETED, since Slurm uses the script exit code to judge if a job completed sucessfully.
     </para>
     <para>
-      Similarly, if a command in the middle of the job script were
-      killed for exceeding memory, the rest of the job script would
-      still be executed and could potentially return an exit code of 0
-      (SUCCESS), resulting again in a state of COMPLETED.
+      Similarly, if a command in the middle of the job script were killed for exceeding memory,
+      the rest of the job script would still be executed and could potentially return an exit
+      code of 0 (SUCCESS), resulting again in a state of COMPLETED.
     </para>
     <para>
-      Conversely, in the following example a sucessful analysis is
-      followed by a command that fails
-    </para>
-    <screen>
-#! /bin/bash
-module load GATK/3.4.0
-GATK -m 5g -T RealignerTargetCreator ...
-touch /file/in/non/existing/directory/DONE
-    </screen>
-    <para>
-      Even though the actual analysis (here the
-      <application>GATK</application> call) finished sucessfully, the
-      last command will fail, resulting in a final state of FAILED for
-      the batch job.
-    </para>
-    <para>
-      Some defensive bash programming techniques can help ensure that
-      a job script will show a final state of FAILED if anything goes
-      wrong.
+      Some more careful bash programming techniques can help ensure, that a job script will
+      show a final state of FAILED if anything goes wrong.
     </para>
     <bridgehead>Use set -e</bridgehead>
     <para>
-      Starting a bash script with <parameter>set -e</parameter> will
-      tell bash to stop executing a script if a command fails and
-      signal failiure with a non-zero exit code which will be
-      reflected as a FAILED state in <application>SLURM</application>.
+      Starting a bash script with <parameter>set -e</parameter> will tell bash to stop
+      executing a script if a command fails. This will then signal failure with a non-zero exit
+      code and will be reflected as a FAILED state in <application>Slurm</application>.
     </para>
     <screen>
 #! /bin/bash
 set -e
 
-module load GATK/3.4.0
-GATK -m 5g -T RealignerTargetCreator ...
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<replaceable>&lt;my_buggy_program&gt;</replaceable>
 echo "DONE"
     </screen>
     <para>
-      One complication with this approach is that some commands will
-      return non-zero exit codes. For example grepping for a string
-      that does not exist.
+      One complication with this approach is, that some commands will return non-zero exit
+      codes. For example grepping for a string that does not exist.
     </para>
     <bridgehead>Check errors for individual commands</bridgehead>
     <para>
-     A more selective approach involves carefully checking the exit
-     codes of the important parts of a job script. This can be done
-     with conventional if/else statements or with conditional short
-     circuit evaluation often seen in scripts. For example:
+     A more selective and superior approach involves carefully checking the exit codes of the
+     important parts of a job script. This can be done with conventional if/else statements or
+     with conditional short circuit evaluation often seen in scripts. For example:
     </para>
     <screen>
 #! /bin/bash
@@ -618,45 +543,39 @@ function fail {
     exit 1  # signal failure
 }
 
-module load GATK/3.4.0 || fail "Could not load GATK module"
-GATK -m 5g -T RealignerTargetCreator ... || fail "RealignerTargetCreator failed"
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<replaceable>&lt;my_buggy_program&gt;</replaceable> || fail "my_buggy_program failed"
 echo "DONE"
     </screen>
   </section>
   <section xml:id="sec-array-jobs">
     <title>Array Jobs</title>
     <para>
-      Array jobs can be used to create a sequence of jobs that share
-      the same executable and resource requirements, but have
-      different input files, to be submitted, controlled, and
-      monitored as a single unit. The arguments
-      <parameter>-a</parameter> or <parameter>--array</parameter> take
-      an additional parameter that specify the array indices. Within
-      the job you can read the environment variables
-      <envar>SLURM_ARRAY_JOB_ID</envar>, which will be set to the
-      first job ID of the array, and
-      <envar>SLURM_ARRAY_TASK_ID</envar>, which will be set
-      individually for each step.
+      Array jobs can be used to create a sequence of jobs which will be submitted, controlled,
+      and monitored as a single unit. This job sequence shares the same executable and resource
+      requirements, but individual executions have different input files. The arguments
+      <parameter>-a</parameter> or <parameter>--array</parameter> take an additional parameter
+      that specify the array indices. Within an array job, you can read the environment
+      variables <envar>SLURM_ARRAY_JOB_ID</envar>, which will be set to the first job ID of the
+      array, and <envar>SLURM_ARRAY_TASK_ID</envar>, which will be set individually for each
+      step.
     </para>
     <para>
-      Within an array job, you can use <varname>%a</varname> and
-      <varname>%A</varname> in addition to <varname>%j</varname> and
-      <varname>%N</varname> (described above) to make the output file
-      name specific to the job. <varname>%A</varname> will be replaced
-      by the value of <envar>SLURM_ARRAY_JOB_ID</envar> and
-      <varname>%a</varname> will be replaced by the value of
-      <envar>SLURM_ARRAY_TASK_ID</envar>.
+      Within an array job, you can use <varname>%a</varname> and <varname>%A</varname> in
+      addition to <varname>%j</varname> and <varname>%N</varname> (described above) to make the
+      output file name specific to the job. <varname>%A</varname> will be replaced by the value
+      of <envar>SLURM_ARRAY_JOB_ID</envar> and <varname>%a</varname> will be replaced by the
+      value of <envar>SLURM_ARRAY_TASK_ID</envar>.
     </para>
     <para>
-      Here is an example how an array job can looks like:
+      Here is an example how an array job may look like:
     </para>
     <screen>
 #!/bin/bash
-#SBATCH -J Science1
 #SBATCH --array 0-9
 #SBATCH -o arraytest-%A_%a.out
 #SBATCH -e arraytest-%A_%a.err
-#SBATCH --ntasks=864
+#SBATCH --ntasks=256
 #SBATCH --mail-type=end
 #SBATCH --mail-user=<replaceable>user@example.org</replaceable>
 #SBATCH --time=08:00:00
@@ -664,27 +583,23 @@ echo "DONE"
 echo "Hi, I am step $SLURM_ARRAY_TASK_ID in this array job $SLURM_ARRAY_JOB_ID"
     </screen>
     <para>
-      For further details please read the <link
-      xlink:href="http://slurm.schedmd.com/job_array.html">Slurm
-      documentation</link>.
+      For further details, please read the corresponding part of the general <link
+      xlink:href="http://slurm.schedmd.com/job_array.html">Slurm documentation</link>.
     </para>
   </section>
   <section xml:id="sec-chain-jobs">
     <title>Chain Jobs</title>
     <para>
-      You can use <firstterm>chain jobs</firstterm> to create
-      dependencies between jobs. This is often the case if a job
-      relies on the result of one or more preceding jobs. Chain jobs
-      can also be used if the runtime limit of the batch queues is not
-      sufficient for your job. <application>SLURM</application> has an
-      option <parameter>-d</parameter> or
-      <parameter>--dependency</parameter> that allows to specify that
-      a job is only allowed to start if another job finished.
+      You can use <firstterm>chain jobs</firstterm> to create dependencies between jobs. This
+      is often the case, if a job relies on the result of one or more preceding jobs. Chain
+      jobs can also be used, if the runtime limit of the batch queues is not sufficient for
+      your job. <application>Slurm</application> has an option <parameter>-d</parameter> or
+      <parameter>--dependency</parameter> that allows to specify that a job is only allowed to
+      start if another job finished.
     </para>
     <para>
-      Here is an example how a chain job can looks like, the example
-      submits 4 jobs (described in a job file) that will be executed
-      on after each other with different CPU numbers:
+      Here is an example of a chain job. It submits 4 jobs (described in a job file) that will
+      be executed one after each other with different CPU numbers:
     </para>
     <screen>
 #!/bin/bash
@@ -708,11 +623,9 @@ done
   <section xml:id="sec-monitoring-jobs">
     <title>Monitoring Jobs</title>
     <para>
-      <command>squeue</command> will report all jobs on the
-      cluster. <command>squeue -u
-      <replaceable>username</replaceable></command> will report your
-      running jobs. Slurm commands like squeue are very flexible, so
-      that you can easily create your own aliases.
+      <command>squeue</command> will report all jobs on the cluster. <command>squeue -u
+      $USER</command> will report your running jobs. Slurm commands like squeue are very
+      flexible, so that you can easily create your own aliases.
     </para>
     <para>
       Example of squeue:
@@ -721,21 +634,19 @@ done
 <prompt>0 user@fe-node ~ $</prompt>
 <command>squeue</command>
 JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-22392     ibfdr meme_sho   susanc PD       0:00      1 (Dependency)
-22393     ibfdr meme_sho   susanc PD       0:00      1 (Dependency)
-22404     ibfdr   stmv-1   susanc  R      10:04      1 cn0414
-22391     ibfdr meme_sho   susanc  R      10:06      1 cn0413
+22392     gpu    gromacs-1   mike PD       0:00      1 (Dependency)
+22393     gpu    gromacs-2   mike PD       0:00      1 (Dependency)
+22404     gpu    gromacs-2   mike  R      10:04      1 node-07
+22391     gpu    gromacs-1   mike  R      10:06      1 node-08
     </screen>
   </section>
   <section xml:id="sec-email-notifications">
     <title>Email notifications</title>
     <para>
-      Using the
-      <parameter>--mail-type=<replaceable>&lt;type&gt;</replaceable></parameter>
-      option to <command>sbatch</command>, users can request email
-      notifications from <application>SLURM</application> as certain
-      events occur. Multiple event types can be specified as a comma
-      separated list. For example:
+      Using the <parameter>--mail-type=<replaceable>&lt;type&gt;</replaceable></parameter>
+      option to <command>sbatch</command>, users can request email notifications from
+      <application>Slurm</application> as certain events occur. Multiple event types can be
+      specified as a comma separated list. For example:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
@@ -815,11 +726,11 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
 <command>scontrol update JobId=181755 licenses=matlab</command>
     </screen>
     <para>
-      Job was submitted to the norm partition, resend to ccr partition:
+      Job was submitted to the default partition, resend to gpu partition:
     </para>
     <screen>
 <prompt>0 user@fe-node ~ $</prompt>
-<command>scontrol update JobID=181755 partition=ccr QOS=ccr</command>
+<command>scontrol update JobID=181755 partition=gpu QOS=gpu-single</command>
     </screen>
     <para>
       Reduce the walltime to 12 hrs:
@@ -830,63 +741,43 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
     </screen>
     <note>
       <para>
-	Users can only <emphasis>reduce</emphasis> the walltime of
-	their submitted jobs.
+	Users can only <emphasis>reduce</emphasis> the walltime of their submitted jobs.
       </para>
     </note>
-  </section>
-  <section xml:id="sec-interactive-x11-gui-jobs">
-    <title>Interactive X11/GUI Jobs</title>
-    <para>
-      <application>SLURM</application> will forward your X11
-      credentials to the first (or even all) node for a job with the
-      (undocumented) <parameter>--x11</parameter> option. For example,
-      an interactive session for 1 hour with Matlab using eigth cores
-      can be started with:
-    </para>
-    <screen>
-module load matlab
-srun --ntasks=1 --cpus-per-task=8 --time=1:00:00 --pty --x11=first matlab
-    </screen>
   </section>
   <section xml:id="sec-biniding-and-distribution-tasks">
     <title>Binding and Distribution of Tasks</title>
     <para>
-      The <application>SLURM</application> provides several binding
-      strategies to place and bind the tasks and/or threads of your
-      job to cores, sockets and nodes.
+      <application>Slurm</application> provides several binding strategies to place and bind
+      the tasks and/or threads of your job to cores, sockets and nodes.
     </para>
     <note>
       <para>
-	Keep in mind that the distribution method has a direct impact
-	on the execution time of your application. The manipulation of
-	the distribution can either speedup or slow down your
-	application.
+	Keep in mind that the distribution method may have a direct impact on the execution
+	time of your application. The manipulation of the distribution can possibly speedup or
+	slow down your application.
       </para>
     </note>
     <para>
-      The default allocation of the tasks/threads for
-      <application>OpenMP</application>,
-      <application>MPI</application> and
-      <application>Hybrid</application> (MPI and OpenMP) are as
-      following.
+      The default allocation of tasks/threads for <application>OpenMP</application>,
+      <application>MPI</application> and <application>Hybrid</application> (MPI and OpenMP)
+      applications are as follows:
     </para>
     <mediaobject>
       <imageobject><imagedata
       fileref="images/Binding_OpenMP.png"
       width="85%" format="PNG"/></imageobject>
       <textobject><phrase>
-        Default binding of a pure OpenMP-job
+        Default binding of a pure OpenMP job
       </phrase></textobject>
       <caption><para>
-        Default binding of a pure OpenMP-job
+        Default binding of a pure OpenMP job
       </para></caption>
     </mediaobject>
     <bridgehead>OpenMP</bridgehead>
     <para>
-      The illustration shows the default binding of a pure
-      OpenMP-job on 1 node with 8 cpus on which 8 threads are
-      allocated.
+      The illustration shows the default binding of a pure OpenMP job on 1 node with 8 CPUs on
+      which 8 threads are allocated.
     </para>
     <screen>
 #!/bin/bash
@@ -894,9 +785,9 @@ srun --ntasks=1 --cpus-per-task=8 --time=1:00:00 --pty --x11=first matlab
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=8
 
-export OMP_NUM_THREADS=8
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
+srun --cpus-per-task=$SLURM_CPUS_PER_TASK ./<replaceable>application</replaceable>
     </screen>
     <bridgehead>MPI</bridgehead>
     <mediaobject>
@@ -904,16 +795,15 @@ srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
       fileref="images/Binding_MPI.png"
       width="85%" format="PNG"/></imageobject>
       <textobject><phrase>
-        Default binding of a pure OpenMP-job
+        Default binding of a pure MPI job
       </phrase></textobject>
       <caption><para>
-        Default binding of a pure OpenMP-job
+        Default binding of a pure MPI job
       </para></caption>
     </mediaobject>
     <para>
-      The illustration shows the default binding of a pure
-      MPI-job. In which 16 global ranks are distributed onto 2 nodes
-      with 8 cores each. Each rank has 1 core assigned to it.
+      The illustration shows the default binding of a pure MPI job. 16 global ranks are
+      distributed onto 2 nodes with 8 cores each. Each rank has 1 core assigned to it.
     </para>
     <screen>
 #!/bin/bash
@@ -921,7 +811,7 @@ srun --ntasks 1 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 ./<replaceable>application</replaceable>
+srun ./<replaceable>application</replaceable>
     </screen>
     <bridgehead>Hybrid (MPI and OpenMP)</bridgehead>
     <mediaobject>
@@ -929,16 +819,15 @@ srun --ntasks 16 ./<replaceable>application</replaceable>
       fileref="images/Binding_Hybrid.png"
       width="85%" format="PNG"/></imageobject>
       <textobject><phrase>
-        Default binding of a Hybrid-job
+        Default binding of a hybrid job
       </phrase></textobject>
       <caption><para>
-        Default binding of a Hybrid-job
+        Default binding of a hybrid job
       </para></caption>
     </mediaobject>
     <para>
-      In the illustration the default binding of a Hybrid-job is
-      shown. In which 4 global ranks are distributed onto 2 nodes with
-      8 cores each. Each rank has 4 cores assigned to it.
+      In the illustration the default binding of a hybrid job is shown. Four global MPI ranks
+      are distributed onto 2 nodes with 8 cores each. Each rank has 4 cores assigned to it.
     </para>
     <screen>
 #!/bin/bash
@@ -946,39 +835,35 @@ srun --ntasks 16 ./<replaceable>application</replaceable>
 #SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=2
 
-export OMP_NUM_THREADS=2
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun --ntasks 8 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
+srun --cpus-per-task=$SLURM_CPUS_PER_TASK ./<replaceable>application</replaceable>
     </screen>
     <section xml:id="sec-detailed-description">
       <title>Detailed Description</title>
       <section xml:id="sec-general">
 	<title>General</title>
 	<para>
-	  To specify a pattern the commands
-	  <parameter>--cpu_bind=&lt;cores | sockets&gt;</parameter>
-	  and <parameter>--distribution=&lt;block |
+	  To specify a pattern the commands <parameter>--cpu_bind=&lt;cores |
+	  sockets&gt;</parameter> and <parameter>--distribution=&lt;block |
 	  cyclic&gt;</parameter> are needed. <parameter>cpu_bind</parameter> defines the
-	  resolution in which the tasks will be allocated. While
-	  <parameter>--distribution</parameter> determinates the order
-	  in which the tasks will be allocated to the cpus. Keep in
-	  mind that the allocation pattern also depends on your
-	  specification.
+	  resolution, while <parameter>--distribution</parameter> determines the order in which
+	  the tasks will be allocated to the CPUs. Keep in mind, that the allocation pattern
+	  also depends on your specification.
 	</para>
 	<screen>
 #!/bin/bash 
-#SBATCH --nodes=2                        # request 2 nodes 
-#SBATCH --cpus-per-task=4                # use 4 cores per task 
+#SBATCH --nodes=2
+#SBATCH --cpus-per-task=4
 #SBATCH --tasks-per-node=2               # allocate 2 tasks per node - 1 per socket 
 
-srun --ntasks 4 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --cpus-per-task $SLURM_CPUS_PER_TASK --cpu_bind=<replaceable>cores</replaceable> \
+  --distribution=block:block ./<replaceable>application</replaceable>
 	</screen>
 	<para>
-	  In the following sections there are some selected examples
-	  of the combinations between
-	  <parameter>--cpu_bind</parameter> and
-	  <parameter>--distribution</parameter> for different job
-	  types.
+	  In the following sections there are some selected examples of the combinations
+	  between <parameter>--cpu_bind</parameter> and <parameter>--distribution</parameter>
+	  for different job types.
 	</para>
       </section>
       <section xml:id="sec-mpi-strategies">
@@ -990,21 +875,18 @@ srun --ntasks 4 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --
 	    fileref="images/Binding_detailed_MPI_Default.png"
 	    width="85%" format="PNG"/></imageobject>
 	    <textobject><phrase>
-	      The default binding
+	      The default binding.
 	    </phrase></textobject>
 	    <caption><para>
-	      The default binding
+	      The default binding.
 	    </para></caption>
 	  </mediaobject>
 	  The default binding uses
-	  <parameter>--cpu_bind=<replaceable>cores</replaceable></parameter>
-	  in combination with
-	  <parameter>--distribution=block:cyclic</parameter>. The
-	  default (as well as block:cyclic) allocation method will
-	  fill up one node after another, while filling socket one and
-	  two in alternation. Resulting in only even ranks on the
-	  first socket of each node and odd on each second socket of
-	  each node.
+	  <parameter>--cpu_bind=<replaceable>cores</replaceable></parameter> in combination
+	  with <parameter>--distribution=block:cyclic</parameter>. The default (as well as
+	  block:cyclic) allocation method will fill up one node after another, while filling
+	  socket one and two in alternation. Resulting in only even ranks on the first socket
+	  of each node and odd on each second socket of each node.
 	</para>
 	<screen>
 #!/bin/bash
@@ -1012,13 +894,15 @@ srun --ntasks 4 --cpus-per-task 4 --cpu_bind=<replaceable>cores</replaceable> --
 #SBATCH --tasks-per-nodes=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 ./<replaceable>application</replaceable>
+srun ./<replaceable>application</replaceable>
 	</screen>
 	<bridgehead>Core Bound</bridgehead>
 	<note>
 	  <para>
-	    With this command the tasks will be bound to a core for
-	    the entire runtime of your application.
+	    With the following settings, the tasks will be bound to a core for the entire
+	    runtime of your application. This usually improves execution speed by eliminating
+	    the overhead from context switches occurring when processes/tasks are being
+	    auto-moved (by the kernel) from one core to another.
 	  </para>
 	</note>
 	<variablelist>
@@ -1031,10 +915,10 @@ srun --ntasks 16 ./<replaceable>application</replaceable>
 		  fileref="images/Binding_detailed_MPI_Core_block_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </para></caption>
 		</mediaobject>
 		This method allocates the tasks linearly to the cores.
@@ -1045,7 +929,7 @@ srun --ntasks 16 ./<replaceable>application</replaceable>
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=block:block <replaceable>./application</replaceable>
+srun --cpu_bind=cores --distribution=block:block <replaceable>./application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1058,19 +942,17 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=block
 		  fileref="images/Binding_detailed_MPI_Core_cyclic_cyclic.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates your tasks in a round robin approach to the cores
+		    Allocates your tasks in a round-robin approach to the cores.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates your tasks in a round robin approach to the cores
+		    Allocates your tasks in a round-robin approach to the cores.
 		  </para></caption>
 		</mediaobject>
-		<parameter>--distribution=cyclic:cyclic</parameter>
-		will allocate your tasks to the cores in a round robin
-		approach. It starts with the first socket of the first
-		node, then the first socket of the second node until
-		one task is placed on every first socket of every
-		node. After that it will place a task on every second
-		socket of every node and so on.
+		<parameter>--distribution=cyclic:cyclic</parameter> will allocate your tasks to
+		the cores in a round-robin approach. It starts with the first socket of the
+		first node, then the first socket of the second node until one task is placed
+		on every first socket of every node. After that, it will place a task on the
+		second socket of every node and so on.
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1078,7 +960,7 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=block
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle:cycle
+srun --cpu_bind=cores --distribution=cycle:cycle
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1091,15 +973,15 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle
 		  fileref="images/Binding_detailed_MPI_Core_cyclic_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks in alternation on node level
+		    Allocates the tasks in alternation on node level.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks in alternation on node level
+		    Allocates the tasks in alternation on node level.
 		  </para></caption>
 		</mediaobject>
-		The cyclic:block distribution will allocate the tasks
-		of your job in alternation on node level, starting
-		with first node filling the sockets linearly.
+		The cyclic:block distribution will allocate the tasks of your job in
+		alternation on the node level, starting with the first node filling the sockets
+		linearly.
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1107,7 +989,7 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=cycle
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=clyclic:block ./<replaceable>application</replaceable>
+srun --cpu_bind=cores --distribution=clyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1117,12 +999,10 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 	<title>Socket Bound</title>
 	<note>
 	  <para>
-	    The general distribution onto the nodes and sockets stays
-	    the same. The mayor difference between socket and cpu
-	    bound lies within the ability of the tasks to "jump" from
-	    one core to another inside a socket while executing the
-	    application. These jumps can slow down the execution time
-	    of your application.
+	    The general distribution onto the nodes and sockets stays the same. The major
+	    difference between socket and cpu bound lies within the ability of the tasks to
+	    jump from one core to another inside a socket while executing the
+	    application. These jumps can slow down the execution time of your application.
 	  </para>
 	</note>
 	<variablelist>
@@ -1136,22 +1016,19 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
 		    Allocates one node after another, while filling
-		    socket one and two in alternation
+		    socket one and two in alternation.
 		  </phrase></textobject>
 		  <caption><para>
 		    Allocates one node after another, while filling
-		    socket one and two in alternation
+		    socket one and two in alternation.
 		  </para></caption>
 		</mediaobject>
 		The default distribution uses
-		<parameter>--cpu_bind=<replaceable>sockets</replaceable></parameter>
-		with
-		<parameter>--distribution=block:cyclic</parameter>. The
-		default allocation method (as well as block:cyclic)
-		will fill up one node after another, while filling
-		socket one and two in alternation. Resulting in only
-		even ranks on the first socket of each node and odd on
-		each second socket of each node.
+		<parameter>--cpu_bind=sockets</parameter> with
+		<parameter>--distribution=block:cyclic</parameter>. The default allocation
+		method (as well as block:cyclic) will fill up one node after another, while
+		filling socket one and two in alternation. Resulting in only even ranks on the
+		first socket of each node and odd on each second socket of each node.
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1159,7 +1036,7 @@ srun --ntasks 16 --cpu_bin=<replaceable>cores</replaceable> --distribution=clycl
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>application</replaceable>
+srun -cpu_bind=sockets ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1172,10 +1049,10 @@ srun --ntasks 16 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>app
 		  fileref="images/Binding_detailed_MPI_Socket_block_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </para></caption>
 		</mediaobject>
 		This method allocates the tasks linearly to the cores.
@@ -1186,7 +1063,7 @@ srun --ntasks 16 -cpu_bind=<replaceable>sockets</replaceable> ./<replaceable>app
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 --cpu_bind=<replaceable>sockets</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --cpu_bind=sockets --distribution=block:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1199,15 +1076,15 @@ srun --ntasks 16 --cpu_bind=<replaceable>sockets</replaceable> --distribution=bl
 		  fileref="images/Binding_detailed_MPI_Socket_cyclic_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks in alternation between the first and the second node
+		    Allocates the tasks in alternation between the first and the second node.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks in alternation between the first and the second node
+		    Allocates the tasks in alternation between the first and the second node.
 		  </para></caption>
 		</mediaobject>
-		The cyclic:block distribution will allocate the tasks
-		of your job in alternation between the first node and
-		the second node while filling the sockets linearly.
+		The cyclic:block distribution will allocate the tasks of your job in
+		alternation between the first node and the second node while filling the
+		sockets linearly.
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1215,7 +1092,7 @@ srun --ntasks 16 --cpu_bind=<replaceable>sockets</replaceable> --distribution=bl
 #SBATCh --tasks-per-node=8
 #SBATCH --cpus-per-task=1
 
-srun --ntasks 16 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
+srun --cpu_bind=sockets --distribution=cyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1231,17 +1108,16 @@ srun --ntasks 16 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyc
 	    fileref="images/Binding_detailed_MPI_Hybrid_Default.png"
 	    width="85%" format="PNG"/></imageobject>
 	    <textobject><phrase>
-	      Splits the cores allocated to a rank between the sockets of a node 
+	      Split the cores allocated to a rank between the sockets of a node.
 	    </phrase></textobject>
 	    <caption><para>
-	      Splits the cores allocated to a rank between the sockets of a node 
+	      Split the cores allocated to a rank between the sockets of a node.
 	    </para></caption>
 	  </mediaobject>
-	  The default binding pattern of hybrid jobs will split the
-	  cores allocated to a rank between the sockets of a node. The
-	  example shows that Rank 0 has 4 cores at its disposal. Two
-	  of them on first socket inside the first node and two on the
-	  second socket inside the first node.
+	  The default binding pattern of hybrid jobs will split the cores allocated to a rank
+	  between the sockets of a node. The example shows that Rank 0 has 4 cores at its
+	  disposal. Two of them on the first socket inside the first node and two on the second
+	  socket inside the first node.
 	</para>
 	<screen>
 #!/bin/bash
@@ -1249,9 +1125,9 @@ srun --ntasks 16 --cpu_bin=<replaceable>sockets</replaceable> --distribution=cyc
 #SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
+srun --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
 	</screen>
       </section>
       <section xml:id="sec-hybrid-core-bound">
@@ -1266,10 +1142,10 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 		  fileref="images/Binding_detailed_MPI_Hybrid_Core_block_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks linearly to the cores
+		    Allocates the tasks linearly to the cores.
 		  </para></caption>
 		</mediaobject>
 		This method allocates the tasks linearly to the cores.
@@ -1280,9 +1156,10 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</rep
 #SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
-export OMP_NUM_THREADS=2
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=block:block ./<replaceable>application</replaceable>
+srun --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> \
+  --distribution=block:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1295,15 +1172,15 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
 		  fileref="images/Binding_detailed_MPI_Hybrid_Core_cyclic_block.png"
 		  width="85%" format="PNG"/></imageobject>
 		  <textobject><phrase>
-		    Allocates the tasks in alternation between the first and the second node
+		    Allocates the tasks in alternation between the first and the second node.
 		  </phrase></textobject>
 		  <caption><para>
-		    Allocates the tasks in alternation between the first and the second node
+		    Allocates the tasks in alternation between the first and the second node.
 		  </para></caption>
 		</mediaobject>
-		The cyclic:block distribution will allocate the tasks
-		of your job in alternation between the first node and
-		the second node while filling the sockets linearly.
+		The cyclic:block distribution will allocate the tasks of your job in
+		alternation between the first node and the second node while filling the
+		sockets linearly.
 	      </para>
 	      <screen>
 #!/bin/bash
@@ -1311,9 +1188,10 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
 #SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=4
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> --distribution=cyclic:block ./<replaceable>application</replaceable>
+srun --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable> \
+  --distribution=cyclic:block ./<replaceable>application</replaceable>
 	      </screen>
 	    </listitem>
 	  </varlistentry>
@@ -1324,12 +1202,11 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
   <section xml:id="sec-accounting">
     <title>Accounting</title>
     <para>
-      The <application>SLURM</application> command
-      <command>sacct</command> provides job statistics like memory
-      usage, CPU time, energy usage etc. Examples:
+      The <application>Slurm</application> command <command>sacct</command> provides job
+      statistics like memory usage, CPU time, energy usage etc. Examples:
     </para>
     <screen>
-# show all own jobs contained in the accounting database
+# show all of your own jobs in the accounting database
 <prompt>0 user@fe-node ~ $</prompt>
 <command>sacct</command>
 
@@ -1352,31 +1229,31 @@ srun --ntasks 4 --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</
   </section>
   <section xml:id="sec-other">
     <title>Other</title>
-    <bridgehead>Host List</bridgehead>
+    <bridgehead>Running on specific hosts</bridgehead>
     <para>
-      If you want to place you job onto specific nodes, there are two
-      options for doing this. Either use <parameter>-p</parameter> to
-      specify a host group that fits your needs. Or, use
-      <parameter>-w</parameter> or (<parameter>--nodelist</parameter>)
-      with a name node nodes that will work for you.
+      If you want to place your job onto specific nodes, there are two options for doing
+      this. Either use <parameter>-p</parameter> to specify a partition with a host group that
+      fits your needs. Or, use the <parameter>-w</parameter> (alternatively
+      <parameter>--nodelist</parameter>) parameter with a single or list of nodes, where you
+      want your job to be executed.
     </para>
-    <bridgehead>Slurm External Links</bridgehead>
+    <bridgehead>Useful external Slurm documentation links</bridgehead>
     <para>
       <itemizedlist>
 	<listitem>
 	  <para>
 	    <link
-		xlink:href="http://slurm.schedmd.com/hdf5_profile_user_guide.html">
+		xlink:href="http://slurm.schedmd.com/hdf5_profile_user_guide.html___blank___">
 	      Slurm Profiling
-	    </link>
+	    </link> using HDF5
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
 	    <link
-		xlink:href="http://slurm.schedmd.com/sh5util.html">
+		xlink:href="http://slurm.schedmd.com/sh5util.html___blank___">
 	      sh5util
-	    </link>
+	    </link> - Tool for merging HDF5 files
 	  </para>
 	</listitem>
       </itemizedlist>
