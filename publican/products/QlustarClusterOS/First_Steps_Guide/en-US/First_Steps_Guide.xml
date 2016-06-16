@@ -179,6 +179,14 @@ keep the local version currently installed.
 	      (see the information on the screen).
 	    </para>
 	  </step>
+	  <step>
+	    <title>Setting the MariaDB root password</title>
+	    <para>
+	      To conclude the configuration procedure, you will be asked to set the password
+	      for the MariaDB/MySQL root account. Setting a password here is important. It
+	      prevents unauthorized access to the Qlustar or other databases on your head-node.
+	    </para>
+	  </step>
 	</procedure>
       </task>
     </section>
