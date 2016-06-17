@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-Messages">
+  <title>Messages</title>
+  <section xml:id="sec-Messages-purpose">
+    <title>Purpose</title>
+    <para>
+      Often things happen when one is not looking. For that reason Qluman keeps a log of
+      messages showing what happened, when, where and how important the event was.
+    </para>
+  </section>
+  <section xml:id="sec-Messages-indicator">
+    <title>Messages indicator button</title>
+    <para>
+      At the right bottom of the main window qluman-qt displays a
+      <guibutton>Messages</guibutton>. The button shows the highest priority of pending
+      messages as well as the number of messages pending. Clicking the button opens the
+      <emphasis>Messages</emphasis> window. The <emphasis>Messages</emphasis> window can
+      also be opened through the Manage Cluster -> Messages menu item.
+  </section>
+  <section xml:id="sec-Messages-window">
+    <title>Messages window</title>
+    <para>
+      Opening the Messages window shows a list of messages sorted by time with the oldest
+      message at the top. The messages can be sorted ascending and descending by clicking on
+      any of the column headers. Only the short text of each message is shown to keep the
+      window compact. Hovering over a row will show the long text for that row as tool-tip.
+      The long text can also be seen in a separate window by clicking the
+      <guibutton>Details<guibutton> button. The extra window makes it easier to read
+      multi-line messages and allows copy+paste.
+  </section>
+  <section xml:id="sec-Messages-filter">
+    <title>Message Filter</title>
+    <para>
+      Not every message is of interest to a user, especially messages that have already been
+      seen. Each user can create their own filter for messages by clicking on the
+      <guibutton>Edit Filter</guibutton>. Filter consist of a number of matches shown as rows
+      with an action as well as a default action. The filtering process goes through
+      the rows one by one and if all fields in a row that are set match a message then the
+      action set for the row is executed, the message is hidden from view or included in the
+      messages window. If none of the rows match a message the default action is taken.
+    </para>
+    <para>
+      The most common filter is to hide message with the <emphasis>seen</emphasis> flag.
+      Without this entry the seen flag has no effect. The filter can be freely edited
+      and can be saved to act as the new default filter or reset to the filter that was saved
+      last.
+    </para>
+    <!--cbox(file: messages/messages.png)-->
+    <!--cbox(file: messages/messages_filter.png)-->
+  </section>
+</chapter>

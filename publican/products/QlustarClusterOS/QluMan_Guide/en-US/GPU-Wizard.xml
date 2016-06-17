@@ -38,17 +38,6 @@
   <section xml:id="sec-GPUwizard-host-selection">
     <title>Selecting Hosts</title>
     <para>
-     <mediaobject>
-       <imageobject><imagedata
-       fileref="images/gpu_wizard/host_selection.png"
-       width="85%" format="PNG"/></imageobject>
-       <textobject><phrase>
-         Selecting hosts for configuration
-       </phrase></textobject>
-       <caption><para>
-         Selecting hosts for configuration
-       </para></caption>
-     </mediaobject>
       The first step is to select the hosts that should be configured. Initially, the lists of
       hosts is empty. One or more of the four buttons at the bottom have to be pressed to
       pre-select hosts that should be considered. The <guibutton>Unconfigured</guibutton>
@@ -70,5 +59,20 @@
       together and shown in <emphasis>hostlist syntax</emphasis>. Select one of the shown
       groups and click <guibutton>Next</guibutton> to start the configuration.
     </para>
+<!--cbox(file: gpu_wizard/gpu_wizard__host_template__clone.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__config_set__assign.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_group2.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_group5.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_gpus__directly.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__host_selection1.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__config_set__modify.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_group4.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_group3.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__config_set__clone.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_gpus__existing.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__host_selection2.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_gpus__new_set.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_gpus__action.png)-->
+<!--cbox(file: gpu_wizard/gpu_wizard__assign_group1.png)-->
   </section>
 </chapter>
