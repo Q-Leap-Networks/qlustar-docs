@@ -328,7 +328,7 @@
     <section xml:id="sec-Slurm-Overview">
       <title>Overview</title>
       <para>
-	The slurm configuration module comes in three parts:
+	The slurm configuration module comes in four parts:
       </para>
       <para>
 	<itemizedlist>
@@ -348,6 +348,12 @@
 	    <para>
 	      The configuration of partitions achieved by using the
 	      <classname>Partitions</classname> tab.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The configuration of gres groups achieved using the
+	      <classname>Gres Groups</classname> tab.
 	    </para>
 	  </listitem>
 	</itemizedlist>
@@ -484,8 +490,55 @@
 	delete a value, select <guimenuitem>Delete value</guimenuitem> from the context menu.
       </para>
     </section>
+    <section xml:id="sec-Slurm-Gres-Groups">
+      <title>Slurm Gres Groups</title>
+      <para>
+        <!--cbox(slurm__gres_groups.png)-->
+        <!--cbox(slurm__gres_group__select.png)-->
+        Slurm Gres Groups are mainly used in Qluman to handle the configuration of GPUs for
+        slurm. The <a href="#GpuWizard">GPU Wizard</a> is the best way to create such resource
+        groups. But the Gres Groups tab allows creating and managing any type of resource
+        group as well as binding GPUs to specific CPU sets, which the wizard does not use. To
+        view or modify a Gres Group select the group from the drop down menu. Use the
+        <guibutton>Preview</guibutton> button to check changes before writing them.
+      </para>
+      <para>
+        <!--cbox(file: slurm__gres_group__new.png)-->
+        <!--cbox(file: slurm__gres_group__new1.png)-->
+        <!--cbox(file: slurm__gres_group__new2.png)-->
+        <!--cbox(file: slurm__gres_group__new3.png)-->
+        <!--cbox(file: slurm__gres_group__new4.png)-->
+        <!--cbox(file: slurm__gres_group__delete_group.png)-->
+        A new gres group can be created by clicking the <guibutton>New Gres Group</guibutton>
+        button. This opens a dialog asking for the type, name and description of the new
+        group. An existing type can be selected from the drop down menu or a new type can be
+        entered directly. After entering a new unique group name the <guibutton>OK</guibutton>
+        button becomes select-able. A group that is not in use can be deleted by clicking
+        <guibutton>Delete Group</guibutton>.
+      </para>
+      <para>
+        <!--cbox(file: slurm__gres_group__new_entry1.png)-->
+        <!--cbox(file: slurm__gres_group__new_entry2.png)-->
+        <!--cbox(file: slurm__gres_group__entry__type.png)-->
+        <!--cbox(file: slurm__gres_group__entry__count.png)-->
+        <!--cbox(file: slurm__gres_group__entry__cpus.png)-->
+        <!--cbox(file: slurm__gres_group__entry__file.png)-->
+        <!--cbox(file: slurm__gres_group__delete_entry.png)-->
+        A Gres Group can have multiple entries. A new entry can be added to a group by
+        clicking on <guibutton>New Entry</guibutton>. At first the entry is blank and at a
+        minimum the type column must be filled in. For resources that can be allocated in
+        pieces the a count can be set for the number of pieces available. For resources that
+        have a device file associated with it that can be set in the File column. Note that
+        resources that have a file associated the count is not applicable since there is
+        always only exactly one file. Last the entry can be associated with a set of CPUs.
+        The CPUs to use can be entered as comma separated list or, for recurring sets,
+        selected from the drop down menu. An entry can be deleted from the group by selecting
+        <guibutton>Delete Entry</guibutton> and a group that is no longer in use can be
+        deleted by selecting <guibutton>Delete Group</guibutton>.
+      </para>
+    </section>
     <section xml:id="sec-Slurm-Assign-Hosts">
-      <title>Assigning Hosts to Slurm Node Groups and Partitions</title>
+      <title>Assigning Hosts to Slurm Node Groups, Partitions and Gres Groups</title>
       <para>
 	<!--cbox(file: slurm__assign_host3.png)-->
 	<!--cbox(file: slurm__assign_host2.png)-->

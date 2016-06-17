@@ -714,7 +714,7 @@ new config in the text field and fill in the contents and description.
 </p>
 <h3 id="SlurmConfig">Slurm Config</h3>
 <p>
-  The slurm configuration module comes in three parts:
+  The slurm configuration module comes in four parts:
 </p>
 <ul class="icon">
   <li>
@@ -726,6 +726,9 @@ new config in the text field and fill in the contents and description.
   </li>
   <li>
     The configuration of partitions achieved using the <strong>Partitions</strong> tab.
+  </li>
+  <li>
+    The configuration of gres groups achieved using the <strong>Gres Groups</strong> tab.
   </li>
 </ul>
 <p>
@@ -835,7 +838,52 @@ new config in the text field and fill in the contents and description.
   to add it. To delete a value, select <strong>Delete value</strong> from the context menu.
 </p>
 <!--btt-->
-<h4 id="SlurmAssignHost">Assigning Hosts to Slurm Node Groups and Partitions</h4>
+<h4 id="SlurmGresGroups">Slurm Gres Groups</h4>
+<p>
+  <!--cbox(slurm__gres_groups.png)-->
+  <!--cbox(slurm__gres_group__select.png)-->
+  Slurm Gres Groups are mainly used in Qluman to handle the configuration of GPUs for slurm.
+  The <a href="#GpuWizard">GPU Wizard</a> is the best way to create such resource groups.
+  But the Gres Groups tab allows creating and managing any type of resource group as well as
+  binding GPUs to specific CPU sets, which the wizard does not use. To view or modify a Gres
+  Group select the group from the drop down menu. Use the <strong>Preview</strong> button to
+  check changes before writing them.
+</p>
+<p>
+  <!--cbox(slurm__gres_group__new.png)-->
+  <!--cbox(slurm__gres_group__new1.png)-->
+  <!--cbox(slurm__gres_group__new2.png)-->
+  <!--cbox(slurm__gres_group__new3.png)-->
+  <!--cbox(slurm__gres_group__new4.png)-->
+  <!--cbox(slurm__gres_group__delete_group.png)-->
+  A new gres group can be created by clicking the <strong>New Gres Group</strong> button. This
+  opens a dialog asking for the type, name and description of the new group. An existing type
+  can be selected from the drop down menu or a new type can be entered directly. After entering
+  a new unique group name the <strong>OK</strong> button becomes select-able. A group that
+  is not in use can be deleted by clicking <strong>Delete Group</strong>.
+</p>
+<p>
+  <!--cbox(slurm__gres_group__new_entry1.png)-->
+  <!--cbox(slurm__gres_group__new_entry2.png)-->
+  <!--cbox(slurm__gres_group__entry__type.png)-->
+  <!--cbox(slurm__gres_group__entry__count.png)-->
+  <!--cbox(slurm__gres_group__entry__cpus.png)-->
+  <!--cbox(slurm__gres_group__entry__file.png)-->
+  <!--cbox(slurm__gres_group__delete_entry.png)-->
+  A Gres Group can have multiple entries.
+  A new entry can be added to a group by clicking on <strong>New Entry</strong>. At first the
+  entry is blank and at a minimum the type column must be filled in. For resources that can
+  be allocated in pieces the a count can be set for the number of pieces available. For
+  resources that have a device file associated with it that can be set in the File column.
+  Note that resources that have a file associated the count is not applicable since there is
+  always only exactly one file. Last the entry can be associated with a set of CPUs. The CPUs
+  to use can be entered as comma separated list or, for recurring sets, selected from the drop
+  down menu. An entry can be deleted from the group by selecting <strong>Delete Entry</strong>
+  and a group that is no longer in use can be deleted by selecting
+  <strong>Delete Group</strong>.
+</p>
+<!--btt-->
+<h4 id="SlurmAssignHost">Assigning Hosts to Slurm Node Groups, Partitions and Gres Groups</h4>
 <p>
   <!--cbox(slurm__assign_host3.png)-->
   <!--cbox(slurm__assign_host2.png)-->
