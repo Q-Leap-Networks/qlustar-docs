@@ -26,6 +26,7 @@
   <xi:include href="RX-Engine.xml"/>
   <xi:include href="Host-Filters.xml"/>
   <xi:include href="User-Roles.xml"/>
+  <xi:include href="Log-Viewer.xml"/>
   <xi:include href="Look-Feel.xml"/>
   <!-- End real content -->
 

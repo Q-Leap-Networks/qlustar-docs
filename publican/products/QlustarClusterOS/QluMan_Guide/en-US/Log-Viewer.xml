@@ -10,16 +10,16 @@
 <chapter xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
 	 xmlns:xi="http://www.w3.org/2001/XInclude"
-	 xml:id="chap-Messages">
-  <title>Messages</title>
-  <section xml:id="sec-Messages-purpose">
+	 xml:id="chap-LogViewer">
+  <title>Log Viewer</title>
+  <section xml:id="sec-LogViewer-purpose">
     <title>Purpose</title>
     <para>
       Often things happen when one is not looking. For that reason Qluman keeps a log of
       messages showing what happened, when, where and how important the event was.
     </para>
   </section>
-  <section xml:id="sec-Messages-indicator">
+  <section xml:id="sec-LogViewer-indicator">
     <title>Messages indicator button</title>
     <para>
       At the right bottom of the main window qluman-qt displays a
@@ -27,19 +27,21 @@
       messages as well as the number of messages pending. Clicking the button opens the
       <emphasis>Messages</emphasis> window. The <emphasis>Messages</emphasis> window can
       also be opened through the Manage Cluster -> Messages menu item.
+    </para>
   </section>
-  <section xml:id="sec-Messages-window">
-    <title>Messages window</title>
+  <section xml:id="sec-LogViewer-window">
+    <title>Log Viewer window</title>
     <para>
       Opening the Messages window shows a list of messages sorted by time with the oldest
       message at the top. The messages can be sorted ascending and descending by clicking on
       any of the column headers. Only the short text of each message is shown to keep the
       window compact. Hovering over a row will show the long text for that row as tool-tip.
       The long text can also be seen in a separate window by clicking the
-      <guibutton>Details<guibutton> button. The extra window makes it easier to read
+      <guibutton>Details</guibutton> button. The extra window makes it easier to read
       multi-line messages and allows copy+paste.
+    </para>
   </section>
-  <section xml:id="sec-Messages-filter">
+  <section xml:id="sec-LogViewer-filter">
     <title>Message Filter</title>
     <para>
       Not every message is of interest to a user, especially messages that have already been
