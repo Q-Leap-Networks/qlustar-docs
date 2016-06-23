@@ -31,6 +31,7 @@
   </section>
   <section xml:id="sec-LogViewer-window">
     <title>Log Viewer window</title>
+    <!--cbox(file: messages/messages.png)-->
     <para>
       Opening the Messages window shows a list of messages sorted by time with the oldest
       message at the top. The messages can be sorted ascending and descending by clicking on
@@ -52,13 +53,112 @@
       action set for the row is executed, the message is hidden from view or included in the
       messages window. If none of the rows match a message the default action is taken.
     </para>
-    <para>
-      The most common filter is to hide message with the <emphasis>seen</emphasis> flag.
-      Without this entry the seen flag has no effect. The filter can be freely edited
-      and can be saved to act as the new default filter or reset to the filter that was saved
-      last.
-    </para>
-    <!--cbox(file: messages/messages.png)-->
     <!--cbox(file: messages/messages_filter.png)-->
+    <para>
+      There is one message filter per cluster connection tab and can be freely edited. The
+      message filter remains in effect till the tab for the cluster is closed. The filter
+      can also be saved in the client so it is reloaded the next time a connection to the
+      cluster is opened again. Or the filter can be reset to the last saved config or
+      cleared to start fresh without any filtering.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-default">
+    <title>Message Filter - Default action</title>
+    <para>
+      Filter can be constructed as positive or negative filters. Which means they can hide
+      all messages that are not specifically shown or show all messages that are not
+      specifically hidden. The default action at the bottom left corner makes that decision.
+      <!--cbox(file: messages/messages_filter__default.png)-->
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-add">
+    <title>Message Filter - Adding a filter</title>
+    <!--cbox(file: messages/messages_filter__add.png)-->
+    <!--cbox(file: messages/messages_filter__add2.png)-->
+    <para>
+      A new filter row can be added by selecting <guimenuitem>Add filter</guimenuitem> from
+      the context menu. The new filter has an action of hide and ignores all fields. It
+      therefore hides all messages, which isn't verry usefull. To be usefull at least one
+      column should be changed through the context menu to match only some messages. The
+      context menu in each column contains the possible values the filter can match against
+      in that column. The <emphasis>Origin</emphasis> and <emphasis>Short</emphasis>
+      columns can also be edited freely by double clicking them. The action for the row can
+      be changed between <emphasis>Hide</emphasis> and <emphasis>Show</emphasis>.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-seen">
+    <title>Message Filter - Filtering Seen</title>
+    <!--cbox(file: messages/messages_filter__seen.png)-->
+    <para>
+      The most common filter is to hide message with the <emphasis>Seen</emphasis> flag.
+      It is recommended to always start a fresh filter by adding a row with action
+      <emphasis>Hide</emphasis> and the seen column set to <emphasis>Seen</emphasis>.
+      If none of the filter rows match against the <emphasis>Seen</emphasis> flag then it
+      will have no effect in the <emphasis>Messages window</emphasis>.
+      The Seen filter can also be toggled between Seen and Unseend by clicking the
+      checkmark. The column can only be disabled by selecting Ignore from the context menu.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-priority">
+    <title>Message Filter - Filtering Priority</title>
+    <!--cbox(file: messages/messages_filter__priority.png)-->
+    <para>
+      Messages can be purley informational, warnings or errors. Informational messages
+      include information about nodes coming online or the server being restarted. There
+      are usualy a lot of informational messages and they can be savely ignored. On the
+      other hand warnings and errors should be considered more carefully. The priority
+      is also color coded for quicker visiual recognition. Informational messages are green,
+      warnings yellow and errors red. The highest priority of any shown message is also
+      shown in the <guibutton>Messages</guibutton> button in the lower right corner of the
+      main window. This shows at a single glance if anything important happened recently.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-origin">
+    <title>Message Filter - Filtering Origin</title>
+    <!--cbox(file: messages/messages_filter__origin.png)-->
+    <para>
+      The origin of a message shows the node or service that generated the message. For the
+      filter the origin can be expressed as a hostlist to match multiple hosts.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-category">
+    <title>Message Filter - Filtering Category</title>
+    <!--cbox(file: messages/messages_filter__category.png)-->
+    <para>
+      Messages fall into different categories. This groups similar messages together for
+      easier filtering. Generall information falls under the category
+      <emphasis>Misc</emphasis> while messages about nodes becoming online or going offline
+      fall under category <emphasis>Online</emphasis>. The <emphasis>Licensing</emphasis>
+      category includes all messages detailing changes in the license status. This could be
+      something simple as a reminder that the license key expires soon. Or more important
+      a warning or error that the cluster as configured exceeds the license count. The last
+      category is <emphasis>Exception</emphasis> and usualy means there was a software error
+      that should be reported.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-short">
+    <title>Message Filter - Filtering Short</title>
+    <!--cbox(file: messages/messages_filter__short.png)-->
+    <para>
+      Messages can also be filtered by their short description. Like Origin this column can
+      be edited by double clicking. Short descriptions are matched using standard regular
+      expressions. To match only part of a short description prefix and/or suffix the text
+      by ".*" to match any remaining characters.
+    </para>
+  </section>
+  <section xml:id="sec-LogViewer-filter-example">
+    <title>Message Filter - Filtering example</title>
+    <!--cbox(file: messages/messages_filter__example.png)-->
+    <para>
+      Here is an example filter containing 5 rows showing how rows can be combined to achieve
+      the desired result. The default action for this filter is set to show messages. Only
+      messages that are explicitly not wanted are hidden. First of those is any message with
+      the seen flag set, matche by row number 1. Rows number 2 and 3 might look odd at first
+      because their action is the same as the default action: Show. But the two rows prevent
+      any of the later rows from hiding messages that have the error or warning priority.
+      Meaning warnings and errors are always shown no matter what additional filter rows
+      follow. Row number 4 hides messages in the online category and row 5 hides messages
+      that originate from hosts matching the hostlist "vm-[0-9]".
+    </para>
   </section>
 </chapter>
