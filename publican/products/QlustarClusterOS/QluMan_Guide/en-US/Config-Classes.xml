@@ -206,7 +206,17 @@
   <section xml:id="sec-DHCP-Config">
     <title>DHCP Config</title>
     <para>
-      <!--cbox(file: dhcp_config__global.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/global.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The global DHCP template
+        </phrase></textobject>
+        <caption><para>
+          The global DHCP template
+        </para></caption>
+      </mediaobject>
       The <classname>DHCP config</classname> dialog allows the configuration of the DHCP
       server and is provide by the main menu <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>DHCP Configs</guimenuitem>. The final DHCP server
@@ -220,7 +230,17 @@
       <filename>dhcpd.conf</filename> man page for the syntax of this file.
     </para>
     <para>
-      <!--cbox(file: dhcp_config__edit_global.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/edit_global.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Editing the global DHCP template
+        </phrase></textobject>
+        <caption><para>
+          Editing the global DHCP template
+        </para></caption>
+      </mediaobject>
       To prevent multiple persons from editing at the same time and overwriting each others
       changes accidentally you must acquire a lock for the template by clicking the
       <guibutton>Edit</guibutton> button. If another user is already editing the file the
@@ -228,9 +248,19 @@
       template.
     </para>
     <para>
-      <!--cbox(file: dhcp_config__save_global.png)-->
-      After having finished editing a template don't forget to save your changes by clicking
+      After having finished editing a template, don't forget to save your changes by clicking
       the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/save_global.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Saving the global DHCP template
+        </phrase></textobject>
+        <caption><para>
+          Saving the global DHCP template
+        </para></caption>
+      </mediaobject>
       save. You can undo all your changes up to the last time the template was saved by
       clicking the <guibutton>Undo</guibutton> button. In case another admin has made changes
       to a template while you are viewing or editing it, the <guibutton>Refresh</guibutton>
@@ -245,7 +275,17 @@
       </note>
     </para>
     <para>
-      <!--cbox(file: template__lock_expire.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/template/lock_expire.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Lock expiration popup
+        </phrase></textobject>
+        <caption><para>
+          Lock expiration popup
+        </para></caption>
+      </mediaobject>
       The template lock expires automatically after some time without activity so that the
       template is not deadlocked if someone forgets to release the lock. In such a case the
       above dialog will be shown notifying you about it. By selecting
@@ -254,7 +294,17 @@
       of the failure.
     </para>
     <para>
-      <!--cbox(file: dhcp_config__menu.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/menu.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Choosing group templates
+        </phrase></textobject>
+        <caption><para>
+          Choosing group templates
+        </para></caption>
+      </mediaobject>
       DHCP options can also be set in separate group templates and targeted to specific
       hosts. For simple clusters, this is hardly ever needed, but for large clusters e.g. you
       might want to have more than one boot server to speed up cluster boot time. In this
@@ -265,9 +315,29 @@
       are included.
     </para>
     <para>
-      <!--cbox(file: dhcp_config__edit_new.png)-->
-      <!--cbox(file: dhcp_config__new.png)-->
-      The drop-down menu also lets you create new templates by selecting the <guimenuitem>new
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new template
+        </phrase></textobject>
+        <caption><para>
+          Creating a new template
+        </para></caption>
+      </mediaobject>
+       <mediaobject>
+        <imageobject><imagedata
+        fileref="images/dhcp_config/edit_new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Saving the new template
+        </phrase></textobject>
+        <caption><para>
+          Saving the new template
+        </para></caption>
+      </mediaobject>
+     The drop-down menu also lets you create new templates by selecting the <guimenuitem>new
       DHCP group</guimenuitem> entry. Enter the name of the template in the text field and
       fill in the contents and description of the template. Pressing <keycap>return</keycap>
       after entering the name will automatically acquire a lock for the new template and go
@@ -307,7 +377,17 @@
       endterm="PropConf-Sets"/>.
     </para>
     <para>
-      <!--cbox(file: disk_config/main.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/disk_config/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating/editing disk configs
+        </phrase></textobject>
+        <caption><para>
+          Creating/editing disk configs
+        </para></caption>
+      </mediaobject>
       Disk configurations can be managed using the <classname>Disk Configs</classname> dialog
       accessible from the main menu <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>Disk Configs</guimenuitem>. You can select the
