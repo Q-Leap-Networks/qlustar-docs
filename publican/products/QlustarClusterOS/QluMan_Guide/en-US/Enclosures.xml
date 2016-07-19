@@ -73,15 +73,14 @@
     <para>
       The template field allows to select a so-called <link linkend="Host-Templates">Host
       Template</link> for the node. Usually, large groups of nodes have an identical hardware
-      and software configuration and will use the same template. Deviations from the
-      properties coming from the template can be set for individual hosts by direct
-      assignment of either a property set or individual properties directly to the host
-      through its context menu. In case of unique properties direct assignments override
-      settings from the template (or property set), for non-unique properties this is
-      additive.
+      and software configuration and will use the same template. Deviations from the properties
+      coming from the template can be set for individual hosts by direct assignment of either a
+      property/config set or individual properties/configs directly to the host through its
+      context menu. In case of unique properties, direct assignments override settings from the
+      template (or property set), for non-unique properties this is additive.
       <note>
 	<para>
-	  Any changes made in the configuration only affects the active node (as indicated by
+	  Any changes made in the configuration only affect the active node (as indicated by
 	  the hostname in the info part of the enclosure view), and not all selected
 	  nodes. Configurations for all selected nodes can be made by using the context menu
 	  (right click) in the tree view.
