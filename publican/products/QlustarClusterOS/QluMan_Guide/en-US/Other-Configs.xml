@@ -102,21 +102,34 @@
   <section xml:id="sec-NIS-Hosts">
     <title>NIS hosts</title>
     <para>
-      <!--cbox(file: nis/host_header.png)-->
-      NIS (Network Information System) is used to manage hostname resolution within the
-      cluster. For all hosts that are managed within <application>QluMan</application>
-      itself, a corresponding NIS entry is created automatically. However, administrators
-      might want to add other hosts external to the cluster to the NIS database as well. To
-      achieve this, the creation of the NIS hosts database is split into a header part that
-      can be freely edited by the admin, and a part that is auto-created with the hosts
-      managed by <application>QluMan</application>. To edit the header part, choose
-      <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>NIS Host Header</guimenuitem>
-      from the main menu. The top part of the window popping up can then freely be
-      edited. Note that entries for the head-node are automatically created upon installation
-      and should remain unchanged unless one of the head-nodes IP changes. The resulting NIS
-      hosts file can then be previewed and written to disk by pressing the corresponding
-      dialogs at the bottom of the dialog. Upon writing the file, the NIS database is
-      automatically rebuilt on the NIS master server.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/nis/host_header.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The NIS host-header configuration window
+        </phrase></textobject>
+        <caption><para>
+          The NIS host-header configuration window
+        </para></caption>
+      </mediaobject>
+      <firstterm>NIS</firstterm> (Network Information System) is used to manage hostname
+      resolution within a Qlustar cluster. For all hosts that are managed within
+      <application>QluMan</application> itself, a corresponding NIS entry is created
+      automatically. However, administrators might want to add other hosts that are not part of
+      the cluster to the NIS database as well. To allow this, the creation of the NIS hosts
+      database is split into a header part that can be freely edited by the admin, and an
+      auto-created part with the hosts managed by <application>QluMan</application>.
+    </para>
+    <para>
+      To edit the header part, choose <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>NIS Host Header</guimenuitem> from the main menu. The
+      top part of the window popping up can then freely be edited. Note that entries for the
+      head-node are automatically created upon installation and should remain unchanged unless
+      one of the head-node's IP changes. The final resulting NIS hosts file can then be
+      previewed and written to disk by pressing the corresponding dialogs at the bottom of the
+      dialog. Upon writing the file, the NIS database is automatically rebuilt on the NIS
+      master server.
     </para>
   </section>
   <section xml:id="sec-SSH-Hosts">
