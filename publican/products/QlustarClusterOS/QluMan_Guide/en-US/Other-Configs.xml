@@ -550,41 +550,91 @@
   <section xml:id="sec-IPMI-Settings">
     <title>IPMI settings</title>
     <para>
-      <!--cbox(file: network_config__ipmi.png)-->
-      Configuring IPMI is similar to Infiniband and also involves multiple steps, because
-      there are a number of options to set. If you have chosen to configure an IPMI network
-      during installation, a larger part of this section is about how to review or change the
-      initial settings. If not, IPMI first has to be activated in the <link
-      linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. There you
-      can set the IPMI Network address IP and netmask. The IPMI address of a host is then
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_config/ipmi.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          IPMI settings in the Network Configuration dialog
+        </phrase></textobject>
+        <caption><para>
+          IPMI settings in the Network Configuration dialog
+        </para></caption>
+      </mediaobject>
+      Configuring <firstterm>IPMI</firstterm> is similar to Infiniband and also involves
+      multiple steps, because there are a number of options to set. If you have chosen to
+      configure an IPMI network during installation, a larger part of this section is about how
+      to review or change the initial settings. If not, IPMI first has to be activated in the
+      <link linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. There
+      you can set the IPMI Network address IP and netmask. The IPMI address of a host is then
       determined with the same mapping as used when <link
       linkend="sec-Configuring-IB">configuring IB</link> and the same restrictions for the
       choice of netmask apply.
     </para>
     <para>
-      <!--cbox(file: hardware_property_set__ipmi.png)-->
-      Often not all nodes in a cluster have IPMI. Therefore, in
-      <application>QluMan</application> per default no host is configured to setup IPMI,
-      unless it is assigned the hardware property <literal>IPMI Adapter</literal> with a
-      value of <parameter>true</parameter>. The easiest way to achieve this, is to add the
-      <literal>IPMI Adapter</literal> property to the Hardware Property Set(s) used in the
-      Host Template(s) for the nodes with IPMI. With this assignment, a node is ready for
-      monitoring its temperature and fan speeds.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hardware_property_set/ipmi.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Setting the Hardware Property "IPMI-adapter"
+        </phrase></textobject>
+        <caption><para>
+          Setting the Hardware Property "IPMI-adapter"
+        </para></caption>
+      </mediaobject>
+      Sometimes, not all nodes in a cluster have IPMI. Therefore per default, no host is
+      configured to setup IPMI in <application>QluMan</application>, unless it is assigned the
+      hardware property <literal>IPMI Adapter</literal> with a value of
+      <parameter>true</parameter>. The easiest way to achieve this, is to add the <literal>IPMI
+      Adapter</literal> property to the Hardware Property Set(s) used in the Host Template(s)
+      for the nodes with IPMI. With this assignment, a node is ready for monitoring its
+      temperature and fan speeds.
     </para>
     <para>
-      <!--cbox(file: generic_property_set__ipmi_channel_add.png)-->
-      <!--cbox(file: generic_property_set__ipmi_initialize_add.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/generic_property_set/ipmi_initialize_add.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Allowing an IPMI adapter to be initialized during boot
+        </phrase></textobject>
+        <caption><para>
+          Allowing an IPMI adapter to be initialized during boot
+        </para></caption>
+      </mediaobject>
       Enabling IPMI nodes for remote control involves two more settings. The first one is the
-      generic property <parameter>Initialize IPMI</parameter>. Per default the settings of
-      the IPMI cards are not touched by <productname>Qlustar</productname>. However, while
-      the <parameter>Initialize IPMI</parameter> generic property is assigned and set to
-      <parameter>true</parameter>, the IPMI card settings of the corresponding host will be
-      reset every time it boots. Changing the value of this property to
-      <parameter>true</parameter> and after booting back to <parameter>false</parameter>
-      allows a one-time setup of the cards properties.
+      generic property <parameter>Initialize IPMI</parameter>. Per default the settings of the
+      IPMI cards are not touched by <productname>Qlustar</productname>. However, if the
+      <parameter>Initialize IPMI</parameter> generic property is assigned and set to
+      <parameter>true</parameter>, the IPMI card network settings of the corresponding host
+      will be set every time it boots. Changing the value of this property to
+      <parameter>true</parameter> and after booting back to <parameter>false</parameter> allows
+      a one-time setup of the cards network properties.
     </para>
     <para>
-      <!--cbox(file: generic_property_set__ipmi_channel_edit.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/generic_property_set/ipmi_channel_add.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Setting the network channel of an IPMI adapter
+        </phrase></textobject>
+        <caption><para>
+          Setting the network channel of an IPMI adapter
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/generic_property_set/ipmi_channel_edit.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Editing the network channel of an IPMI adapter
+        </phrase></textobject>
+        <caption><para>
+          Editing the network channel of an IPMI adapter
+        </para></caption>
+      </mediaobject>
       The second generic property is the <parameter>IPMI Channel</parameter> to use. Per
       default channel 1 is used and this is the only preset value for the property. If you
       need to use a different channel, first add the generic property <parameter>IPMI
