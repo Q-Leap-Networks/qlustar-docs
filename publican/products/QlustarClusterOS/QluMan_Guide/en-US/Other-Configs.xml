@@ -15,34 +15,43 @@
   <section xml:id="sec-Qlustar-OS-Images">
     <title>Qlustar OS Images</title>
     <para>
-      <!--cbox(file: qlustar_images/main.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/QlustarImages/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Qlustar OS Image configuration window
+        </phrase></textobject>
+        <caption><para>
+          The Qlustar OS Image configuration window
+        </para></caption>
+      </mediaobject>
       Qlustar OS images can be defined and configured in the <classname>Qlustar
       Images</classname> dialog accessible via <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>Qlustar Images</guimenuitem>. Each image has a unique
-      name, a flavor (e.g. <classname>trusty</classname>), a version, a <link
+      name, a flavor (e.g. <classname>trusty</classname>), a version, an optional <link
       linkend="sec-UnionFS-Chroots">chroot</link> and one or more image modules.
     </para>
     <section xml:id="sec-Image-Versioning">
       <title>Image Versioning</title>
       <para>
-	Currently available image versions are 9, 9.0 (both meta-versions) and 9.0.0. Note,
-	that selecting meta-versions has implications on the update process. They allow
-	tracking the newest x.y (x.y.z) releases automatically. Example: If you have
-	installed version 9 of the modules, you will currently get the 9.0 (most recent 9.y)
-	versions, but when 9.1 will be
-	<!--cbox(file: qlustar_images__modules.png)-->
-	available, <code>apt-get dist-upgrade</code> will update to 9.1 versions
+	Currently available image versions are 9, 9.1 (both meta-versions), 9.1.0 and
+	9.1.1. Note, that selecting meta-versions (like e.g. 9) has implications on the update
+	process. They allow tracking the newest x.y (x.y.z) releases automatically. Example: If
+	you have installed version 9 of the modules, you will currently get the 9.1 (most
+	recent 9.y) versions, but when 9.2 will be
+	available, <code>apt-get dist-upgrade</code> will update to 9.2 versions
 	automatically. So with this choice, updates will usually include larger changes,
-	since new <emphasis role="bold">feature</emphasis> releases (like 9.1) will
+	since new <emphasis role="bold">feature</emphasis> releases (like 9.2) will
 	automatically be installed.
       </para>
       <para>
-	Similar, if you have selected the 9.0 version (currently default after a fresh
-	installation) you will currently get 9.0.0 (most recent 9.0.z version) and
-	<code>apt-get dist-upgrade</code> will update the modules/images to 9.0.1
+	Similarly, if you have selected the 9.1 version (currently default after a fresh
+	installation) you will currently get 9.1.1 (most recent 9.1.z version) and
+	<code>apt-get dist-upgrade</code> will update the modules/images to 9.1.2
 	automatically once available. So this choice will update to new <emphasis
 	role="bold">maintenance</emphasis> releases automatically. The most conservative
-	choice would be to explicitly select a x.y.z version (currently 9.0.0), since then
+	choice would be to explicitly select a x.y.z version (currently 9.1.1), since then
 	images will only receive bug fix updates without explicitly changing the version in
 	<productname>Qlustar</productname>. See also the discussion in the general <link
 	xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
@@ -52,20 +61,41 @@
     <section xml:id="sec-Image-Properties">
       <title>Image Properties</title>
       <para>
-	<!--cbox(file: qlustar_images__new.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/QlustarImages/modules.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a module to a Qlustar Image
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a module to a Qlustar Image
+	  </para></caption>
+	</mediaobject>
 	A couple of images are pre-defined during the installation process. The dialog shows
-	the images sorted by their names. Expanding an entry shows its configuration and
-	allows to select a UnionFS chroot via the drop-down menu. Each image must contain at
-	least the core module. Additional modules can be added or removed using the context
-	menu when hovering over an entry. Only modules that are not already chosen are
-	available for selection.
+	the images sorted by their names. Expanding an entry shows its configuration and allows
+	to select a <link linkend="sec-UnionFS-Chroots">UnionFS chroot</link> via the drop-down
+	menu. Each image contains at least the <classname>core module</classname>. Additional
+	modules can be added or removed using the context menu when hovering over an
+	entry. Only modules that are not already chosen are available for selection.
       </para>
       <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/QlustarImages/new.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Creating a new Qlustar Image
+	  </phrase></textobject>
+	  <caption><para>
+	    Creating a new Qlustar Image
+	  </para></caption>
+	</mediaobject>
 	New images can be added through the context menu or by pressing the
-	<guibutton>New</guibutton> button at the bottom of the dialog. Like before, you
-	should then enter the name for the new config, choose a UnionFS group and optionally
-	provide a description for the new image. Existing images can be removed via the
-	context menu.
+	<guibutton>New</guibutton> button at the bottom of the dialog. Like before, you should
+	then enter the name for the new config, choose a <link
+	linkend="sec-UnionFS-Chroots">UnionFS chroot</link> and optionally provide a
+	description for the new image. Existing images can be removed via the context menu.
       </para>
     </section>
   </section>
