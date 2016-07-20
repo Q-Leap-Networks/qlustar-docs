@@ -123,8 +123,9 @@
     </para>
     <para>
       To edit the header part, choose <guimenuitem>Manage
-      Configs</guimenuitem>-><guimenuitem>NIS Host Header</guimenuitem> from the main menu. The
-      top part of the window popping up can then freely be edited. Note that entries for the
+      Configs</guimenuitem>-><guimenuitem>NIS Host Header</guimenuitem> from the main menu and
+      press <guibutton>Edit</guibutton>. The top part of the window popping up can then freely
+      be edited. When done press <guibutton>Save</guibutton>. Note that entries for the
       head-node are automatically created upon installation and should remain unchanged unless
       one of the head-node's IP changes. The final resulting NIS hosts file can then be
       previewed and written to disk by pressing the corresponding dialogs at the bottom of the
@@ -135,33 +136,67 @@
   <section xml:id="sec-SSH-Hosts">
     <title>SSH host files</title>
     <para>
-      <!--cbox(file: ssh_hosts__known.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/ssh_hosts/known.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The SSH known hosts header configuration window
+        </phrase></textobject>
+        <caption><para>
+          The SSH known hosts header configuration window
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/ssh_hosts/equiv.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The SSH shosts.equiv header configuration window
+        </phrase></textobject>
+        <caption><para>
+          The SSH shosts.equiv header configuration window
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/ssh_hosts/authorized_keys.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The SSH root authorized_keys configuration window
+        </phrase></textobject>
+        <caption><para>
+          The SSH root authorized_keys configuration window
+        </para></caption>
+      </mediaobject>
       To simplify ssh remote logins to cluster nodes, three ssh configuration files are
       provided and managed by <application>QluMan</application>: (a)
       <filename>ssh_known_hosts</filename> (holds ssh host keys of cluster nodes), (b)
       <filename>shosts.equiv</filename> (enables login without password between machines
-      within the cluster) and (c) <filename>authorized_keys</filename>, which is used to
-      allow password-less root login to nodes with the specified ssh public keys. The first
-      two config files consist of a configurable header part, where additional hosts can
-      freely be entered and an auto-generated part for the hosts managed by
-      <application>QluMan</application>. The last one just has the configurable part. Ssh
-      host info for the head-node and a possibly configured frontend-node are automatically
-      inserted during the installation process.
+      within the cluster) and (c) <filename>authorized_keys</filename> (used to
+      allow password-less root login to nodes with the specified ssh public keys).
     </para>
     <para>
-      <!--cbox(file: ssh_hosts__authorized_keys.png)-->
-      <!--cbox(file: ssh_hosts__equiv.png)-->
+      The first two config files consist of a configurable header part, where additional hosts
+      can freely be entered and an auto-generated part for the hosts managed by
+      <application>QluMan</application>. The <filename>authorized_keys</filename> one just has
+      the configurable part. Ssh host info for the head-node and a possibly configured
+      frontend-node are automatically inserted during the installation process.
+    </para>
+    <para>
       Management of the three configs is similar to the <classname>NIS hosts</classname>
       dialog: To edit the header part of either config, select <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>SSH Configs</guimenuitem> from the main menu. Then
-      choose the config to work on by using the drop-down menu at the bottom left. The top
-      part of the window popping up can then freely be edited. Finally, the resulting ssh
-      host files can be previewed and written to disk by pressing the corresponding dialogs
-      at the bottom of the dialog.
+      choose the config to work on by using the drop-down menu at the bottom left and press
+      <guibutton>Edit</guibutton>. The top part of the window popping up can then freely be
+      edited. When done press <guibutton>Save</guibutton>. Finally, the resulting ssh host
+      files can be previewed and written to disk by pressing the corresponding buttons at the
+      bottom of the dialog.
       <note>
 	<para>
 	  There is no preview of the <filename>authorized_keys</filename> file, as this is
-	  automatically written during the boot phase on hosts, that are not head-nodes.
+	  automatically written to <filename>/root/.ssh</filename> during the boot phase on
+	  hosts, that are not head-nodes.
 	</para>
       </note>
     </para>
