@@ -392,25 +392,49 @@
     </para>
   </section>
   <section xml:id="sec-Configuring-IB">
-    <title>Infiniband network</title>
+    <title>Infiniband Network</title>
     <para>
-      For most practical purposes, Infiniband (IB) adapters need to be configured with an IP
-      address (IPoIB) just like Ethernet adapters. If you have chosen to configure an IB
-      network during installation, this section is mostly about how to review or change the
-      initial
-      <!--cbox(file: network_config__infiniband.png)-->
-      settings. If not, IB first has to be activated in the <link
+      For most practical purposes, <firstterm>Infiniband (IB)</firstterm> adapters need to be
+      configured with an IP address (IPoIB) just like Ethernet adapters. If you have chosen to
+      configure an IB network during installation, this section is mostly about how to review
+      or change the initial settings. If not, IB has to be activated first in the <link
       linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. An IB Network
-      address IP and netmask can then be chosen. The Infiniband network must not collide with
-      the Cluster (Ethernet) or IPMI network. This is prevented automatically in the settings
-      dialog. The Infiniband IP of each host is computed by mapping the host part of its
-      Cluster Network IP to the IB Network. Example: IP Cluster Network 192.168.52.100 - IP IB
-      network 192.168.53.100. Note, that this mechanism requires the IB netmask to be at least
-      as large as the Cluster Network netmask. Hence, smaller values won't be selectable.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_config/infiniband.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          IB settings in the Network Configuration dialog
+        </phrase></textobject>
+        <caption><para>
+          IB settings in the Network Configuration dialog
+        </para></caption>
+      </mediaobject>
+      address IP and netmask can then be chosen there. The Infiniband network must not collide
+      with the Cluster (Ethernet) or IPMI network. This is prevented automatically in the
+      settings dialog. The Infiniband IP of each host is computed by mapping the host part of
+      its Cluster Network IP to the IB Network. Example: IP Cluster Network 192.168.52.100 - IP
+      IB network 192.168.53.100.
     </para>
+    <note>
+      <para>
+	This mechanism requires the IB netmask to be at least as large as the Cluster Network
+	netmask. Hence, smaller values won't be selectable.
+      </para>
+    </note>
     <para>
-      <!--cbox(file: hardware_property_set__ib.png)-->
-      To actually have a node's IB adapter be configured during the boot process, additional
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/hardware_property_set/ib.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Setting the Hardware Property "IB-adapter"
+        </phrase></textobject>
+        <caption><para>
+          Setting the Hardware Property "IB-adapter"
+        </para></caption>
+      </mediaobject>
+      In order to have a configured IB adapter during the boot process of a node, additional
       steps are necessary. It is not uncommon, that a cluster consists of hosts with IB and
       hosts without. Therefore, the pre-defined hardware property <parameter>IB
       Adapter</parameter> with a value of <parameter>true</parameter> must be assigned to a
@@ -420,29 +444,67 @@
       configured during the boot process of the corresponding nodes with the IP mapping
       described above.
     </para>
+    <note>
+      <para>
+	The <link linkend="chap-HWwizard">Hardware Wizard</link> auto-detects the presence of
+	IB adapters and allows to conveniently set the IB hardware property.
+      </para>
+    </note>
     <section xml:id="sec-Configuring-OpenSM">
       <title>Activating/configuring OpenSM</title>
       <para>
 	In an IB fabric, at least one node (or switch) has to run a subnet manager to manage
-	the routing tables. Qlustar provides <application>OpenSM</application> for this
+	the IB routing tables. Qlustar provides <application>OpenSM</application> for this
 	task. If the head-node is also part of the IB network, it's usually best to configure
 	it to run OpenSM. This might have
-	<!--cbox(file: opensm__port_all.png)-->
 	been chosen during installation, in which case there is nothing more to be done. If
-	not, you have the option to run OpenSM on ordinary nodes too. In this case, it is
-	advisable to run OpenSM on two or three nodes (not more) for redundancy reasons. It
-	is therefore best, to configure this directly for the chosen hosts, rather than using
-	a Host Template or generic property set.  After selecting the host or hosts where
-	OpenSM should run in the Enclosure View, open the context menu and select
+	not, you have the option to run OpenSM on ordinary nodes too.
+      </para>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_config/opensm/port_all.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Activating OpenSM on nodes
+	  </phrase></textobject>
+	  <caption><para>
+	    Activating OpenSM on nodes
+	  </para></caption>
+	</mediaobject>
+	In this case, it is advisable to run OpenSM on two or three nodes (not more) for
+	redundancy reasons. It is therefore best, to configure this directly for the chosen
+	hosts, rather than using a Host Template or generic property set. After selecting the
+	host(s) where OpenSM should run in the Enclosure View, open the context menu and select
 	<guimenuitem>Set Generic Property</guimenuitem>-><guimenuitem>OpenSM
-	Ports</guimenuitem>-><guimenuitem>ALL</guimenuitem>. The next time the hosts boots,
+	Ports</guimenuitem>-><guimenuitem>ALL</guimenuitem>. The next time the host(s) boots,
 	the OpenSM daemon will be started on all its Infiniband ports.
       </para>
       <para>
-	<!--cbox(file: opensm__port_create_1.png)-->
-	<!--cbox(file: opensm__port_1.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_config/opensm/port_1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Configuring OpenSM to run on a specific port
+	  </phrase></textobject>
+	  <caption><para>
+	    Configuring OpenSM to run on a specific port
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_config/opensm/port_create_1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a new port for OpenSM
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a new port for OpenSM
+	  </para></caption>
+	</mediaobject>
 	If a host has more than one IB port, OpenSM can also be configured to run only on a
-	specific port instead of all of them. The port can be specified by its number or by
+	specific one rather than on all of them. The port can be specified by its number or by
 	its unique ID. As this is an uncommon configuration and the unique ID is unknown
 	beforehand, there is no preset value for this. To create a new value, first select an
 	existing value, e.g. ALL, for the generic property <literal>OpenSM
@@ -453,14 +515,35 @@
 	the OpenSM Ports property through the context menu.
       </para>
       <para>
-	<!--cbox(file: opensm__option_edit.png)-->
-	<!--cbox(file: opensm__option_add.png)-->
-	In some circumstances it might be necessary to run OpenSM with extra options. This
-	can also be configured via generic properties. The only preset value is the empty
-	string, so you need to create a new value for the options you require. First add the
-	empty value of the generic property <classname>OpenSM Options</classname> to one
-	host. Edit the value to your requirements and press <keycap>return</keycap> to create
-	it. Finally add/change the OpenSM Options generic property to all relevant hosts.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_config/opensm/option_add.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding an OpenSM option
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding an OpenSM option
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_config/opensm/option_edit.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Editing an OpenSM option
+	  </phrase></textobject>
+	  <caption><para>
+	    Editing an OpenSM option
+	  </para></caption>
+	</mediaobject>
+	In some circumstances, it might be necessary to run OpenSM with extra options. This can
+	also be configured via <link linkend="Generic-Properties">Generic
+	Properties</link>. The only preset value is the empty string, so you need to create a
+	new value for the options you require. First add the empty value of the generic
+	property <classname>OpenSM Options</classname> to one host. Then edit the value to your
+	requirements and press <keycap>return</keycap> to create it. Finally add/change the
+	OpenSM Options generic property for all relevant hosts.
       </para>
     </section>
   </section>
