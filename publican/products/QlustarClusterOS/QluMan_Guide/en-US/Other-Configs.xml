@@ -204,48 +204,97 @@
   <section xml:id="sec-UnionFS-Chroots">
     <title>UnionFS Chroots</title>
     <para>
-      In most practical cases, a <productname>Qlustar</productname> image should be
-      configured with an associated UnionFS chroot. Exceptions are single purpose images
-      e.g. for Lustre servers. By design, images are stripped down to the functionality
+      In most practical cases, a <productname>Qlustar</productname> image should be configured
+      with an associated <classname>UnionFS chroot</classname>. Exceptions are single purpose
+      images e.g. for Lustre servers. By design, images are stripped down to the functionality
       (programs) that is most often needed on a compute/storage node. This keeps them small
-      while still providing fast, network-independent access to programs/files typically
-      used.
+      while still providing fast, network-independent access to programs/files typically used.
     </para>
     <para>
-      To complement the image and provide the full richness of the packages/programs
-      available in the chosen Linux distribution, the UnionFS chroot (holding a full
-      installation of e.g. Ubuntu) is exported via NFS by one of the head-nodes and
-      technically <emphasis role="bold">merged below</emphasis> the content of the
-      <classname>Qlustar OS image</classname>. In practice, this means that all files
-      belonging to the chroot will be available on the nodes configured to use it, but if a
-      file/program is also in the node's image, that one will be used. Hence, this method
-      combines the <emphasis role="bold">compactness and speed</emphasis> of the imaging
-      approach with the <emphasis role="bold">completeness</emphasis> of a full OS
-      installation to give you the best of all worlds.
+      To complement the image and provide the full richness of the packages/programs available
+      in the chosen Linux distribution, the UnionFS chroot (holding a full installation of
+      e.g. Ubuntu) is exported via NFS by one of the head-nodes and technically <emphasis
+      role="bold">merged below</emphasis> the content of the <classname>Qlustar OS
+      image</classname>. In practice, this means that all files belonging to the chroot will be
+      available on the nodes configured to use the chroot, but if a file/program is also in the
+      node's image, that version will be used. Hence, this method combines the <emphasis
+      role="bold">compactness and speed</emphasis> of the imaging approach with the <emphasis
+      role="bold">completeness</emphasis> of a full OS installation to give you the best of all
+      worlds.
     </para>
     <para>
-      <!--cbox(file: manage_chroots/main.png)-->
-      <!--cbox(file: menu-manage_cluster__manage_chroots.png)-->
-      The chroot associated with a Qlustar image is easily selectable as explained (see <xref
-      linkend="sec-Qlustar-OS-Images"/>). Management of the chroots themselves is possible via
-      the <classname>Manage Chroots</classname> dialog which is accessible via the main menu
-      <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Manage Chroots</guimenuitem>. It
-      provides a number of actions related to chroots. Manipulation of the contents of chroots
-      is explained <link xlink:href=
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/menu-manage_cluster/manage_chroots.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Starting chroot management
+        </phrase></textobject>
+        <caption><para>
+          Starting chroot management
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Manage Chroot dialog
+        </phrase></textobject>
+        <caption><para>
+          The Manage Chroot dialog
+        </para></caption>
+      </mediaobject>
+      As explained before (see <xref linkend="sec-Qlustar-OS-Images"/>), the chroot associated
+      with an image is easily selectable via the Qlustar Images dialog. The management of
+      the chroots themselves is possible via the <classname>Manage Chroots</classname> dialog.
+      It is accessible via the main menu (<guimenuitem>Manage
+      Cluster</guimenuitem>-><guimenuitem>Manage Chroots</guimenuitem>) and provides a number
+      of actions related to chroots. Manipulation of the contents of chroots is explained <link
+      xlink:href=
       "../First_Steps_Guide/index.html#sec-Adding-Software___blank___">elsewhere</link>.
     </para>
     <para>
-      <!--cbox(file: manage_chroots__select_chroot.png)-->
-      To <emphasis role="bold">specify a chroot to operate on</emphasis>, select it via the
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/select_chroot.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Selecting a UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      To <emphasis role="bold">specify a chroot</emphasis> to operate on, select it via the
       corresponding pull-down menu. This will show its description, as well as its properties
-      like the NFS server that hosts it, the filesystem path on the server, the flavor (edge
-      platform, precise/wheezy/...)  and the version of the
-      <productname>Qlustar</productname> feature release (always being of the form x.y, e.g
-      8.1).
+      like the NFS server that serves it, the filesystem path on the server, the flavor (edge
+      platform, trusty/wheezy/...)  and the version of the <productname>Qlustar</productname>
+      feature release (always being of the form x.y, e.g 9.1).
     </para>
     <para>
-      <!--cbox(file: manage_chroots__new2.png)-->
-      <!--cbox(file: manage_chroots__new1.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/new1.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Creating a new UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/new2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creation process of a new UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Creation process of a new UnionFS chroot
+        </para></caption>
+      </mediaobject>
       When <emphasis role="bold">generating a new chroot</emphasis>, a name for the chroot
       must be specified and optionally a description of its purpose. Furthermore, you can
       select an NFS server where the chroot will be located (currently only one option), a
@@ -257,28 +306,88 @@
       of minutes) in its own window.
     </para>
     <para>
-      <!--cbox(file: manage_chroots__edit.png)-->
-      <!--cbox(file: manage_chroots__clone2.png)-->
-      <!--cbox(file: manage_chroots__clone1.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/clone1.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Cloning a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Cloning a UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/clone2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Cloning process of a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Cloning process of a UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/edit.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Changing the description of a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Changing the description of a UnionFS chroot
+        </para></caption>
+      </mediaobject>
       <emphasis role="bold">Cloning an existing chroot</emphasis> is mostly useful when you
       want to test an upgrade to a new release or for other tests. Pressing the
-      <guibutton>Clone</guibutton> button opens a sub-window in which you can specify the
+      <guibutton>Clone</guibutton> button, opens a sub-window in which you can specify the
       name of the new cloned chroot and optionally a description of its purpose. Pressing the
       <guibutton>OK</guibutton> button then starts the cloning process. You can again watch
-      it in its own window. Editing a chroot let's you edit it's description.
+      this in its own window. Editing a chroot allows to modify it's description.
     </para>
     <para>
-      <!--cbox(file: manage_chroots__remove3.png)-->
-      <!--cbox(file: manage_chroots__remove2.png)-->
-      <!--cbox(file: manage_chroots__remove1.png)-->
-      <emphasis role="bold">Removal of a chroot</emphasis> by pressing the
-      <guibutton>Remove</guibutton> button first asks you for a final confirmation. If you
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/remove1.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Removing a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Removing a UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/remove2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Removal process of a UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Removal process of a UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/manage_chroots/remove3.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Attempting to delete a used UnionFS chroot
+        </phrase></textobject>
+        <caption><para>
+          Attempting to delete a used UnionFS chroot
+        </para></caption>
+      </mediaobject>
+      <emphasis role="bold">Removal of a chroot</emphasis>, by pressing the
+      <guibutton>Remove</guibutton> button, first asks you for a final confirmation. If you
       then press the <guibutton>Delete</guibutton> button, the chroot will be removed
-      provided it is not still in use by a Qlustar image. If it is still in use, a list of
-      images that are associated with the chroot is given. You would then first have to
+      provided it is not still in use by a Qlustar image. If it is, a list of
+      images that are associated with the chroot is displayed. You would then first have to
       reconfigure these images to use another chroot before trying to remove again. <emphasis
-      role="bold">Renaming of a chroot</emphasis> is not supported directly. To rename you'd
-      have to clone the original chroot giving the clone the new desired name and afterwards
+      role="bold">Renaming of a chroot</emphasis> is not supported directly. To rename, you'd
+      have to clone the original chroot, giving the clone the new desired name and afterwards
       remove the old chroot.
     </para>
   </section>
