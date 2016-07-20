@@ -15,7 +15,17 @@
   <section xml:id="sec-RXE-Overview">
     <title>RXEngine Overview</title>
     <para>
-      <!--cbox(file: execute__overview.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/overview.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Qlustar Remote Execution Engine
+        </phrase></textobject>
+        <caption><para>
+          The Qlustar Remote Execution Engine
+        </para></caption>
+      </mediaobject>
       <application>QluMan</application> provides a powerful remote command execution engine,
       that allows to run shell commands on any number of hosts in <emphasis
       role="bold">parallel</emphasis> and analyze their output/status in <emphasis
@@ -61,7 +71,7 @@
 	<listitem>
 	  <para>
 	    Hosts with equal output are <emphasis role="bold">grouped</emphasis> together to
-	    reduce the noise.
+	    display a compact view of command's messages.
 	  </para>
 	</listitem>
 	<listitem>
@@ -77,25 +87,85 @@
   <section xml:id="sec-RXE-Pre-Defined">
     <title>Executing a pre-defined command</title>
     <para>
-      <!--cbox(file: execute_predefined2.png)-->
-      <!--cbox(file: execute_predefined1.png)-->
-      <!--cbox(file: enclosure_view__execute_predefined.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/execute_predefined.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Preparing the execution of a pre-defined command
+        </phrase></textobject>
+        <caption><para>
+          Preparing the execution of a pre-defined command
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/predefined1.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Executing a pre-defined command
+        </phrase></textobject>
+        <caption><para>
+          Executing a pre-defined command
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/predefined2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Output of a pre-defined command
+        </phrase></textobject>
+        <caption><para>
+          Output of a pre-defined command
+        </para></caption>
+      </mediaobject>
       Pre-Defined commands can be created using the <classname>Command Editor</classname> (see
       <xref linkend="sec-RXE-Command-Editor"/> for details). To execute a pre-defined command,
       open the pull-down menu of the <guibutton>Execute button</guibutton> at the bottom of the
       <classname>Enclosure View</classname> and select an entry. This opens a new
       <classname>Command Execution</classname> window for pre-defined commands. At the very top
       of it, the selected pre-defined command is shown. It can be changed if required. Below
-      that is a list of arguments, the selected command accepts. <guilabel>Execute
+      that is a list of the arguments, the selected command accepts. <guilabel>Execute
       on</guilabel> is always present showing where the command will be executed. If defined,
       additional arguments of the command are displayed underneath. Further below, the final
       command is shown, with its arguments inserted at the right places. The command will be
       executed upon clicking the <guibutton>Execute</guibutton> button.
     </para>
     <para>
-      <!--cbox(file: execute_predefined4.png)-->
-      <!--cbox(file: execute_predefined3.png)-->
-      <!--cbox(file: enclosure_view__execute_predefined2.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/execute_predefined2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Preparing the execution of a pre-defined command
+        </phrase></textobject>
+        <caption><para>
+          Preparing the execution of a pre-defined command
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/predefined3.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting hosts for execution
+        </phrase></textobject>
+        <caption><para>
+          Selecting hosts for execution
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/predefined4.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Using a host-filter for selecting hosts
+        </phrase></textobject>
+        <caption><para>
+          Using a host-filter for selecting hosts
+        </para></caption>
+      </mediaobject>
       Arguments to a pre-defined command can be set fixed to a <link
       linkend="chap-Host-Filters">Host Filter</link> , in which case the filter and its
       resulting hostlist are shown as plain text and can not be edited. Optionally,
@@ -113,8 +183,28 @@
   <section xml:id="sec-RXE-Custom">
     <title>Executing a custom command</title>
     <para>
-      <!--cbox(file: execute/main.png)-->
-      <!--cbox(file: enclosure_view__execute.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/execute.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Preparing the execution of a custom command
+        </phrase></textobject>
+        <caption><para>
+          Preparing the execution of a custom command
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The RXengine window for custom commands
+        </phrase></textobject>
+        <caption><para>
+          The RXengine window for custom commands
+        </para></caption>
+      </mediaobject>
       To execute a custom command, open the pull-down menu of the <guimenu>Execute
       button</guimenu> at the bottom of the <classname>Enclosure View</classname> and select
       custom command from the menu. This opens a new blank <classname>Command
@@ -122,14 +212,44 @@
       <note>
 	<para>
 	  The initial hostlist is empty in the screenshot examples, since no hosts where
-	  selected in the <classname>Enclosure View</classname>
+	  selected in the <classname>Enclosure View</classname>.
 	</para>
-	</note>.
+      </note>
     </para>
     <para>
-      <!--cbox(file: execute__past_command.png)-->
-      <!--cbox(file: execute__update.png)-->
-      <!--cbox(file: execute__selected.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/selected.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting hosts for remote execution
+        </phrase></textobject>
+        <caption><para>
+          Selecting hosts for remote execution
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/update.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Updating the selection of hosts for remote execution
+        </phrase></textobject>
+        <caption><para>
+          Updating the selection of hosts for remote execution
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/past_command.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Choosing commands previously executed
+        </phrase></textobject>
+        <caption><para>
+          Choosing commands previously executed
+        </para></caption>
+      </mediaobject>
       In case hosts were selected in the <classname>Enclosure View</classname> before
       clicking the <guibutton>Execute</guibutton> button, a hostlist representing these hosts
       will be present in the <classname>Command Execution</classname> window. This allows
@@ -153,7 +273,17 @@
       Passing input to a command
     </bridgehead>
     <para>
-      <!--cbox(file: execute__input.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/input.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          RXEngine - Passing input to a command
+        </phrase></textobject>
+        <caption><para>
+          RXEngine - Passing input to a command
+        </para></caption>
+      </mediaobject>
       Sometimes it is necessary to pass some input to a command. This can be done by clicking
       the <guibutton>Input</guibutton> button near the top. Another text box will then be
       added to the window and will allow to specify, what should be passed to
@@ -165,29 +295,48 @@
       Command Syntax
     </bridgehead>
     <para>
-      Commands will be interpreted/executed by the <literal>BASH</literal> shell on every
-      host matching the hostlist. The full <literal>BASH</literal> syntax is
-      supported. Redirection of output to files, as in the last example, and working with
-      variables works as expected. Please refer to the <literal>BASH</literal> documentation
-      (e.g. <code>man bash</code>) for more details.
+      Commands will be interpreted/executed by the <literal>BASH</literal> shell on every host
+      matching the hostlist. The full bash syntax is supported. Redirection of output to files,
+      as in the last example, and working with variables works as expected. Please refer to the
+      bash documentation (e.g. <code>man bash</code>) for more details.
     </para>
   </section>
   <section xml:id="sec-RXE-Output-Analysis">
     <title>Analysis of Command Status/Output</title>
     <para>
-      <!--cbox(file: execute__command.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          RXEngine - Executing a custom command
+        </phrase></textobject>
+        <caption><para>
+          RXEngine - Executing a custom command
+        </para></caption>
+      </mediaobject>
       Once the hostlist is added, a command can simply be run by entering it in the command
-      box and hitting the <guibutton>Execute</guibutton> button. It will then start to run in
+      box and hitting the <guibutton>Execute</guibutton> button. It will then start in
       parallel on all listed hosts and the command output will be collected. Periodically, in
       short but increasing intervals, the <emphasis role="bold">output will be
-      sorted</emphasis>> and displayed. Hence, for short running programs you will see it
+      sorted</emphasis> and displayed. Hence, for short running programs you will see it
       immediately. Due to the increasing display intervals, long running and noisy commands
       won't cause constant flickering of the output, allowing you to more easily follow it.
     </para>
     <section xml:id="sec-RXE-Command-Status">
       <title>Command Status</title>
       <para>
-	<!--cbox(file: execute__df.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/df.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Tracking the status of executed commands
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Tracking the status of executed commands
+	  </para></caption>
+	</mediaobject>
 	After the <guibutton>Execute</guibutton> button has been pressed, all hosts will start
 	in the <literal>Pending state</literal>. Once a host confirms that it has started its
 	command, it will change to the <literal>Running state</literal>. When the command
@@ -199,35 +348,68 @@
 	state. Otherwise, it enters the <literal>Success</literal> state.
       </para>
       <para>
-	<!--cbox(file: execute__killed.png)-->
-	<!--cbox(file: execute__pending.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/pending.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Hosts in pending state
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Hosts in pending state
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/killed.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Killing a command
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Killing a command
+	  </para></caption>
+	</mediaobject>
 	In the screenshot example, the hosts <systemitem class="systemname">sn-1</systemitem>
 	and <systemitem class="systemname">sn-2</systemitem> were down, so they remained in the
 	<literal>Pending</literal> state. By clicking the <guibutton>Pending</guibutton>
 	button, a hostlist of the pending hosts is displayed. The <application>QluMan
 	server</application> will start the command on those hosts, when they become online
 	again. If you do not want that to happen, or if the command does not terminate on its
-	own, then the <guibutton>Kill</guibutton> button allows you to stop the command.  A
+	own, then the <guibutton>Kill</guibutton> button allows you to stop the command. A
 	killed command counts as failed, so <systemitem class="systemname">sn-1</systemitem>
 	and <systemitem class="systemname">sn-2</systemitem> now enter that state. The command
-	output also reflects that the command was killed.
+	output also reflects, that the command was killed.
       </para>
     </section>
     <section xml:id="sec-RXE-Host-Grouping">
       <title>Host Grouping by Status and Output</title>
       <para>
-	<!--cbox(file: execute_group.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/group.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Statistics about job status
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Statistics about job status
+	  </para></caption>
+	</mediaobject>
 	Hosts executing a command are not only grouped by their execution state, the command
 	output produced by the different hosts is also <emphasis role="bold">analyzed and
 	compared</emphasis> to each other. Hosts with identical output are put into a
 	group. Their output is only displayed once, prefixed with the hostlist representing the
 	hosts in each group. For a quick overview, the number of hosts and groups is also
-	displayed below each state button. In the screenshot example, two hosts (<systemitem
-	class="systemname">sn-1</systemitem> and <systemitem
-	class="systemname">sn-2</systemitem>) have failed, because they where offline and the
-	command was killed before starting. The output of both was identical, so they form one
-	group. Similar, one host (<systemitem class="systemname">ql-head-pr-t</systemitem>)
-	completed the command successfully and builds its own group.
+	displayed below each state button.
+      </para>
+      <para>
+	In the screenshot example, two hosts (<systemitem class="systemname">sn-1</systemitem>
+	and <systemitem class="systemname">sn-2</systemitem>) have failed, because they where
+	offline and the command was killed before starting. The output of both was identical,
+	so they form one group. Similar, one host (<systemitem
+	class="systemname">ql-head-pr-t</systemitem>) completed the command successfully and
+	builds its own group.
       </para>
       <para>
 	The <guibutton>S</guibutton> buttons next to the numbers add or remove the hosts in
@@ -241,7 +423,17 @@
     <section xml:id="sec-RXE-Filter-OutErr">
       <title>Filtering by stdout and stderr</title>
       <para>
-	<!--cbox(file: execute__errors.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/errors.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - A command with stdout and stderr output 
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - A command with stdout and stderr output 
+	  </para></caption>
+	</mediaobject>
 	Commands usually output regular text to <literal>stdout</literal> and warnings as well
 	as errors to <literal>stderr</literal>. In the latter case, the command ends up in the
 	<literal>Errors</literal> state, because this is usually something that needs further
@@ -252,8 +444,28 @@
 	reading from the file descriptors causes the order to slightly change.
       </para>
       <para>
-	<!--cbox(file: execute_stderr.png)-->
-	<!--cbox(file: execute__stdout.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/stdout.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Filtering stdout
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Filtering stdout
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/execute/stderr.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    RXEngine - Filtering stderr
+	  </phrase></textobject>
+	  <caption><para>
+	    RXEngine - Filtering stderr
+	  </para></caption>
+	</mediaobject>
 	Some commands produce a lot of output. Error messages are then easily overseen in
 	between the lines. Similarly a command might report a lot of harmless errors, that hide
 	the interesting output going to <literal>stdout</literal>. To simplify an analysis of
@@ -267,8 +479,28 @@
   <section xml:id="sec-RXE-Command-Editor">
     <title>Command Editor</title>
     <para>
-      <!--cbox(file: command_editor__ls.png)-->
-      <!--cbox(file: command_editor/main.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/command_editor/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Command Editor
+        </phrase></textobject>
+        <caption><para>
+          The Command Editor
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/command_editor/ls.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The definition of a command
+        </phrase></textobject>
+        <caption><para>
+          The definition of a command
+        </para></caption>
+      </mediaobject>
       The <classname>command editor</classname> shows all the pre-defined commands in a tree
       view on the left. A number of useful commands are already defined by default. Selecting
       a command shows its definition on the right-hand side, where it can also be
@@ -282,38 +514,98 @@
     <section xml:id="sec-RXE-Command-Editor-Sorting">
       <title>Sorting commands</title>
       <para>
-	<!--cbox(command_editor__context_menu.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/context_menu.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Arranging commands in the tree view
+	  </phrase></textobject>
+	  <caption><para>
+	    Arranging commands in the tree view
+	  </para></caption>
+	</mediaobject>
 	Commands are kept in a tree structure, grouping similar commands together. They can be
 	sorted freely using the context menu to make frequently used commands easier to
 	select. The <guimenuitem>Move Up</guimenuitem> and <guimenuitem>Move Down</guimenuitem>
 	menu items move a command or group up or down within the group respectively. The
 	<guimenuitem>Move to group</guimenuitem> sub-menu allows moving a command up or down in
-	the tree hierarchy. Groups can be created, renamed and deleted to give any desired
+	the tree hierarchy. Groups can be created, renamed and deleted to achieve any desired
 	hierarchy of commands.
       </para>
     </section>
     <section xml:id="sec-RXE-Command-Editor-Defining">
       <title>Defining or editing a command</title>
       <para>
-	<!--cbox(file: command_editor__new2.png)-->
-	<!--cbox(file: command_editor__new1.png)-->
-	<!--cbox(file: command_editor__rename.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/new1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Creating a new command
+	  </phrase></textobject>
+	  <caption><para>
+	    Creating a new command
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/new2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Setting the name of a new command
+	  </phrase></textobject>
+	  <caption><para>
+	    Setting the name of a new command
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/rename.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Renaming a command
+	  </phrase></textobject>
+	  <caption><para>
+	    Renaming a command
+	  </para></caption>
+	</mediaobject>
 	To define a new command, select <guimenuitem>New Command</guimenuitem> from the context
-	menu. The new command will be created in the group, where the context menu was opened
-	or in the root, if the mouse is outside of any group. Initially, the command will have
-	no definitions.
+	menu and set its name. The new command will be created in the group, where the
+	context menu was opened or in the root, if the mouse is outside of any
+	group. Initially, the command will have no definitions.
       </para>
       <para>
 	To edit a command, it needs to be selected first. Then its definitions will be shown on
 	the right-hand side. The name/alias of a command can be edited by clicking in the text
 	box at the top and entering the new name. The check-box to the right of the name
-	indicates, whether your name is valid. Press enter, to save the new name and the
-	check-box will become fully checked again. To undo editing, simply reselect the command
-	in the tree view.
+	indicates, whether your name is valid. Press <keycap>return</keycap>, to save the new
+	name and the check-box will become fully checked again. To undo editing, simply
+	reselect the command in the tree view.
       </para>
       <para>
-	<!--cbox(file: command_editor__execute_on2.png)-->
-	<!--cbox(file: command_editor__execute_on.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/execute_on.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Choosing the target hosts for commands
+	  </phrase></textobject>
+	  <caption><para>
+	    Choosing the target hosts for commands
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/execute_on2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Displaying the result of a host filter
+	  </phrase></textobject>
+	  <caption><para>
+	    Displaying the result of a host filter
+	  </para></caption>
+	</mediaobject>
 	A command can be executed on any host or set of hosts in the cluster. The
 	<guilabel>Execute on</guilabel> field governs how that host or set of hosts is
 	constructed. The default is <parameter>User input</parameter>. This means, the user
@@ -323,23 +615,62 @@
 	currently evaluates to, is displayed below it.
       </para>
       <para>
-	<!--cbox(file: command_editor__edit2.png)-->
-	<!--cbox(file: command_editor__edit.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/edit.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Activating the "Edit" state for a command
+	  </phrase></textobject>
+	  <caption><para>
+	    Activating the "Edit" state for a command
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/edit2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Editing the actual command(s)
+	  </phrase></textobject>
+	  <caption><para>
+	    Editing the actual command(s)
+	  </para></caption>
+	</mediaobject>
 	Editing the command itself may take a while. To avoid conflicts from concurrent editing
 	attempts by different <application>QluMan</application> users, only one person can edit
 	a command at a time. To start the editing process, click the
 	<guibutton>Edit</guibutton> button at the bottom. After that, changes to the command
 	can be entered. Commands will be interpreted/executed by the <literal>BASH</literal>
-	shell on every host matching the hostlist. The full BASH syntax is
+	shell on every host matching the hostlist. The full bash syntax is
 	supported. Redirection of output to files and working with variables works as
-	expected. Please refer to the BASH documentation (e.g. <code>man bash</code>) for more
+	expected. Please refer to the bash documentation (e.g. <code>man bash</code>) for more
 	details. There is one exception to this: A "%" character followed by a number specifies
 	additional arguments for the command, as explained in more detail below.
       </para>
       <para>
-	<!--cbox(file: command_editor__edit5.png)-->
-	<!--cbox(file: command_editor__edit4.png)-->
-	<!--cbox(file: command_editor__edit3.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/edit3.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Specifying input for a command
+	  </phrase></textobject>
+	  <caption><para>
+	    Specifying input for a command
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/edit4.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Saving the command definitions
+	  </phrase></textobject>
+	  <caption><para>
+	    Saving the command definitions
+	  </para></caption>
+	</mediaobject>
 	Sometimes it is necessary, to pass some input to a pre-defined command. This can be
 	done by clicking the <guibutton>Input</guibutton> check-box. It will bring up an input
 	text-box, where the desired input text can be entered.
@@ -351,31 +682,67 @@
 	placeholders and updates the entries in the <classname>Arguments</classname> box.
       </para>
       <para>
-	<!--cbox(file: command_editor__arguments.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/edit5.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Using command arguments
+	  </phrase></textobject>
+	  <caption><para>
+	    Using command arguments
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/arguments.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Determining the type of command arguments
+	  </phrase></textobject>
+	  <caption><para>
+	    Determining the type of command arguments
+	  </para></caption>
+	</mediaobject>
 	The definition of command arguments use the same mechanism as detailed for the
-	<literal>Execute on</literal> definition. They can either be left up to the user to
-	fill in, when the command is executed or be specified by a filter selectable from the
-	dropdown menu. When executed, the <replaceable>num</replaceable> placeholders in the
+	<literal>Execute on</literal> definition. They can either be left up to the user, to be
+	filled in when the command is executed or be specified by a filter selectable from the
+	drop-down menu. When executed, the <replaceable>num</replaceable> placeholders in the
 	command text are replaced by the user specified arguments or the resulting hostlist of
 	the filter. There are always as many arguments as there are placeholders in the
 	command. To add an argument, edit the command text and add a placeholder there. To
 	remove an argument, edit the command text and remove the placeholder.
       </para>
       <para>
-	<!--cbox(file: command_editor__testing_command.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/testing_command.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    The test command appearing in the RXEngine window
+	  </phrase></textobject>
+	  <caption><para>
+	    The test command appearing in the RXEngine window
+	  </para></caption>
+	</mediaobject>
 	In the screenshot example, the test command is defined to execute on all head-nodes
 	(<systemitem class="systemname">qlu-dev</systemitem> is the only head node in the
 	cluster). It has some input and two extra arguments. The first one is fixed to a
-	Hostname filter, that evaluates to any host starting with <systemitem
-	class="systemname">beo</systemitem>. The second one is left for the user to be
-	specified, hence, when executing the command, only the second argument is editable. In
-	the screenshot, the <literal>ONLINE</literal> filter was chosen for this argument, but
-	any other text would have been possible too. For easy verification, the command text,
-	with all the arguments substituted, is shown together with the command input (if
-	defined). Note that in the example, the specified input is simply output by the
-	<command>cat</command> command, so in the output shown, it appears between the two
-	<command>echo</command> commands.
+	<classname>Hostname filter</classname> that evaluates to any host starting with
+	<systemitem class="systemname">beo</systemitem>. The second one is left for the user to
+	be specified, hence, when executing the command, only the second argument is
+	editable. In the screenshot, the <literal>ONLINE</literal> filter was chosen for this
+	argument, but any other text would have been possible too. For easy verification, the
+	command text, with all the arguments substituted, is shown together with the command
+	input (if defined).
       </para>
+      <note>
+	<para>
+	  In the example, the specified input is simply output by the <command>cat</command>
+	  command, so in the output shown, it appears between the two <command>echo</command>
+	  commands.
+	</para>
+      </note>
     </section>
   </section>
 </chapter>
