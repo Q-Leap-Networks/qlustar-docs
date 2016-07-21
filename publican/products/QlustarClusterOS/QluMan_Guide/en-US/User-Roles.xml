@@ -19,7 +19,7 @@
       an interface to configure and control users as well as their permissions when they work
       with <application>QluMan</application>. The <application>QluMan</application> users are
       not connected to system users in any way. To simplify permission management, the
-      concept of <literal>user roles</literal> can be used. User roles allow to predefine a
+      concept of <literal>user roles</literal> can be used. User roles allow to pre-define a
       <emphasis role="bold">collection of permissions</emphasis> for
       <application>QluMan</application> operations. Once defined, they can be assigned to a
       user.
@@ -28,8 +28,17 @@
   <section xml:id="sec-User-Manage">
     <title>Managing QluMan Users</title>
     <para>
-      <!--cbox(file: users/main.png)-->
-      <!--cbox(file: users__select.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/users/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Manage Users window
+        </phrase></textobject>
+        <caption><para>
+          The Manage Users window
+        </para></caption>
+      </mediaobject>
       The <literal>admin user</literal> is pre-defined and has the <literal>admin
       role</literal>, meaning all possible rights. Roles for the admin user can not be
       changed, just like the root user in a Linux system always has all rights. When
@@ -39,17 +48,57 @@
     <section xml:id="sec-User-Add">
       <title>Adding a User</title>
       <para>
-	<!--cbox(file: users__new3.png)-->
-	<!--cbox(file: users__new2.png)-->
-	<!--cbox(file: users__select.png)-->
-	<!--cbox(file: users__new.png)-->
 	To create a new user, click <guibutton>New User</guibutton> and enter the name for the
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Creating a new QluMan user
+	  </phrase></textobject>
+	  <caption><para>
+	    Creating a new QluMan user
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Setting the user name
+	  </phrase></textobject>
+	  <caption><para>
+	    Setting the user name
+	  </para></caption>
+	</mediaobject>
 	new user to create it. Then select the user from the drop-down menu and fill out the
 	remaining fields. The changes will be saved automatically when <keycap>return</keycap>
 	is pressed or the input field looses the focus. New users have no roles assigned to
 	them and will have no rights to change something. They can only inspect the cluster
 	config (read-only mode). See <xref linkend="sec-Roles-Manage"/> for how to create new
-	roles and assign them to the user by checking the respective checkboxes. If the
+	roles and assign them to the user by checking the respective check-boxes. If the
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/users/select.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a QluMan user
+        </phrase></textobject>
+        <caption><para>
+          Selecting a QluMan user
+        </para></caption>
+      </mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new3.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Setting properties of a QluMan user
+	  </phrase></textobject>
+	  <caption><para>
+	    Setting properties of a QluMan user
+	  </para></caption>
+	</mediaobject>
 	<guibutton>New User</guibutton> button is not selectable, then the user lacks
 	sufficient rights to create new users. The <guibutton>Roles</guibutton> buttons will
 	then also be disabled, preventing an unauthorized user from giving himself or others
@@ -59,70 +108,134 @@
     <section xml:id="sec-User-Auth-Token">
       <title>Generating the Auth Token</title>
       <para>
-	<!--cbox(file: users__new_auth_token.png)-->
-	A new user is also created without login credentials, so initially, he can't connect
-	to QluMan. Hence, the next step is to generate a <literal>one-time token</literal>
-	for the user by clicking <guibutton>New Auth Token</guibutton>. Generating the
-	one-time token may take a little time to finish and happens before the <classname>New
-	Auth Token</classname> dialog opens. The dialog shows a certificate containing the
-	generated one-time token as well as the other login information required to connect
-	to the server. The certificate is protected by an auto-generated 8 digit pin, so
-	that it can be transfered over unencrypted communication channels like e-mail or
-	chat programs. In such a case the pin should be send over a second, different,
-	communication channel, e.g. reading it over the phone.
+	A new user also lacks login credentials, so initially, he can't connect to
+	QluMan. Hence, the next step is to generate a <literal>one-time token</literal> for the
+	user, by clicking <guibutton>New Auth Token</guibutton>. Generating the one-time token
+	may take a little time to finish and happens before the <classname>New Auth
+	Token</classname> dialog opens. The dialog shows a certificate containing the
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new_auth_token/display.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    A generated new one-time Auth Token
+	  </phrase></textobject>
+	  <caption><para>
+	    A generated new one-time Auth Token
+	  </para></caption>
+	</mediaobject>
+	generated one-time token, as well as the other login information required to connect to
+	the server. The certificate is protected by an auto-generated 8 digit pin, so that it
+	can be transferred over unencrypted communication channels like e-mail or chat
+	programs. In such a case, the pin should be sent over a second, <emphasis
+	role="bold">different</emphasis>, communication channel, e.g. reading it over the
+	phone.
       </para>
       <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new_auth_token/decoded.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Changing your own certificate
+	  </phrase></textobject>
+	  <caption><para>
+	    Changing your own certificate
+	  </para></caption>
+	</mediaobject>
 	As a special case, when a user clicks <guibutton>New Auth Token</guibutton> for
 	himself, the generated token is imported into his running client and replaces the
-	current login credentials. A reconnect is then triggered automatically which forces
-	the client to generate a new random public/private key pair and use the new one-time
-	token to authenticate itself to the server. This should be used to invalidate the old
-	keys and replace them with fresh ones, in case a user suspects the certificate safe
-	might have been compromised by an attacker.
+	current login credentials. A reconnect of the GUI client is then triggered
+	automatically. It forces the client to generate a new random public/private key pair
+	and use the new one-time token to authenticate itself to the server. This procedure
+	should be used to invalidate the old keys and replace them with fresh ones, in case a
+	user suspects the certificate safe might have been compromised by an attacker.
       </para>
       <para>
-	<!--cbox(file: users__new_auth_token_2.png)-->
-	The <classname>New Auth Token</classname> dialog also has 3 usefull buttons at the
+	The <classname>New Auth Token</classname> dialog also has 3 useful buttons at the
 	right bottom corner. The <guibutton>Import</guibutton> button allows adding the
 	certificate directly to the running client. The use case for this is when creating a
-	user account for oneself when working as admin. It is recommendd that for clusters
-	with multiple users with admin role that every user has their own user account and
-	the admin user is only used to create those.
-	<!--cbox(file: users__new_auth_token__mailed.png)-->
-	<!--cbox(file: users__new_auth_token__saved.png)-->
+	user account for oneself when working as admin. It is recommended, that for clusters
+	with multiple users having the admin role, that every user has his own user account and
+	the admin user is only used to initially create the new users.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new_auth_token/mailed.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Mailing the Auth Token
+	  </phrase></textobject>
+	  <caption><para>
+	    Mailing the Auth Token
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/new_auth_token/saved.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Saving the Auth Token
+	  </phrase></textobject>
+	  <caption><para>
+	    Saving the Auth Token
+	  </para></caption>
+	</mediaobject>
 	The <guibutton>Save</guibutton> button allows saving the certificate into a file and
 	the <guibutton>Mail</guibutton> button sends the certificate to the email configured
-	for the user. In both cases only the certificate is saved or mailed and the password
+	for the user. In both cases, only the certificate is saved or mailed and the password
 	needs to be send separately.
       </para>
       <para>
-	For optimal security, it is recommened to leave a new user without roles, until he has
-	logged in using the one-time token. That way, if the certificate was intercepted, it
-	will be useless to an attacker, since he won't be able to perform any actions within
-	QluMan. Also, if the attacker manages to intercept and use the certificate before the
-	real intended user does, the real user won't be able to use it anymore and notice that
-	something is wrong, most likely reporting to the main cluster administrator.
+	For <emphasis role="bold">optimal security</emphasis>, it is recommended to leave a new
+	user <emphasis role="bold">without roles</emphasis>, until he has logged in using the
+	one-time token. That way, if the certificate was intercepted, it will be useless to an
+	attacker, since he won't be able to perform any actions within QluMan. Also, if the
+	attacker manages to intercept and use the certificate before the real intended user
+	does, the real user won't be able to use it anymore, and notice that something is
+	wrong, most likely reporting to the main cluster administrator.
       </para>
       <note>
 	<para>
-	  The certificate contains the information about the cluster telling the client how to
-	  connect to it and the public key of the <systemitem
-	  class="systemname">qlumand</systemitem> server that ensures the client will only talk
-	  to the desired server and can't be eavesdropped. It also contains a one-time token
-	  allowing any client to log in exactly once within the next 48 hours. On the first
-	  login with a correct one-time token, the client's public key (generated randomly and
-	  uniquely for the cluster/user pair) is stored by the server and used to authenticate
-	  the user in the future. The client's and server's public and private keys are also
-	  used when connecting, to safely exchange session keys enabling <emphasis
-	  role="bold">encryption with perfect forward-security</emphasis>.
+	  The certificate contains the connection information of the cluster and the public key
+	  of the <systemitem class="systemname">qlumand</systemitem> server. The latter ensures
+	  that the client will only talk to the desired server and can't be eavesdropped. The
+	  certificate also contains a one-time token, allowing any client to log in <emphasis
+	  role="bold">exactly once</emphasis> within the next 48 hours.
+	</para>
+	<para>
+	  On the first login with a correct one-time token, the client's public key (generated
+	  randomly and uniquely for the cluster/user pair) is stored by the server and used to
+	  authenticate the user in the future. When establishing a connection, the client's and
+	  server's public and private keys are used, to safely exchange session keys enabling
+	  <emphasis role="bold">encryption with perfect forward-security</emphasis>.
 	</para>
       </note>
     </section>
     <section xml:id="sec-User-Remove">
       <title>Removing a User</title>
       <para>
-	<!--cbox(file: users__delete2.png>-->
-	<!--cbox(file: users__delete.png>-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/delete.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Deleting a QluMan user
+	  </phrase></textobject>
+	  <caption><para>
+	    Deleting a QluMan user
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/users/delete2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Confirming user deletion
+	  </phrase></textobject>
+	  <caption><para>
+	    Confirming user deletion
+	  </para></caption>
+	</mediaobject>
 	A user other than admin can be deleted by clicking the <guibutton>Delete
 	User</guibutton> button. Just like the <guibutton>New User</guibutton> button, it is
 	only enabled if the current user has sufficient rights.
@@ -137,11 +250,11 @@
       those correspond directly to a specific window in the GUI, giving the user the right to
       alter settings in that window. For example, the right to configure Qlustar images
       corresponds directly to operations available from the <literal>Qlustar Images</literal>
-      window opened from <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>Qlustar
-      Images</guimenuitem>. Others govern the right to specific actions or to alter specific
-      properties. For example, the right to configure OpenSM on hosts enables the user to add,
-      alter or delete the <literal>OpenSM Ports</literal> and <literal>OpenSM Options</literal>
-      property of hosts in the <classname>Enclosure View</classname>.
+      window opened from <guimenuitem>Manage Configs->Qlustar Images</guimenuitem>. Others
+      govern the right to specific actions or to alter specific properties. For example, the
+      right to configure OpenSM on hosts, enables the user to add, alter or delete the
+      <literal>OpenSM Ports</literal> and <literal>OpenSM Options</literal> property of hosts
+      in the <classname>Enclosure View</classname>.
     </para>
     <para>
       The rights are grouped into 4 categories: <literal>Admin rights</literal> covers
@@ -151,15 +264,45 @@
       configuration of hosts.
     </para>
     <para>
-      <!--cbox(file: roles__manager.png)-->
-      <!--cbox(file: roles__new.png)-->
-      <!--cbox(file: roles__empty.png)-->
-      Creating and editing roles is simple. Click <guibutton>New</guibutton> to create a
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/roles/empty.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new role
+        </phrase></textobject>
+        <caption><para>
+          Creating a new role
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/roles/new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Naming the new role
+        </phrase></textobject>
+        <caption><para>
+          Naming the new role
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/roles/manager.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Assigning rights to a role
+        </phrase></textobject>
+        <caption><para>
+          Assigning rights to a role
+        </para></caption>
+      </mediaobject>
+      Creating and editing roles is simple: Click <guibutton>New</guibutton> to create a
       new role, fill in a name and description for it and click
       <guibutton>OK</guibutton>. To change the rights associated with a role, first select
-      it using the dropdown menu at the top. Next click the checkmark boxes to the left of
+      it using the dropdown menu at the top. Next, click the checkmark boxes to the left of
       the rights you want to change, grant or remove from the role. Click
-      <guibutton>Save</guibutton> to save the changes or <guibutton>Undo</guibutton> to
+      <guibutton>Save</guibutton>, to save the changes, or <guibutton>Undo</guibutton> to
       reset the rights to the last saved settings.
     </para>
   </section>
