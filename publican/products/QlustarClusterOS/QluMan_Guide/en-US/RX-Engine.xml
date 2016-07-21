@@ -516,13 +516,35 @@
       <para>
 	<mediaobject>
 	  <imageobject><imagedata
-	  fileref="images/command_editor/context_menu.png"
+	  fileref="images/command_editor/context_menu_1.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    Arranging commands in the tree view
+	    Creating a new command or group
 	  </phrase></textobject>
 	  <caption><para>
-	    Arranging commands in the tree view
+	    Creating a new command or group
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/context_menu_2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Actions for menu folders
+	  </phrase></textobject>
+	  <caption><para>
+	    Actions for menu folders
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/context_menu_3.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Actions for menu commands
+	  </phrase></textobject>
+	  <caption><para>
+	    Actions for menu commands
 	  </para></caption>
 	</mediaobject>
 	Commands are kept in a tree structure, grouping similar commands together. They can be
