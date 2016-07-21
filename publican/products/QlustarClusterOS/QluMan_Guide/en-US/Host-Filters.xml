@@ -15,13 +15,23 @@
   <section xml:id="sec-Host-Filter-Overview">
     <title>Overview</title>
     <para>
-      <!--cbox(file: filter_editor/main.png)-->
-      Host filters define a set of hosts by specifying any number of criteria. The set of
-      hosts defined by a filter is dynamic: Changes made to the properties of hosts are
-      automatically reflected in the hostlist a filter evaluates to. Every time a filter is
-      used, the criteria defining it are evaluated from scratch. Hence, host filters provide
-      a powerful tool to classify hosts into groups, in a way that will dynamically take into
-      account changes made to the cluster. They can be used in various ways within
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/main.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Host Filter Editor window
+        </phrase></textobject>
+        <caption><para>
+          The Host Filter Editor window
+        </para></caption>
+      </mediaobject>
+      <classname>Host filters</classname> define a set of hosts by specifying any number of
+      criteria. The set of hosts defined by a filter is dynamic: Changes made to the properties
+      of hosts are automatically reflected in the hostlist a filter evaluates to. Every time a
+      filter is used, the criteria defining it are evaluated from scratch. Hence, host filters
+      provide a powerful tool to classify hosts into groups, in a way that will dynamically
+      take into account changes made to the cluster. They can be used in various ways within
       <application>QluMan</application>:
     </para>
     <para>
@@ -51,35 +61,94 @@
   <section xml:id="sec-Host-Filter-Editor">
     <title>Host Filter Editor</title>
     <para>
-      <!--cbox(file: filter_editor__select_filter.png)-->
-      The filter editor window is split into two areas. At the top the definition of the
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/select_filter.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting a filter for editing
+        </phrase></textobject>
+        <caption><para>
+          Selecting a filter for editing
+        </para></caption>
+      </mediaobject>
+      The filter editor window is split into two areas. At the top, the definition of the
       currently selected filter is shown. You can select the filter to be displayed from the
-      dropdown menu. At the bottom the hosts that pass all the filters are displayed in the
-      compact HostList format. This format is used by a number of other programs including
-      pdsh and SLURM (the <link
+      drop-down menu. At the bottom, the hosts that currently pass all the filters are
+      displayed in the compact <firstterm>hostlist format</firstterm>. This format is used by a
+      number of other programs including pdsh and SLURM (the <link
       xlink:href="https://code.google.com/p/pdsh/wiki/HostListExpressions___blank___">pdsh
       Wiki</link> has a detailed discussion on the syntax).
     </para>
     <para>
-      <!--cbox(file: filter_editor__new3.png)-->
-      <!--cbox(file: filter_editor__new2.png)-->
-      <!--cbox(file: filter_editor__new.png)-->
-      <!--cbox(file: filter_editor__new5.png)-->
-      <!--cbox(file: filter_editor__new4.png)-->
-    </para>
-    <para>
-      Select <guimenuitem>new filter</guimenuitem> from the dropdown menu to start defining a
-      new filter. Then add filters from the context menu, until the desired subset of hosts
-      is displayed in the bottom half of the window. Using their context menu, filters can be
-      edited or removed and sub-filters be added. The <guimenuitem>Reset filter</guimenuitem>
-      menu item clears the filter, so one can start from scratch. To finally create (save)
-      the new filter click <guibutton>Save as</guibutton> and enter a name for it.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new host filter
+        </phrase></textobject>
+        <caption><para>
+          Creating a new host filter
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/new2.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new host filter
+        </phrase></textobject>
+        <caption><para>
+          Creating a new host filter
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/new3.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Adding a specific sub-filter
+        </phrase></textobject>
+        <caption><para>
+          Adding a specific sub-filter
+        </para></caption>
+      </mediaobject>
+      Select <guimenuitem>new filter</guimenuitem> from the drop-down menu to start defining a
+      new filter. Then add specific sub-filters from the context menu, until the desired subset
+      of hosts is displayed in the bottom half of the window. Using their context-menu, filters
+      can be edited or removed and sub-filters be added. 
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/new4.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Saving the filter
+        </phrase></textobject>
+        <caption><para>
+          Saving the filter
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filter_editor/new5.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Naming the filter
+        </phrase></textobject>
+        <caption><para>
+          Naming the filter
+        </para></caption>
+      </mediaobject>
+      The <guimenuitem>Reset filter</guimenuitem> menu item clears the filter, so one can start
+      from scratch. To finally create (save) the new filter click <guibutton>Save
+      as</guibutton> and enter a name for it.
     </para>
     <section xml:id="sec-Host-Filter-Edit">
       <title>Editing a Filter</title>
       <para>
 	Editing a filter is similar to creating a new one. First select the filter from the
-	dropdown menu to display it's current definition. Then add, edit or remove individual
+	drop-down menu to display it's current definition. Then add, edit or remove individual
 	filters as desired. Finally click <guibutton>Save as</guibutton> to save the altered
 	filter, Using an existing name will replace the old filter. Using a different name will
 	create a new filter.
@@ -88,50 +157,115 @@
     <section xml:id="sec-Host-Filter-Types">
       <title>Types of Filters</title>
       <para>
-	<!--cbox(file: filter_editor__new3.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filter_editor/new3.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a specific sub-filter
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a specific sub-filter
+	  </para></caption>
+	</mediaobject>
 	A filter can be added from the context menu (right mouse click) in the top area.  For a
 	host to show up in the filtered list (bottom part), it must pass all the filters added.
-	Each filter narrows down the list. Any number of filters can be added and they do not
-	have to be unique. For example you can add a Hostname filter that selects all hosts
+	Each filter may narrow down the list. Any number of filters can be added and they do
+	not have to be unique. For example you can add a Hostname filter that selects all hosts
 	that begin with <systemitem class="systemname">beo</systemitem> and a Host Template
 	filter that selects all <systemitem class="systemname">Demo VM</systemitem> nodes. A
 	host has to pass all top-level filters to show up. Currently,
 	<application>QluMan</application> provides six top-level filters: Hostname,
 	HostTemplate, Enclosure, HEADNODE, HEADNODES and ONLINE. Additional ones will be added
-	in future versions.
+	in the future.
       </para>
       <section xml:id="sec-Host-Filter-Hostname">
 	<title>Hostname Filter</title>
 	<para>
-	  <!--cbox(file: filter_editor__2_hostnames2.png)-->
-	  <!--cbox(file: filter_editor__add__hostname.png)-->
-	  <!--cbox(file: filter_editor__2_hostnames1.png)-->
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hostname/create.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Adding a host sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      Adding a host sub-filter
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hostname/add.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Defining the hostnames
+	    </phrase></textobject>
+	    <caption><para>
+	      Defining the hostnames
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hostname/configured.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      The configured host sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      The configured host sub-filter
+	    </para></caption>
+	  </mediaobject>
 	  Adding a Hostname filter opens up a pop-up dialog asking for the hostname or a
-	  regular expression to filter for. The input must be a regular expression in
-	  <literal>python</literal> syntax and is matched against the beginning of the
-	  hostname. If a match against the full hostname is desired then "$" should be added at
-	  the end. A ".*" can be added to the front, to match anywhere in the hostname instead
-	  of matching against the beginning.
+	  <firstterm>regular expression</firstterm> to filter for. The input must be a regular
+	  expression in <literal>python</literal> syntax and is matched against the beginning
+	  of the hostname. If a match against the full hostname is desired then "$" should be
+	  added at the end. A ".*" can be added to the front, to match anywhere in the hostname
+	  instead of matching against the beginning.
 	</para>
-	<para>
-	  Multiple hostname patterns can be added to a Hostname filter through the context
-	  menu. 
-	  <note>
-	    <para>
-	      Note that this is <emphasis role="bold">additive</emphasis>: If a host matches at
-	      least one pattern, it will be included in the resulting list.
-	    </para>
-	  </note>
-	</para>
+	<note>
+	  <para>
+	    Multiple hostname patterns can be added to a Hostname filter through the context
+	    menu. This is <emphasis role="bold">additive</emphasis>: If a host
+	    matches at least one pattern, it will be included in the resulting list.
+	  </para>
+	</note>
       </section>
       <section xml:id="sec-Host-Filter-HostTemplate">
 	<title>Host Template Filter</title>
 	<para>
-	  <!--cbox(file: filter_editor__hotstemplate__add_template1.png)-->
-	  <!--cbox(file: filter_editor__hotstemplate.png)-->
-	  <!--cbox(file: filter_editor__add_hosttemplate.png)-->
-	  <!--cbox(file: filter_editor__hotstemplate2.png)-->
-	  <!--cbox(file: filter_editor__hotstemplate__add_template2.png)-->
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hosttemplate/create.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Adding a Host Template sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      Adding a Host Template sub-filter
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hosttemplate/new.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      A new Host Template sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      A new Host Template sub-filter
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hosttemplate/add-1.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Adding a specific Host Template
+	    </phrase></textobject>
+	    <caption><para>
+	      Adding a specific Host Template
+	    </para></caption>
+	  </mediaobject>
 	  Adding a Host Template filter does not pop up a dialog. Instead it adds an empty Host
 	  Template filter. This simply selects all hosts with an assigned Host Template. Hosts
 	  that do not have a Host Template will not pass this filter. The filter can be made
@@ -139,6 +273,28 @@
 	  opens up a pop-up dialog, from where an existing Host Template name can be selected.
 	</para>
 	<para>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hosttemplate/add-2.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Selecting the Host Template
+	    </phrase></textobject>
+	    <caption><para>
+	      Selecting the Host Template
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/hosttemplate/configured.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Final Host Template sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      Final Host Template sub-filter
+	    </para></caption>
+	  </mediaobject>
 	  The result is a list of hosts, for which the associated Host Template matches the
 	  given pattern.  Adding multiple Host Template names is again additive, just like with
 	  Hostname patterns.
@@ -147,37 +303,107 @@
       <section xml:id="sec-Host-Filter-Enclosure">
 	<title>Enclosure Filter</title>
 	<para>
-	  <!--cbox(file: filter_editor__enclosure.png)-->
-	  <!--cbox(file: filter_editor__add__enclosure.png)-->
-	  <!--cbox(file: filter_editor__enclosure2.png)-->
-	  <!--cbox(file: filter_editor__enclosure__add.png)-->
-	  Adding an Enclosure filter also does not bring up a dialog. Like a Host Template
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/enclosure/create.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Adding an Enclosure sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      Adding an Enclosure sub-filter
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/enclosure/new.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      A new Enclosure sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      A new Enclosure sub-filter
+	    </para></caption>
+	  </mediaobject>
+	  Adding an Enclosure filter does not bring up a dialog either. Like a Host Template
 	  filter, it selects all hosts that are part of an enclosure. Unlike the Hostname and
 	  Host Template filters though, an Enclosure filter allows for two different
-	  specifications: The name <emphasis role="bold">and</emphasis> the type of an
+	  specifications: The name <emphasis role="bold">and/or</emphasis> the type of an
 	  enclosure can be matched. Just like Hostname and Host Template filters the Enclosure
 	  filter is additive. Adding sub-filters for both the Enclosure name and the Enclosure
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/enclosure/add.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Filter on type or name
+	    </phrase></textobject>
+	    <caption><para>
+	      Filter on type or name
+	    </para></caption>
+	  </mediaobject>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/filter_editor/enclosure/configured.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Final Enclosure sub-filter
+	    </phrase></textobject>
+	    <caption><para>
+	      Final Enclosure sub-filter
+	    </para></caption>
+	  </mediaobject>
 	  type will filter hosts that match at least one of those criteria. To filter for hosts
-	  that match both, an Enclosure name and an Enclosure type two separate Enclosure
-	  filters have to be used, to get the intersection of both filters. The first one to
-	  filter the name and the second to filter the type.
+	  that match both, an Enclosure name and an Enclosure type, two separate Enclosure
+	  filters have to be used to get the intersection of both filters. The first one to
+	  filter the name and the second one to filter the type.
 	</para>
       </section>
     </section>
     <section xml:id="sec-Host-Filter-Inverting">
       <title>Inverting a Filter</title>
       <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filter_editor/invert.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Inverting the pattern or filter
+	  </phrase></textobject>
+	  <caption><para>
+	    Inverting the pattern or filter
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filter_editor/invert_filter.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    An inverted filter
+	  </phrase></textobject>
+	  <caption><para>
+	    An inverted filter
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filter_editor/invert_pattern.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    An inverted pattern
+	  </phrase></textobject>
+	  <caption><para>
+	    An inverted pattern
+	  </para></caption>
+	</mediaobject>
 	Every filter, sub-filter and pattern can be inverted through the context menu. The
-	context menu for a pattern contains menu entries for both the pattern and the
+	context menu for a pattern contains menu entries for both, the pattern and the
 	enclosing filter separated by a line. The first <emphasis
 	role="bold">Invert</emphasis> entry will invert the specific pattern that was
 	selected, while the second <emphasis role="bold">Invert</emphasis> will invert the
 	whole filter.
       </para>
       <para>
-	<!--cbox(file: filter_editor__invert_filter.png)-->
-	<!--cbox(file: filter_editor__invert_pattern.png)-->
-	<!--cbox(file: filter_editor__invert.png)-->
 	Besides the obvious, this can also be useful in finding hosts that are not configured
 	correctly. For example, adding an empty Host Template filter and inverting it, will
 	show all hosts without a Host Template. Adding a second filter, that selects all
@@ -189,7 +415,17 @@
     <section xml:id="sec-Host-Filter-AddSub">
       <title>Additive versus subtractive</title>
       <para>
-	<!--cbox(file: filter_editor__subtractive.png)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filter_editor/subtractive.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Subtractive hostname filters
+	  </phrase></textobject>
+	  <caption><para>
+	    Subtractive hostname filters
+	  </para></caption>
+	</mediaobject>
 	When constructing a filter, it is important to remember, that all top-level filters
 	are subtractive. A host must pass all top-level filters to show up in the result. On
 	the other hand, all patterns and sub-filters are additive. Matching any one of them
@@ -197,7 +433,7 @@
 	subtractive behavior is desired for patterns or sub-filters, each pattern or
 	sub-filter must be added to its own top-level filter. For example, to select all
 	hosts that start with <systemitem class="systemname">beo</systemitem> as well as end
-	on "1" two Hostname filters have to be added.
+	on "1", two Hostname filters have to be added.
       </para>
     </section>
   </section>
