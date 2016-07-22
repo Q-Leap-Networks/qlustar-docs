@@ -4,7 +4,21 @@
   <title>Revision History</title>
   <revhistory>
     <revision>
-      <revnumber>9.1-0</revnumber>
+      <revnumber>2.1.1-0</revnumber>
+      <date>July 22 2016</date>
+      <author>
+	<personname><firstname>Qlustar</firstname>
+	<surname>Doc Team</surname></personname>
+	<email>qlustar-docs@q-leap.com</email>
+      </author>
+      <revdescription>
+	<simplelist>
+	  <member>Updates for QluMan 2.1.1 / Qlustar 9.1.1 / </member>
+	</simplelist>
+      </revdescription>
+    </revision>
+    <revision>
+      <revnumber>2.1-0</revnumber>
       <date>Aug 27 2015</date>
       <author>
 	<personname><firstname>Qlustar</firstname>
@@ -13,7 +27,7 @@
       </author>
       <revdescription>
 	<simplelist>
-	  <member>Initial version</member>
+	  <member>Initial version 2.1.0</member>
 	</simplelist>
       </revdescription>
     </revision>
