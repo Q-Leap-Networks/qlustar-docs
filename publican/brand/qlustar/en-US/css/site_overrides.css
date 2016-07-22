@@ -221,7 +221,7 @@ h6 {
 }
 
 .book .toc dd dl dd dl dt{
-    margin-bottom: -0.3em !important;
+    margin-bottom: -0.1em !important;
 }
 
 .book .toc dd dl dd {
@@ -233,7 +233,7 @@ h6 {
 }
 
 .chapter .toc dd dl dt {
-    margin-bottom: -0.3em !important;
+    margin-bottom: -0.1em !important;
 }
 
 /* Modification for Chapter in Preface */
