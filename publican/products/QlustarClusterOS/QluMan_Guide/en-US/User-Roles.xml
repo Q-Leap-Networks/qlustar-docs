@@ -131,6 +131,15 @@
 	role="bold">different</emphasis>, communication channel, e.g. reading it over the
 	phone.
       </para>
+      <note>
+	<para>
+	  If a new cluster has been setup, an initial auth token for the admin user needs to be
+	  generated on the cmdline of the cluster head-node. This is explained in detail in the
+	  <link
+	  xlink:href="../First_Steps_Guide/index.html#sec-QluMan-Token___blank___">Qlustar
+	  First Steps Guide</link>.
+	</para>
+      </note>
       <para>
 	<mediaobject>
 	  <imageobject><imagedata
