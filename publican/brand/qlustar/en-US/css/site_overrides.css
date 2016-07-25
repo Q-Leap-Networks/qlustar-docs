@@ -180,6 +180,15 @@ body > #wrapper {
     font-size: 16px;
 }
 
+/* bullets for lists*/
+ul {
+    list-style-image: url("common/en-US/images/dot2.png") !important;
+}
+
+ul ul {
+    list-style-image: url("common/en-US/images/dot.png") !important;
+}
+
 /* Set the position of the image descriptions */
 .caption .para {
     margin-top: 0px;
@@ -210,6 +219,12 @@ h6 {
     margin-left: -4px;
 }
 /* -------------------------------------------------- */
+
+/* ----------------- Header / Title ----------------- */
+
+.article .author {
+    text-align: center;
+}
 
 /* Set Background-color + opacity of Index-toc*/
 #floatingtoc .toc {
