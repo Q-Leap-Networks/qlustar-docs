@@ -10,7 +10,24 @@
 <article xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
 	 xmlns:xi="http://www.w3.org/2001/XInclude">
-  <xi:include href="Article_Info.xml"/>
+  <info version="5.0" xml:id="info-Qlustar_Cluster_OS-Release_Notes-Release_Notes" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Release Notes</title>
+    <subtitle></subtitle>
+    <productname>Qlustar Cluster OS</productname>
+    <productnumber>9.1</productnumber>
+    <edition>1</edition>
+    <abstract>
+      <para>
+	Qlustar 9.1 is a major feature release of the 9.x series. It ships QluMan 2.1 packed
+	with new features and improvements. The highlights among the numerous component updates
+	and bug fixes are: Slurm 15.8.5, OpenMPI 1.8.8, ZFS 0.6.5, OFED 3.18-1, Lustre 2.8 and
+	CUDA 7.5.
+      </para>
+    </abstract>
+    <author><orgname><inlinemediaobject><imageobject>
+	<imagedata fileref="Common_Content/images/qlustar-logo.png" format="PNG" />
+      </imageobject></inlinemediaobject></orgname></author>
+  </info>
   <section>
     <title>Basic Info</title>
       <para>
@@ -392,6 +409,168 @@
 	</step>
       </procedure>
     </task>
+  </section>
+  <section xml:id="RelNotes_9_1_1">
+    <title>Release Notes for the 9.1.1 Maintenance Release</title>
+    <para>
+      Qlustar 9.1.1 is the first maintenance release within the 9.1 series. It includes quite a
+      number of new features and minor component updates. Updating from 9.1.0 works <link
+      xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___"> as
+      usual.</link>
+    </para>
+    <section>
+      <title>Basic Info</title>
+      <para>
+	The Qlustar 9.1.1 <classname>core platform</classname> is based on Ubuntu 14.04.4 and
+	the additional Debian <classname>edge platform</classname> on Debian 7.9. They include
+	all security fixes and other package updates published before July 15th 2016. Available
+	security updates relevant to Qlustar 9.1.1, that have appeared after this date, will be
+	announced on the Qlustar website and in the Qlustar security news-letter.
+      </para>
+    </section>
+    <section>
+      <title>New features / tools / packages</title>
+      <section>
+	<title>QluMan 2.1.1</title>
+	<para>
+	  <variablelist>
+	    <varlistentry>
+	      <term>Slurm GRES Configurator</term>
+	      <listitem><para> Slurm generic resources (GRES) are mostly used to assign
+	      additional hardware features (e.g. GPUs) to a running job. QluMan now has a
+	      nice configurator which allows to assign and manage GRES on nodes. <link
+	      xlink:href="../QluMan_Guide/index.html#sec-Slurm-Gres-Groups___blank___"> More
+	      details &hellipsis;</link> </para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>GPU Wizard</term>
+	      <listitem><para> To make GPU management for usage with Slurm really simple, a
+	      powerful GPU wizard has been added to QluMan. Auto-detected GPUs on running nodes
+	      are correctly setup with just a few mouse clicks. <link
+	      xlink:href="../QluMan_Guide/index.html#sec-GPUwizard___blank___"> More details
+	      &hellipsis;</link>
+	      </para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Message Log Viewer</term>
+	      <listitem><para> QluMan now also includes a powerful Log Viewer that allows to
+	      inspect important events in the cluster. Messages are categorized depending on
+	      the type of event, when it occurred, which component(s) it involved and how
+	      important it was. With our convenient filter editor, the type of messages to be
+	      shown is easily custom-tailored. <link
+	      xlink:href="../QluMan_Guide/index.html#chap-LogViewer___blank___"> More details
+	      &hellipsis;</link> </para></listitem>
+	    </varlistentry>
+	  </variablelist>
+	</para>
+      </section>
+      <section>
+	<title>Commercial compiler support</title>
+	<para>
+	  Two new packages have been created that allow for straight-forward installation and integration of the two most popular commercial compilers on Linux Clusters:
+	  <itemizedlist>
+	    <listitem><para>
+	      Intel Parallel Studio XE 2016
+	    </para></listitem>
+	    <listitem><para>
+	      PGI compilers / Tools
+	    </para></listitem>
+	  </itemizedlist>
+	  Just install either of the compilers on the head-nodes NFS using their standard
+	  installation routine. Afterwards install and configure the corresponding Qlustar
+	  packages in the UnionFS chroot used for your compute nodes:
+	  <itemizedlist>
+	    <listitem><para>
+	      qlustar-ips-2016 - for Intel Parallel Studio
+	    </para></listitem>
+	    <listitem><para>
+	      qlustar-pgi-2015 - for PGI compilers / Tools
+	    </para></listitem>
+	  </itemizedlist>
+	    Integrated OpenMPI packages for the compilers are also available:
+	  <itemizedlist>
+	    <listitem><para>
+	      openmpi-icc - for Intel Parallel Studio
+	    </para></listitem>
+	    <listitem><para>
+	      openmpi-pgi - for PGI compilers / Tools
+	    </para></listitem>
+	  </itemizedlist>
+	</para>
+      </section>
+      <section>
+	<title>New utilities</title>
+	<para>
+	  <variablelist>
+	    <varlistentry>
+	      <term>Configurable automatic ZFS snapshot backup</term>
+	      <listitem><para> The new package <application>qluman-fs-tools</application>
+	      includes the configurable ZFS snapshot backup tool
+	      <application>zfs-snap-bak.py</application> with a corresponding configuration
+	      file at <filename>/etc/qlustar/fs-tools/zfs-snap-bak.conf</filename>.
+	      </para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Easy resetting of NIS passwords</term>
+	      <listitem><para> The new utility <application>reset-nis-passwd.sh</application>
+	      allows for easy resetting of user passwords in NIS, including generating a new
+	      random password.  </para></listitem>
+	    </varlistentry>
+	  </variablelist>
+	</para>
+      </section>
+      <section>
+	<title>I/O benchmark tools</title>
+	<para>
+	  <variablelist>
+	    <varlistentry>
+	      <term>mdtest HPC benchmark</term>
+	      <listitem><para> The new mdtest package compiled against OpenMPI provides the
+	      parallel metadata benchmark <link
+	      xlink:href="https://sourceforge.net/projects/mdtest/___blank___">mdtest</link>
+	      (1.9.3), that performs open/stat/close operations on files and directories and
+	      then reports the performance. It's mostly used to benchmark parallel filesystem
+	      performance.  </para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>IOR MPI parallel I/O benchmark</term>
+	      <listitem><para> The new ior package compiled against OpenMPI provides the
+	      popular parallel I/O benchmark <link
+	      xlink:href="https://github.com/LLNL/ior___blank___">IOR</link> (3.0.1), that
+	      leverages the scalability of MPI to easily and accurately calculate the aggregate
+	      bandwidth of an unlimited number of client machines. IOR can utilize the POSIX,
+	      MPI-IO, and HDF5 I/O interfaces. It's mostly used to benchmark parallel
+	      filesystem performance. </para></listitem>
+	    </varlistentry>
+	  </variablelist>
+	</para>
+      </section>
+      <section>
+	<title>Major component updates</title>
+	<para>
+	  <itemizedlist>
+	    <listitem><para>slurm 15.08.12</para></listitem>
+	    <listitem><para>OFED 3.18-2 (includes new libfabric package)</para></listitem>
+	    <listitem><para>Lustre 2.8 final</para></listitem>
+	    <listitem><para>ZFS 0.6.5.7</para></listitem>
+	  </itemizedlist>
+	</para>
+      </section>
+      <section>
+	<title>Changelogs</title>
+	<para>
+	  A detailed log of changes in the image modules can be found in the directories
+	  <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-9.1.1</filename>.
+	  As an example, in the directory
+	  <filename>/usr/share/doc/qlustar-module-core-precise-amd64-9.1.1</filename> you will
+	  find a summary changelog in <filename>core.changelog</filename>, a complete list of
+	  packages with version numbers entering the current core module in
+	  <filename>core.packages.version.gz</filename>, a complete changelog of the core
+	  modules package versions in <filename>core.packages.version.gz</filename> and finally
+	  a complete log of changed files in <filename>core.contents.changelog.gz</filename>.
+      </para>
+      </section>
+    </section>
   </section>
 </article>
 
