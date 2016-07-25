@@ -298,16 +298,6 @@
       <section xml:id="sec-Host-Selections">
 	<title>Host Selections</title>
 	<para>
-	  There are situations, where one wants to change a property or config of a whole set
-	  of hosts. For example, you may want to change all nodes located in a particular blade
-	  to no longer format their disk on boot. This can be achieved by selecting a set of
-	  hosts in the enclosure view with the mouse. A range of hosts can be selected by
-	  clicking on the first host and then clicking on the last host, while pressing the
-	  shift key. Hosts can also be added or removed from the selection by clicking on a
-	  host while pressing the <keycap>CTRL</keycap> key. Once a set of hosts is selected,
-	  changes can be made to all selected hosts through the context menu. For instance,
-	  this allows changing the Host Template or add/alter a generic property of a set of
-	  hosts.
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/enclosure_view/selection_button.png"
@@ -319,7 +309,25 @@
 	      Alternative selection of hosts
 	    </para></caption>
 	  </mediaobject>
+	  There are situations, where one wants to change a property or config of a whole set
+	  of hosts. For example, you may want to change all nodes located in a particular blade
+	  to no longer format their disk on boot. This can be achieved by selecting a set of
+	  hosts in the enclosure view with the mouse. A range of hosts can be selected by
+	  clicking on the first host and then clicking on the last host, while pressing the
+	  shift key. Hosts can also be added or removed from the selection by clicking on a
+	  host while pressing the <keycap>CTRL</keycap> key. Once a set of hosts is selected,
+	  changes can be made to all selected hosts through the context menu. For instance,
+	  this allows changing the Host Template or add/alter a generic property of a set of
+	  hosts.
 	</para>
+	<note>
+	  <para>
+	    When a host is part of an enclosure, selecting the enclosure will also select the
+	    host(s) inside of the enclosure, provided it is <emphasis
+	    role="bold">collapsed</emphasis>. However, hosts inside of expanded enclosures must
+	    be selected individually.
+	  </para>
+	</note>
 	<para>
 	  An alternative and more powerful way to select a set of hosts is available via the
 	  <guibutton>Selection</guibutton> button at the bottom of the <classname>Enclosure
@@ -355,7 +363,7 @@
 	  Filters see <xref linkend="chap-Host-Filters"/>. When pressing
 	  <guibutton>Select</guibutton>, the selection is set to the hosts defined by the
 	  corresponding filter, dropping any previously selected hosts. <guibutton>Add
-	  to</guibutton>> adds, while <guibutton>Remove from</guibutton> removes the hosts
+	  to</guibutton> adds, while <guibutton>Remove from</guibutton> removes the hosts
 	  defined by the filter from the current selection. <guibutton>Intersection</guibutton>
 	  sets the selection to only those hosts in the current selection, that are also part
 	  of the set defined by the filter.
@@ -364,4 +372,3 @@
     </section>
   </section>
 </chapter>
-

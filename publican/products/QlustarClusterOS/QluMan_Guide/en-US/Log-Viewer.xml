@@ -15,9 +15,9 @@
   <section xml:id="sec-LogViewer-purpose">
     <title>Purpose</title>
     <para>
-      QluMan comes with a <classname>Log Viewer</classname> that allows to inspect import
-      events in the cluster. Events are categorized depending on the type of event, when it
-      occurred, which component(s) it involved and how important the event was.
+      QluMan comes with a <classname>Log Viewer</classname> that allows to inspect important
+      events in the cluster. Messages are categorized depending on the type of event, when it
+      occurred, which component(s) it involved and how important it was.
     </para>
   </section>
   <section xml:id="sec-LogViewer-indicator">
