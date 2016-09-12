@@ -94,12 +94,17 @@ keep the local version currently installed.
 		</para></caption>
 	      </mediaobject>
 	      An <firstterm>ssh key</firstterm> for the root user is generated next. You can
-	      enter an optional <firstterm>pass-phrase</firstterm> for it. Note however, that a
-	      non-empty pass-phrase will have the effect that you will have to specify it any
-	      time, you try to ssh to another host in the cluster. If you don't want that, work
-	      without a pass-phrase. This key, will be used to enable login by root to any node
-	      of the cluster without specifying a password.
+	      enter an optional <firstterm>pass-phrase</firstterm> for it. This key, will be
+	      used to enable login by root to any node of the cluster without specifying a
+	      password.
 	    </para>
+	    <note>
+	      <para>
+		Be aware, that having a non-empty pass-phrase means, that you will have to
+		specify it any time you try to ssh to another host in the cluster. If you
+		don't want that, work without a pass-phrase.
+	      </para>
+	    </note>
 	  </step>
 	  <step>
 	    <title>Configuring Nagios</title>
@@ -155,10 +160,14 @@ keep the local version currently installed.
 	      If slurm was selected as the cluster resource manager, its configuration requires
 	      the generation of a <firstterm>munge key</firstterm> and the specification of a
 	      password for the slurm mysql account. Enter the chosen password twice when asked
-	      for it. Note that the slurm database daemon is also being configured by this
-	      process. Hence, you will be ready to take full advantage of the accounting
-	      features of slurm.
+	      for it.
 	    </para>
+	    <note>
+	      <para>
+		The slurm database daemon is also being configured by this process. Hence, you
+		will be ready to take full advantage of the accounting features of slurm.
+	      </para>
+	    </note>
 	  </step>
 	  <step>
 	    <title>Configuring the virtual Demo Cluster</title>
@@ -367,10 +376,15 @@ keep the local version currently installed.
 	</screen>
 	The nice thing about this mechanism is that software from packages installed in a
 	particular chroot will be available instantaneously on all compute/storage nodes that
-	are configured to use that chroot.  Important: There is usually no need to install
-	additional packages on the head-node itself (only in the chroot). Software packages
-	installed directly on the head-node will not be visible cluster-wide.
+	are configured to use that chroot.
       </para>
+      <important>
+	<para>
+	  There is usually no need to install additional packages on the head-node itself (only
+	  in the chroot). Software packages installed directly on the head-node will not be
+	  visible cluster-wide.
+      </para>
+      </important>
     </section>
     <section xml:id="sec-Running-QluMan">
       <title>Running the Cluster Manager QluMan</title>
