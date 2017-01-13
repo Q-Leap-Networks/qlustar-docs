@@ -14,7 +14,7 @@
   <title>Slurm Configuration and Management</title>
   <section xml:id="sec-Slurm-Config">
     <title>Slurm Configuration</title>
-    <section xml:id="sec-Slurm-Overview">
+    <section xml:id="sec-Slurm-Config-Overview">
       <title>Overview</title>
       <para>
 	The slurm configuration module comes in four parts:
@@ -940,7 +940,21 @@
 	  between simplicity, clarity and precision concerning your individual configuration
 	  policy.
 	</para>
+      </section>
+    </section>
   </section>
+  <section xml:id="sec-Slurm-Manage">
+    <title>Slurm Management</title>
+    <section xml:id="sec-Slurm-Manage-Overview">
+      <title>Overview</title>
+      <para>
+	The QluMan Slurm Component provides extensive functionality to manage and operate more
+	or less all aspects and features of the Slurm workload manager. In Qlustar 9.2, QluMan
+	supports the included Slurm version 16.05.
+      </para>
+      <para>
+	The following management and operation sub-components are available:
+      </para>
     </section>
   </section>
 </section>
