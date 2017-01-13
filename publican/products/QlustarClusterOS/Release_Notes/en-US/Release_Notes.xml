@@ -7,10 +7,10 @@
 <!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
 %DOCBOOK_ENTS;
 ]>
-<article xmlns="http://docbook.org/ns/docbook"
+<article version="5.0" xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
 	 xmlns:xi="http://www.w3.org/2001/XInclude">
-  <info version="5.0" xml:id="info-Qlustar_Cluster_OS-Release_Notes-Release_Notes" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <info xml:id="info-Qlustar_Cluster_OS-Release_Notes-Release_Notes">
     <title>Release Notes</title>
     <subtitle></subtitle>
     <productname>Qlustar Cluster OS</productname>
@@ -18,10 +18,14 @@
     <edition>1</edition>
     <abstract>
       <para>
-	Qlustar 9.1 is a major feature release of the 9.x series. It ships QluMan 2.1 packed
-	with new features and improvements. The highlights among the numerous component updates
-	and bug fixes are: Slurm 15.8.5, OpenMPI 1.8.8, ZFS 0.6.5, OFED 3.18-1, Lustre 2.8 and
-	CUDA 7.5.
+	Qlustar 9.2 is a major feature release of the 9.x series. It ships QluMan 3.0 that
+	introduces a powerful new management and operating interface for Slurm. Under the hood,
+	a completely new messaging architecture QluNet has been implemented to serve as the
+	communication backbone for QluMan components.
+      </para>
+      <para>
+	The highlights among the numerous component updates and bug fixes are: Slurm 16.5.8,
+	OpenMPI 2.0.2 and CUDA 8.0.
       </para>
     </abstract>
     <author><orgname><inlinemediaobject><imageobject>
@@ -31,17 +35,17 @@
   <section>
     <title>Basic Info</title>
       <para>
-	The Qlustar 9.1 <classname>core platform</classname> is based on Ubuntu 14.04.3 and the
+	The Qlustar 9.2 <classname>core platform</classname> is based on Ubuntu 14.04.5 and the
 	additional Debian <classname>edge platform</classname> on Debian 7.9. They include all
-	security fixes and other package updates published before December 30th 2015. Available
-	security updates relevant to Qlustar 9.1, that have appeared after this date, will be
+	security fixes and other package updates published before January 20th 2017. Available
+	security updates relevant to Qlustar 9.2, that have appeared after this date, will be
 	announced on the Qlustar website and in the Qlustar security news-letter.
       </para>
   </section>
   <section>
     <title>New features</title>
     <section>
-      <title>QluMan 2.1</title>
+      <title>QluMan 3.0</title>
       <para>
 	<variablelist>
 	  <varlistentry>
@@ -120,8 +124,8 @@
 	    <term>Slurm</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 introduces the Slurm 15.8 series with the current version being
-		15.8.5.
+		Qlustar 9.2 introduces the Slurm 16.5 series with the current version being
+		16.5.8.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -170,21 +174,8 @@
 	    <term>Nvidia CUDA</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 provides optimal support for Nvidia GPU hardware by supplying
-		pre-compiled and up-to-date kernel drivers as well as CUDA 7.5.
-	      </para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>HA stack</term>
-	    <listitem>
-	      <para>
-		Qlustar 9.1 ships corosync 2.3.4, pacemaker 1.1.12 and crmsh 2.1.1 for
-		reliable High-Availability configurations.
-	      </para>
-	      <para>
-	       Improved Qlustar resource scripts dramatically reduce failover and startup times
-	       of HA resources by more than 80%.
+		Qlustar 9.2 provides optimal support for Nvidia GPU hardware by supplying
+		pre-compiled and up-to-date kernel drivers as well as CUDA 8.0.
 	      </para>
 	    </listitem>
 	  </varlistentry>
