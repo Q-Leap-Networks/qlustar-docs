@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xmlns:xi="http://www.w3.org/2001/XInclude"
+	 xml:id="chap-Components">
+  <title>Optional Components</title>
+  <para>
+    The fact that Qlustar is a modular Cluster OS with standard core functionality and many
+    optional add-on components is also reflected in QluMan. Depending on the Qlustar modules
+    installed and activated for a cluster, the QluMan GUI will have optional functionality
+    accessible via its <guimenuitem>Components</guimenuitem> submenu. These optional components
+    are documented below.
+  </para>
+
+  <xi:include href="components/Slurm.xml"/>
+
+</chapter>
