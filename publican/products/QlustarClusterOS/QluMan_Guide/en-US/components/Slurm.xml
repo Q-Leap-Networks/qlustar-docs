@@ -956,6 +956,121 @@
 	The following management and operation sub-components are available:
       </para>
     </section>
+    <section xml:id="sec-Slurm-Manage-Job-Management">
+      <title>Job Management</title>
+      <para>
+	In the <classname>Job Management</classname> are all of your current jobs. Because a
+	job has about 100 propteries you are able to decide which propteries you want to show
+	or hide in the Job Management (see <xref linkend="sec-Slurm-Manage-Customize-Columns"
+	endterm="CustomizeColumns"/> for further informations). To sort the job table you just
+	have to click on the title of the proptery you want to sort for (for example
+	<emphasis>Job Id</emphasis>). Click the title again for changing the sort order. You
+	can also move a column with drag and drop and change its width. These settings will be
+	saved when the window gets closed. If you want to take action on a job you just have to
+	go into its contextmenu and select between killing, suspending and resuming
+	it. Depending on the state of the selected jobs some actions might be disabled. You are
+	able to take this action on all selected jobs or all jobs of this user on condition
+	that there is no conflict with the job state. If you want to get more informations from
+	a job go into the contextmenu and select <emphasis>More Information</emphasis> (see
+	<xref linkend="sec-Slurm-Manage-More-Informations" endterm="MoreInformations"/> for
+	further informations). In <emphasis>Activate Filter</emphasis> you can set one ore more
+	custom filter (created in the Job Filter Editor) as active. All active filters are
+	shown after the <emphasis>Active Filter</emphasis> label. For creating custom filters
+	see Job Filter Editor.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Manage-Customize-Columns">
+      <title>Customize Columns</title>
+      <para>
+	In the Customize Columns Dialog are all known columns (Properties of a Job) listed in 2
+	lists, depending on whether they are shown or hidden. To show or hide a column just
+	select the columns you want to show/hide and drag them in the right list. The order of
+	this list is not important because this is not the order of the columns in the Job
+	Management. Confirm your changes with OK.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Manage-More-Informations">
+      <title>More Informations</title>
+      <para>
+	This Dialog opens after you select Get more informations in the context menu of a
+	job. It uses a table to show the propteries and the corresponding values for the
+	selected job. There are 2 filteres included in this dialog. One for hiding all
+	properties if the value is 0 or empty and one for hiding exotic propteries which are
+	not needed in most cases. Standardly these both filters are enabled. To disable them
+	you have to uncheck the corresponding checkbox at the bottom of the Dialog.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Manage-Activate-Filter">
+      <title>Activate Filter</title>
+      <para>
+	If you created some custom filters they will be listed here. Select one or more filters
+	for the current jobs. All active filters are shown in the Active Filter label of the
+	Job Management
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Manage-Job-Filter-Editor">
+      <title>Job Filter Editor</title>
+      <para>
+	As mentioned before we are able to create custom filters for our jobs. To do this we
+	first have to create a new filter by clicking New Filter and then insert a name for the
+	filter. After this is done we created a filter. To add some values to this filter go in
+	the contextmenu and select the proptery you want to filter. For example Job Id. A new
+	dialog pops up. Here you can select what kind of filtering you want. Because the job id
+	is always an integer you have the filtertypes between x and y, bigger then x, less then
+	x. Choose the filtertype you want and confirm with OK. The value is now added to our
+	custom filter. You can combine multiple values in one custom filter. After we made our
+	changes we hit the save button. Now our filter can be used in the Job Management.
+      </para>
+    </section>
+    <section xml:id="sec-Slurm-Manage-Node-State-Management">
+      <title></title>
+      <para>
+	In the Node State Management are all known hosts listed. We have 3 different kind of
+	trees which are containing the hosts.
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>
+	    Partition View
+	  </term>
+	  <listitem>
+	    <para>
+	      This tree shows all partitions with the corresponding nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Enclosure View
+	  </term>
+	  <listitem>
+	    <para>
+	      This tree is like the Enclosure View dialog.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    NodeState View
+	  </term>
+	  <listitem>
+	    <para>
+	      This tree shows all nodestates with the corresponding nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+      <para>
+	To manage one or more nodes you first have to select them. Use the preffered view and
+	move the node to the right list. All nodes in this list are selected for later
+	actions. You can select multiple nodes for moving or input a Hostlist in the Hostlist
+	label (e.g. beo-[01-04]). The nodes will be selected, if the hostlist is correct.
+      </para>
+      <para>
+	We have 7 actions to use for our selected nodes:
+      </para>
+    </section>
+    
   </section>
 </section>
 
