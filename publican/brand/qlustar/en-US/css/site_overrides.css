@@ -181,11 +181,11 @@ body > #wrapper {
 }
 
 /* bullets for lists*/
-ul {
+.itemizedlist ul {
     list-style-image: url("common/en-US/images/dot2.png") !important;
 }
 
-ul ul {
+.itemizedlist ul ul {
     list-style-image: url("common/en-US/images/dot.png") !important;
 }
 

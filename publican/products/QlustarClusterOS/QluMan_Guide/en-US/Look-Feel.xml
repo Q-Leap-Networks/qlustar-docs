@@ -57,6 +57,19 @@
       set with the corresponding pull-down menu. Changing one of the values and clicking the
       <guibutton>Apply</guibutton> button, changes the corresponding color on the fly.
     </para>
+    <section xml:id="sec-Look-Feel-Preferences">
+    <title>Preferences</title>
+    <para>
+      <!--cbox(file: preferences/preferences_full.png caption:)-->
+      In the <classname>QluMan Preferences</classname> dialog you are able to customize the Look&amp;Feel of your
+      QluMan. In the right tree are all settings listed that are available for you. This depends on the components
+      of your cluster. Select the component you want to customize. For example
+      <guimenu>Slurm->Accounting->Colors</guimenu>. Here you can see the colors that are set for accounts, users,
+      users in default accounts and the root user. To change a color select the property and hit the
+      <classname>Edit</classname> button. Now a colorpicker dialog comes up. Select your new color and click OK. If
+      a dialog which uses this color is open, you need to reopen it to get the color updates.
+    </para>
+    </section>
   </section>
   <section xml:id="sec-Look-Feel-Clone">
     <title>Cloning KDE Settings</title>

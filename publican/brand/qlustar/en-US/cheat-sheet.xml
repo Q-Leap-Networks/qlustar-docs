@@ -49,6 +49,10 @@
 	</listitem>
       </itemizedlist>
     </para>
+    <!-- A text between quotes-->
+    <para>
+      Set to <quote>DOWN</quote>
+    </para>
     <para>
       <!-- A list with a title and an indented Text-->
       <variablelist>
@@ -89,7 +93,7 @@
       <!-- The way of showing an internal link
       The string in 'linkend' is the id to link-->
       This the key-control file regarding the DNS configuration (see
-      <xref linkend="admin-man-sect-dns" endterm="Linkname"/>).
+      <link linkend="admin-man-sect-dns">Link name</link>).
     </para>
     <para>
       <!-- Showing a part of a text in italic -->
