@@ -66,8 +66,7 @@
       of your cluster. Select the component you want to customize. For example
       <guimenu>Slurm->Accounting->Colors</guimenu>. Here you can see the colors that are set for accounts, users,
       users in default accounts and the root user. To change a color select the property and hit the
-      <classname>Edit</classname> button. Now a colorpicker dialog comes up. Select your new color and click OK. If
-      a dialog which uses this color is open, you need to reopen it to get the color updates.
+      <classname>Edit</classname> button. Now a colorpicker dialog comes up. Select your new color and click OK.
     </para>
     </section>
   </section>
