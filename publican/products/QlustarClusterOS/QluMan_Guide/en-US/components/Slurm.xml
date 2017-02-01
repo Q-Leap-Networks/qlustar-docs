@@ -945,8 +945,6 @@
   </section>
   <section xml:id="sec-Slurm-Manage">
     <title>Slurm Management</title>
-    <section xml:id="sec-Slurm-Manage-Overview">
-      <title>Overview</title>
       <para>
 	The QluMan Slurm Component provides extensive functionality to manage and operate more
 	or less all aspects and features of the Slurm workload manager. In Qlustar 9.2, QluMan
@@ -955,7 +953,42 @@
       <para>
 	The following management and operation sub-components are available:
       </para>
-    </section>
+      <section xml:id="sec-Slurm-Manage-Overview">
+	<title>Overview</title>
+	<para>
+	  <!-- Insert picture of menu here -->
+	  In the <application>Slurm Overview</application> you get a close look over your cluster. This Overview
+	  splitts itself into 2 parts: a <classname>Cluster Usage Overview</classname> and a <classname>Job
+	  Overview</classname>.
+	</para>
+	<bridgehead>Cluster Usage Overview</bridgehead>
+	<para>
+	  <!--cbox(file: slurm/Overview/cluster_usage_overview.png caption:)-->
+	  The <classname>Cluster Usage Overview</classname> provides live information and charts for
+	  <classname>Nodes</classname>, <classname>CPU Cores</classname> and <classname>Memory</classname>. Every
+	  property in the table has a tooltip for deeper information about it. 
+	  <!-- Insert picture of tooltip here -->
+	</para>
+	<note>
+	  <para>
+	    You can change the colors for the <classname>Cluster Usage Overview</classname> in <link
+	    linkend="sec-Look-Feel-Preferences">Preferences</link>.
+	  </para>
+	</note>
+	<bridgehead>Job Overview</bridgehead>
+	<para>
+	  <!--cbox(file: slurm/Overview/joboverview.png caption:)-->
+	  The <classname>Job Overview</classname> consists of 2 tables and 4 charts, which gets live updates. The
+	  <classname>Running</classname> table provides running job informations for every user. The column are
+	  holding the color of the user (if he is part of a chart), the username, the count of running cpu cores,
+	  used nodes and running jobs. The <classname>Pending</classname> table provides the pending cpu cores and
+	  jobs for the same user. These job informations are mirrored by the 4 pie-charts <classname>Allocated CPU
+	  Cores by User</classname>, <classname>Used Nodes by User</classname>, <classname>Pending CPU Cores by
+	  User</classname> and <classname>Pending Jobs by User</classname>. Every part of the pie-chart has a
+	  tooltip with the name of the user.
+	  <!-- Insert picture of tooltip here -->
+	</para>
+      </section>
     <section xml:id="sec-Slurm-Manage-Job-Management">
       <title>Job Management</title>
       <para>
