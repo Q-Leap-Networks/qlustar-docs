@@ -956,7 +956,7 @@
       <section xml:id="sec-Slurm-Manage-Overview">
 	<title>Overview</title>
 	<para>
-	  <!-- Insert picture of menu here -->
+	  <!--cbox(file: slurm/Overview/cluster_usage_overview_menu.png caption:)-->
 	  In the <application>Slurm Overview</application> you get a close look over your cluster. This Overview
 	  splitts itself into 2 parts: a <classname>Cluster Usage Overview</classname> and a <classname>Job
 	  Overview</classname>.
@@ -967,7 +967,7 @@
 	  The <classname>Cluster Usage Overview</classname> provides live information and charts for
 	  <classname>Nodes</classname>, <classname>CPU Cores</classname> and <classname>Memory</classname>. Every
 	  property in the table has a tooltip for deeper information about it. 
-	  <!-- Insert picture of tooltip here -->
+	  <!--cbox(file: slurm/Overview/cluster_usage_overview_tooltip.png caption:)-->
 	</para>
 	<note>
 	  <para>
@@ -977,7 +977,7 @@
 	</note>
 	<bridgehead>Job Overview</bridgehead>
 	<para>
-	  <!--cbox(file: slurm/Overview/joboverview.png caption:)-->
+	  <!--cbox(file: slurm/Overview/job_overview.png caption:)-->
 	  The <classname>Job Overview</classname> consists of 2 tables and 4 charts, which gets live updates. The
 	  <classname>Running</classname> table provides running job informations for every user. The column are
 	  holding the color of the user (if he is part of a chart), the username, the count of running cpu cores,
@@ -986,7 +986,7 @@
 	  Cores by User</classname>, <classname>Used Nodes by User</classname>, <classname>Pending CPU Cores by
 	  User</classname> and <classname>Pending Jobs by User</classname>. Every part of the pie-chart has a
 	  tooltip with the name of the user.
-	  <!-- Insert picture of tooltip here -->
+	  <!--cbox(file: slurm/Overview/job_overview_tooltip.png caption:)-->
 	</para>
       </section>
     <section xml:id="sec-Slurm-Manage-Job-Management">
