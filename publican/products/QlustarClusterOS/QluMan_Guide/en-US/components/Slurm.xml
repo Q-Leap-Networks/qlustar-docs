@@ -994,23 +994,88 @@
       <para>
 	<!--cbox(file: slurm/job_management/job_management_full.png caption:)-->
 	In the <classname>Job Management</classname> are all of your current jobs. Because a job has about 100
-	propteries you are able to decide which propteries you want to show or hide in the Job Management (see
-	<link linkend="sec-Slurm-Manage-Customize-Columns">Customize Columns</link> for further informations). To
-	sort the job table you just have to click on the title of the proptery you want to sort for (for example
-	<emphasis>Job Id</emphasis>). <!--cbox(file: slurm/job_management/job_management_sort.png caption:)-->
-	Click the title again for changing the sort order. You can also move a column with drag and drop and change
-	its width. <!--cbox(file: slurm/job_management/job_management_drag.png caption:)--> These settings will be
-	saved when the window gets closed. If you want to take action on a job you just have to go into its
-	contextmenu and select between killing, suspending and resuming it.
+	propteries you are able to decide which propteries you are interested in and which you want to hide in the
+	Job Management (see <link linkend="sec-Slurm-Manage-Customize-Columns">Customize Columns</link> for further
+	informations). To sort the job table you just have to click on the title of the proptery you want to sort
+	for (for example <emphasis>Job Id</emphasis>). <!--cbox(file: slurm/job_management/job_management_sort.png
+	caption:)--> Click the title again for changing the sort order. You can also move a column with drag and
+	drop and change its width. <!--cbox(file: slurm/job_management/job_management_drag.png caption:)--> These
+	settings will be saved when the window gets closed. If you want to take action on a job you just have to go
+	into its contextmenu and select between the following actions:
+	<variablelist>
+	<varlistentry>
+	  <term>Kill Job</term>
+	  <listitem>
+	    <para>
+	      This kills a Job and set its state to CANCELED.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Suspend Job</term>
+	  <listitem>
+	    <para>
+	      This suspends a Job and set its state to SUSPENDED.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Resume Job</term>
+	  <listitem>
+	    <para>
+	      This resumes a suspended Job and set its state to RUNNING.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Requeue Job</term>
+	  <listitem>
+	    <para>
+	      This kills a Job and set it back in the queue with state PENDING.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Requeue and Hold Job</term>
+	  <listitem>
+	    <para>
+	      This kills a Job and set it back in the queue with state PENDING. The Job gets hold.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Hold Job</term>
+	  <listitem>
+	    <para>
+	      This prevents a pending job from getting started.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Release Job</term>
+	  <listitem>
+	    <para>
+	      This releases a job that was hold.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Set Priority</term>
+	  <listitem>
+	    <para>
+	      This let you set the Priority of a Job manually.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	</variablelist>
 	<!--cbox(file: slurm/job_management/job_management_context.png caption:)--> 
-	Depending on the state of the selected jobs some
-	actions might be disabled. You are able to take this action on all selected jobs or all jobs of this user
-	on condition that there is no conflict with the job states. 
-	<!--cbox(file: slurm/job_management/job_management_action_to_all_user.png caption:)-->
+	Depending on the state of the selected jobs some actions might be disabled. You are able to take this
+	action on all selected jobs or all jobs of this user on condition that there is no conflict with the job
+	states.	<!--cbox(file: slurm/job_management/job_management_action_to_all_user.png caption:)-->
 	If you want to get more informations from a job go into the contextmenu and select <emphasis>More
 	Information</emphasis> (see <link linkend="sec-Slurm-Manage-More-Informations">More Information</link> for
-	further informations). In <classname>Activate Filter</classname> you can set one ore more custom filter
-	(created in the Job Filter Editor) as active.  
+	further informations). In <classname>Activate Filter</classname> you can set one or more custom filter
+	(created in the <link linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>) as active.  
 	<!--cbox(file:slurm/job_management/job_management_activate_filter.png caption:)--> 
 	All active filters are shown after the <classname>Active Filter</classname> label. For creating custom
 	filters see <link linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>.
@@ -1021,11 +1086,11 @@
       <para>
 	<!--cbox(file: slurm/customize_columns/customize_columns_full.png caption:)-->
 	In the <classname>Customize Columns</classname> dialog are all known columns (Properties of a Job) listed
-	in 2 lists, depending on whether they are shown or hidden. To show or hide a column just select the columns
+	in 2 lists, seperated on whether they are shown or hidden. To show or hide a column just select the columns
 	you want to show/hide and drag them in the right list. 
 	<!--cbox(file: slurm/customize_columns/customize_columns_drag.png caption:)-->
-	The order of this list is not important because this
-	is not the order of the columns in the Job Management. Confirm your changes with <emphasis>OK</emphasis>.
+	The order of this list is not important because this is not the order how the columns are shown in the Job
+	Management. Confirm your changes with <emphasis>OK</emphasis>.
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-More-Informations">
@@ -1033,11 +1098,11 @@
       <para>
 	<!--cbox(file: slurm/more_information/more_information_full.png caption:)-->
 	This dialog opens after you select <classname>Get more informations</classname> in the context menu of a
-	job. <!--cbox(file: slurm/more_information/more_information_context.png caption:)--> 
-	It uses a table to show the propteries and the corresponding values for the selected job. There are 2
-	filters included in this dialog. One for hiding all properties if the value is 0 or empty and one for
-	hiding exotic propteries which are not needed in most cases. Standardly both filters are enabled. To
-	disable them you have to uncheck the corresponding checkbox at the bottom of the Dialog.
+	Job. <!--cbox(file: slurm/more_information/more_information_context.png caption:)--> It uses a table to
+	show the propteries and the corresponding values for the selected Job. There are 2 filters included in this
+	dialog. One for hiding all properties if the value is 0/None/False or empty and one for hiding exotic
+	propteries which are not interesting in most cases. Standardly both filters are enabled. To disable them you
+	have to uncheck the corresponding checkbox at the bottom of the Dialog.
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-Activate-Filter">
@@ -1046,24 +1111,25 @@
 	If you created some custom filters they will be listed here (For creating custom filters see <link
 	linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>).
 	<!--cbox(file: slurm/active_filters/active_filters_full.png caption:)--> 
-	Select one or more filters for the current jobs. All active filters are shown in the <classname>Active
-	Filter</classname> label of the <classname>Job Management</classname>.
+	Select one or more filters for the current jobs. All active filters are shown comma-separated in the
+	<classname>Active Filter</classname> label of the <classname>Job Management</classname>.
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-Job-Filter-Editor">
       <title>Job Filter Editor</title>
       <para>
-	As mentioned before we are able to create custom filters for our jobs. To do this we first have to create a
-	new filter by clicking <classname>New Filter</classname> and then insert a name for the filter. 
+	As mentioned before we are able to create custom filters for our <classname>Job Management</classname>. To
+	do this we first have to create a new filter by clicking <classname>New Filter</classname> and then insert
+	a name for the filter.
 	<!--cbox(file: slurm/job_filter_editor/job_filter_editor_new_filtername.png caption:)--> 
 	After this is done we created a filter. To add some values to this filter go in the contextmenu and select
-	the proptery you want to filter. 
+	the proptery you want to filter by. 
 	<!--cbox(file: slurm/job_filter_editor/job_filter_editor_contextmenu.png caption:)--> 
-	For example <emphasis>Job Id</emphasis>. A new dialog pops up. Here you can select what kind of filtering
-	you want. Because the job id is always an integer you have the filtertypes <emphasis>between x and
-	y</emphasis>, <emphasis>bigger then x</emphasis>, <emphasis>less then x</emphasis>.
+	In this example we use the <emphasis>Job Id</emphasis>. A new dialog pops up. Here you can select what kind
+	of filtering you want. Because the job id is always an integer you have the filtertypes <emphasis>between x
+	and y</emphasis>, <emphasis>bigger then x</emphasis> and <emphasis>less then x</emphasis>.
 	<!--cbox(file: slurm/job_filter_editor/job_filter_editor_jobid_filter.png caption:)--> 
-	Choose the filtertype you want, the values and confirm with OK. The value is now added to our custom
+	Choose the filtertype you want, set the values and confirm with OK. The value is now added to our custom
 	filter. You can combine multiple values in one custom filter.
 	<!--cbox(file: slurm/job_filter_editor/job_filter_editor_jobid_filter1.png caption:)--> 
 	After we made our changes we hit the <classname>Save</classname> button. Now our filter can be used in the
@@ -1128,43 +1194,12 @@
       <variablelist>
 	<varlistentry>
 	  <term>
-	    Set to <quote>DOWN</quote>
-	  </term>
-	  <listitem>
-	    <para>
-	      The node is unavailable for use. Slurm can automatically place nodes in this state if some failure
-	      occurs. System administrators may also explicitly place nodes in this state.
-	    </para>
-	  </listitem>
-	</varlistentry>
-	<varlistentry>
-	  <term>
 	    Drain
 	  </term>
 	  <listitem>
 	    <para>
 	      The node is currently executing a job, but will not be allocated to additional jobs. The node state
 	      will be changed to state <emphasis>DRAINED</emphasis> when the last job on it completes.
-	    </para>
-	  </listitem>
-	</varlistentry>
-	<varlistentry>
-	  <term>
-	    Resume
-	  </term>
-	  <listitem>
-	    <para>
-	      ff
-	    </para>
-	  </listitem>
-	</varlistentry>
-	<varlistentry>
-	  <term>
-	    Restart slurmd
-	  </term>
-	  <listitem>
-	    <para>
-	      ff
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -1195,6 +1230,36 @@
 	  <listitem>
 	    <para>
 	      The node will be powered up.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Start Slurmd
+	  </term>
+	  <listitem>
+	    <para>
+	      This starts the Slurmd on the selected nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Stop Slurmd
+	  </term>
+	  <listitem>
+	    <para>
+	      This stops the Slurmd on the selected nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Restart Slurmd
+	  </term>
+	  <listitem>
+	    <para>
+	      This restarts the Slurmd on the selected nodes.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -1323,9 +1388,14 @@
 	</para>
 	<bridgehead xml:id="sec-Slurm-Manage-Manage-Users-delete-user">Delete an User</bridgehead>
 	<para>
-	  To delete a user go into its contextmenu and select <classname>Remove User</classname>
+	  To delete a user go into its contextmenu and select <classname>Remove User</classname>.
 	  <!--cbox(file: slurm/accounting/manage_users/manage_users_remove_user.png caption:)-->
 	</para>
+	<note>
+	  <para>
+	    Be sure that the User has no active Jobs.
+	  </para>
+	</note>
 	<bridgehead xml:id="sec-Slurm-Manage-Manage-Users-assign-to-accounts">Assign an User to Accounts</bridgehead>
 	<para>
 	  <!--cbox(file: slurm/accounting/manage_users/manage_users_assign_accounts.png caption:)-->
@@ -1373,8 +1443,8 @@
 	<bridgehead>Account View</bridgehead>
 	<para>
 	  <!--cbox(file: slurm/fair_share/fair_share_account_view.png caption:)-->
-	  The <classname>Account View</classname> shows all the Slurm share information for the accounts. The color
-	  are set in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>
+	  The <classname>Account View</classname> shows all the Slurm share information for the accounts. The colors
+	  are set in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>.
 	</para>
 	<bridgehead>Detailed Account View</bridgehead>
 	<para>
@@ -1403,7 +1473,7 @@
 	<para>
 	  <!--cbox(file: slurm/settings.png caption:)-->
 	  In the <classname>Settings</classname> dialog are the update intervals for jobs, nodes, partitions and
-	  slurm accounting. Here you can modify how often you want QluMan to look for updates.
+	  slurm accounting. Here you can modify how often you want QluMan to look for changes on your cluster.
 	</para>
 	<note>
 	  <para>
