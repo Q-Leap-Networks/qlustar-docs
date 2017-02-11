@@ -25,7 +25,8 @@
       </para>
       <para>
 	The highlights among the numerous component updates and bug fixes are: Slurm 16.5.8,
-	OpenMPI 2.0.2 and CUDA 8.0.
+	OpenMPI 2.0.2, CUDA 8.0 and BeeGFS 6. New in this release is support for Singularity
+	containers.
       </para>
     </abstract>
     <author><orgname><inlinemediaobject><imageobject>
@@ -60,59 +61,19 @@
 	    </para></listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term>Certificate safe</term>
-	    <listitem><para>
-	      The certificates used to authenticate a QluMan user are stored in an encrypted
-	      password protected certificate safe. This safe may contain an unlimited number of
-	      connection certificates for different clusters and can easily be managed using
-	      the new <classname>Connection Manager</classname>. <link
-	      xlink:href="../QluMan_Guide/index.html#sec-connecting-to-cluster___blank___">
-	      More details &hellipsis;</link>
-	    </para></listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>Hardware Wizard</term>
-	    <listitem><para>
-	      The powerful new <classname>HW-Wizard</classname> auto-detects partially, wrongly
-	      or un-configured hosts and guides through the config steps to set them up in a
-	      correct and optimal way. A new type of icon in the <classname>Enclosure
-	      View</classname> marks hosts that need reconfiguration. <link
-	      xlink:href="../QluMan_Guide/index.html#chap-HWwizard___blank___">
-	      More details &hellipsis;</link>
-	    </para></listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>New node property display</term>
-	    <listitem><para>
-	      Assigned host properties and settings are now shown in a transparent tree
-	      structure within the <classname>Enclosure View</classname>. This helps to clearly
-	      identify what settings are active for a given host and where in the config
-	      hierarchy they come from.
-	    </para></listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>Direct node property assignment</term>
-	    <listitem><para>
-	      Any property, setting or set thereof can now be directly assigned to nodes. This
-	      hugely increases flexibility in node setups.
-	    </para></listitem>
-	  </varlistentry>
-	  <varlistentry>
 	    <term>Copy&amp;Paste host configs</term>
 	    <listitem><para>
 	      All assignments of a particular host can now be used to setup a group of other
 	      nodes. This is the most simple and fastest way to get new nodes up and running.
 	    </para></listitem>
 	  </varlistentry>
-	  <varlistentry>
-	    <term>Improved use of filters in RXEngine</term>
-	    <listitem><para>
-	      The RXEngine now allows the use of host filters for all command types. This
-	      allows for extremely speedy selection of the nodes a command should be executed
-	      on.
-	    </para></listitem>
-	  </varlistentry>
 	</variablelist>
+      </para>
+    </section>
+    <section>
+      <title>Container Support</title>
+      <para>
+	Docker + Singularity
       </para>
     </section>
   </section>
@@ -142,22 +103,8 @@
 	    <term>OpenMPI</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 updates the OpenMPI 1.8 series to the most recent version 1.8.8.
-	      </para>
-	      <para>
-		Package versions (<classname>openmpi-icc</classname>) compiled with the most
-		recent Intel compiler suite were also added (this requires a manual
-		installation of the Intel compilers using the base install path
-		<filename>/apps/prod/intel/ps_xe_2016</filename>).
-	      </para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>Lustre</term>
-	    <listitem>
-	      <para>
-		Qlustar 9.1 adds the brand-new Lustre 2.8 release with ZFS as the back-end
-		filesystem.
+		Qlustar 9.2 introduces the new OpenMPI 2.0 series with the most recent version
+		2.0.2.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -165,8 +112,7 @@
 	    <term>ZFS Filesystem</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 updates ZFS to version 0.6.5.x bringing many improvements and
-		bug-fixes.
+		Qlustar 9.2 updates ZFS to version 0.6.5.8 bringing a number of bug-fixes.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -212,12 +158,12 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      <classname>Disk auto-setup</classname>: Add config option to limit ZFS arc cache.
+	      <classname>Disk auto-setup</classname>: Make use of ZFS volumes for swap safe.
 	    </para>
 	  </listitem>
 	  <listitem>
 	    <para>
-	      <classname>Root shell</classname>: New fancy prompt.
+	      <classname>Installer</classname>: Supports NVME boot disks.
 	    </para>
 	  </listitem>
 	  <listitem>
