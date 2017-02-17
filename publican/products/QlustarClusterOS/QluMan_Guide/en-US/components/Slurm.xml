@@ -1450,8 +1450,7 @@
 	<para>
 	  <!--cbox(file: slurm/fair_share/fair_share_detailed_account_view.png caption:)-->
 	  The <classname>Detailed Account View</classname> shows all the Slurm share information for the accounts
-	  with the users in it. The color are set in the <link
-	  linkend="sec-Look-Feel-Preferences">Preferences</link>
+	  with the users in it. The colors are set in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>.
 	</para>
 	<para>For more information about <application>sshare</application> see <link
 	  xlink:href="https://slurm.schedmd.com/sshare.html___blank___">sshare manpage</link>.
