@@ -66,7 +66,8 @@
       of your cluster. Select the component you want to customize. For example
       <guimenu>Slurm->Accounting->Colors</guimenu>. Here you can see the colors that are set for accounts, users,
       users in default accounts and the root user. To change a color select the property and hit the
-      <classname>Edit</classname> button. Now a colorpicker dialog comes up. Select your new color and click OK.
+      <classname>Edit</classname> button. Now a colorpicker dialog comes up. Select your new color and click
+      OK. You are also able to customize the column height of the Job Management.
     </para>
     </section>
   </section>

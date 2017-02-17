@@ -1000,8 +1000,11 @@
 	for (for example <emphasis>Job Id</emphasis>). <!--cbox(file: slurm/job_management/job_management_sort.png
 	caption:)--> Click the title again for changing the sort order. You can also move a column with drag and
 	drop and change its width. <!--cbox(file: slurm/job_management/job_management_drag.png caption:)--> These
-	settings will be saved when the window gets closed. If you want to take action on a job you just have to go
-	into its contextmenu and select between the following actions:
+	settings can be stored in layouts. Just modify the Job Management like you want it and hit the
+	<classname>Save</classname> Button. You can restore a layout by selecting it in the Layout combo box and
+	press <classname>Load</classname>. When the Job Management gets opened it always uses the last state as
+	layout. This is the layout that was set when you closed the Job Management the last time. If you want to
+	take action on a job you just have to go into its contextmenu and select between the following actions:
 	<variablelist>
 	<varlistentry>
 	  <term>Kill Job</term>
