@@ -44,7 +44,7 @@
     </para>
     <para>
       After closing the error dialog the <classname>License Key window</classname> can be
-      opened by selecting <guimenuitem>File</guimenuitem>-><guimenuitem>License
+      opened by selecting <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>License
       Key</guimenuitem> in the main Menu. If you never installed a license key before, the
       window will come up mostly empty.
     </para>
