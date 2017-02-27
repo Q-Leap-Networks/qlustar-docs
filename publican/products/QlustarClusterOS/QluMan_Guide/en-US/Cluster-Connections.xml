@@ -91,6 +91,12 @@
 	</para>
       </note>
     </para>
+    <section xml:id="sec-connection-status">
+      <title>Connection Status</title>
+      <para>
+	<!--cbox(file: connect_cluster_dialog/connection_status.png caption:)-->
+      </para>
+    </section>
   </section>
   <section xml:id="sec-manage-cluster">
     <title>Managing Clusters</title>
