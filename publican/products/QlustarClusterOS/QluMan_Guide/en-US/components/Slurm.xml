@@ -1081,7 +1081,8 @@
 	(created in the <link linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>) as active.  
 	<!--cbox(file:slurm/job_management/job_management_activate_filter.png caption:)--> 
 	All active filters are shown after the <classname>Active Filter</classname> label. For creating custom
-	filters see <link linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>.
+	filters see <link linkend="sec-Slurm-Manage-Job-Filter-Editor">Job Filter Editor</link>. The column height
+	of the table is editable in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>.
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-Customize-Columns">
@@ -1104,8 +1105,9 @@
 	Job. <!--cbox(file: slurm/more_information/more_information_context.png caption:)--> It uses a table to
 	show the propteries and the corresponding values for the selected Job. There are 2 filters included in this
 	dialog. One for hiding all properties if the value is 0/None/False or empty and one for hiding exotic
-	propteries which are not interesting in most cases. Standardly both filters are enabled. To disable them you
-	have to uncheck the corresponding checkbox at the bottom of the Dialog.
+	propteries which are not interesting in most cases. Standardly both filters are enabled. To disable them
+	you have to uncheck the corresponding checkbox at the bottom of the Dialog.  The column height of the table
+	is editable in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>.
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-Activate-Filter">
@@ -1282,13 +1284,202 @@
       </para>
       <bridgehead>Create a Reservation</bridgehead>
       <para>
+	<!--cbox(file: slurm/reservation/reservation_add.png caption:)-->
 	To create a reservation click the <classname>Add reservation</classname> button. A new dialog pops up.
-	<!--cbox(file: slurm/reservation/reservation_add.png caption:)--> 
-	Choose a <emphasis>User</emphasis> from an selected <emphasis>Account</emphasis>, a
-	<emphasis>Duration</emphasis> for the reservation (this is possible by directly entering
-	<emphasis>Duration</emphasis> or <emphasis>End Time</emphasis>). You also have to enter <emphasis>Node
-	Count</emphasis>. All other informations are optional. Confirm by clicking the <classname>Add
-	reservation</classname> button.
+	The following parameter can be specified:
+	<variablelist>
+	  <varlistentry>
+	    <term>
+	      Name
+	    </term>
+	    <listitem>
+	      <para>
+		You are able to set a own name for your reservation. If you dont set a name slurm automatically
+		creates one for yo based upon the first user or account name and a numeric suffix.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Account/s
+	    </term>
+	    <listitem>
+	      <para>
+		You have to set Account/s and/or User/s to create a reservation. Select one or more account/s for
+		the reservation. All users of this account/s can use this reservation if no additional user is set.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      User/s
+	    </term>
+	    <listitem>
+	      <para>
+		You have to set Account/s and/or User/s to create a reservation. Select one or more user/s for the
+		reservation. If one or more accounts are set, the <classname>Select User</classname> dialog shows
+		just the user from this account/s.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Partition
+	    </term>
+	    <listitem>
+	      <para>
+		The partition to be reserved.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Start Time
+	    </term>
+	    <listitem>
+	      <para>
+		The start time of the reservation. The default value is <quote>now</quote>. By changing the
+		Start Time, Duration or End Time everything gets new calculated.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Duration
+	    </term>
+	    <listitem>
+	      <para>
+		The duration of the reservation. Set a count of days and/or hours and minutes. By changing the
+		Start Time, Duration or End Time everything gets new calculated.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      End Time
+	    </term>
+	    <listitem>
+	      <para>
+		The End Time of the reservation. By changing the Start Time, Duration or End Time everything gets
+		new calculated.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Nodes and Cores
+	    </term>
+	    <listitem>
+	      <para>
+		You can either select to set a Node Count and Core Count or a fixed Node List and Cores per Node.
+		With the first thing, slurm will randomly select the nodes and cores for your reservation. By
+		choosing the second variation you can select the nodes for that reservation and the number of cores
+		from every node.
+		<variablelist>
+		  <varlistentry>
+		    <term>
+		      Node Count / Core Count
+		    </term>
+		    <listitem>
+		      <para>
+			Number of nodes and cores to be reserved.
+		      </para>
+		    </listitem>
+		  </varlistentry>
+		  <varlistentry>
+		    <term>
+		      Node List / Cores per Node
+		    </term>
+		    <listitem>
+		      <para>
+			Identify the node/s to be reserved. For every node you can set the number of cores.
+		      </para>
+		    </listitem>
+		  </varlistentry>
+		</variablelist>
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>
+	      Flags
+	    </term>
+	    <listitem>
+	      <para>
+		Flags associated with the reservation. This flags can be set:
+		<itemizedlist>
+		  <listitem>
+		    <para>
+		      ANY_NODES: Use any compute nodes
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      DAILY: Set DAILY flag
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      FIRST_CORES: Use only first cores on each node
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      IGNORE_JOBS: Ignore running jobs
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      MAINT: Set MAINT flag
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      OVERLAP: Permit to overlap others
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      PART_NODES: Use partition nodes only
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      STATIC_ALLOC: Static node allocation
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      TIME_FLOAT: Time offset is relative
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      WEEKLY: Set WEEKLY flag
+		    </para>
+		  </listitem>
+		</itemizedlist>
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+	Confirm by clicking the <classname>Add reservation</classname> button.
+      </para>
+      <bridgehead>Update a Reservation</bridgehead>
+      <para>
+	To update a reservation you just have to select it and go into its contextmenu. Choose <classname>Update
+	Reservation</classname>.
+	<!--cbox(file: slurm/reservation/reservation_update.png caption:)-->
+	You can see now all the properties prefilled from you reservation. The node and core settings are not
+	updateable yet. To change something just make your changes and click the <classname>Update
+	Reservation</classname> button.
+	<note>
+	  <para>
+	    To edit the Start Time of a reservation, the current Start Time and the new Start Time have to be in
+	    the future. Once you have set a value for <classname>Nodes per Core</classname> the reservation is not
+	    updateable anymore.
+	  </para>
+	</note>
       </para>
       <bridgehead>Delete a Reservation</bridgehead>
       <para>
