@@ -1309,7 +1309,7 @@
 	context-menu of a job. It shows the properties and their corresponding values of the
 	selected job in a table. There are two filters that may be applied: One is for hiding
 	all properties with a value of 0, None, False or empty, the other one for hiding exotic
-	propteries which one is rarely interested in. Per default, both filters are enabled. To
+	properties which one is rarely interested in. Per default, both filters are enabled. To
 	disable them, you have to check the corresponding entry at the bottom of the dialog.
       </para>
       <note>
@@ -1673,7 +1673,7 @@
 	      <para>
 		To create a reservation, one has to either select one or more accounts and/or
 		one or more users who will be allowed to use it. Select one or more accounts by
-		checking their entries in the popup. All users of the selected accounts may
+		checking their entries in the pop-up. All users of the selected accounts may
 		utilize the reservation.
 	      </para>
 	    </listitem>
@@ -1686,7 +1686,7 @@
 	      <para>
 		To create a reservation, one has to either select one or more accounts and/or
 		one or more users who will be allowed to use it. Select one or more users by
-		checking their entries in the popup. In case accounts are also set, the
+		checking their entries in the pop-up. In case accounts are also set, the
 		<classname>Select User</classname> dialog shows only the users belonging to the
 		selected accounts.
 	      </para>
@@ -2075,10 +2075,10 @@
 	    fileref="images/slurm/accounting/manage_users/manage_users_set_def.png"
 	    width="85%" format="PNG"/></imageobject>
 	    <textobject><phrase>
-	      Regisering a User with Slurm.
+	      Registering a User with Slurm.
 	    </phrase></textobject>
 	    <caption><para>
-	      Regisering a User with Slurm.
+	      Registering a User with Slurm.
 	    </para></caption>
 	  </mediaobject>
 	  To register a user with Slurm, uncollapse the <classname>Unregistered
@@ -2146,68 +2146,168 @@
       <section xml:id="sec-Slurm-Manage-Cluster-Usage">
 	<title>Cluster Usage</title>
 	<para>
-	  <!--cbox(file: slurm/cluster_usage/cluster_usage_full.png caption:)-->
-	  <!--cbox(file: slurm/cluster_usage/cluster_usage_full2.png caption:)-->
-	  The <classname>Cluster Usage</classname> uses <application>sreport</application> to
-	  generate reports of job usage and cluster utilization for Slurm jobs saved to the
-	  Slurm Database, slurmdbd. For detailed information to the reports and options see
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/cluster_usage/cluster_usage_full.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      The Slurm Cluster Usage Display
+	    </phrase></textobject>
+	    <caption><para>
+	      The Slurm Cluster Usage Display
+	    </para></caption>
+	  </mediaobject>
+	  The <classname>Cluster Usage</classname> display uses the Slurm utility
+	  <application>sreport</application> to generate reports of job usage and cluster
+	  utilization. For detailed information about the type of reports and options read the
 	  <link xlink:href="https://slurm.schedmd.com/sreport.html___blank___">sreport
 	  manpage</link>. Select your report type (for example <emphasis>cluster</emphasis>) in
-	  the left combo box and then the option from the combobox left to it. Per default the
-	  time of the period from the report is yesterday. You can change this by modifying the
-	  start and the endtime. The color are set in the <link
-	  linkend="sec-Look-Feel-Preferences">Preferences Dialog</link>.
+	  the left combo box and then the report options from the combobox right to it. Per
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/cluster_usage/cluster_usage_full2.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Cluster Usage by Account/User.
+	    </phrase></textobject>
+	    <caption><para>
+	      Cluster Usage by Account/User.
+	    </para></caption>
+	  </mediaobject>
+	  default the time period used for the report is the past day. You can change this by
+	  modifying the start and the end time. The colors used in the window are customizable
+	  in the <link linkend="sec-Look-Feel-Preferences">Preferences Dialog</link>.
 	</para>
+	<note>
+	  <para>
+	    <application>sreport</application> will only be able to show utilization data if
+	    Slurm Accounting is activated. This is the default on Qlustar clusters.
+	  </para>
+	</note>
       </section>
       <section xml:id="sec-Slurm-Manage-Fair-Share">
 	<title>Fair Share</title>
 	<para>
-	  <classname>Fair Share</classname> uses <application>sshare</application> to view
-	  Slurm share information. We provide 2 views with a long and a short version. By
-	  default we show the short version but you can change this by checking the
-	  <classname>long</classname> checkbox.
+	  The <classname>Fair Share</classname> view uses the Slurm utility
+	  <application>sshare</application> to display Slurm fair-share information. We provide
+	  two versions of views, a basic and a long one. The long version shows additional
+	  information that is needed less often. By default we show the basic view, but you can
+	  easily switch by checking the <classname>long</classname> checkbox at the bottom
+	  right of the window.
 	</para>
 	<bridgehead>Account View</bridgehead>
 	<para>
-	  <!--cbox(file: slurm/fair_share/fair_share_account_view.png caption:)-->
-	  The <classname>Account View</classname> shows all the Slurm share information for the accounts. The colors
-	  are set in the <link linkend="sec-Look-Feel-Preferences">Preferences</link>.
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/fair_share/fair_share_account_view.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Fair-share Account View.
+	    </phrase></textobject>
+	    <caption><para>
+	      Fair-share Account View.
+	    </para></caption>
+	  </mediaobject>
+	  The <classname>Account View</classname> shows the Slurm fair-share information
+	  for all registered Slurm accounts. The used colors are customizable in the <link
+	  linkend="sec-Look-Feel-Preferences">Preferences Dialog</link>.
 	</para>
 	<bridgehead>Detailed Account View</bridgehead>
 	<para>
-	  <!--cbox(file: slurm/fair_share/fair_share_detailed_account_view.png caption:)-->
-	  The <classname>Detailed Account View</classname> shows all the Slurm share
-	  information for the accounts with the users in it. The colors are set in the <link
-	  linkend="sec-Look-Feel-Preferences">Preferences</link>.
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/fair_share/fair_share_detailed_account_view.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      Fair-share detailed Account View.
+	    </phrase></textobject>
+	    <caption><para>
+	      Fair-share detailed Account View.
+	    </para></caption>
+	  </mediaobject>
+	  The <classname>Detailed Account View</classname> shows the Slurm fair-share
+	  information for all registered Slurm accounts including the information for
+	  individual users that are member of the accounts. The used colors are customizable in
+	  the <link linkend="sec-Look-Feel-Preferences">Preferences Dialog</link>.
 	</para>
-	<para>For more information about <application>sshare</application> see <link
-	  xlink:href="https://slurm.schedmd.com/sshare.html___blank___">sshare manpage</link>.
+	<para>For more information about <application>sshare</application> and the meaning of
+	the displayed quantities, read the <link
+	xlink:href="https://slurm.schedmd.com/sshare.html___blank___">sshare manpage</link>.
 	</para>
+	<note>
+	  <para>
+	    <application>sshare</application> will only be able to show fair-share data if the
+	    fair-share option is activated in the Slurm config. This is the default on Qlustar
+	    clusters.
+	  </para>
+	</note>
       </section>
       <section xml:id="sec-Slurm-Manage-Job-Priorities">
 	<title>Job Priorities</title>
 	<para>
-	  <!--cbox(file: slurm/job_priorities/job_priorities_full.png caption:)-->
-	  <!--cbox(file: slurm/job_priorities/job_priorities_full_long.png caption:)-->
-	  <classname>Job Priorities</classname> uses <application>sprio</application> to view
-	  the components of a job's scheduling priority when the multi-factor priority plugin
-	  is installed. For more information about <application>sprio</application> see <link
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/job_priorities/job_priorities_full.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      The Job Priorities View.
+	    </phrase></textobject>
+	    <caption><para>
+	      The Job Priorities View.
+	    </para></caption>
+	  </mediaobject>
+	  The <classname>Job Priorities</classname> dialog uses the Slurm utility
+	  <application>sprio</application> to display the values of the individual factors that
+	  are used to calculate a job's scheduling priority when the <application>multi-factor
+	  priority plugin</application> is installed. This is information needed, when
+	  analyzing why certain pending jobs run earlier than others.
+	</para>
+	<para>
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/job_priorities/job_priorities_full_long.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      The Job Priorities View (long version).
+	    </phrase></textobject>
+	    <caption><para>
+	      The Job Priorities View (long version).
+	    </para></caption>
+	  </mediaobject>
+	  We provide two versions of the view, a basic and a long one. The long version shows
+	  additional information that is needed less often. By default we show the basic view,
+	  but you can easily switch by checking the <classname>long</classname> checkbox at the
+	  bottom right of the window. For more information about
+	  <application>sprio</application> read the <link
 	  xlink:href="https://slurm.schedmd.com/sprio.html___blank___">sprio manpage</link>.
 	</para>
       </section>
       <section xml:id="sec-Slurm-Manage-Settings">
-	<title>Settings</title>
+	<title>QluMan Slurm Settings</title>
 	<para>
-	  <!--cbox(file: slurm/settings.png caption:)-->
-	  In the <classname>Settings</classname> dialog are the update intervals for jobs,
-	  nodes, partitions and slurm accounting. Here you can modify how often you want QluMan
-	  to look for changes on your cluster.
+	  <mediaobject>
+	    <imageobject><imagedata
+	    fileref="images/slurm/settings.png"
+	    width="85%" format="PNG"/></imageobject>
+	    <textobject><phrase>
+	      QluMan Slurm settings.
+	    </phrase></textobject>
+	    <caption><para>
+	      QluMan Slurm settings.
+	    </para></caption>
+	  </mediaobject>
+	  The <classname>QluMan Slurm Settings</classname> dialog allows to customize the
+	  update intervals for information about jobs, nodes, partitions and Slurm
+	  accounting. This information flow is provided by the QluMan Slurm daemon running on
+	  the cluster and the QluMan GUI automatically subscribes to it. Shorter update
+	  intervals mean more server load and more network traffic. In most cases, the default
+	  values should be adequate.
 	</para>
 	<note>
 	  <para>
-	    If you modify something in the QluMan for example a job you will automatically get
-	    the update for that. The update interval is just for changes that does not happen
-	    in the QluMan.
+	    Whenever you modify some property/value in the QluMan GUI for example for a job
+	    the GUI will always get an immediate update for that. The update intervals only
+	    affect changes that are not the consequence of an explicit action by a QluMan user.
 	  </para>
 	</note>
       </section>
