@@ -1107,10 +1107,10 @@
 	  fileref="images/slurm/job_management/job_management_drag.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    Moving a column,
+	    Moving a column.
 	  </phrase></textobject>
 	  <caption><para>
-	    Moving a column,
+	    Moving a column.
 	  </para></caption>
 	</mediaobject>
 	If you want to change the state of a job you just have to open its context-menu and
