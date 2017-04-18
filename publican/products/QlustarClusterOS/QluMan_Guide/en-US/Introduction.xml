@@ -15,35 +15,37 @@
   <section xml:id="sec-Introduction">
     <title>Qlustar Clusters</title>
     <para>
-      A Qlustar HPC cluster is designed to boot and manage compute or storage nodes (hosts)
+      A Qlustar cluster is designed to boot and manage compute and/or storage nodes (hosts)
       over the network and make them run a minimal OS (Operating System) image in RAM. Local
       disks (if present) are only used to preserve log files across boots and for temporary
-      storage (e.g. for compute jobs). One or more head-nodes deliver the boot images to the
-      nodes. Additionally, a small <firstterm>NFS</firstterm> share containing part of the
-      configuration space for the nodes is exported from one of the head-nodes. Optionally, the
-      RAM-based root FS (file-system) can be supplemented by a global <link
-      linkend="sec-UnionFS-Chroots">UnionFS chroot</link> to support software not already
-      contained in the boot images themselves. The head-node(s) of the cluster typically
-      provides <firstterm>TFTP/PXE boot services</firstterm>, <firstterm>DHCP
-      service</firstterm>, <firstterm>NIS service</firstterm>, <firstterm>torque</firstterm> or
-      <firstterm>slurm resource management</firstterm> etc. to the cluster. The management of
-      these and all cluster-related components of a <productname>Qlustar</productname>
-      installation in general can easily be accomplished through a single administration
-      interface: <application>QluMan</application>, the <literal>Qlustar Management
-      interface</literal>.
+      storage (e.g. for compute jobs). Hence all Qlustar cluster nodes apart from head-nodes are always <firstterm>state-less</firstterm>.
     </para>
     <para>
-      The <application>QluMan</application> GUI is <parameter>multi-user</parameter> as well as
-      <parameter>multi-cluster</parameter> capable: Different users are allowed to work
-      simultaneously with the GUI. Changes made by one user are updated and visible in
-      real-time in the windows opened by all the other users. On the other hand, it is possible
-      to manage a virtually unlimited number of clusters within a single instance of the
-      <application>QluMan</application> GUI at the same time. Each cluster is shown in a tab or
-      in a separate main window.
+      One or more head-nodes deliver the OS boot images to the nodes. Additionally, a small
+      <firstterm>NFS</firstterm> share containing part of the configuration space for the nodes
+      is exported from one of the head-nodes. Optionally, the RAM-based root FS (file-system)
+      can be supplemented by a global <link linkend="sec-UnionFS-Chroots">UnionFS chroot</link>
+      to support software not already contained in the boot images themselves. The head-node(s)
+      of the cluster typically provides <firstterm>TFTP/PXE boot services</firstterm>,
+      <firstterm>DHCP service</firstterm>, <firstterm>NIS service</firstterm>,
+      <firstterm>torque</firstterm> or <firstterm>slurm resource management</firstterm> etc. to
+      the cluster.
+    </para>
+    <para>
+      The management of these and all cluster-related components of a
+      <productname>Qlustar</productname> installation in general can easily be accomplished
+      through a single administration interface: <application>QluMan</application>, the
+      <literal>Qlustar Management interface</literal>. The <application>QluMan</application>
+      GUI is <parameter>multi-user</parameter> as well as <parameter>multi-cluster</parameter>
+      capable: Different users are allowed to work simultaneously with the GUI. Changes made by
+      one user are updated and visible in real-time in the windows opened by all the other
+      users. On the other hand, it is possible to manage a virtually unlimited number of
+      clusters within a single instance of the <application>QluMan</application> GUI at the
+      same time. Each cluster is shown in a tab or in a separate main window.
     </para>
   </section>
   <section xml:id="sec-functionality-overview">
-    <title>Functionality Overview</title>
+    <title>Overview of basic Setup Principles</title>
     <para>
       A central part of Qlustar are its pre-configured <literal>modular OS
       images</literal>. Different nodes may have different hardware or need to provide specific
@@ -53,7 +55,7 @@
       different software components are provided from which <literal>individual custom OS
       images</literal> can be created as needed. A Qlustar OS image just contains what is
       actually required to accomplish the tasks of a node, nothing more. See below for more
-      details about configuring <link linkend="sec-Qlustar-OS-Images">OS images</link>)
+      details about configuring <link linkend="sec-Qlustar-OS-Images">OS images</link>.
     </para>
     <para>
       But providing different OS images is still not enough for a flexible yet easily
