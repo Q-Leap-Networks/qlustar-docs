@@ -300,31 +300,84 @@
       as in the last example, and working with variables works as expected. Please refer to the
       bash documentation (e.g. <code>man bash</code>) for more details.
     </para>
-    <section xml:id="sec-RXE-Edt-Custom">
+    <section xml:id="sec-RXE-Edit-Custom">
     <title>Custom Command Editor</title>
     <para>
-      To edit your custom commands open the <classname>Custom Command Editor</classname> by clicking the tool
-      button next to the command.
-      <!--cbox(file: execute/main_with_edit_button_highlighted.png caption:)-->
-      <!--cbox(file: execute/custom_command_editor.png caption:)-->
-      This dialog allows you to edit the order of how your commands appear in the custom command selectbox, delete
-      them and even edit them.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/main_with_edit_button_highlighted.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Invoking the Custom Command Editor.
+        </phrase></textobject>
+        <caption><para>
+          Invoking the Custom Command Editor.
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/custom_command_editor.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Custom Command Editor.
+        </phrase></textobject>
+        <caption><para>
+          The Custom Command Editor.
+        </para></caption>
+      </mediaobject>
+      To edit your custom commands open the <classname>Custom Command Editor</classname> by
+      clicking the tool button next to the command. This dialog allows you to rearrange the
+      order of how the commands appear in the custom command selectbox, delete and even edit
+      them.
     </para>
-    <bridgehead>Edit a custom command</bridgehead>
+    <bridgehead>Editing a custom command</bridgehead>
     <para>
-      To edit a command just select it. Now the <classname>Edit</classname> button gets enabled. After you click it
-      a new dialog appears that lets you edit the command. Click <classname>Apply</classname> to save your changes.
-      <!--cbox(file: execute/custom_command_editor_edit.png caption:)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/custom_command_editor_edit.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Editing a Custom Command.
+        </phrase></textobject>
+        <caption><para>
+          Editing a Custom Command.
+        </para></caption>
+      </mediaobject>
+      To edit a command just select it. Now the <classname>Edit</classname> button gets
+      enabled. After you click on it, a new dialog appears that lets you edit the
+      command. Click <classname>Apply</classname> to save your changes.
     </para>
-    <bridgehead>Delete a custom command</bridgehead>
+    <bridgehead>Deleting a custom command</bridgehead>
     <para>
-      To delete a custom command just go into its contextmenu and select <classname>Delete</classname>.
-      <!--cbox(file: execute/custom_command_editor_delete.png caption:)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/custom_command_editor_delete.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Deleting a Custom Command.
+        </phrase></textobject>
+        <caption><para>
+          Deleting a Custom Command.
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/custom_command_editor_drag.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Rearranging Custom Commands.
+        </phrase></textobject>
+        <caption><para>
+          Rearranging Custom Commands.
+        </para></caption>
+      </mediaobject>
+      To delete a custom command just go into its contextmenu and select
+      <classname>Delete</classname>.
     </para>
-    <bridgehead>Change the order of custom commands</bridgehead>
+    <bridgehead>Changing the order of custom commands</bridgehead>
     <para>
-      The order of the custom commands can be changed with Drag&amp;Drop. You don't have to save this changes.
-      <!--cbox(file: execute/custom_command_editor_drag.png caption:)-->
+      The order of the custom commands can be changed via Drag&amp;Drop. You don't have to
+      explicitly save the changes, since this is done automatically after each rearrangement.
     </para>
     </section>
   </section>

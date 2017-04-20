@@ -94,7 +94,21 @@
     <section xml:id="sec-connection-status">
       <title>Connection Status</title>
       <para>
-	<!--cbox(file: connect_cluster_dialog/connection_status.png caption:)-->
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/connect_cluster_dialog/connection_status.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Connection Status indicators.
+	  </phrase></textobject>
+	  <caption><para>
+	    Connection Status indicators.
+	  </para></caption>
+	</mediaobject>
+	The status of the network connection between a GUI session and the relevant QluMan
+	server components (qlumand, qluman-slurmd, etc.) is displayed by LEDs in the status bar
+	of the main QluMan window. The <classname>QluNet</classname> internal network client ID
+	is also listed there.
       </para>
     </section>
   </section>
