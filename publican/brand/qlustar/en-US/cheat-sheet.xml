@@ -166,6 +166,10 @@
       <envar>${HOSTNAME##*-}</envar>
     </para>
     <para>
+      <!-- Showing an application -->
+      In that case the program <application>ssmtp</application> should be installed.
+    </para>
+    <para>
       <!-- The way of showing a package -->
       In that case the package <package>bind9</package> should be installed.
     </para>
