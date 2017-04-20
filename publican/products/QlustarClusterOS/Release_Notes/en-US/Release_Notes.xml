@@ -20,8 +20,15 @@
       <para>
 	Qlustar 9.2 is a major feature release of the 9.x series. It ships QluMan 3.0 that
 	introduces a powerful new management and operating interface for Slurm. Under the hood,
-	a completely new messaging architecture QluNet has been implemented to serve as the
-	communication backbone for QluMan components.
+	a completely new messaging architecture <classname>QluNet</classname> has been
+	implemented. It serves as the communication backbone for all QluMan components.
+      </para>
+      <para>
+	We also introduced the <classname>Qlustar BioStack</classname> delivering a huge
+	selection of easily deployable and cluster-optimized Bioinformatics software packages
+	based on <link xlink:href="https://www.debian.org/devel/debian-med/___blank___">the
+	DebianMed project</link>. These packages are grouped in tasks and can conveniently be
+	selected when setting up a chroot for the cluster nodes.
       </para>
       <para>
 	The highlights among the numerous component updates and bug fixes are: Slurm 16.5.8,
@@ -37,8 +44,8 @@
     <title>Basic Info</title>
       <para>
 	The Qlustar 9.2 <classname>core platform</classname> is based on Ubuntu 14.04.5 and the
-	additional Debian <classname>edge platform</classname> on Debian 7.9. They include all
-	security fixes and other package updates published before January 20th 2017. Available
+	additional Debian <classname>edge platform</classname> on Debian 7.9. Both include all
+	security fixes and other package updates published before April 19th 2017. Available
 	security updates relevant to Qlustar 9.2, that have appeared after this date, will be
 	announced on the Qlustar website and in the Qlustar security news-letter.
       </para>
@@ -47,33 +54,116 @@
     <title>New features</title>
     <section>
       <title>QluMan 3.0</title>
-      <para>
 	<variablelist>
 	  <varlistentry>
-	    <term>Certificate based authentification</term>
-	    <listitem><para>
-	      The authentification of a QluMan user is now established using certificates. The
-	      elimination of passwords combined with the new initial user registration based on
-	      one-time tokens provides an exceptionally high level of security needed for
-	      confidential connections over public networks. <link
-	      xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___"> More details
-	      &hellipsis;</link>
-	    </para></listitem>
+	    <term>Slurm management interface</term>
+	    <listitem>
+	      <para>
+		The all new management interface for Slurm provides a nice overview of cluster
+		and job usage, a fancy job management interface that includes customizable job
+		filters, a node state management tool to display and manipulate the Slurm state
+		of compute nodes, a powerful dialog to view, create and modify reservations, as
+		well as sub-windows that present cluster usage, fairshare and job priority
+		data.
+	      </para>
+	      <para>
+		Additionally, it includes an interface to Slurm accounting that allows to view,
+		create and modify Slurm accounts and Slurm users. Configured QOS are also
+		viewable in a separate dialog. See <link
+		xlink:href="../QluMan_Guide/index.html#sec-Slurm-Manage___blank___"> the
+		corresponding section</link> in the QluMan guide to read about all the
+		capabilities of the new Slurm component.
+	      </para>
+	      <para>
+		All frequently changing Slurm state data like job/node information, cluster
+		usage etc. is automatically updated in real-time in the corresponding GUI
+		clients. Update intervals can be individually customized for different data
+		types to allow for an optimal cluster-specific compromise between generated
+		network traffic/server load and desired (high) update frequency.
+	      </para>
+	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term>Copy&amp;Paste host configs</term>
-	    <listitem><para>
-	      All assignments of a particular host can now be used to setup a group of other
-	      nodes. This is the most simple and fastest way to get new nodes up and running.
-	    </para></listitem>
+	    <term>QluNet Messaging Architecture</term>
+	    <listitem>
+	      <para>
+		QluMan's messaging architecture has been completely redesigned and extended to
+		allow for flexible additions of future QluMan server components and is now
+		available as a separately packaged component called
+		<classname>QluNet</classname>.
+	      </para>
+	      <para>
+		A new router daemon (<firstterm>qluman-router</firstterm>) has become the
+		central hub for all messages exchanged between QluMan components. Among other
+		tasks, it is responsible for managing the registration of new QluMan network
+		nodes (like the qlumand, GUI client, etc.) and monitoring the availability of
+		existing ones besides its main task of routing messages from a sending QluMan
+		component to the correct destination.
+	      </para>
+	      <para>
+		The new Slurm component e.g. includes a separate daemon
+		(<firstterm>qluman-slurmd</firstterm>) which GUI clients can now talk to
+		directly via the router without qlumand being involved. Subscription channels
+		provide real-time updates of necessary information from the server components
+		to the connected GUI clients.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> Miscellaneous</term>
+	    <listitem>
+	      <para>
+		<itemizedlist>
+		  <listitem>
+		    <para>
+		      The RXEngine dialog has a new <link
+		      xlink:href="../QluMan_Guide/index.html#sec-RXE-Edit-Custom___blank___">
+		      editor for the history of custom commands</link>. This allows convenient
+		      book-keeping and rearrangement of recently executed command lines.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      New LEDs at the bottom of the main QluMan window indicate the <link
+		      xlink:href="../QluMan_Guide/index.html#sec-connection-status___blank___">
+		      connection status</link> of a GUI session to the QluMan server
+		      components.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      It is now possible to control (enable/disable)
+		      <firstterm>hyper-threading</firstterm> of compute nodes CPUs from within
+		      QluMan by setting the corresponding generic property.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      QluMan's server components provide better control of logging levels in
+		      their configuration files. Each component now has its own config file.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      The QluMan GUI qluman-qt is no longer installed on the cluster head-node
+		      or a chroot during installation. If you really want to run it as a remote
+		      application from the cluster, you'll have to install it manually
+		      (<code>apt-get install qluman-qt</code>). However, it is recommended to
+		      run it locally from your Linux workstation either by installing the
+		      package directly (if on Debian/Ubuntu) or via the provided
+		      container-based packages (Singularity or Docker).
+		    </para>
+		  </listitem>
+		</itemizedlist>
+	      </para>
+	    </listitem>
 	  </varlistentry>
 	</variablelist>
-      </para>
     </section>
     <section>
       <title>Container Support</title>
       <para>
-	Docker + Singularity
+	Qlustar now fully supports the two container technologies Docker and Singularity.
       </para>
     </section>
   </section>
@@ -94,7 +184,7 @@
 	    <term>OFED Infiniband stack</term>
 	    <listitem>
 	      <para>
-		Qlustar 9.1 ships the recently released OFED 3.18-1 Infiniband stack including
+		Qlustar 9.2 ships the recently released OFED 3.18-2 Infiniband stack including
 		all necessary components.
 	      </para>
 	    </listitem>
@@ -109,19 +199,29 @@
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term>ZFS Filesystem</term>
-	    <listitem>
-	      <para>
-		Qlustar 9.2 updates ZFS to version 0.6.5.8 bringing a number of bug-fixes.
-	      </para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
 	    <term>Nvidia CUDA</term>
 	    <listitem>
 	      <para>
 		Qlustar 9.2 provides optimal support for Nvidia GPU hardware by supplying
 		pre-compiled and up-to-date kernel drivers as well as CUDA 8.0.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>BeeGFS</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.2 ships the latest BeeGFS version 6.7 and provides ready-to-use image
+		modules based on it for real easy deployment of this ultra-fast parallel
+		filesystem backed by ZFS on your storage cluster.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>ZFS Filesystem</term>
+	    <listitem>
+	      <para>
+		Qlustar 9.2 updates ZFS to version 0.6.5.8 including a number of bug-fixes.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -134,12 +234,29 @@
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <classname>openblas</classname>: 0.2.15
+	    <classname>Intel/PGI Compiler support</classname>: The Qlustar wrapper packages
+	    have been updated to support the new versions Intel Parallel Studio 2017 and PGI
+	    2016. Corresponding OpenMPI package variants for these compilers are also provided.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>openafs</classname>: 1.6.11.1
+	    <classname>openblas</classname>: 0.2.19
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>lapack</classname>: 3.7.0
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>HPL Linpack</classname>: 2.2
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>freeipmi</classname>: 1.5.5
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -151,14 +268,104 @@
 	<itemizedlist>
 	  <listitem>
 	    <para>
-	      <classname>Slurm</classname>: The slurmd cgroup RAM limit on compute nodes was
-	      increased from 64MB to 128MB. Previously, slurmd sometimes required more than
-	      64MB and consequently crashed.
+	      <classname>Slurm</classname>
+	    </para>
+	    <itemizedlist>
+	      <listitem>
+		<para>
+		  Changes in the Qlustar Slurm default config (shown below as a diff)
+		</para>
+		<screen>
+-TaskPlugin=task/cgroup
+-TaskPluginParam=Cpusets,Verbose
++TaskPlugin=task/affinity,task/cgroup
++TaskPluginParam=Sched
+
+-#DefMemPerCPU=0
++DefMemPerCPU=1024
+-SelectTypeParameters=CR_CPU
++SelectTypeParameters=CR_CPU_Memory
+
++# Preemption
++PreemptType=preempt/qos
++PreemptMode=requeue
+
++PriorityFlags=FAIR_TREE
++FairShareDampeningFactor=5
+-PriorityWeightFairshare=1000
++PriorityWeightFairshare=5000
+
+-AccountingStorageEnforce=0
++AccountingStorageEnforce=limits,qos,nosteps
+		</screen>
+	      </listitem>
+	      <listitem>
+		<para>
+		  New job submit parameter <literal>--gres-flags=enforce-binding</literal> that
+		  allows e.g. to bind Slurm tasks of a submitted job to the correct CPU as
+		  configured in a GRES definition.
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  A base setup for Slurm accounting is now automatically initialized provided
+		  that Slurm was chosen as an option during installation. Furthermore, new
+		  cluster users are automatically added to the default Slurm account
+		  <emphasis>users</emphasis>. This is defined in the so-called add-user-hook
+		  <filename>/etc/qlustar/common/add-user-hook</filename> of the <link
+		  xlink:href="../Administration_Manual/index.html#admin-man-sect-user-manage___blank___">adduser.sh
+		  script</link>
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Parallelized Online Update</classname>: The <link
+	      xlink:href="../Administration_Manual/index.html#updating-nodes___blank___">Qlustar
+	      online update mechanism</link> for net-booted cluster nodes has added parallelism
+	      as well as auto-detection of the image type needed for the update of their node
+	      OS leading to maximum simplicity. Processing speed has improved dramatically to
+	      allow updating of up to a thousand nodes in less than five minutes.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>NFS path for applications</classname>: The default NFS path to be used
+	      by an admin for custom applications installed outside of the packaging system has
+	      changed to <filename>/apps/local</filename>. This affects only new installations.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Infiniband</classname>: A new kernel parameter
+	      <literal>tune_ib_qib</literal> was added to activate auto-tuning of Intel
+	      Truescale adapters.
 	    </para>
 	  </listitem>
 	  <listitem>
 	    <para>
 	      <classname>Disk auto-setup</classname>: Make use of ZFS volumes for swap safe.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Lustre</classname>: Added additional config option
+	      <literal>ko2iblnd_conf</literal> to allow for inhomogeneous IB clusters with a
+	      mix of IB cards.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Ssh known_hosts file</classname>: On the head-nodes, this is now a
+	      real file instead of a link which simplifies handling of HA head-nodes.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <classname>Bash completion for users</classname>: The Bash setup for users now
+	      activates full support for program dependent completion provided by many Debian
+	      software packages.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -172,14 +379,6 @@
 	    </para>
 	  </listitem>
 	</itemizedlist>
-      </para>
-  </section>
-  <section>
-    <title>Important bug fixes</title>
-      <para>
-	The boot loader grub used to throw the error message <emphasis>Error: diskfilter writes
-	are not supported</emphasis> and hang for a couple of seconds. This is fixed with the
-	upgrade to <classname>grub</classname> version <emphasis>2.02~beta2-9ubuntu1.7</emphasis>.
       </para>
   </section>
   <section>
@@ -208,61 +407,8 @@
 	<step>
 	  <title>Preparations</title>
 	  <para>
-	    Upgrading to Qlustar 9.1 is only supported from a 9.0.x or a 8.1.x release.
+	    Upgrading to Qlustar 9.2 is only supported from a 9.1.x release.
 	  </para>
-	  <note>
-	    <para>
-	      When updating from Qlustar 8.1 you'll have to do some further preparation:
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    Backup Slurm Config
-		  </term>
-		  <listitem>
-		    <para>
-		      Backup your Slurm config file
-		      (<filename>/etc/qlustar/common/slurm-llnl/slurm.conf</filename>) to a
-		      safe place before starting. In Qlustar 9.x, the Slurm config is managed
-		      by QluMan and needs to be setup from scratch (see <link
-		      xlink:href="../QluMan_Guide/index.html#sec-Slurm-Config___blank___"> the
-		      corresponding section in the QluMan guide</link>). Use the settings in
-		      your backed up config file to accomplish this.
-		    </para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>
-		    Remove conflicting packages
-		  </term>
-		  <listitem>
-		    <para>
-		      Execute the following command as root on the head-node:
-		      <screen>
-<prompt>0 root@cl-head ~ #</prompt>
-<command>dpkg -l | grep -q kvm-ipxe &amp;&amp; dpkg --purge kvm-ipxe</command>
-		      </screen>
-		    </para>
-		  </listitem>
-		</varlistentry>
-		<varlistentry>
-		  <term>
-		    Fix munge startup
-		  </term>
-		  <listitem>
-		    <para>
-		      Execute the following commands as root on the head-node:
-		      <screen>
-<prompt>0 root@cl-head ~ #</prompt>
-<command>cfg=/etc/default/munge</command>
-<prompt>0 root@cl-head ~ #</prompt>
-<command>[ -w $cfg ] &amp;&amp; echo "OPTIONS=--force" >> $cfg</command>
-		      </screen>
-		    </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </note>
 	  <note><para>
 	    Make sure that you have no unwritten changes in the QluMan database. If you do,
 	    write them to disk as described in the <link
@@ -271,7 +417,7 @@
 	  </para></note>
 	</step>
 	<step>
-	  <title>Update to 9.1 package sources list</title>
+	  <title>Update to 9.2 package sources list</title>
 	  <para>
 	    The Qlustar apt sources list needs to be changed as follows both on the
 	    head-node(s) and in all chroot(s) that should be updated.
@@ -279,7 +425,7 @@
 <prompt>0 root@cl-head ~ #</prompt>
 <command>apt-get update</command>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>apt-get install qlustar-sources-list-9.1</command>
+<command>apt-get install qlustar-sources-list-9.2</command>
 	    </screen>
 	  </para>
 	</step>
@@ -298,47 +444,26 @@
 	  </para>
 	</step>
 	<step>
-	  <title>Generate a one-time token</title>
-	  <para>
-	    After having updated and rebooted the head-node, you'll have to generate a one-time
-	    token with which you'll be able to establish authentification with QluMan.
-	    <screen>
-<prompt>0 root@cl-head ~ #</prompt>
-<command>qluman-cli --gencert</command>
-	    </screen>
-	    You'll be prompted for a pin when generating the token. This step is explained
-	     <link
-	    xlink:href="../First_Steps_Guide/index.html#sec-QluMan-Token___blank___">
-	    elsewhere in more detail</link>.
-	  </para>
-	  <para>
-	    With this one-time token, you can proceed to register yourself using the QluMan GUI
-	    as explained in the <link
-	    xlink:href="../QluMan_Guide/index.html#sec-manage-cluster___blank___">
-	    QluMan Guide</link>.
-	  </para>
-	</step>
-	<step>
-	  <title>Write config file changes</title>
-	  <para>
-	    The update might have introduced changes in the QluMan database. These need to be
-	    written to disk. Check the QluMan Guide about <link
-	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">
-	    how to write such changes</link>.
-	  </para>
-	</step>
-	<step>
 	  <title>Regenerating Qlustar images</title>
 	  <para>
-	    Most likely you will also have to regenerate your Qlustar images with the 9.1 image
-	    modules. To accomplish this, you'll have to select <emphasis>Version 9.1</emphasis>
+	    Most likely you will also have to regenerate your Qlustar images with the 9.2 image
+	    modules. To accomplish this, you'll have to select <emphasis>Version 9.2</emphasis>
 	    in the QluMan <link
 	    xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
 	    Qlustar Images dialog</link>.
 	  </para>
 	</step>
 	<step>
-	  <title>Reboot all netboot node(s)</title>
+	  <title>Write config file changes</title>
+	  <para>
+	    To activate all changes in the QluMan database that were introduced by the update,
+	    they need to be written to disk now. Check the QluMan Guide about <link
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___"> how to
+	    write such changes</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Reboot all netboot nodes</title>
 	  <para>
 	    After the regeneration of the images is complete, you can reboot all other nodes in
 	    the cluster, including virtual FE nodes. This completes the update procedure.
@@ -347,167 +472,19 @@
       </procedure>
     </task>
   </section>
-  <section xml:id="RelNotes_9_1_1">
-    <title>Release Notes for the 9.1.1 Maintenance Release</title>
+  <section>
+    <title>Changelogs</title>
     <para>
-      Qlustar 9.1.1 is the first maintenance release within the 9.1 series. It includes quite a
-      number of new features and minor component updates. Updating from 9.1.0 works <link
-      xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___"> as
-      usual.</link>
-    </para>
-    <section>
-      <title>Basic Info</title>
-      <para>
-	The Qlustar 9.1.1 <classname>core platform</classname> is based on Ubuntu 14.04.4 and
-	the additional Debian <classname>edge platform</classname> on Debian 7.9. They include
-	all security fixes and other package updates published before July 15th 2016. Available
-	security updates relevant to Qlustar 9.1.1, that have appeared after this date, will be
-	announced on the Qlustar website and in the Qlustar security news-letter.
-      </para>
-    </section>
-    <section>
-      <title>New features / tools / packages</title>
-      <section>
-	<title>QluMan 2.1.1</title>
-	<para>
-	  <variablelist>
-	    <varlistentry>
-	      <term>Slurm GRES Configurator</term>
-	      <listitem><para> Slurm generic resources (GRES) are mostly used to assign
-	      additional hardware features (e.g. GPUs) to a running job. QluMan now has a
-	      nice configurator which allows to assign and manage GRES on nodes. <link
-	      xlink:href="../QluMan_Guide/index.html#sec-Slurm-Gres-Groups___blank___"> More
-	      details &hellipsis;</link> </para></listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>GPU Wizard</term>
-	      <listitem><para> To make GPU management for usage with Slurm really simple, a
-	      powerful GPU wizard has been added to QluMan. Auto-detected GPUs on running nodes
-	      are correctly setup with just a few mouse clicks. <link
-	      xlink:href="../QluMan_Guide/index.html#sec-GPUwizard___blank___"> More details
-	      &hellipsis;</link>
-	      </para></listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Message Log Viewer</term>
-	      <listitem><para> QluMan now also includes a powerful Log Viewer that allows to
-	      inspect important events in the cluster. Messages are categorized depending on
-	      the type of event, when it occurred, which component(s) it involved and how
-	      important it was. With our convenient filter editor, the type of messages to be
-	      shown is easily custom-tailored. <link
-	      xlink:href="../QluMan_Guide/index.html#chap-LogViewer___blank___"> More details
-	      &hellipsis;</link> </para></listitem>
-	    </varlistentry>
-	  </variablelist>
-	</para>
-      </section>
-      <section>
-	<title>Commercial compiler support</title>
-	<para>
-	  Two new packages have been created that allow for straight-forward installation and integration of the two most popular commercial compilers on Linux Clusters:
-	  <itemizedlist>
-	    <listitem><para>
-	      Intel Parallel Studio XE 2016
-	    </para></listitem>
-	    <listitem><para>
-	      PGI compilers / Tools
-	    </para></listitem>
-	  </itemizedlist>
-	  Just install either of the compilers on the head-nodes NFS using their standard
-	  installation routine. Afterwards install and configure the corresponding Qlustar
-	  packages in the UnionFS chroot used for your compute nodes:
-	  <itemizedlist>
-	    <listitem><para>
-	      qlustar-ips-2016 - for Intel Parallel Studio
-	    </para></listitem>
-	    <listitem><para>
-	      qlustar-pgi-2015 - for PGI compilers / Tools
-	    </para></listitem>
-	  </itemizedlist>
-	    Integrated OpenMPI packages for the compilers are also available:
-	  <itemizedlist>
-	    <listitem><para>
-	      openmpi-icc - for Intel Parallel Studio
-	    </para></listitem>
-	    <listitem><para>
-	      openmpi-pgi - for PGI compilers / Tools
-	    </para></listitem>
-	  </itemizedlist>
-	</para>
-      </section>
-      <section>
-	<title>New utilities</title>
-	<para>
-	  <variablelist>
-	    <varlistentry>
-	      <term>Configurable automatic ZFS snapshot backup</term>
-	      <listitem><para> The new package <application>qluman-fs-tools</application>
-	      includes the configurable ZFS snapshot backup tool
-	      <application>zfs-snap-bak.py</application> with a corresponding configuration
-	      file at <filename>/etc/qlustar/fs-tools/zfs-snap-bak.conf</filename>.
-	      </para></listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Easy resetting of NIS passwords</term>
-	      <listitem><para> The new utility <application>reset-nis-passwd.sh</application>
-	      allows for easy resetting of user passwords in NIS, including generating a new
-	      random password.  </para></listitem>
-	    </varlistentry>
-	  </variablelist>
-	</para>
-      </section>
-      <section>
-	<title>I/O benchmark tools</title>
-	<para>
-	  <variablelist>
-	    <varlistentry>
-	      <term>mdtest HPC benchmark</term>
-	      <listitem><para> The new mdtest package compiled against OpenMPI provides the
-	      parallel metadata benchmark <link
-	      xlink:href="https://sourceforge.net/projects/mdtest/___blank___">mdtest</link>
-	      (1.9.3), that performs open/stat/close operations on files and directories and
-	      then reports the performance. It's mostly used to benchmark parallel filesystem
-	      performance.  </para></listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>IOR MPI parallel I/O benchmark</term>
-	      <listitem><para> The new ior package compiled against OpenMPI provides the
-	      popular parallel I/O benchmark <link
-	      xlink:href="https://github.com/LLNL/ior___blank___">IOR</link> (3.0.1), that
-	      leverages the scalability of MPI to easily and accurately calculate the aggregate
-	      bandwidth of an unlimited number of client machines. IOR can utilize the POSIX,
-	      MPI-IO, and HDF5 I/O interfaces. It's mostly used to benchmark parallel
-	      filesystem performance. </para></listitem>
-	    </varlistentry>
-	  </variablelist>
-	</para>
-      </section>
-      <section>
-	<title>Major component updates</title>
-	<para>
-	  <itemizedlist>
-	    <listitem><para>slurm 15.08.12</para></listitem>
-	    <listitem><para>OFED 3.18-2 (includes new libfabric package)</para></listitem>
-	    <listitem><para>Lustre 2.8 final</para></listitem>
-	    <listitem><para>ZFS 0.6.5.7</para></listitem>
-	  </itemizedlist>
-	</para>
-      </section>
-      <section>
-	<title>Changelogs</title>
-	<para>
-	  A detailed log of changes in the image modules can be found in the directories
-	  <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-9.1.1</filename>.
-	  As an example, in the directory
-	  <filename>/usr/share/doc/qlustar-module-core-precise-amd64-9.1.1</filename> you will
-	  find a summary changelog in <filename>core.changelog</filename>, a complete list of
-	  packages with version numbers entering the current core module in
-	  <filename>core.packages.version.gz</filename>, a complete changelog of the core
-	  modules package versions in <filename>core.packages.version.gz</filename> and finally
-	  a complete log of changed files in <filename>core.contents.changelog.gz</filename>.
+      A detailed log of changes in the image modules can be found in the directories
+      <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-9.2.0</filename>.
+      As an example, in the directory
+      <filename>/usr/share/doc/qlustar-module-core-precise-amd64-9.2.0</filename> you will find
+      a summary changelog in <filename>core.changelog</filename>, a complete list of packages
+      with version numbers entering the current core module in
+      <filename>core.packages.version.gz</filename>, a complete changelog of the core modules
+      package versions in <filename>core.packages.version.gz</filename> and finally a complete
+      log of changed files in <filename>core.contents.changelog.gz</filename>.
       </para>
       </section>
-    </section>
-  </section>
 </article>
 
