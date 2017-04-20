@@ -66,33 +66,32 @@ apt-get dist-upgrade</command>
 	 the nodes like above or using the <application>Qlustar online update
 	 mechanism</application> (currently the online update has to be executed manually,
 	 future versions of <application>QluMan</application> will allow to do this from the
-	 GUI) as follows. Execute the following command on the head-node for each node (of
-	 course, this can be done in a shell <command>for loop</command>):
+	 GUI) as follows: Execute the following command on the head-node:
        </para>
        <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-qlustar-image-update -u &lt;image name&gt; &lt;hostname&gt;</command>
+qlustar-image-update -H &lt;hostlist&gt;</command>
        </screen>
        <para>
-	 where &lt;image name&gt; has to be the name of the image that is currently booted on
-	 the corresponding node. You also have the option to first check what exactly the
-	 update will change. To find out, execute the following for one sample node per image
-	 type:
+	 where &lt;hostlist&gt; is a list of nodes in hostlist format, e.g. beo-[01-80]. You
+	 also have the option to first check what exactly the update will change. To find out,
+	 execute the following:
        </para>
        <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-qlustar-image-update -c &lt;image name&gt; &lt;hostname&gt;</command>
+qlustar-image-update -c -H &lt;hostlist&gt;</command>
        </screen>
        <para>
-	 This will show the files that will be changed by this update.
+	 This will show what will be changed by this update.
        </para>
        <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-qlustar-image-update -s &lt;image name&gt; &lt;hostname&gt;</command>
+qlustar-image-update -s -H &lt;hostlist&gt;</command>
        </screen>
        <para>
 	 This will show all services (daemons) that need to be restarted as a result of this
-	 update.
+	 update. If you want more detailed information about the update process, add the option
+	 <emphasis>-v</emphasis> to any of the previous command lines.
        </para>
        <section xml:id="image-update">
 	 <title>When will images be updated/rebuilt?</title>
@@ -105,31 +104,31 @@ qlustar-image-update -s &lt;image name&gt; &lt;hostname&gt;</command>
 	 <orderedlist>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y.z</type>, e.g. 8.1.1. In
+	       Selected image version is of <type>type x.y.z</type>, e.g. 9.1.1. In
 	       this case, the image will be rebuilt if and only if there is an update for the
-	       selected version (8.1.1) of the modules. Such updates will always be
+	       selected version (9.1.1) of the modules. Such updates will always be
 	       bug-/security-fixes.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y</type>, e.g. 8.1 with 8.1.1
-	       being the most recent 8.1.z version before applying the update. In this case the
-	       image is rebuilt, if the update entails a new maintenance release (e.g. 8.1.2
+	       Selected image version is of <type>type x.y</type>, e.g. 9.1 with 9.1.1
+	       being the most recent 9.1.z version before applying the update. In this case the
+	       image is rebuilt, if the update entails a new maintenance release (e.g. 9.1.2
 	       which will then become the new real image version) or an update for the
-	       currently installed (8.1.1) modules.
+	       currently installed (9.1.1) modules.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x</type>, e.g. 8 with 8.1
-	       being the most recent 8.y and 8.1.1 being the most recent 8.1.z version before
+	       Selected image version is of <type>type x</type>, e.g. 9 with 9.1
+	       being the most recent 9.y and 9.1.1 being the most recent 9.1.z version before
 	       applying the update. In this case the image is rebuilt, if either the update
-	       entails a new feature release (e.g. 8.2, the latest 8.2.z will then become the
-	       new real image version) or a new maintenance release (e.g. 8.1.2 which will then
+	       entails a new feature release (e.g. 9.2, the latest 9.2.z will then become the
+	       new real image version) or a new maintenance release (e.g. 9.1.2 which will then
 	       become the new real image version) or an update for the currently installed
-	       (8.1.1) modules. With this option, manual intervention to obtain a new image
-	       version is only necessary when upgrading to a new major release (e.g. 9.y.z).
+	       (9.1.1) modules. With this option, manual intervention to obtain a new image
+	       version is only necessary when upgrading to a new major release (e.g. 10.y.z).
 	     </para>
 	   </listitem>
 	 </orderedlist>
