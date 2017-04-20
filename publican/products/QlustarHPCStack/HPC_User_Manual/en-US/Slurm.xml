@@ -12,7 +12,7 @@
 	 xmlns:xi="http://www.w3.org/2001/XInclude"
 	 xml:id="chap-hpc-user-man-slurm">
   <title>Using the Slurm workload manager</title>
-  <section xml:id="sec-Introduction">
+  <section xml:id="sec-slurm-Introduction">
     <title>Job Submission</title>
     <para>
       Use the <command>sbatch</command> command to submit a batch script.
@@ -223,7 +223,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
       </variablelist>
     </para>
   </section>
-  <section xml:id="sec-parallel-jobs">
+  <section xml:id="sec-slurm-parallel-jobs">
     <title>Parallel Jobs</title>
     <para>
       For submitting parallel jobs, a few rules have to be understood
@@ -275,7 +275,7 @@ srun <replaceable>&lt;my_program&gt;</replaceable>
       </varlistentry>
     </variablelist>
   </section>
-  <section xml:id="sec-allocating-GPUs">
+  <section xml:id="sec-slurm-allocating-GPUs">
     <title>Allocating GPUs</title>
     <para>
       Allocating GPUs is very much cluster-specific. Depending on your local Slurm setup you
@@ -294,7 +294,7 @@ srun <replaceable>&lt;my_program&gt;</replaceable>
 <command>sbatch --partition=gpu --gres=gpu:k80:2 script.sh</command>
     </screen>
   </section>
-  <section xml:id="sec-interactive-jobs">
+  <section xml:id="sec-slurm-interactive-jobs">
     <title>Interactive Jobs</title>
     <para>
       Interactive tasks like editing, compiling etc. are normally limited to the FrontEnd
@@ -323,7 +323,7 @@ srun: job 13598400 has been allocated resources
 <command>start interactive work with the 4 cores.</command>
     </screen>
   </section>
-  <section xml:id="sec-walltime-limits">
+  <section xml:id="sec-slurm-walltime-limits">
     <title>Walltime Limits</title>
     <para>
       Often, partitions have walltime limits. Use the command <command>sinfo
@@ -374,7 +374,7 @@ JOBID               TIME_LIMIT          TIME
       For many more <command>squeue</command> options, see the squeue man page.
     </para>
   </section>
-  <section xml:id="sec-deleting-jobs">
+  <section xml:id="sec-slurm-deleting-jobs">
     <title>Deleting Jobs</title>
     <para>
       The <command>scancel</command> command is used to delete jobs. Examples:
@@ -405,7 +405,7 @@ JOBID               TIME_LIMIT          TIME
 (delete any jobs running on node node-15)
     </screen>
   </section>
-  <section xml:id="sec-job-states">
+  <section xml:id="sec-slurm-job-states">
     <title>Job States</title>
     <para>
       Common job states:
@@ -481,7 +481,7 @@ JOBID               TIME_LIMIT          TIME
 <command>sacct --state f --starttime 2016-03-01 </command>
     </screen>
   </section>
-  <section xml:id="sec-exit-codes">
+  <section xml:id="sec-slurm-exit-codes">
     <title>Exit codes</title>
     <para>
       The completion status of a job is essentially the exit status of the job script with all
@@ -548,7 +548,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 echo "DONE"
     </screen>
   </section>
-  <section xml:id="sec-array-jobs">
+  <section xml:id="sec-slurm-array-jobs">
     <title>Array Jobs</title>
     <para>
       Array jobs can be used to create a sequence of jobs which will be submitted, controlled,
@@ -587,7 +587,7 @@ echo "Hi, I am step $SLURM_ARRAY_TASK_ID in this array job $SLURM_ARRAY_JOB_ID"
       xlink:href="http://slurm.schedmd.com/job_array.html">Slurm documentation</link>.
     </para>
   </section>
-  <section xml:id="sec-chain-jobs">
+  <section xml:id="sec-slurm-chain-jobs">
     <title>Chain Jobs</title>
     <para>
       You can use <firstterm>chain jobs</firstterm> to create dependencies between jobs. This
@@ -620,7 +620,7 @@ for TASKS in $TASK_NUMBERS ; do
 done
     </screen>
   </section>
-  <section xml:id="sec-monitoring-jobs">
+  <section xml:id="sec-slurm-monitoring-jobs">
     <title>Monitoring Jobs</title>
     <para>
       <command>squeue</command> will report all jobs on the cluster. <command>squeue -u
@@ -640,7 +640,7 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
 22391     gpu    gromacs-1   mike  R      10:06      1 node-08
     </screen>
   </section>
-  <section xml:id="sec-email-notifications">
+  <section xml:id="sec-slurm-email-notifications">
     <title>Email notifications</title>
     <para>
       Using the <parameter>--mail-type=<replaceable>&lt;type&gt;</replaceable></parameter>
@@ -704,7 +704,7 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
       </tgroup>
     </informaltable>
   </section>
-  <section xml:id="sec-modifying-job-after-submission">
+  <section xml:id="sec-slurm-modifying-job-after-submission">
     <title>Modifying a job after submission</title>
     <para>
       After a job is submitted, some of the submission parameters can
@@ -745,7 +745,7 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
       </para>
     </note>
   </section>
-  <section xml:id="sec-biniding-and-distribution-tasks">
+  <section xml:id="sec-slurm-biniding-and-distribution-tasks">
     <title>Binding and Distribution of Tasks</title>
     <para>
       <application>Slurm</application> provides several binding strategies to place and bind
@@ -839,9 +839,9 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 srun --cpus-per-task=$SLURM_CPUS_PER_TASK ./<replaceable>application</replaceable>
     </screen>
-    <section xml:id="sec-detailed-description">
+    <section xml:id="sec-slurm-detailed-description">
       <title>Detailed Description</title>
-      <section xml:id="sec-general">
+      <section xml:id="sec-slurm-general">
 	<title>General</title>
 	<para>
 	  To specify a pattern the commands <parameter>--cpu_bind=&lt;cores |
@@ -866,7 +866,7 @@ srun --cpus-per-task $SLURM_CPUS_PER_TASK --cpu_bind=<replaceable>cores</replace
 	  for different job types.
 	</para>
       </section>
-      <section xml:id="sec-mpi-strategies">
+      <section xml:id="sec-slurm-mpi-strategies">
 	<title>MPI Strategies</title>
 	<bridgehead>Default Binding and Distribution Pattern</bridgehead>
 	<para>
@@ -995,7 +995,7 @@ srun --cpu_bind=cores --distribution=clyclic:block ./<replaceable>application</r
 	  </varlistentry>
 	</variablelist>
       </section>
-      <section xml:id="sec-socket-bound">
+      <section xml:id="sec-slurm-socket-bound">
 	<title>Socket Bound</title>
 	<note>
 	  <para>
@@ -1098,7 +1098,7 @@ srun --cpu_bind=sockets --distribution=cyclic:block ./<replaceable>application</
 	  </varlistentry>
 	</variablelist>
       </section>
-      <section xml:id="sec-hybrid-strategies">
+      <section xml:id="sec-slurm-hybrid-strategies">
 	<title>Hybrid Strategies</title>
 	<bridgehead>Default Binding and Distribution
 	Pattern</bridgehead>
@@ -1130,7 +1130,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 srun --cpus-per-task $OMP_NUM_THREADS ./<replaceable>application</replaceable>
 	</screen>
       </section>
-      <section xml:id="sec-hybrid-core-bound">
+      <section xml:id="sec-slurm-hybrid-core-bound">
 	<title>Core Bound</title>
 	<variablelist>
 	  <varlistentry>
@@ -1199,7 +1199,7 @@ srun --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable
       </section>
     </section>
   </section>
-  <section xml:id="sec-accounting">
+  <section xml:id="sec-slurm-accounting">
     <title>Accounting</title>
     <para>
       The <application>Slurm</application> command <command>sacct</command> provides job
@@ -1227,7 +1227,7 @@ srun --cpus-per-task $OMP_NUM_THREADS --cpu_bind=<replaceable>cores</replaceable
       on the provided fields.
     </para>
   </section>
-  <section xml:id="sec-other">
+  <section xml:id="sec-slurm-other">
     <title>Other</title>
     <bridgehead>Running on specific hosts</bridgehead>
     <para>
