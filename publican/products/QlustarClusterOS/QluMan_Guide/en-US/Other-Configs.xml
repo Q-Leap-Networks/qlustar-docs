@@ -35,23 +35,23 @@
     <section xml:id="sec-Image-Versioning">
       <title>Image Versioning</title>
       <para>
-	Currently available image versions are 9, 9.1 (both meta-versions), 9.1.0 and
-	9.1.1. Note, that selecting meta-versions (like e.g. 9) has implications on the update
+	Currently available image versions are 9, 9.1, 9.2 (all meta-versions), 9.1.1 and
+	9.2.0. Note, that selecting meta-versions (like e.g. 9) has implications on the update
 	process. They allow tracking the newest x.y (x.y.z) releases automatically. Example: If
-	you have installed version 9 of the modules, you will currently get the 9.1 (most
-	recent 9.y) versions, but when 9.2 will be
-	available, <code>apt-get dist-upgrade</code> will update to 9.2 versions
+	you have installed version 9 of the modules, you will currently get the 9.2 (most
+	recent 9.y) versions, but if a 9.3 would become
+	available, <code>apt-get dist-upgrade</code> will update to 9.3 versions
 	automatically. So with this choice, updates will usually include larger changes,
-	since new <emphasis role="bold">feature</emphasis> releases (like 9.2) will
+	since new <emphasis role="bold">feature</emphasis> releases (like 9.3) will
 	automatically be installed.
       </para>
       <para>
-	Similarly, if you have selected the 9.1 version (currently default after a fresh
-	installation) you will currently get 9.1.1 (most recent 9.1.z version) and
-	<code>apt-get dist-upgrade</code> will update the modules/images to 9.1.2
+	Similarly, if you have selected the 9.2 version (currently default after a fresh
+	installation) you will currently get 9.2.0 (most recent 9.2.z version) and
+	<code>apt-get dist-upgrade</code> will update the modules/images to 9.2.1
 	automatically once available. So this choice will update to new <emphasis
 	role="bold">maintenance</emphasis> releases automatically. The most conservative
-	choice would be to explicitly select a x.y.z version (currently 9.1.1), since then
+	choice would be to explicitly select a x.y.z version (currently 9.2.0), since then
 	images will only receive bug fix updates without explicitly changing the version in
 	<productname>Qlustar</productname>. See also the discussion in the general <link
 	xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
@@ -270,7 +270,7 @@
       corresponding pull-down menu. This will show its description, as well as its properties
       like the NFS server that serves it, the filesystem path on the server, the flavor (edge
       platform, trusty/wheezy/...)  and the version of the <productname>Qlustar</productname>
-      feature release (always being of the form x.y, e.g 9.1).
+      feature release (always being of the form x.y, e.g 9.2).
     </para>
     <para>
       <mediaobject>
