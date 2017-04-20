@@ -237,16 +237,15 @@ version3: beo-[05-08]
 
      <para>
        By default the compute-nodes do not send mail. You can however activate the simple MTA
-       ssmtp by assigning the QluMan generic property <emphasis>Activate Mail</emphasis> to
-       cluster nodes.
+       <application>ssmtp</application> by assigning the QluMan generic property
+       <emphasis>Activate Mail</emphasis> to cluster nodes.
      </para>
      <para>
-       The configuration of ssmtp needs to be done in the directory
-       <filename>/etc/qlustar/common/ssmtp/</filename> and consists of two files,
+       The configuration of <application>ssmtp</application> needs to be done in the directory
+       <filename>/etc/qlustar/common/ssmtp</filename> and consists of two files,
        <filename>ssmtp.conf</filename> and <filename>revaliases</filename>. In
-       <filename>ssmtp.conf</filename> you should set these parameters:
+       <filename>ssmtp.conf</filename> you should set the following parameters:
      </para>
-
      <variablelist>
        <varlistentry>
 	 <term>
