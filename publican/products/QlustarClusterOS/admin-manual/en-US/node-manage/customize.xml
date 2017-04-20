@@ -222,109 +222,13 @@ version3: beo-[05-08]
        <filename>/etc/qlustar/common/image-files/destinations.version3</filename>. The group
        name defined in the softgroups is the extension to the destinations file. The files
        could look like this: <screen># destinations.version2 - use version2 of the program:
-       /apps/prod/bin/program.version2 /usr/bin/program # destinations.version3 - use version3
-       of the program: /apps/prod/bin/program.version3 /usr/bin/program
+       /apps/local/bin/program.version2 /usr/bin/program # destinations.version3 - use version3
+       of the program: /apps/local/bin/program.version3 /usr/bin/program
        </screen>
        Hence, with this mechanism, you can have parts of your cluster use different
        versions of the same program.
      </para>
-     
-   </section>
-
-   <section xml:id="admin-man-sect-hard-disc-init">
-     <title>Hard disc initialization</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Hard disc initialization</secondary></indexterm>
-     
-     <para>
-       The boot script <filename>/etc/init.d/disk-auto-setup</filename> is responsible for
-       checking whether the hard disc of the compute-node is already partitioned correctly and
-       has the needed filesystems and swap setup. If this is not the case, it partitions the
-       drive, generates filesystems and swap space, and finally mounts the filesystems and
-       activates swap.  You can force creating of the partitions and filesystems by adding the
-       hostnames to the initialize group in
-       <filename>/etc/qlustar/common/disk-configs/raidgroups</filename>:
-     </para>
-     
-<screen>
-initialize: beo-01 beo-[12][0-9]
-</screen>
-
-     <para>
-       Note that you can also use regular expressions to match hostnames, so that a line like
-       the one above would affect node <systemitem class="systemname">beo-01</systemitem> as
-       well as nodes 10 to 29. The disc is typically setup with a <filename>/var</filename>
-       (1GB) filesystem, 2GB of swap space and a /scratch filesystem occupying the remainder of
-       the disc. The configuration file resides in
-       <filename>/etc/qlustar/common/disk-configs/initdisc.cf</filename> and by default looks
-       like this:
-     </para>
-
-<screen>
-disk_config sda
-primary   /var          1024       ;
-primary   swap          8192       ;
-primary   /scratch      1000-      ;
-</screen>
-     
-     <para>
-       This instructs the script disk-auto-setup to create a <filename>/var
-       partition/filesystem</filename> of size 1GB, a swap partition of size 8GB and to use the
-       rest of the disk for the /scratch partition. Note that the partitions
-       <filename>/var</filename> and <filename>/scratch</filename> are automatically mounted
-       and swap automatically activated. Therefore you should define at least these three
-       partitions. Special configurations with RAID 0 devices on multiple discs are also
-       possible in cases where disc I/O performance is of central importance. Example:
-     </para>
-     
-<screen>
-disk_config sda ; sdb sdc
-primary   /var          2048       ; raid0 md0
-primary   swap          4096       ; raid0 md1
-primary /scratch        1000-      ; raid0 md2
-</screen>
-
-     <para>
-       You can add a parameter <parameter>sched_config</parameter> and set it to the desired
-       I/O Scheduler. The possible values are: noop, anticipatory, deadline and cfq. To set the
-       scheduler to deadline add this line:
-     </para>
-     
-<screen>
-sched_config deadline
-</screen>
-     
-     <variablelist>
-       <varlistentry>
-	 <term>
-	   Diskgroups
-	 </term>
-	 <listitem>
-	   <para>
-	     Similar to Softgroups you can divide your cluster into groups with different hard
-	     disk setups. The file
-	     <filename>/etc/qlustar/common/disk-configs/diskgroups</filename> defines the
-	     groups and should be created by the ql-cluster-portal. It may look like this:
-<screen>
-moreswap: beo-01 beo-02 beo-03 beo-04
-</screen>
-	     Now the file
-	     <filename>/etc/qlustar/common/disk-configs/initdisc.cf.moreswap</filename> could
-	     have this content:
-	     <screen>
-disk_config sda
-primary   /var           1024       ;
-primary   swap           16384      ;
-primary   /scratch       1000-      ;
-	     </screen>
-	     and hosts <systemitem class="systemname">beo-01</systemitem> - <systemitem
-	     class="systemname">beo-04</systemitem> will have more swap space available.
-	   </para>
-	 </listitem>
-       </varlistentry>
-     </variablelist>
-
-   </section>
+  </section>
 
    <section xml:id="admin-man-sect-mail-trans-agent">
      <title>Mail Transport Agent</title>
@@ -333,16 +237,11 @@ primary   /scratch       1000-      ;
 
      <para>
        By default the compute-nodes do not send mail. You can however activate the simple MTA
-       ssmtp. In the file <filename>/etc/qlustar/common/beobox.conf</filename> you can specify
-       to use it:
+       ssmtp by assigning the QluMan generic property <emphasis>Activate Mail</emphasis> to
+       cluster nodes.
      </para>
-
-<screen>
-BEOBOX_MAILER=ssmtp
-</screen>
-     
      <para>
-       The configuration can be found in the directory
+       The configuration of ssmtp needs to be done in the directory
        <filename>/etc/qlustar/common/ssmtp/</filename> and consists of two files,
        <filename>ssmtp.conf</filename> and <filename>revaliases</filename>. In
        <filename>ssmtp.conf</filename> you should set these parameters:
@@ -400,35 +299,28 @@ BEOBOX_MAILER=ssmtp
 	 </listitem>
        </varlistentry>
      </variablelist>
-
      <para>
        An example configuration file would be:
      </para>
-
-<screen>
+     <screen>
 Root=user@domain.com
 Mailhub=relayhost
 RewriteDomain=domain.com
 FromLineOverride=Yes
 Hostname=thishost.domain.com
-</screen>
-     
+     </screen>
      <para>
-       In the file <filename>revaliases</filename> you can specify how mails to local accounts
+       In the file <filename>revaliases</filename>, you can specify how mails to local accounts
        should be forwarded to outgoing addresses and which mail server to use. Example:
      </para>
-     
-<screen>
+     <screen>
 user:user@mailprovider.com:mailserver.mailprovider.com
-</screen>
-
+     </screen>
    </section>
-
    <section xml:id="admin-man-sect-infiniband">
      <title>Infiniband</title>
      <indexterm><primary>Node Customization</primary>
      <secondary>Infiniband</secondary></indexterm>
-
      <para>
        If the dynamically created file <filename>/etc/qlustar/options.d/ib</filename> exists
        (see <xref linkend="admin-man-sect-node-options"/> for details on the mechanism), the
@@ -445,15 +337,9 @@ user:user@mailprovider.com:mailserver.mailprovider.com
 	     address.
 	   </para>
 	 </listitem>
-	 <listitem>
-	   <para>
-	     and the subnet manager OpenSM will be started, if so configured with QluMan.
-	   </para>
-	 </listitem>
        </itemizedlist>
-       The configurable options in this file are:
+       The available parameters in this file are:
      </para>
-     
      <variablelist>
        <varlistentry>
 	 <term>
@@ -461,7 +347,7 @@ user:user@mailprovider.com:mailserver.mailprovider.com
 	 </term>
 	 <listitem>
 	   <para>
-	     the network part of the current address
+	     the IPoIB IP address of the adapter
 	   </para>
 	 </listitem>
        </varlistentry>
@@ -475,37 +361,14 @@ user:user@mailprovider.com:mailserver.mailprovider.com
 	   </para>
 	 </listitem>
        </varlistentry>
-       <varlistentry>
-	 <term>
-	   OPENSM_START
-	 </term>
-	 <listitem>
-	   <para>
-	     Should OpenSM be started (true/false)
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   OPENSM_OPTS
-	 </term>
-	 <listitem>
-	   <para>
-	     Command line options for OpenSM
-	   </para>
-	 </listitem>
-       </varlistentry>
      </variablelist>
-     
      <para>
       An example <filename>/etc/qlustar/options.d/ib</filename> options file:
      </para>
-<screen>
-IB_IP=172.16.0.200
+     <screen>
+IB_IP=192.168.83.3
 IB_MASK=255.255.255.0
-OPENSM_START=true
-OPENSM_OPTS="-R updn"
-</screen>
+     </screen>
    </section>
  </section>
 
