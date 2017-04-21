@@ -357,10 +357,10 @@ keep the local version currently installed.
 	a full-featured installation of the corresponding Qlustar edge platform. To change into
 	a chroot, convenience bash shell aliases of the form chroot-<replaceable>chroot
 	name</replaceable> are defined for the root user on the head-node. You may use them as
-	follows (e.g. for Debian/Wheezy, if it was selected at install):
+	follows (e.g. for Ubuntu/Trusty, if it was selected at install):
 	<screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>chroot-wheezy</command>
+<command>chroot-trusty</command>
 	</screen>
 	Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
 	its software packages, e.g.
@@ -598,7 +598,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	given for slurm):
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>OMPI_MCA_btl="tcp,self" salloc -N 2 --ntasks-per-node=2 -p demo \
+<command>OMPI_MCA_btl="tcp,self" salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo \
 srun hello-world-c</command>
 	</screen>
 	This will run the job interactively on 2 nodes with 2 processes each (total of 4
@@ -634,7 +634,7 @@ salloc: Job allocation 19 has been revoked.
 	slurm-<replaceable>job#</replaceable>.out</command> after the job has finished):
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>sbatch -N 2 --ntasks-per-node=2 -p demo hello-world-f90-slurm.sh</command>
+<command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
 	</screen>
 	Note that the environment variable <envar>OMPI_MCA_btl="tcp,self"</envar> is used in
 	the above two examples to prevent error messages from not finding an
