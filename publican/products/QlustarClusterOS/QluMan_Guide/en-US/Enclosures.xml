@@ -20,17 +20,20 @@
         fileref="images/enclosure_view/startup.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          The Enclosure View
+          The Enclosure View.
         </phrase></textobject>
         <caption><para>
-          The Enclosure View
+          The Enclosure View.
         </para></caption>
       </mediaobject>
       The <classname>Enclosure View</classname> shows an overview of the cluster in a tree
-      structure.  The tree structure is designed to reflect the physical structure of the
+      structure. The tree is designed to reflect the physical structure of the
       cluster. At the lowest level are the hosts. A host can be a head, storage or compute
       node but also a switch e.g. In general, anything in the cluster that has a name, IP and
-      MAC address is a host. A host is represented by its <literal>bare board</literal> and
+      MAC address is a host.
+    </para>
+    <para>
+      A host is represented by its <literal>bare board</literal> and
       should be placed into a <firstterm> host enclosure</firstterm>. 1U, 2U, 3U or 4U
       enclosures contain exactly one board, while others like a Twin or Blade chassis can
       have multiple boards. Once defined, host enclosures can be placed into
@@ -46,16 +49,17 @@
         fileref="images/enclosure_view/select_host.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          Selected host in Enclosure View
+          Tool-tip of selected host shows additional info.
         </phrase></textobject>
         <caption><para>
-          Selected host in Enclosure View
+          Tool-tip of selected host shows additional info.
         </para></caption>
       </mediaobject>
-      Selecting a node in the tree displays its configuration info on the right hand side:
-      The hostname, IP and MAC can be edited and saved by pressing
-      <keycap>return</keycap>. The check-mark to the right of the field shows the state of
-      the change. If the entered value is not valid, the check-box is cleared
+      Selecting a node in the tree displays its configuration info on the right hand
+      side. Hovering over a host entry in the tree view brings up a tool-tip with additional
+      info about the host. The hostname, IP and MAC can be edited and saved by pressing
+      <keycap>return</keycap>. The check-mark to the right of the field shows the state of the
+      change. If the entered value is not valid, the check-box is cleared
     </para>
     <para>
       The check-boxes tool-tip (you'll see it when the mouse moves on top of it) gives the
