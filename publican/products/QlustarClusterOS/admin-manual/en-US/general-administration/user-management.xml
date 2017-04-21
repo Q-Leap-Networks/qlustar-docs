@@ -71,55 +71,13 @@ removeuser.sh -r <replaceable>username</replaceable></command>
     <indexterm><primary>User Management</primary>
     <secondary>Managing restrictions</secondary></indexterm>
     <para>
-      In the default configuration of a Qlustar cluster all NIS registered users are allowed to
-      run commands on the cluster nodes provided such commands don’t require root rights.
-      However, it is possible for system administrators of a BEOBOX cluster to easily change
-      this standard behaviour. First of all there is a parameter
-      <parameter>NO_USER_LOGIN_ON_NODES</parameter> within the file
-      <filename>/etc/qlustar/common/beobox.conf</filename> which value should be set to
-      <parameter>true</parameter> as seen below
-    </para>
-    <screen>
-# Disallow user logins to nodes not running a PBS job
-NO_USER_LOGIN_ON_NODES=true
-    </screen>
-    <para>
-      Finally it is necessary to restart the boot script
-      <filename>/etc/init.d/torque-mom</filename> on all the nodes:
-    </para>
- 
-    <screen>
-<prompt>0 root@cl-head ~ #</prompt><command>
-dsh <replaceable>-a</replaceable> /etc/init.d/torque-mom restart</command>
-    </screen>
-    <para>
-      Following this procedure the administrator can change the cluster behaviour so that
-      users are constrained to only run PBS jobs trough the <command>qsub</command> 
-      command on the nodes.
-      Any other commands being issued by any user other than root will not be allowed to
-      run.
-    </para>
-    <para>
-      The first question arising here is what to do if the administrator would like the users,
-      say <replaceable>usr1</replaceable> and <replaceable>usr2</replaceable> to
-      be an exception to this restrictive rule. In that case it suffices to
-      put the name of those privileged users in the file 
-      <filename>/etc/qlustar/yp/group</filename> as shown:
-    </para>
-    <screen>
-users::100
-admgroup::2001:usr1,usr2
-    </screen>
-    <para>
-      After the regeneration of the NIS database:
-    </para>
-    <screen>
-# cd /var/yp
-/var/yp:# make
-    </screen>
-    <para>
-      users <replaceable>usr1</replaceable> and <replaceable>usr2</replaceable> will be allowed
-      to run commands according to their system rights.
+      In the default configuration of a Qlustar cluster, all registered users are allowed to
+      login by ssh on the cluster nodes. However, it is easily possible for cluster admins to
+      change this default behavior. Users will then be allowed to ssh only into nodes where one
+      of their jobs is running. To activate this setting for a node, use QluMan to assign the
+      <link xlink:href="../QluMan_Guide/index.html#Generic-Properties___blank___">generic
+      property</link> <emphasis>Limit User Logins</emphasis> with a value
+      <emphasis>yes</emphasis> to it.
     </para>
   </section>
   <section xml:id="admin-man-sect-shell-stp">
