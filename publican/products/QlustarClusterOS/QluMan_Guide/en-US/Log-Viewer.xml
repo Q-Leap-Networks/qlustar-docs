@@ -23,6 +23,17 @@
   <section xml:id="sec-LogViewer-indicator">
     <title>Messages indicator button</title>
     <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/messages/messages_button.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Messages Indicator button.
+        </phrase></textobject>
+        <caption><para>
+          The Messages Indicator button.
+        </para></caption>
+      </mediaobject>
       At the right bottom of the main window the QluMan GUI displays a
       <guibutton>Messages</guibutton> indicator. The button shows the highest priority of
       uninspected messages, as well as their number. Clicking the button opens the

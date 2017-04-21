@@ -64,12 +64,25 @@
       that needs to be specifically initiated and confirmed.
     </para>
     <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/write_files_button.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          The Write Files button.
+        </phrase></textobject>
+        <caption><para>
+          The Write Files button.
+        </para></caption>
+      </mediaobject>
       Each configuration dialog of a config class has a <guibutton>Preview</guibutton> and a
       <guibutton>Write</guibutton> button for its own config files. Additionally, there is a
       dedicated dialog for writing and previewing <emphasis role="bold">all</emphasis>
       configuration files. You can access the latter from <guimenuitem>Manage
       Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
-      Files</guibutton> button at the bottom right of the main window.
+      Files</guibutton> button at the bottom right of the main window. The button is an
+      indicator for the presence of pending changes: It is greyed out if there aren't any, and
+      fully visible otherwise.
     </para>
     <para>
       <mediaobject>
