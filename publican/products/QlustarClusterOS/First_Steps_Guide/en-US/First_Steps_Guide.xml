@@ -202,13 +202,13 @@ keep the local version currently installed.
     <section xml:id="sec-Final-Reboot">
       <title>Final Reboot</title>
       <para>
-	Please reboot again once all the previous steps are complete (e.g. by typing the
-	command <command>shutdown -r</command> now ). After the head-node is up and running
-	again, test its network connectivity by pinging its public IP address (hostname). Do
-	the same for the virtual front-end node, if you have chosen to configure one. It should
-	have booted as well after the head-node is up and running. You can try to login to it
-	using ssh. A test mail should have been sent to the e-mail address(es) you specified
-	during the installation. If you didn't receive one, review your settings in
+	Reboot again once all the previous steps are complete by pressing
+	<keycap>Enter</keycap>. After the head-node is up and running again, test its network
+	connectivity by pinging its public IP address (hostname). Do the same for the virtual
+	front-end node, if you have chosen to configure one. It should have booted as well
+	after the head-node is up and running. You can try to login to it using ssh. A test
+	mail should have been sent to the e-mail address(es) you specified during the
+	installation. If you didn't receive one, review your settings in
 	<filename>/etc/aliases</filename> and/or <filename>/etc/postfix/main.cf</filename>. In
 	case some of them are wrong, you can execute
 	<screen>
@@ -353,7 +353,7 @@ keep the local version currently installed.
 	xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
 	platform</link> was automatically created. The chroots are located at
 	<filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	<replaceable>chroot name</replaceable> would be trusty or wheezy. Each of them contains
+	<replaceable>chroot name</replaceable> would be trusty. Each of them contains
 	a full-featured installation of the corresponding Qlustar edge platform. To change into
 	a chroot, convenience bash shell aliases of the form chroot-<replaceable>chroot
 	name</replaceable> are defined for the root user on the head-node. You may use them as
@@ -392,10 +392,11 @@ keep the local version currently installed.
 	<title>Generating a one time token for the first admin login</title>
       <para>
 	The Qlustar management GUI <application>qluman-qt</application> uses public/private
-	keys for both encryption and authentication. For this there first needs to be an
-	exchange of public keys between the client and the server. Normally this is done by an
-	user with admin role through the GUI. But for the first admin login this must be
-	accomplished using a root shell on the head-node:
+	keys for both encryption and authentication of its connection with the QluMan server
+	processes. For this to work, there needs to be an exchange of public keys between the
+	GUI client and the QluMan server. Later this can be done by a user with admin role via
+	the GUI. But for the first admin login, it must be accomplished using a root shell on
+	the head-node as follows:
 	<screen>
 <prompt>(trusty) 0 root@cl-head ~ #</prompt>
 <command>qluman-cli --gencert</command>
@@ -415,8 +416,8 @@ Z4XQ4dymvSO9hp8mUabfq7prVUOTYeChB2pOrom8XSQxjOoe4Yll5yv6da_CdGq50KrO8Q
 C12Z4Pz2eSbvqXbo7c7DdLRjMc0v0Km3WyljgdsDYbKC5iT75Bgryc
 ---[ TO HERE ]---
 	</screen>
-	The token can also be saved directly into a file using the <parameter>-o
-	&lt;filename&gt;</parameter> option and the user the token is for can be specified by
+	The token can also be saved directly to a file using the <parameter>-o
+	&lt;filename&gt;</parameter> option. The user the token is for can be specified by
 	the <parameter>-u &lt;username&gt;</parameter> option like this:
 	<screen>
 <prompt>(trusty) 0 root@cl-head ~ #</prompt>
@@ -433,117 +434,214 @@ Server infos and one-time login token for user 'admin' saved as 'token'
 	entered. This is important when the data is sent via unencrypted channels (e.g. email
 	or chat programs) to users or when it is stored on a shared filesystem like NFS. The
 	pin does not need to be a strong password. It is only used to make it non-trivial to
-	use an intercepted token. The token can also only be used once. So once you use it
-	yourself it becomes useless to anybody else. On the other hand, if somebody intercepts
-	the token, guesses the pin and uses the token it will no longer work for you and you
-	know something is wrong.
+	use an intercepted token.
       </para>
+      <note>
+	<para>
+	  The token can only be used once. So once you use it yourself, it becomes useless to
+	  anybody else. On the other hand, if somebody intercepts the token, guesses the pin
+	  and uses it for a connection, it will no longer work for you. If that happened, you'd
+	  know something went wrong.
+	</para>
+      </note>
       </section>
       <section xml:id="sec-Enclosure-View">
 	<title>Starting the QluMan GUI</title>
 	<para>
-	  During installation, the Qlustar management GUI <firstterm>qluman-qt</firstterm> is
-	  installed for the virtual FE node, if one has been setup, otherwise on the
-	  head-node. If you like to have it available on the head-node in any case, just
+	  Per default, the Qlustar management GUI <application>qluman-qt</application> is not
+	  installed on any node of the cluster. This is because the installation on the
+	  head-node (or a chroot) pulls and installs a lot of other packages that qluman-qt
+	  depends on, which will slow down updates. If you have the possibility, <link
+	  linkend="sec-QluMan-Workstation">install qluman-qt on your workstation</link> and
+	  work from there. If you still like to have it available on the head-node, just
 	  install it there like any other package:
 	  <screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>apt-get install qluman-qt</command>
 	  </screen>
-	  The installation on the head-node is not done by default, since it pulls and installs
-	  a lot of other packages that qluman-qt depends on, which will slow down updates. If
-	  you have the possibility, <link linkend="sec-QluMan-Workstation">install qluman-qt on
-	  your workstation</link> and work from there. If not, you can launch qluman-qt
-	  remotely on the node, where it is installed (FE or head-node), per ssh (with X11
-	  forwarding enabled / <parameter>-X</parameter> option) as follows:
+	  Then you can launch qluman-qt remotely on the head-node, per ssh (with X11 forwarding
+	  enabled / <parameter>-X</parameter> option) as follows:
 	  <screen>
 <prompt>0 user@workstation ~ $</prompt>
 <command>ssh -X root@servername qluman-qt</command>
 	  </screen>
 	  This should bring up the <firstterm>Management Console</firstterm>.  Using the
-	  one-time token generated as explained above you will now be able to add the cluster
+	  one-time token generated as explained above, you will now be able to add the cluster
 	  to the list of available connections. (Details about this are explained in the <link
 	  xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">QluMan
 	  Guide</link>).
 	</para>
       </section>
       <section xml:id="sec-QluMan-Workstation">
-	<title>Installing the QluMan GUI on a workstation</title>
+	<title>Running the QluMan GUI on a workstation</title>
 	<para>
-	  If your workstation runs one of the edge platforms currently supported by Qlustar,
-	  you can install the QluMan GUI directly there. This is recommended, since the
-	  <emphasis role="bold">responsiveness</emphasis> of a GUI, that is locally started, is
-	  a lot better as compared to one that is running via remote X11. To install the
-	  qluman-qt package on your workstation, you need to add the correct Qlustar repository
-	  to your <literal>apt sources list</literal>. This can be accomplished by executing
-	  the following as root on your workstation.
-	  <screen>
+	  If your workstation runs one of the edge platforms currently supported by Qlustar, or
+	  if it allows executing containers, you can install/run the QluMan GUI directly
+	  there. This is recommended, since the <emphasis role="bold">responsiveness</emphasis>
+	  of a GUI, that is locally started, is a lot better as compared to one that is running
+	  via remote X11. We explain the two alternatives below.
+	</para>
+	<section xml:id="sec-QluMan-Workstation-package">
+	  <title>Installing/running using the Debian package</title>
+	  <para>
+	    To install the qluman-qt package on your Ubuntu workstation, you need to add the
+	    correct Qlustar repository to your <literal>apt sources list</literal>. This can be
+	    accomplished by executing the following as root on your workstation.
+	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
 <command>dpkg -l software-properties-common > /dev/null 2>&amp;1 || apt-get install software-properties-common</command>
 <prompt>0 root@workstation ~ #</prompt>
 <command>gpg --no-default-keyring --primary-keyring /etc/apt/trusted.gpg --recv-keys E6BA110F3C0BC307</command>
-	  </screen>
-	  On a <literal>Debian/Wheezy</literal> workstation, you should use
-	  <application>python-software-properties</application> instead of
-	  <application>software-properties-common</application> in the first command. The
-	  second one should have imported the <firstterm>Qlustar PGP archive key</firstterm>,
-	  and must output a line like:
-	  <screen>
+	    </screen>
+	    The second one should have imported the <firstterm>Qlustar PGP archive
+	    key</firstterm>, and must output a line like:
+	    <screen>
 gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@q-leap.com>" imported
-	  </screen>
-	</para>
-	<note>
-	  <para>
-	    The <application>gpg</application> command above might fail, the first time you
-	    execute it. This happens, if <application>gpg</application> has never been executed
-	    before for the root user. In this case, simply execute it a second time.
+	    </screen>
 	  </para>
-	</note>
-	<para>
-	  Then if you have <literal>Ubuntu/Trusty</literal> execute:
-	  <screen>
+	  <note>
+	    <para>
+	      The <application>gpg</application> command above might fail, the first time you
+	      execute it. This happens, if <application>gpg</application> has never been
+	      executed before for the root user. In this case, simply execute it a second time.
+	    </para>
+	  </note>
+	  <para>
+	    Then if you have <literal>Ubuntu/Trusty</literal> execute:
+	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 9.1-trusty main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 9.2-trusty main non-free'</command>
 <prompt>0 root@workstation ~ #</prompt>
 <command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman
-9.1-trusty-proposed-updates main non-free'</command>
-	  </screen>
-	  Else for <literal>Debian/Wheezy</literal>:
-	  <screen>
+9.2-trusty-proposed-updates main non-free'</command>
+	    </screen>
+	    Else for <literal>Ubuntu/Xenial</literal>:
+	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 9.1-wheezy main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.0-xenial main non-free'</command>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 9.1-wheezy-proposed-updates main non-free'</command>
-	  </screen>
-	  After this you can install qluman-qt the usual way:
-	  <screen>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.0-xenial-proposed-updates main non-free'</command>
+	    </screen>
+	    After this you can install qluman-qt the usual way:
+	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
 <command>apt-get update</command>
 <prompt>0 root@workstation ~ #</prompt>
 <command>apt-get install qluman-qt</command>
-	  </screen>
-	</para>
-	<note>
-	  <para>
-	    On Ubuntu you need to have the <literal>universe repository</literal> enabled in
-	    your <literal>apt sources list</literal> for the above command to succeed.
+	    </screen>
 	  </para>
-	</note>
-	<para>
-	  Finally, the QluMan GUI can then be launched
-	  as an ordinary user in a shell on the workstation:
-	  <screen>
+	  <note>
+	    <para>
+	      On Ubuntu you need to have the <literal>universe repository</literal> enabled in
+	      your <literal>apt sources list</literal> for the above command to succeed.
+	    </para>
+	  </note>
+	  <para>
+	    Finally, the QluMan GUI can be launched as an ordinary user in a shell on the
+	    workstation:
+	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
 <command>qluman-qt &amp;</command>
-	  </screen>
-	  <important>
-	    <para>
-	      The versions of the QluMan packages on the workstation should be
-	      the same as on the head-node(s) to ensure correct operation. Some unequal version
-	      combinations might work too, but are usually not well tested.
-	    </para>
-	  </important>
-	</para>
+	    </screen>
+	  </para>
+	</section>
+	<section xml:id="sec-QluMan-Workstation-container">
+	  <title>Installing/running from a container</title>
+	  <para>
+	    <variablelist>
+	      <varlistentry>
+		<term>Singularity container</term>
+		<listitem>
+		  <para>
+		    <link
+		    xlink:href="http://singularity.lbl.gov/___blank___">Singularity</link>
+		    container images with the QluMan GUI are available on our <link
+		    xlink:href="https://qlustar.com/download___blank___">Download
+		    page</link>. This makes it really easy to start the GUI as a non-root user
+		    on any Linux machine with Singularity installed. Download the desired
+		    version of the image and execute:
+	    <screen>
+<prompt>0 user@workstation ~ $</prompt>
+<command>singularity exec <replaceable>&lt;path to singularity qluman image&gt;</replaceable> qluman-qt</command>
+	    </screen>
+		  </para>
+		  <note>
+		    <para>
+		      Q-Leap hosts a <link
+		      xlink:href="https://qlustar.com/docs/community-package-repo___blank___">community
+		      package repository</link> with Singularity packages for various Debian
+		      and Ubuntu versions. Given that you run one of the supported versions,
+		      you can easily use this to install Singularity on your workstation.
+		    </para>
+		  </note>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>Docker container</term>
+		<listitem>
+		  <para>
+		    A <link
+		    xlink:href="https://hub.docker.com/r/qlustar/qluman-gui/___blank___">docker
+		    container with the QluMan GUI</link> is available on the Docker Hub. You
+		    will need the docker engine installed on your workstation to run it. To
+		    install the docker engine for your platform, check the instructions at
+		    <link
+		    xlink:href="https://docs.docker.com/engine/installation/___blank___">the
+		    official Docker site</link>. Once you have it installed, you can <link
+		    xlink:href="https://qlustar.com/sites/default/files/downloads/run-qluman-docker___blank___">
+		    download our run script</link> and execute it like (from the directory to
+		    where you saved it)
+		    <screen>
+<prompt>0 user@workstation ~ $</prompt>
+<command>chmod 755 run-qluman-docker</command>
+<prompt>0 user@workstation ~ $</prompt>
+<command>./run-qluman-docker</command>
+		    </screen>
+		    <note>
+		      <para>
+			The Docker container will most likely not be able to resolve the
+			hostname of your cluster head-node. Hence, you will have to use its
+			IP address in the <emphasis>Local</emphasis> field of <link
+			xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
+			connection info</link> dialog for it.
+		      </para>
+		    </note>
+		    <note>
+		      <para>
+			If you always want to run the latest version of the QluMan GUI, start
+			the script like <screen><command>./run-qluman-docker
+			latest</command></screen>
+		      </para>
+		    </note>
+		    <note>
+		      <para>
+			In case you are running the docker container as a non-root user and if
+			that user has its home directory on an NFS mount point, carefully read
+			and follow the instructions/output of the script.
+		      </para>
+		    </note>
+		    <important>
+		      <para>
+			Be sure to verify the sha256 checksum of the
+			<application>run-qluman-docker</application> script after the
+			download. It is:
+			1ee39af0953af315ba05494f0554efe905d7bb4c337573606b620edb4868de19
+		      </para>
+		    </important>
+		  </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    <important>
+	      <para>
+		The base version (e.g. 3.0.0) of the QluMan packages/containers on the
+		workstation should be the same as on the head-node(s) to ensure correct
+		operation. Some close unequal version combinations (e.g. 3.0.1.7 and 3.0.0.12)
+		usually work too, but are not well tested.
+	      </para>
+	    </important>
+	  </para>
+	</section>
       </section>
     </section>
     <section xml:id="sec-Creating-Users">
@@ -563,7 +661,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	</screen>
 	The behavior of the <application>adduser.sh</application> script can be customized in
 	its configuration file <filename>/etc/qlustar/common/adduser.cf</filename>. It also
-	contains the definition of the initial user password.
+	contains the definition of the initial default user password.
       </para>
     </section>
     <section xml:id="sec-Compiling-MPI">
@@ -572,10 +670,11 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	<link xlink:href="http://www.mcs.anl.gov/research/projects/mpi/___blank___">MPI
 	(Message Passing Interface)</link> is the de facto standard for distributed parallel
 	programming on Linux clusters. The default <firstterm>MPI</firstterm> variant in
-	Qlustar is <firstterm>OpenMpi</firstterm> and is automatically installed in the default
-	chroot during installation. You can test the correct installation of MPI with two small
-	"hello world" test programs (one in C the other one in FORTRAN90) as the test user you
-	created earlier: Login on the front-end node as this user and execute
+	Qlustar is <firstterm>OpenMPI</firstterm> and is automatically installed in the
+	standard chroot during installation. You can test the correct installation of MPI with
+	two small <emphasis>hello world</emphasis> test programs (one in C ,the other one in
+	FORTRAN90) as the test user you created earlier: Login on the front-end node as this
+	user and execute
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpicc.openmpi-gcc -o hello-world-c hello-world.c</command>
@@ -604,34 +703,33 @@ srun hello-world-c</command>
 	This will run the job interactively on 2 nodes with 2 processes each (total of 4
 	processes). You should obtain an output like this:
 	<screen>
-salloc: Granted job allocation 19
-cpu_bind=NULL - beo-201, task  0  0 [13959]: mask 0x1
-cpu_bind=NULL - beo-202, task  3  1 [13607]: mask 0x2
-cpu_bind=NULL - beo-202, task  2  0 [13606]: mask 0x1
-cpu_bind=NULL - beo-201, task  1  1 [13960]: mask 0x2
+salloc: Granted job allocation 3
+NVIDIA: no NVIDIA devices found
+NVIDIA: no NVIDIA devices found
+NVIDIA: no NVIDIA devices found
+NVIDIA: no NVIDIA devices found
 Hello world from process 1 of 4
+Hello world from process 2 of 4
 Hello world from process 3 of 4
 Hello world from process 0 of 4
-Hello world from process 2 of 4
-salloc: Relinquishing job allocation 19
-salloc: Job allocation 19 has been revoked.
+salloc: Relinquishing job allocation 3
 	</screen>
-	The lines starting with <parameter>cpu_bind=NULL</parameter> are new in Qlustar 9 and
-	appear due to the fact, that we have enabled the verbose setting for the configuration
-	of <parameter>cpusets</parameter> under slurm. They indicate the binding (<emphasis
-	role="bold">core affinity</emphasis>) of the separate MPI tasks to the CPUs/cores of
-	the compute nodes. This is done by the slurm <emphasis role="bold">cgroup
-	plugin</emphasis>, that is now enabled by default. Binding of processes to cores
-	guarantees data (memory) locality and thus improves performance on <firstterm>NUMA
-	systems</firstterm>, since access to local memory is faster than to remote memory. Note
-	that essentially all modern multi-socket (CPU) systems have a NUMA architecture these
-	days (<productname>Intel Xeon</productname>, <productname>AMD Opteron</productname>,
-	...), so this is relevant.
+	<note>
+	  <para>
+	    The lines starting with <parameter>NVIDIA:</parameter> are new in Qlustar 9.2 and
+	    appear due to the fact, that we have enabled Nvidia CUDA support for OpenMPI. These
+	    lines are printed on nodes without supported Nvidia GPUs. They really shouldn't and
+	    unfortunately they can't be muted, since one of the Nvidia supplied binary-only
+	    libraries is responsible for them, so only Nvidia can provide relief. Anyway, it is
+	    just a warning that can be ignored.
+	  </para>
+	</note>
       </para>
       <para>
 	Similarly the F90 version can be submitted as a batch job using the script
 	<filename>hello-world-f90-slurm.sh</filename> (to see the output, execute <command>cat
-	slurm-<replaceable>job#</replaceable>.out</command> after the job has finished):
+	slurm-<replaceable>&lt;job#&gt;</replaceable>.out</command> after the job has
+	finished):
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
@@ -678,8 +776,8 @@ btl = tcp,self
 JOBID PARTITION     NAME     USER  ST  TIME  NODES  NODELIST(REASON)
    27      demo linstres     test   R  2:46      4     beo-[201-204]
 	</screen>
-	ssh to one of the nodes in the <literal>NODELIST</literal> and check with top that
-	Linpack is running at full steam, like:
+	Now ssh to one of the nodes in the <literal>NODELIST</literal> and check with
+	<application>top</application> that Linpack is running at full steam, like:
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>top</command>
@@ -688,20 +786,19 @@ JOBID PARTITION     NAME     USER  ST  TIME  NODES  NODELIST(REASON)
 18306 test  20   0  354m 294m 2764 R   99 29.3   6:45.09 xhpl-openblas
 	</screen>
 	You can check the output of each Linpack run in the files:
-	<filename>$HOME/bench/hpl/run/job-<replaceable>jobid</replaceable>-*/openblas/job-<replaceable>jobid</replaceable>-*-<replaceable>run#</replaceable>.out</filename>
-	where <replaceable>jobid</replaceable> is the slurm <literal>JOBID</literal> (see the
-	squeue command above) and <replaceable>run#</replaceable> is an integer starting from
-	1. The way the script is designed, it will run indefinitely, restarting Linpack in an
-	infinite loop. So to stop it, you need to cancel the job like
+	<filename>$HOME/bench/hpl/run/job-<replaceable>&lt;jobid&gt;</replaceable>-*/openblas/job-<replaceable>&lt;jobid&gt;</replaceable>-*-<replaceable>&lt;run#&gt;</replaceable>.out</filename>
+	where <replaceable>&lt;jobid&gt;</replaceable> is the slurm <literal>JOBID</literal>
+	(see the squeue command above) and <replaceable>&lt;run#&gt;</replaceable> is an
+	integer starting from 1. The way the script is designed, it will run indefinitely,
+	restarting Linpack in an infinite loop. So to stop it, you need to cancel the job like
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>scancel <replaceable>jobid</replaceable></command>
+<command>scancel <replaceable>&lt;jobid&gt;</replaceable></command>
 	</screen>
       </para>
     </section>
   </chapter>
   <!-- End of real content -->
-
   <xi:include href="Revision_History.xml"/>
   <index />
 </book>
