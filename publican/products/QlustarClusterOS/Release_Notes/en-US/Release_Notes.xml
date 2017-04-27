@@ -382,24 +382,6 @@
       </para>
   </section>
   <section>
-    <title>Changelogs</title>
-      <para>
-	A detailed log of changes in the image modules can be found in the directories
-	<filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-9.1.0</filename>.
-	As an example, in the directory
-	<filename>/usr/share/doc/qlustar-module-core-precise-amd64-9.1.0</filename> you will
-	find a summary changelog in <filename>core.changelog</filename>, a complete list of
-	packages with version numbers entering the current core module in
-	<filename>core.packages.version.gz</filename>, a complete changelog of the core modules
-	package versions in <filename>core.packages.version.gz</filename> and finally a
-	complete log of changed files in <filename>core.contents.changelog.gz</filename>.
-      </para>
-      <para>
-	As usual, individual changelogs of packages can be found on an installed head-node in
-	the directories <filename>/usr/share/doc/&#60;package name&#62;</filename>.
-      </para>
-  </section>
-  <section>
     <title>Update instructions</title>
     <task>
       <title></title>
@@ -435,6 +417,22 @@
 	    Now proceed as explained in the <link
 	    xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
 	    Qlustar Administration Manual</link>.
+	  </para>
+	</step>
+	<step>
+	  <title>Install new QluMan packages</title>
+	  <para>
+	    QluMan 3.0 has two new server components and corresponding packages that need to be
+	    installed and activated. To do so, execute the following on the head-node:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>apt-get install qluman-router qluman-slurmd</command>
+	    </screen>
+	    If your cluster doesn't have slurm installed, you can skip
+	    <emphasis>qluman-slurmd</emphasis>. Once installed, activate the daemons for
+	    automatic startup at boot time by setting <literal>RUN=yes</literal> in the
+	    packages default files <filename>/etc/default/qluman-router</filename> and
+	    <filename>/etc/default/qluman-slurmd</filename>.
 	  </para>
 	</step>
 	<step>
