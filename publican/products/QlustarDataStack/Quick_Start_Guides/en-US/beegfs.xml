@@ -53,13 +53,13 @@
 	  <para>
 	    In QluMan, create an image (named e.g. <parameter>StorNode</parameter>) that
 	    contains the module
-	    <literal>beegfs-<replaceable>version</replaceable>-server</literal> (current
-	    version 2014.01). If you want to mount the BeeGFS FS also on the storage nodes
+	    <literal>beegfs-<replaceable>&lt;version&gt;</replaceable>-server</literal>
+	    (current version 6). If you want to mount the BeeGFS FS also on the storage nodes
 	    additionaly include the
-	    <literal>beegfs-<replaceable>version</replaceable>-client</literal> module. On
-	    compute nodes that don't run any BeeGFS meta/storage targets, only the
-	    <literal>beegfs-<replaceable>version</replaceable>-client</literal> module is
-	    required.
+	    <literal>beegfs-<replaceable>&lt;version&gt;</replaceable>-client</literal>
+	    module. On compute nodes that don't run any BeeGFS meta/storage targets, only the
+	    <literal>beegfs-<replaceable>&lt;version&gt;</replaceable>-client</literal> module
+	    is required.
 	  </para>
 	</step>
 	<step>
