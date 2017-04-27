@@ -150,8 +150,9 @@
 		      application from the cluster, you'll have to install it manually
 		      (<code>apt-get install qluman-qt</code>). However, it is recommended to
 		      run it locally from your Linux workstation either by installing the
-		      package directly (if on Debian/Ubuntu) or via the provided
-		      container-based packages (Singularity or Docker).
+		      package directly (if on Debian/Ubuntu) or via the provided <link
+		      xlink:href="../First_Steps_Guide/index.html#sec-QluMan-Workstation-container___blank___">container-based
+		      packages</link> (Singularity or Docker).
 		    </para>
 		  </listitem>
 		</itemizedlist>
@@ -163,7 +164,9 @@
     <section>
       <title>Container Support</title>
       <para>
-	Qlustar now fully supports the two container technologies Docker and Singularity.
+	Qlustar now fully supports the two container technologies <link
+	xlink:href="https://docs.docker.com___blank___">Docker</link> and
+	<link xlink:href="http://singularity.lbl.gov/___blank___">Singularity</link>.
       </para>
     </section>
   </section>

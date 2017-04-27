@@ -1865,25 +1865,28 @@
 	  </para>
 	</note>
       </para>
+      <mediaobject>
+	<imageobject><imagedata
+	fileref="images/slurm/reservation/reservation_delete.png"
+	width="85%" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  Deleting a reservation.
+	</phrase></textobject>
+	<caption><para>
+	  Deleting a reservation.
+	</para></caption>
+      </mediaobject>
       <bridgehead>Deleting a Reservation</bridgehead>
       <para>
-	<mediaobject>
-	  <imageobject><imagedata
-	  fileref="images/slurm/reservation/reservation_delete.png"
-	  width="85%" format="PNG"/></imageobject>
-	  <textobject><phrase>
-	    Deleting a reservation.
-	  </phrase></textobject>
-	  <caption><para>
-	    Deleting a reservation.
-	  </para></caption>
-	</mediaobject> 
 	To delete a reservation one just has to choose <classname>Delete
 	Reservation</classname> from its context-menu .
       </para>
     </section>
     <section xml:id="sec-Slurm-Manage-Accounting">
       <title>Slurm Accounting</title>
+      <section xml:id="sec-Slurm-Manage-Manage-Accounts">
+	<title>Manage Slurm Accounts</title>
+	<para>
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/slurm/accounting/menu.png"
@@ -1895,9 +1898,6 @@
 	      Accessing Slurm Accounting.
 	    </para></caption>
 	  </mediaobject> 
-      <section xml:id="sec-Slurm-Manage-Manage-Accounts">
-	<title>Manage Slurm Accounts</title>
-	<para>
 	  To open the <classname>Manage Slurm Accounts</classname> dialog go
 	  <guimenu>Components-> Slurm->Manage->Accounting->Manage Accounts</guimenu>. There
 	  will be a tab for every cluster known to the Slurm accounting database. Each tab
@@ -1913,14 +1913,6 @@
 	      Managing Slurm Accounts. 
 	    </para></caption> 
 	  </mediaobject> 
-	  Slurm instance. To better distinguish between accounts and users, they are identified
-	  by pre-defined color codes (See <link linkend="sec-Look-Feel-Preferences">Preferences
-	  Dialog</link> for changing the corresponding colors). At the bottom of the dialog you
-	  can see a legend for the color codes.
-	</para>
-	<bridgehead>Adding an Account</bridgehead>
-	<para>
-	  Clicking the <classname>Add Account</classname> button will open a new dialog.  Here
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/slurm/accounting/manage_accounts/manage_accounts_add_account.png"
@@ -1932,6 +1924,14 @@
 	      Adding a Slurm Account.
 	    </para></caption>
 	  </mediaobject>
+	  Slurm instance. To better distinguish between accounts and users, they are identified
+	  by pre-defined color codes (See <link linkend="sec-Look-Feel-Preferences">Preferences
+	  Dialog</link> for changing the corresponding colors). At the bottom of the dialog you
+	  can see a legend for the color codes.
+	</para>
+	<bridgehead>Adding an Account</bridgehead>
+	<para>
+	  Clicking the <classname>Add Account</classname> button will open a new dialog.  Here
 	  you have to specify a name for the new account. Optionally, you can also specify a
 	  parent account and a description. If an account had been selected before, the
 	  <classname>Add Account</classname> button was clicked, this account will be
@@ -2087,11 +2087,6 @@
 	  Account</classname> in the context-menu of the account you want to be the default. By
 	  doing this, the user will be registered with this default account. If you just select
 	  some accounts for an unregistered user by checking them and then pressing the
-	  <classname>Create</classname> button, the user will be registered with a default
-	  account set randomly among the chosen ones.
-	</para>
-	<bridgehead xml:id="sec-Slurm-Manage-Manage-Users-delete-user">Delete an User</bridgehead>
-	<para>
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/slurm/accounting/manage_users/manage_users_remove_user.png"
@@ -2103,6 +2098,12 @@
 	      Deleting a User.
 	    </para></caption>
 	  </mediaobject>
+	  <classname>Create</classname> button, the user will be registered with a default
+	  account set randomly among the chosen ones.
+	</para>
+	<bridgehead xml:id="sec-Slurm-Manage-Manage-Users-delete-user">Deleting
+	a User</bridgehead>
+	<para>
 	  To delete a user, bring up his context-menu and select <classname>Remove
 	  User</classname>.
 	</para>
@@ -2145,7 +2146,6 @@
       -->
       <section xml:id="sec-Slurm-Manage-Cluster-Usage">
 	<title>Cluster Usage</title>
-	<para>
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/slurm/cluster_usage/cluster_usage_full.png"
@@ -2157,6 +2157,7 @@
 	      The Slurm Cluster Usage Display
 	    </para></caption>
 	  </mediaobject>
+	<para>
 	  The <classname>Cluster Usage</classname> display uses the Slurm utility
 	  <application>sreport</application> to generate reports of job usage and cluster
 	  utilization. For detailed information about the type of reports and options read the
