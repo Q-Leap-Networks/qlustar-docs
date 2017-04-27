@@ -2,14 +2,27 @@
 <!DOCTYPE appendix>
 <appendix xmlns="http://docbook.org/ns/docbook">
   <title>Revision History</title>
-  <simpara>
     <revhistory>
+      <revision>
+	<revnumber>9.2-0</revnumber>
+	<date>Thu Apr 27 2017</date>
+	<author>
+	  <personname><firstname>Qlustar</firstname>
+	  <surname>Documentation Team</surname></personname>
+	  <email>qlustar-docs@q-leap.com</email>
+	</author>
+	<revdescription>
+	  <simplelist>
+	    <member>Updates for 9.2 release</member>
+	  </simplelist>
+	</revdescription>
+      </revision>
       <revision>
 	<revnumber>9.1-1</revnumber>
 	<date>Fri Jul 3 2015</date>
 	<author>
-	  <firstname>Qlustar</firstname>
-	  <surname>Documentation Team</surname>
+	  <personname><firstname>Qlustar</firstname>
+	  <surname>Documentation Team</surname></personname>
 	  <email>qlustar-docs@q-leap.com</email>
 	</author>
 	<revdescription>
@@ -22,8 +35,8 @@
 	<revnumber>9.0-1</revnumber>
 	<date>Thu Jan 29 2015</date>
 	<author>
-	  <firstname>Qlustar</firstname>
-	  <surname>Documentation Team</surname>
+	  <personname><firstname>Qlustar</firstname>
+	  <surname>Documentation Team</surname></personname>
 	  <email>qlustar-docs@q-leap.com</email>
 	</author>
 	<revdescription>
@@ -36,8 +49,8 @@
 	<revnumber>8.1-1</revnumber>
 	<date>Wed Jan 15 2014</date>
 	<author>
-	  <firstname>Qlustar</firstname>
-	  <surname>Documentation Team</surname>
+	  <personname><firstname>Qlustar</firstname>
+	  <surname>Documentation Team</surname></personname>
 	  <email>qlustar-docs@q-leap.com</email>
 	</author>
 	<revdescription>
@@ -50,8 +63,8 @@
 	<revnumber>8.0-1</revnumber>
 	<date>Fri Mar 1 2013</date>
 	<author>
-	  <firstname>Qlustar</firstname>
-	  <surname>Documentation Team</surname>
+	  <personname><firstname>Qlustar</firstname>
+	  <surname>Documentation Team</surname></personname>
 	  <email>qlustar-docs@q-leap.com</email>
 	</author>
 	<revdescription>
@@ -61,5 +74,4 @@
 	</revdescription>
       </revision>
     </revhistory>
-  </simpara>
 </appendix>
