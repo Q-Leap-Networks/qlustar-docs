@@ -508,13 +508,12 @@
 		<bridgehead xml:id="Edge-Platform-Selection">Edge Platform
 		Selection</bridgehead>
 		<para>
-		  Starting from version 8.1.1 Qlustar supports multiple so-called
+		  Qlustar supports multiple so-called
 		  <link xlink:href="https://qlustar.com/intro/platform___blank___">
-		  Edge Platforms</link>. Currently the choices are 
-		  <emphasis role="bold">Ubuntu/Precise</emphasis> and 
-		  <emphasis role="bold">Debian/Wheezy</emphasis>. Please select your
-		  favorite platforms. Multiple choices are possible. At least one must
-		  be selected.
+		  Edge Platforms</link>. In 9.2, the available ones are <emphasis
+		  role="bold">Ubuntu/Trusty</emphasis> and <emphasis
+		  role="bold">Debian/Wheezy</emphasis>. Please select your favorite
+		  platform(s). Multiple choices are possible. At least one must be selected.
 		</para>
 		<para>
 		  In essence, this option corresponds to the choice of what Linux distribution
@@ -537,19 +536,27 @@
 		      Choose network adapter
 		    </para></caption>
 		  </mediaobject>
-		  Technically, choosing a specific edge platform (e.g. Debian/Wheezy) will
-		  cause Qlustar images based on Debian/Wheezy to be created along with an
-		  associated chroot. The latter will hold a complete Debian/Wheezy installation
+		  Technically, choosing a specific edge platform (e.g. Ubuntu/Trusty) will
+		  cause Qlustar images based on Ubuntu/Trusty to be created along with an
+		  associated chroot. The latter will hold a complete Ubuntu/Trusty installation
 		  in which you can later <link
 		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">add
 		  packages</link>. By assigning such an image to some nodes later on, you will
-		  have a <emphasis role="bold">full-featured</emphasis> Debian Wheezy
+		  have a <emphasis role="bold">full-featured</emphasis> Ubuntu/Trusty
 		  installation available on these nodes, once they have booted over the
 		  network. Since multiple edge platforms are available, it is fully supported
-		  and easily achieved to have subsets of nodes running Ubuntu/Precise and
+		  and easily achieved to have subsets of nodes running Ubuntu/Trusty and
 		  Debian/Wheezy <emphasis role="bold">simultaneously</emphasis> in the same
 		  cluster.
 		</para>
+		<note>
+		  <para>
+		    The Qlustar 9.2 installer doesn't offer Debian/Wheezy anymore, since
+		    security support for it will be terminated at the beginning of
+		    2018. However from within QluMan, you will still be able so setup images
+		    and chroots with Debian/Wheezy.
+		  </para>
+		</note>
 	      </listitem>
 	      <listitem>
 		<bridgehead>Package Bundle Selection</bridgehead>
@@ -564,40 +571,40 @@
 		      Choose network adapter
 		    </para></caption>
 		  </mediaobject>
-		  The default installation will only install a minimal set of basic
-		  packages on the head-node of your cluster. Here you can select additional
-		  package bundles to install. Among others, you have the choice of two
-		  workload managers: Slurm and Torque. If you don't have a strong preference,
-		  we suggest to use Slurm. In particular, if you intend to follow all the
-		  instructions in the
+		  The default installation will only install a minimal set of basic packages on
+		  the head-node of your cluster. Here you can select additional package bundles
+		  to install. Among others, you have the choice of two workload managers: Slurm
+		  and Torque. If you don't have a particular reason why you must use Torque,
+		  you should choose Slurm which has a nice QluMan config and operation GUI
+		  component. Furthermore, if you intend to follow all the instructions in the
 		  <link 
-		      xlink:href="../First_Steps_Guide/index.html##First-boot___blank___">
-		    First Steps Guide</link>, Slurm is a requirement and is also sufficient for
-		    a basic evaluation setup.
+		      xlink:href="../First_Steps_Guide/index.html___blank___">
+		    First Steps Guide</link>, Slurm is a requirement.
 		</para>
 		<note>
-		<para>
-		  Beware, that you should choose Lustre as an option here, only if the
-		  head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).  If you
-		  merely intend to try out Lustre, it is recommended to <link
-		  xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
-		  configure an image</link> with Lustre support in QluMan, and assign it to
-		  some nodes of the <link 
-		  xlink:href="../First_Steps_Guide/index.html#sec-Starting-Virtual-Demo-Cluster___blank___"> virtual demo-cluster</link>
-		</para>
+		  <para>
+		    Beware, that you should choose Lustre as an option here only, if the
+		    head-node itself is supposed to run Lustre services (MGS/MDTs/OSTs).  If
+		    you merely intend to try out Lustre, it is recommended to <link
+		    xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">
+		    configure an image</link> with Lustre support in QluMan, and assign it to
+		    some nodes of the <link
+		    xlink:href="../First_Steps_Guide/index.html#sec-Starting-Virtual-Demo-Cluster___blank___">
+		    virtual demo-cluster</link>
+		  </para>
 		</note>
 		<note>
-		<para>
-		  Apart from Nvidia Cuda software, the packages selected here will
-		  only be installed on the head-node. Selecting and generating boot-image
-		  modules as well as the process of general package installation for
-		  compute/storage nodes booting from the network must be done elsewhere. This
-		  is discussed in the <link
-		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">
-		  First Steps</link> and the
+		  <para>
+		    Apart from Nvidia CUDA software, the packages selected here will only be
+		    installed on the head-node. Selecting and generating boot-image modules as
+		    well as the process of general package installation for compute/storage
+		    nodes booting from the network must be done elsewhere. This is discussed in
+		    the <link
+		    xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">
+		    First Steps</link> and the
 		  <link xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
 		  QluMan Guide</link>
-		</para>
+		  </para>
 		</note>
 	      </listitem>
 	    </itemizedlist>
