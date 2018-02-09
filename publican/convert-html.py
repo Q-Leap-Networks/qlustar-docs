@@ -132,7 +132,7 @@ def main():
     # Now reopen file and process
     with open(args.input_file, encoding="UTF-8") as input_file:
         if html:
-            soup = BeautifulSoup(input_file)
+            soup = BeautifulSoup(input_file, "lxml")
         else:
             # For XML, we edit a copy of the file and replace the original with the copy at the end
             with tempfile.NamedTemporaryFile(dir=os.path.dirname(args.input_file), delete=False) as out_file:
