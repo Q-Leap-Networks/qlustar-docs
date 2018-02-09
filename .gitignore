@@ -6,3 +6,4 @@ publican/*/*/tmp/
 publican/*/*/*/tmp/
 publican/*/publish/
 publican/website/
+publican/website.*/
