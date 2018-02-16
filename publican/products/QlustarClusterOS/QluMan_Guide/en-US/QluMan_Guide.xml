@@ -17,7 +17,7 @@
   <!-- Begin real content -->
   <xi:include href="Introduction.xml"/>
   <xi:include href="Cluster-Connections.xml"/>
-  <xi:include href="Global-Cluster-Settings.xml"/>
+  <xi:include href="Cluster-Network-Setup.xml"/>
   <xi:include href="Enclosures.xml"/>
   <xi:include href="Adding-Hosts.xml"/>
   <xi:include href="HW-Wizard.xml"/>

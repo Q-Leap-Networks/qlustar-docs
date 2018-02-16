@@ -24,10 +24,12 @@
       directly assignable to a <classname>Config Set</classname> or a host. Sub-classes are
       assigned indirectly via their parent class. Most of the functional subsystems of
       <productname>Qlustar</productname> have a dedicated <classname>Config
-      Class</classname>. Currently, there are four of them: <classname>Boot</classname>,
-      <classname>DHCP</classname>, <classname>Disk</classname>, and <classname>Slurm
-      Configs</classname> (Slurm is optional) complemented by a single sub-class,
-      <classname>Qlustar Images</classname>.
+      Class</classname>. Currently, there are five of them: <classname>Network</classname>,
+      <classname>Boot</classname>, <classname>DHCP</classname>, <classname>Disk</classname>,
+      and <classname>Slurm Configs</classname> (Slurm is optional) complemented by a single
+      sub-class, <classname>Qlustar Images</classname>. Please note that the
+      <classname>Network Configs</classname> has already been described in a <link
+      linkend="sec-Network-Configs">previous chapter</link>
     </para>
   </section>
   <section xml:id="sec-Writing-Config-Files">
@@ -55,7 +57,7 @@
           The Write Files dialog with pending changes
         </para></caption>
       </mediaobject>
-      The configurations managed in the <application>QluMan</application> GUI via
+      Many of the configurations managed in the <application>QluMan</application> GUI via
       <classname>Config Classes</classname> and sub-classes, are translated into automatically
       generated configuration files on the head-node(s). While
       <application>QluMan</application> configuration options are usually saved in the
