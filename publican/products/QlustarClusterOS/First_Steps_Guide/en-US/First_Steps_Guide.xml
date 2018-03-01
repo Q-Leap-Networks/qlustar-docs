@@ -332,7 +332,7 @@ keep the local version currently installed.
 	</itemizedlist>
 	<note>
 	  <para>
-	    Please note, that you shouldn't install the default Ubuntu MySQL server packages on
+	    Please note, that you shouldn't install the Ubuntu MySQL server packages on
 	    the head-node, since QluMan requires <link
 	    xlink:href="https://mariadb.org/___blank___">MariaDB</link> and packages of the
 	    latter conflict with the MySQL packages. MariaDB is a complete and compatible
@@ -353,25 +353,25 @@ keep the local version currently installed.
 	xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
 	platform</link> was automatically created. The chroots are located at
 	<filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	<replaceable>chroot name</replaceable> would be trusty. Each of them contains
+	<replaceable>chroot name</replaceable> would be xenial. Each of them contains
 	a full-featured installation of the corresponding Qlustar edge platform. To change into
 	a chroot, convenience bash shell aliases of the form chroot-<replaceable>chroot
 	name</replaceable> are defined for the root user on the head-node. You may use them as
-	follows (e.g. for Ubuntu/Trusty, if it was selected at install):
+	follows (e.g. for Ubuntu/Xenial, if it was selected at install):
 	<screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>chroot-trusty</command>
+<command>chroot-xenial</command>
 	</screen>
 	Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
 	its software packages, e.g.
 	<screen>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
-<command>apt-get update</command>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
-<command>apt-get dist-upgrade</command>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
-<command>apt-get install <replaceable>package</replaceable></command>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<command>apt update</command>
+<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<command>apt dist-upgrade</command>
+<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<command>apt install <replaceable>package</replaceable></command>
+<prompt>(xenial) 0 root@cl-head ~ #</prompt>
 <command>exit</command>
 	</screen>
 	The nice thing about this mechanism is that software from packages installed in a
@@ -398,7 +398,7 @@ keep the local version currently installed.
 	the GUI. But for the first admin login, it must be accomplished using a root shell on
 	the head-node as follows:
 	<screen>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<prompt>0 root@cl-head ~ #</prompt>
 <command>qluman-cli --gencert</command>
 Generating one-time login token for user 'admin':
 Cluster  = QL
@@ -420,7 +420,7 @@ C12Z4Pz2eSbvqXbo7c7DdLRjMc0v0Km3WyljgdsDYbKC5iT75Bgryc
 	&lt;filename&gt;</parameter> option. The user the token is for can be specified by
 	the <parameter>-u &lt;username&gt;</parameter> option like this:
 	<screen>
-<prompt>(trusty) 0 root@cl-head ~ #</prompt>
+<prompt>0 root@cl-head ~ #</prompt>
 <command>qluman-cli --gencert -u admin -o token</command>
 Generating one-time login token for user 'admin':
 Cluster  = QL
@@ -457,7 +457,7 @@ Server infos and one-time login token for user 'admin' saved as 'token'
 	  install it there like any other package:
 	  <screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>apt-get install qluman-qt</command>
+<command>apt install qluman-qt</command>
 	  </screen>
 	  Then you can launch qluman-qt remotely on the head-node, per ssh (with X11 forwarding
 	  enabled / <parameter>-X</parameter> option) as follows:
@@ -489,7 +489,7 @@ Server infos and one-time login token for user 'admin' saved as 'token'
 	    accomplished by executing the following as root on your workstation.
 	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>dpkg -l software-properties-common > /dev/null 2>&amp;1 || apt-get install software-properties-common</command>
+<command>dpkg -l software-properties-common > /dev/null 2>&amp;1 || apt install software-properties-common</command>
 <prompt>0 root@workstation ~ #</prompt>
 <command>gpg --no-default-keyring --primary-keyring /etc/apt/trusted.gpg --recv-keys E6BA110F3C0BC307</command>
 	    </screen>
@@ -507,15 +507,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    </para>
 	  </note>
 	  <para>
-	    Then if you have <literal>Ubuntu/Trusty</literal> execute:
-	    <screen>
-<prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 9.2-trusty main non-free'</command>
-<prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman
-9.2-trusty-proposed-updates main non-free'</command>
-	    </screen>
-	    Else for <literal>Ubuntu/Xenial</literal>:
+	    Then if you have <literal>Ubuntu/Xenial</literal> execute:
 	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
 <command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.0-xenial main non-free'</command>
@@ -525,9 +517,9 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    After this you can install qluman-qt the usual way:
 	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>apt-get update</command>
+<command>apt update</command>
 <prompt>0 root@workstation ~ #</prompt>
-<command>apt-get install qluman-qt</command>
+<command>apt install qluman-qt</command>
 	    </screen>
 	  </para>
 	  <note>
@@ -697,33 +689,19 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	given for slurm):
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>OMPI_MCA_btl="tcp,self" salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo \
-srun hello-world-c</command>
+<command>salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo srun hello-world-c</command>
 	</screen>
 	This will run the job interactively on 2 nodes with 2 processes each (total of 4
 	processes). You should obtain an output like this:
 	<screen>
 salloc: Granted job allocation 3
-NVIDIA: no NVIDIA devices found
-NVIDIA: no NVIDIA devices found
-NVIDIA: no NVIDIA devices found
-NVIDIA: no NVIDIA devices found
 Hello world from process 1 of 4
 Hello world from process 2 of 4
 Hello world from process 3 of 4
 Hello world from process 0 of 4
 salloc: Relinquishing job allocation 3
+salloc: Job allocation 3 has been revoked.
 	</screen>
-	<note>
-	  <para>
-	    The lines starting with <parameter>NVIDIA:</parameter> are new in Qlustar 9.2 and
-	    appear due to the fact, that we have enabled Nvidia CUDA support for OpenMPI. These
-	    lines are printed on nodes without supported Nvidia GPUs. They really shouldn't and
-	    unfortunately they can't be muted, since one of the Nvidia supplied binary-only
-	    libraries is responsible for them, so only Nvidia can provide relief. Anyway, it is
-	    just a warning that can be ignored.
-	  </para>
-	</note>
       </para>
       <para>
 	Similarly the F90 version can be submitted as a batch job using the script
@@ -733,17 +711,6 @@ salloc: Relinquishing job allocation 3
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
-	</screen>
-	Note that the environment variable <envar>OMPI_MCA_btl="tcp,self"</envar> is used in
-	the above two examples to prevent error messages from not finding an
-	<firstterm>Infiniband network</firstterm>. The latter would otherwise occur, because we
-	compile OpenMPI to use an IB network per default and if not found, a TCP network is
-	used as backup. <firstterm>TCP</firstterm> can also be set as the default in the
-	OpenMPI config file (in the chroot, typically under
-	<filename>/srv/apps/chroots/trusty/etc/openmpi/x.y.z/openmpi-mca-params.conf</filename>)
-	by adding the entry:
-	<screen>
-btl = tcp,self
 	</screen>
       </para>
     </section>
