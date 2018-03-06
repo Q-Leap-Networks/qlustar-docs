@@ -108,7 +108,7 @@ def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description="Convert Qlustar Doc HTML/XML files",
                                      epilog="XML comments representing an image must be of the form:\n\n"
-                                     "  <!--cbox(file: messages/add.png caption: Adding a message filter)-->)\n\n"
+                                     "  <!--cbox(file: messages/add.png caption: Adding a message filter)-->\n\n"
                                      "  The path following 'file: ' is relative to the images dir of the project.\n"
                                      "  The text after 'caption: ' will be inserted as the figure caption.")
     parser.add_argument("-i", "--input_file", help = "File to be converted", required=True)
