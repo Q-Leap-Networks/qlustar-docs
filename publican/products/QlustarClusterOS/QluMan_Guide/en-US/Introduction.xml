@@ -28,9 +28,8 @@
       can be supplemented by a global <link linkend="sec-UnionFS-Chroots">UnionFS chroot</link>
       to support software not already contained in the boot images themselves. The head-node(s)
       of the cluster typically provides <firstterm>TFTP/PXE boot services</firstterm>,
-      <firstterm>DHCP service</firstterm>, <firstterm>NIS service</firstterm>,
-      <firstterm>torque</firstterm> or <firstterm>slurm resource management</firstterm> etc. to
-      the cluster.
+      <firstterm>DHCP service</firstterm>, <firstterm>NIS service</firstterm> and/or
+      <firstterm>slurm resource management</firstterm> etc. to the cluster.
     </para>
     <para>
       The management of these and all cluster-related components of a
@@ -74,8 +73,8 @@
 	  <para>
 	    <xref linkend="Generic-Properties" xrefstyle="template:Generic Properties"/> are
 	    simple on/off options or key+value pairs applicable to groups of nodes, e.g. to
-	    flag the reformatting of the local disks at the next boot, add torque node
-	    properties, etc.
+	    flag the reformatting of the local disks at the next boot, add SMTP mail
+	    functionality, etc.
 	  </para>
 	</listitem>
 	<listitem>
@@ -88,38 +87,48 @@
 	  <para>
 	    <xref linkend="Hardware-Properties" xrefstyle="template:Hardware Properties"/> are
 	    not used to configure the nodes themselves but describe their hardware
-	    configuration and are of importance e.g. for the slurm or torque resource managers
-	    and/or inventory management.
+	    configuration and are of importance e.g. for the slurm workload manager and/or
+	    inventory management.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
 	    Finally, <xref linkend="Specific-Properties" xrefstyle="template:Specific
-	    Properties"/> are properties that are unique to a particular node, like its serial
-	    number. Therefore, these properties can only be assigned to individual nodes.
+	    Properties"/> are unique to a particular node, like its MAC address or a static IP
+	    address. Therefore, they can only be assigned individually to a particular node.
 	  </para>
 	</listitem>
       </itemizedlist>
     </para>
     <para>
-      Of course, one can configure every host in a cluster individually. But in most
-      clusters, there are large groups of hosts that should be configured
-      identically. However, even if there are several groups, they might share some
-      properties/configurations but not all of them. To provide a simple handling of such
-      scenarios, <application>QluMan</application> allows to combine generic properties,
-      hardware properties and config classes each into sets. Moreover, it is possible to
-      combine exactly one generic property, one hardware property and one config set into a
-      <classname>Host Template</classname>. Assigning a Host Template to a group of hosts
-      makes it possible to specify their complete properties and configuration settings with
-      a single click. Last there is also a global generic property set, a global hardware
-      property set and a global config set that can hold generic properties, hardware
-      properties and config classes applicable to all hosts in the cluster.
-      Nonetheless, for maximum flexibility, it is also allowed to override or
-      extend the settings from the template of a host by assigning either one of the sets
-      and/or individual properties/config classes to it. In case of conflicts, values from
-      individual properties/config classes have highest priority followed by set values, the
-      Host Template values and finally the global values. For more details on this see <xref
-      linkend="sec-Configuring-Hosts"/>.
+      Of course, one can configure every host in a cluster individually. But in most clusters,
+      there are large groups of hosts that need to be configured identically. However, even if
+      there are several groups, they might share only some properties/configurations, but not
+      all of them. To provide a simple handling for such scenarios, while at the same time
+      maintaining maximum flexibility, <application>QluMan</application> allows to combine
+      generic properties, hardware properties and config classes each into sets.
+    </para>
+    <para>
+      For settings that apply to all hosts of a cluster, there are <classname>global
+      sets</classname>: A global Generic Property set, a global Hardware Property set and a
+      global Config set.
+    </para>
+    <para>
+      Additionally, it is possible to combine exactly one Generic Property set, one Hardware
+      Property set and one Config set into a <classname>Host Template</classname>. Assigning a
+      Host Template to a group of hosts allows to specify all of their specific properties and
+      configuration settings with a single mouse-click.
+    </para>
+    <para>
+      For situations where flexibility is required (e.g. one host in a group has a slightly
+      different hardware configuration than all the others), it is also possible to override or
+      extend the settings defined in the chosen Host Template, by assigning either one of the
+      sets and/or individual properties/config classes directly to a host. In case of
+      conflicts, values from individual properties/config classes have highest priority,
+      followed by set values, then the Host Template values and finally the global values. The
+      <link linkend="sec-Enclosure-View">Enclosure View</link> presents a nice graphical
+      representation of this hierarchy of settings for each host. For more details on this, see
+      <xref linkend="sec-Configuring-Hosts"/>.
     </para>
   </section>
 </chapter>
