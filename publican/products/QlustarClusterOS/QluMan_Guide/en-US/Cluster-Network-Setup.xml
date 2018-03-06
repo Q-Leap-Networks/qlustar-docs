@@ -13,7 +13,7 @@
       xml:id="chap-Cluster-Network-Setup">
   <title>Cluster Network Setup</title>
   <para>
-    Starting from QluMan4/Qlustar 10, the configuration of networks has been reimplemented and
+    Starting from Qlustar 10, the configuration of networks has been reimplemented and
     become a lot more powerful. An arbitrary number of networks of different types and with
     different properties can now be configured for a cluster. There is a new network config
     class that allows networks to be grouped in any number of network configs. The idea is,
