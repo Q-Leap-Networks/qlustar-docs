@@ -18,7 +18,8 @@
       A Qlustar cluster is designed to boot and manage compute and/or storage nodes (hosts)
       over the network and make them run a minimal OS (Operating System) image in RAM. Local
       disks (if present) are only used to preserve log files across boots and for temporary
-      storage (e.g. for compute jobs). Hence all Qlustar cluster nodes apart from head-nodes are always <firstterm>state-less</firstterm>.
+      storage (e.g. for compute jobs). Hence all Qlustar cluster nodes apart from head-nodes
+      are always <firstterm>state-less</firstterm>.
     </para>
     <para>
       One or more head-nodes deliver the OS boot images to the nodes. Additionally, a small
@@ -60,7 +61,7 @@
     <para>
       But providing different OS images is still not enough for a flexible yet easily
       manageable cluster: A node booting a generated image also receives extra configuration
-      options via DHCP and via NFS at boot time, thus allowing to fine-tune the OS
+      options via DHCP, via qlumand and via NFS at boot time, thus allowing to fine-tune the OS
       configuration at run-time. E.g. it is possible to determine how the local disks are to
       be used (if any are present), whether additional services like
       <firstterm>OpenSM</firstterm> or <firstterm>samba</firstterm> should be
@@ -110,11 +111,14 @@
       combine exactly one generic property, one hardware property and one config set into a
       <classname>Host Template</classname>. Assigning a Host Template to a group of hosts
       makes it possible to specify their complete properties and configuration settings with
-      a single click. Nonetheless, for maximum flexibility, it is also allowed to override or
+      a single click. Last there is also a global generic property set, a global hardware
+      property set and a global config set that can hold generic properties, hardware
+      properties and config classes applicable to all hosts in the cluster.
+      Nonetheless, for maximum flexibility, it is also allowed to override or
       extend the settings from the template of a host by assigning either one of the sets
       and/or individual properties/config classes to it. In case of conflicts, values from
-      individual properties/config classes have highest priority followed by set values and
-      finally the Host Template values. For more details on this see <xref
+      individual properties/config classes have highest priority followed by set values, the
+      Host Template values and finally the global values. For more details on this see <xref
       linkend="sec-Configuring-Hosts"/>.
     </para>
   </section>
