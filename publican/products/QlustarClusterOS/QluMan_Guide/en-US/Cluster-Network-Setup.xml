@@ -32,78 +32,144 @@
       can be accomplished within the networks dialog selectable via <guibutton>Manage
       Cluster</guibutton>-><guibutton>Networks</guibutton> from the main windows menu.
     </para>
-    <!–cbox(file: images/network_config/networks.png caption: Networks dialog)–>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/network_config/networks.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Networks dialog
+      </phrase></textobject>
+      <caption><para>
+        Networks dialog
+      </para></caption>
+    </mediaobject>
     <para>
-      The Networks window shows all defined networks using tabs. Each tabs shows all the
-      parameter that define a single network. This starts with the IP address, netmask and
-      optional a gateway to the outside world. Qluman distinguishes two types of networks:
-      <firstterm>Primary Networks</firstterm> and <firstterm>Slave Networks</firstterm>.
+      The Networks window displays all defined networks each in a separate tab. Each tab shows
+      all the configurable parameter that define the corresponding network. The base settings
+      of a network are its IP address and netmask as well as an optional gateway
+      address. Qluman distinguishes two types of networks: <firstterm>Primary
+      Networks</firstterm> and <firstterm>Slave Networks</firstterm>.
     </para>
     <para>
       A primary network is one that determines the IP address of a host using one of the
-      <guilabel>Configure via</guilabel> options. The IP can be configured using the DHCP
-      server running on the headnode by selecting <guibutton>DHCP (boot)</guibutton>. This
-      allows the host to boot over the network using PXE and every cluster will have one such
-      network. The IP can also be requested from an external DHCP server not under the control
-      of QluMan by selecting <guibutton>DHCP (external)</guibutton> or configured static for
-      each host individually by selecting <guibutton>Static</guibutton>. The last two options
-      are usualy used for the external networks of the headnode and login nodes.
+      options listed in the <guilabel>Configure via</guilabel> section of the dialog. The
+      available options are:
+      <variablelist>
+	<varlistentry>
+	  <term>
+	    DHCP (boot)
+	  </term>
+	  <listitem>
+	    <para>
+	      Configuration via the DHCP server running on the headnode. This allows the host
+	      to boot over the network using PXE. Every cluster must have one such network and
+	      it is created automatically during the Qlustar installation process according to
+	      the data provided from the installer.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    DHCP (external)
+	  </term>
+	  <listitem>
+	    <para>
+	      Configuration by an external DHCP server not under the control of QluMan. This
+	      option only makes sense for nodes that have an adapter connected to a
+	      cluster-external network, like e.g. a cluster FrontEnd node.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Static
+	  </term>
+	  <listitem>
+	    <para>
+	      Static configuration for each host individually. Select
+	      <guibutton>Static</guibutton> for this method. The last two options are usualy
+	      used for the external networks of the headnode and login nodes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
     </para>
     <para>    
-      A slave network on the other hand is slaved to a primary network and the IP of a host is
-      determined by mapping the host part of the IP in the primary network into the network
-      range of the slave network. In usual confiuration this means the host IPs end in the same
-      number for the primary and slave networks. This is generally used for the Infiniband and
-      IPMI networks and makes IPs easily recognizable as belonging to the same host.
+      A slave network on the other hand, is tied to a primary network. The idea is, that the IP
+      of a host in the slave network is determined by mapping the host part of the IP in the
+      primary network into the network range of the slave network. In most cases, this means
+      that the host IP of the primary and slave networks end in the same number. This is a
+      convenient feature, mostly used for Infiniband and IPMI networks. It saves you from
+      registering/managing additional MAC/IP addresses and makes IPs easily recognizable as
+      belonging to the same host.
     </para>
     <note>
       <para>
 	This mechanism requires the netmask of the slave network to be at least as large as the
-        primary network it is slaved too. Hence, smaller values won't be selectable.
+	primary network it is slaved to. Hence, the GUI prevents smaller values to be selected.
       </para>
     </note>
     <bridgehead>
       Configuring the Boot network
     </bridgehead>
     <para>
-    <!–cbox(file: images/network_config/boot.png caption: Boot network)–>
-      QluMan uses network booting via PXE to start nearly all hosts in the cluster. The only
-      system that can not be network booted is the <firstterm>headnode</firstterm> itself.
-      Every cluster should therefore have a network that is a <guibutton>Primary
-      Networks</guibutton> and configured via <guibutton>DHCP (boot)</guibutton>. A network
-      like this is created by the installer and called <classname>Boot</classname>. Changes to
-      this network should only be done when the cluster is offline and after a change all nodes
-      must be booted fresh to get the updated configuration.
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/network_config/boot.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        The Boot network dialog
+      </phrase></textobject>
+      <caption><para>
+        The Boot network dialog
+      </para></caption>
+    </mediaobject>
+      Qlustar uses network-booting via PXE to start nearly all hosts in the cluster. The only
+      system(s) that can not be network-booted is the <firstterm>headnode(s)</firstterm>
+      itself. Every cluster should therefore have a network that is a <guibutton>Primary
+      Network</guibutton> and configured via <guibutton>DHCP (boot)</guibutton>. Such a network
+      is created by the Qlustar installer and called <classname>Boot</classname>. Changes to
+      this network are rarely necessary but if changes were made, all nodes must be rebooted to
+      get the updated configuration.
     </para>
     <note>
       <para>
-	Changing the network address or mask may also require additional changes in the config
-        of hosts booting from disk, specifically the <firstterm>headnode</firstterm>
-        itself.
+	Changing the network address or mask may also require additional manual changes in the
+	config of hosts booting from disk, specifically the <firstterm>headnode</firstterm>
+	itself.
       </para>
     </note>
     <para>
       The IP addresses and MACs of individual hosts can be configured in the <link
-      linkend="sec-Enclosure-View">Enclosure View</link> once the host has be assigned to a
-      network. This can also be done in the <link
-      linkend="sec-Enclosure-View">Enclosure View</link> by assigning a network directly or
-      more generally by adding a network config to a Config Set and the Config Set to a Host
-      Template.
+      linkend="sec-Enclosure-View">Enclosure View</link> once the host has been assigned to a
+      network config. As with other settings/configs, this assignment can also be done in the
+      <link linkend="sec-Enclosure-View">Enclosure View</link> by assigning a network config in
+      one of the available ways (direct assignment, host or global template).
     </para>
     <para>
-      <!–cbox(file: images/network_config/invalid-network.png caption: Invalid network config)–>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_config/invalid-network.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Invalid network configuration
+        </phrase></textobject>
+        <caption><para>
+          Invalid network configuration
+        </para></caption>
+      </mediaobject>
       The GUI has some safeguards to prevent invalid network configurations. For example
       different networks must not overlap. Attempting to change the network address so that it
-      overlaps another network won't accept the change. The <guibutton>Save</guibutton> button
-      at the bottom of the window will be disabled. A red LED icon will also appear with a
-      tooltip explaining why the selected configuration can not be accepted.
+      overlaps another network won't be accepted: The <guibutton>Save</guibutton> button at the
+      bottom of the window will be disabled and a red LED icon will appear with a tooltip
+      explaining why the selected configuration is not allowed.
     </para>
     <para>
       When changing the network IP address or netmask, the IP addresses of all hosts configured
-      to be in that network will be remapped to reflect their new values. This requires that
-      the new netmask is large enough, so that the resulting network range can include all
+      to be in that network will be remapped to reflect the changed values. This requires that
+      a new netmask is large enough, so that the resulting network range can include all
       existing hosts in the cluster. Therefore, the GUI won't let you pick anything too
-      small. If there are unused address ranges in your existing network and you need a smaller
+      small. If there are unused address ranges in the existing network and you need a smaller
       netmask than currently selectable, you will first have to change some host addresses so
       that all of them combined occupy a small enough subset of the current network.
     </para>
@@ -113,17 +179,17 @@
       convention, to use the second last IP of the cluster network as the Head IP, is
       obviously not a requirement. Hence, this is not done automatically when changing the
       netmask. Furthermore, changing the Head IP involves some additional steps without which
-      the nodes in the cluster won't function or even boot. The point is that the Head IP
+      the nodes in the cluster won't function or even boot. The reason is that the Head IP
       also appears in the <classname>Global DHCP Template</classname> and may have been added
-      to other templates. These templates are simple, freely editable text blobs. A
+      to other templates too. These templates are simple, freely editable text blobs. A
       change of the network definitions will not change them, so you need to check and adjust
       each of them manually.
     </para>
     <para>
-      Changes to the networks definition have wide ranging effects. To prevent accidental
+      Changes to the networks definition have wide-ranging effects. To prevent accidental
       changes or booting hosts while in between configurations any changes to the network are
       not saved instantly. Instead the <guibutton>Save</guibutton> button at the bottom of the
-      window needs to be clicked to confirm the changed. Alternatively the
+      window needs to be clicked to confirm the changes. Alternatively, the
       <guibutton>Undo</guibutton> button can be used to revert any changes to the last saved
       values. Any changes to a network must be saved or reverted before switching tabs or
       closing the window.
@@ -153,26 +219,33 @@
       Configuring slave networks
     </bridgehead>
     <para>
-      In a cluster that has Infiniband or IPMI the respective networks are usually setup to
-      mirror the ethernet network. If the IP of the host ends in .10 then the Infiniband and
-      IPMI IPs will usually also end in .10. In QluMan this can be set up by configuring the
-      network as a slave to the ethernet network by selecting a network to be slaved to from
-      the drop down menu.
+      For convenience, in a cluster with Infiniband and/or IPMI, the corresponding networks are
+      usually setup to mirror the Boot network: If the Boot IP of a host ends in .10 then the
+      Infiniband and IPMI IPs will usually also end in .10. Within QluMan, this relationship
+      can be set up by configuring these special networks as a slave to the Boot network: In
+      the tab of the network under consideration, simply select the network to be slaved to
+      from the drop-down menu.
     </para>
     <para>
-       A slave network always determines the IP of a host from the IP in the network it is
-       slaved to and configures it automatically via the qluman-execd at boot. The IP in the
-       slave network doesn't need to be set for each host individually. The hostname used in
-       the NIS config for the IP in the slave network is also simplified. The name of a host in
-       that network can also be autogenerated using the QluMan name of the host as stem and
-       adding a prefix and/or postfix separated by a dash. The default Infiniband network setup
-       for example has a postfix of "ib", meaning a host named <parameter>beo-01</parameter>
-       will be reachable on the Infiniband network as <parameter>beo-01-ib</parameter>.
+       In a slave network, the IP of a host is always derived from its IP in the network it is
+       slaved to. During the initial part of a node's boot process, the qluman-execd writes the
+       resulting static slave network information into the relevant configuration file, so that
+       the adapter will later be configured via standard OS methods. Hence, the IPs in the
+       slave network don't need to be set for each host individually.
+    </para>
+    <para>
+      The hostnames corresponding to the IPs in the slave network are also under control of
+      this mechanism. The name of a host in a slave network will be autogenerated using the
+      QluMan node name of the host as the stem and adding a prefix and/or postfix separated by
+      a dash to it. The default Infiniband network setup for example has a postfix of "ib",
+      meaning a host named <parameter>beo-01</parameter> will be reachable on the Infiniband
+      network as <parameter>beo-01-ib</parameter>. Such pre/postfixes may be set/changed
+      in the configuration dialog of the network.
     </para>
     <note>
       <para>
-        Hostnames are added to the DHCP (boot network only), NIS and ssh configs (not IPMI)
-        allowing them to be used within the cluster.
+        Hostnames generated by QluMan are added to the DHCP (boot network only), NIS and ssh
+        configs allowing them to be used within the cluster where necessary.
       </para>
     </note>
   </section>
