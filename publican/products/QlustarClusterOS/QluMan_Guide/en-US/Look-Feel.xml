@@ -164,6 +164,11 @@
 	machine, where you're executing the <application>QluMan GUI</application>.
       </para>
     </section>
+    <section xml:id="sec-Greying-Out">
+      <title>Making 'greying out' work</title>
+      <para>
+        *** TODO ***
+      </para>
   </section>
 </chapter>
 
