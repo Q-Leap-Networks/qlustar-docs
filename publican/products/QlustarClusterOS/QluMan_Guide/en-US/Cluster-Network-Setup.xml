@@ -357,59 +357,63 @@
       For most practical purposes, <firstterm>Infiniband (IB)</firstterm> adapters need to be
       configured with an IP address (IPoIB) just like Ethernet adapters. If you have chosen to
       configure an IB network during installation, this section is mostly about how to review
-      or change the initial settings. If not, IB has to be activated first in the <link
-      linkend="sec-Configuring-the-Network">Network Configuration</link> dialog. An IB Network
+      or change the initial settings. If not, a network definition for
+      IB has to be created in the <link linkend="sec-Network-Definitions">Networks</link> dialog.
+      An IB Network
       <mediaobject>
         <imageobject><imagedata
         fileref="images/network_config/infiniband.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          IB settings in the Network Configuration dialog
+          IB network definition in the Networks dialog
         </phrase></textobject>
         <caption><para>
-          IB settings in the Network Configuration dialog
+          IB network definition in the Networks dialog
         </para></caption>
       </mediaobject>
       address IP and netmask can then be chosen there. The Infiniband network must not collide
-      with the Cluster (Ethernet) or IPMI network. This is prevented automatically in the
-      settings dialog. The Infiniband IP of each host is computed by mapping the host part of
-      its Cluster Network IP to the IB Network. Example: IP Cluster Network 192.168.52.100 - IP
-      IB network 192.168.53.100.
+      with any other network. This is prevented automatically in the
+      settings dialog. By making the network a slave to the boot network the Infiniband IP of each
+      host is computed by mapping the host part of its Boot IP to the IB Network. Example: Boot IP
+      Network 192.168.17.100 - IP IB network 192.168.18.100.
     </para>
     <note>
       <para>
-	This mechanism requires the IB netmask to be at least as large as the Cluster Network
+	This mechanism requires the IB netmask to be at least as large as the Boot Network
 	netmask. Hence, smaller values won't be selectable.
       </para>
     </note>
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="images/hardware_property_set/ib.png"
+        fileref="images/network_config/network-configs__ib.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          Setting the Hardware Property "IB-adapter"
+          "IB-adapter" in the Network Config
         </phrase></textobject>
         <caption><para>
-          Setting the Hardware Property "IB-adapter"
+          "IB-adapter" in the Network Config
         </para></caption>
       </mediaobject>
-      In order to have a configured IB adapter during the boot process of a node, additional
-      steps are necessary. It is not uncommon, that a cluster consists of hosts with IB and
-      hosts without. Therefore, the pre-defined hardware property <parameter>IB
-      Adapter</parameter> with a value of <parameter>true</parameter> must be assigned to a
-      host, to explicitly enable IB for it. This is done most conveniently, by adding this
-      property to the Hardware Property Set(s) used in the Host Template(s) for nodes with
-      IB. If this assignment exists, Infiniband modules will be loaded and IP-over-IB will be
+      In order to have a configured IB adapter during the boot process of a node, the network
+      definition must also be added to the Network Config used by the host. It is not uncommon,
+      that a cluster consists of hosts with IB and hosts without. In such cases multiple
+      Network Configs must be created, with IB and without IB, and assigned to the
+      different hosts. This is done most conveniently, by adding this
+      property to the Config Set(s) used in the Host Template(s). If the Network Config for a host
+      includes a NIC of type <parameter>IB</parameter> then Infiniband modules will be loaded and IP-over-IB will be
       configured during the boot process of the corresponding nodes with the IP mapping
-      described above.
+      configured in the network definition.
     </para>
+    <!-- FIXME: not implemented yet
     <note>
       <para>
 	The <link linkend="chap-HWwizard">Hardware Wizard</link> auto-detects the presence of
-	IB adapters and allows to conveniently set the IB hardware property.
+	IB adapters and allows to conveniently recommends Network Configs that include an IB
+	adapter.
       </para>
     </note>
+    -->
     <section xml:id="sec-Configuring-OpenSM">
       <title>Activating/configuring OpenSM</title>
       <para>
