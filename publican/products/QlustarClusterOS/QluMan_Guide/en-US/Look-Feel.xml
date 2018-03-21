@@ -167,7 +167,13 @@
     <section xml:id="sec-Greying-Out">
       <title>Making 'greying out' work</title>
       <para>
-        *** TODO ***
+	Depending on the KDE theme and settings disabled texts,	buttons, icons or menu entries
+	are not rendered as 'greyed out'. Instead they are rendered like normale text, buttons,
+	icons and menu entries but can not be selected with the mouse. This is rather confusing.
+	A quick	fix we found for this issue is editing
+	<filename>~/.kde/share/config/kdeglobals</filename> and removing all lines of the form
+	"ForegroundNormal=...". After saving and restarting <application>qluman-qt</application>
+	the 'greying out' should work.
       </para>
   </section>
 </chapter>
