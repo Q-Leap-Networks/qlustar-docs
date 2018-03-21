@@ -40,6 +40,15 @@
       <emphasis>Messages</emphasis> window. The <emphasis>Messages</emphasis> window can also
       be opened through the <guimenuitem>Manage Cluster -> Messages</guimenuitem> menu item.
     </para>
+    <note>
+      <para>
+	Over time the number of saved messages rises using up more and more space in the databse.
+	More importantly the messages are transmitted to the GUI client when connecting. Having
+	more than 1000 messages starts to become noticeable and more than about 30000 saved
+	messages can become problematic and can cause wrongfull timeouts on connect. It is
+	therefore recommended to review and clear messages from time to time.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-LogViewer-window">
     <title>Log Viewer window</title>
