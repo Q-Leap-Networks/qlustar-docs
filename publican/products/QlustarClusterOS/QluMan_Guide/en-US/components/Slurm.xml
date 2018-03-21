@@ -625,9 +625,12 @@
 	  </para></caption>
 	</mediaobject>
 	Hosts are assigned to Slurm <classname>Node/Gres Groups</classname> and <emphasis
-	role="bold">Partitions</emphasis> by use of a <link linkend="Host-Templates">Host
-	Template</link> and its corresponding <link linkend="PropConf-Sets">Config Set</link>
-	or by <link linkend="sec-Enclosure-View">direct assignment</link>. A <classname>Config
+	role="bold">Partitions</emphasis> by use of the	<classname>Global Template</classname> or
+	a <link linkend="Host-Templates">Host
+	Template</link> and their corresponding <link linkend="PropConf-Sets">Config Set</link>
+	or by <link linkend="sec-Enclosure-View">direct assignment</link>, aka the
+	<link linkend="levels-of-configuration">4 levels of configuration</link>. A
+	<classname>Config
 	Set</classname> may contain at most one <classname>Node Group</classname> but any
 	number of <classname>Gres Groups</classname> or <classname>Partitions</classname>,
 	<mediaobject>
@@ -657,6 +660,16 @@
 	menu of the <classname>Config Set</classname> or via the Enclosure View context menu of
 	hosts.
       </para>
+      <note>
+	<para>
+	  The <link linkend="levels-of-configuration">4 levels of configuration</link> allow
+	  overriding a setting in one level in a higher level. They do not allow removing a setting
+	  though. For that reason there exists a <literal>NONE</literal>
+	  <classname>Node Group</classname>, <classname>Partitions</classname> and
+	  <classname>Gres Groups</classname>. Assigning <literal>NONE</literal> removes the setting
+	  from lower levels without replcing it with a different group or partition.
+	</para>
+	</note>
     </section>
     <section xml:id="sec-GPUwizard">
       <title>GPU Wizard</title>
