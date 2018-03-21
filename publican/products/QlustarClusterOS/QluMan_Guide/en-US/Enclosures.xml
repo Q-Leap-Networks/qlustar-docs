@@ -57,16 +57,51 @@
       </mediaobject>
       Selecting a node in the tree displays its configuration info on the right hand
       side. Hovering over a host entry in the tree view brings up a tool-tip with additional
-      info about the host. The hostname, IP and MAC can be edited and saved by pressing
-      <keycap>return</keycap>. The check-mark to the right of the field shows the state of the
-      change. If the entered value is not valid, the check-box is cleared
+      info about the host. The cluster node name can be edited at the top. Normally the node
+      name will be used as hostname and appear on the shell prompt when logged into the host
+      or outgoing mails. If a different hostname is desired an override hostname can be entered
+      by clicking the <guibutton>Override hostname</guibutton> check-mark and entering the name
+      in the text field next to it. 
+      <!--cbox(file: enclosure_view/override_hostname.png caption: )-->
+      A network must also be chosen from the networks the host belongs to from the drop down menu.
+      This determines the IP that used for the hostname in the NIS config and that applications
+      see when they resolve the hostname. 
     </para>
     <para>
-      The check-boxes tool-tip (you'll see it when the mouse moves on top of it) gives the
-      reason, why the entered value is invalid. If the entered value is valid but has not yet
-      been saved, the check-box is checked but ghosted. Finally, after the value has been
-      saved in the database, the check-box shows a solid check.
+      <!--cbox(file: enclosure_view/show_networks.png caption: )-->
+      In the middle of the window the hosts individual network config is shown. Normally only the
+      boot network is visible as in the screenshot. Clicking the <guibutton>&#62;</guibutton> will
+      open up the full list of networks. For each network the Host IP, MAC address and optional
+      aliases are shown. For more details see
+      <link linkend="sec-Host-Network-Settings">Host Networks Settings</link>.
     </para>
+    <para>
+      While editing the label corresponding to the field being edited will change color indicating
+      the state of the edit. A green label means that the current input is a valid choice but has
+      not been saved yet. A yellow label means that the input itself is not valid but can still be
+      completed to be valid. This is only used for the MAC address for when a partial address is
+      entered. A red label means that the current input is invalid and can not be used. The
+      tool-tip (you'll see it when the mouse moves on top of it) gives the exact reason, why the
+      entered value is invalid. The most likely reason is that the input is already being used
+      somewhere else. The node name, hostname override, the host IPs, MAC addresses and aliases
+      must all be unique.
+    </para>
+    <para>
+      Along with the label changing color the <guibutton>save</guibutton> button will also
+      become enabled and change color whenever a field is edited and not yet saved. It will
+      turn red if any of the changes is invalid even if some are valid. Again the tool-tip
+      will point to the reason why changes are invalid. Changes can be saved by pressing return
+      in the text field to finish editing or by clicking the <guibutton>save</guibutton> button.
+      Once all changes have been saved in the database the coresponding labels will turn black
+      again and the <guibutton>save</guibutton> button will be come disabled.
+    </para>
+    <note>
+      <para>
+	Trying to change to a different host by clicking it in the tree view or closing the
+	Enclosure View will pop up a reminder dialog asking to save the changes, undo the changes
+	or cancel the action.
+      </para>
+    </note>
     <para>
       For nodes that are not part of a <literal>multi-host enclosure</literal> (like a Blade
       or Twin chassis) the enclosure type can be changed to one of the single-slot host
