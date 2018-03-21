@@ -188,8 +188,9 @@
       PXELinux command, and kernel parameters become visible. You can change any of the values,
       by simply selecting a different option from the drop-down menus. In case of kernel
       parameters, you can also directly edit the entry and save the result by pressing
-      <keycap>return</keycap>. Furthermore, it is possible to add more kernel parameters or
-      remove them through the context menu.
+      <keycap>return</keycap>. Furthermore, it is possible to add multiple kernel parameters or
+      remove them through the context menu. Each added kernel parameter will be added to the
+      kernel command line.
     </para>
     <para>
       <mediaobject>
