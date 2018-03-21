@@ -177,6 +177,19 @@
       be created in one of two ways: Either an existing template can be cloned or a completely
       new one can be created.  In both cases, a name for the new template must be given.
     </para>
+    <para>
+      For clusters with identical hardware, excluding the headnode and possibly login nodes, it
+      can also make sense to directly change the <literal>Global Template</literal>. Click
+      <guibutton>Modify Global Template</guibutton> to go that way.
+    </para>
+    <note>
+      <para>
+	Changing the <literal>Global Template</literal> affects all hosts. After finishing with
+	the Hardware Wizard make sure the headnode and login nodes are still correctly configured
+	or add the correct overrides to their <literal>Host Template</literal> or assign the right
+	properties and configs directly.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-HWwizard-hw-prop-set">
     <title>Selecting a Hardware Property Set</title>
@@ -317,6 +330,13 @@
       (both from the context-menu).  Once the desired <classname>HW Properties</classname> are
       selected, click <guibutton>Next</guibutton> to continue.
     </para>
+    <note>
+      <para>
+	If <literal>Modify Global Template</literal> was chosen previously then choises will be
+	limited to use the existing Hardware Property Set <classname>Global Hardware Property
+	Set</classname>.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-HWwizard-resolve-conflict">
     <title>Resolving Hardware Conflicts</title>
@@ -451,6 +471,13 @@
       Set</classname> page, the Boot, Disk, and Slurm configs, are the most likely candidates
       for settings that need to be selected and fine-tuned.
     </para>
+    <note>
+      <para>
+	If <literal>Modify Global Template</literal> was chosen previously then choises will be
+	limited to use the existing Generic Property Set <classname>Global Generic Property
+	Set</classname> and the existing Config Set <classname>Global Config Set</classname>.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-HWwizard-summary">
     <title>Summary Page</title>
@@ -478,8 +505,9 @@
     </para>
     <note>
       <para>
-	If an existing <classname>Host Template</classname> or <classname>Hardware Property
-	Set</classname> was modified during the wizard procedure, then this is the last chance
+	If an existing <classname>Host Template</classname>, an existing <classname>Hardware
+	Property Set</classname> or the <classname>Global Template</classname> was modified during
+	the wizard procedure, then this is the last chance
 	to drop out. By clicking <guibutton>Finish</guibutton>, all the modifications are made
 	permanent, and the configuration settings will be assigned to the selected hosts. The
 	latter should then be fully configured, and after writing the changes (see <xref
