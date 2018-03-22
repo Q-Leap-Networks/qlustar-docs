@@ -126,7 +126,7 @@
     <bridgehead xml:id="Hardware-Properties">Hardware Properties</bridgehead>
     <para>
       <literal>Hardware properties</literal> are used to describe the hardware of a
-      host. Amongst others, hardware properties like the amount of RAM or number of CPU cores
+      host. Among others, hardware properties like the amount of RAM or number of CPU cores
       are used to configure resource management systems like slurm or torque, so jobs can be
       assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
       purely informational and might be used for inventory management.
@@ -246,19 +246,22 @@
           Overwritten properties/configs.
         </para></caption>
       </mediaobject>
-      If a generic/hardware property or config is set and assigned in a particular hierarchy
-      level, it overwrites the corresponding assignment(s)/value(s) from all lower priority
-      levels. This introduces great flexibility. For example it allows setting a property in
-      the Global Template that is right for most hosts and then replace it in a particular Host
-      Template that is used for a few exceptional hosts. The screenshot shows two examples of
-      this strategy: The Host Template replaces the configs for <literal>Net Config</literal>,
+      If a generic/hardware property or config is set and assigned to a host in a particular
+      hierarchy level, it overwrites the corresponding assignment(s)/value(s) from all lower
+      priority levels. This introduces a lot of flexibility while retaining consistency.
+    </para>
+    <para>
+      For example it allows setting a property in the Global Template that is right for most
+      hosts and then replace it in a particular Host Template that is used for a few
+      exceptional hosts. The screenshot shows two examples of this strategy: The assigned Host
+      Template of the chosen host replaces the configs for <literal>Net Config</literal>,
       <literal>Slurm Partition</literal> and <literal>Slurm Node Group</literal> of the Global
       Template (red box) and the number of CPU cores is directly assigned replacing the value
       from the Host Template (green box).
     </para>
     <note>
       <para>
-	The tree representation of a host's properties/configs in the enclosure view clearly
+	The tree representation of a host's properties/configs in the Enclosure View clearly
 	indicates overwritten assignments by displaying them in a light gray.
       </para>
     </note>
