@@ -188,18 +188,18 @@
       configure multiple hosts, you would select them in the tree view and choose a
       <literal>Host Template</literal> from the context menu. The check-marks in the sub-menu
       indicate which <literal>Host Templates</literal> are currently assigned (if any) for the
-      selected nodes. This action will override the previous assignment.
+      selected nodes. This action will override the previous assignment for all selected hosts.
     </para>
     <bridgehead xml:id="Global-Template">Global Template</bridgehead>
     <para>
-    Even more generic is the <literal>Global Template</literal>. The <literal>Global
-    Template</literal> applies to all hosts in the cluster and consists of the <literal>Global
-    Generic Property Set</literal>, the <literal>Global Hardware Property Set</literal> and
-    the <literal>Global Config Set</literal>. These are just like any other set, a simple means
-    of grouping individual generic properties, hardware properties and config classes, with
-    the one difference that they always apply to all hosts as a base configuration.
+    Even more generic is the <literal>Global Template</literal>. It applies to all hosts in the
+    cluster and consists of the <literal>Global</literal> Generic/Hardware Property and Config
+    Set. In principle, the latter are just like any other set, with the one difference that
+    they always apply to all hosts. This is useful when defining a base configuration for a
+    cluster.
     </para>
-    <bridgehead xml:id="x2host-mapping">Directly assigned properties, configs and sets</bridgehead>
+    <bridgehead xml:id="x2host-mapping">Directly assigned properties, configs and
+    sets</bridgehead>
     <para>
       <mediaobject>
         <imageobject><imagedata
@@ -212,33 +212,55 @@
           Selecting a Generic Property
         </para></caption>
       </mediaobject>
-      <literal>Generic properties</literal>, <literal>hardware properties</literal>,
-      <literal>config sets</literal> and their corresponding sets can also be assigned to a
-      host individually. Such
-      assigned properties take precedence over ones of the same type selected through the
-      <literal>Host Template</literal>. This is useful when a property should be changed
-      temporarily for some hosts or when a property should not be
-      changeable globally through the Host Template. Note that by default, every new host has
-      the generic property <parameter>Schedule Format: always</parameter>, which is required
-      to format the disk on the first boot. This should be removed after the first successful
-      boot of the host, so that log files will be preserved across boots in the future.
+      Generic/hardware properties, configs and their corresponding sets can also be
+      individually assigned to a host. Such assigned properties take precedence over ones of
+      the same type selected through the Host or Global Template. This is useful when a
+      particular (or a few) node(s) require a special property/config (set) while everything
+      else should be set the same as for other hosts with the same template.
     </para>
-    <bridgehead xml:id="levels-of-configuration">4 Levels of configuration</bridgehead>
+    <note>
+      <para>
+	By default, every new host has the generic property <parameter>Schedule Format:
+	always</parameter>, which is required to format the disk on the first boot. This
+	property should be removed (or changed to <literal>never</literal>) after the first
+	successful boot of the host, so that log files will be preserved across boots in the
+	future.
+      </para>
+    </note>
+    <bridgehead xml:id="levels-of-configuration">Four Levels of configuration</bridgehead>
     <para>
-      Overall the configuration of a host is composed of the 4 levels of configuration
-      described above. Going from lowest to highest priority these are: <literal>Global
-      Template</literal>, <literal>Host Template</literal>, directly assigned sets and
-      directly assigned properties and configs.
+      Overall, the configuration of a host is determined by the hierarchy of the four
+      assignment levels described above. Going from lowest to highest priority these are:
+      <literal>Global Template</literal>, <literal>Host Template</literal>, directly assigned
+      sets and directly assigned properties and configs.
     </para>
     <para>
-      <!--cbox(file: enclosure_view/properties_and_configs.png caption: )-->
-      In each level if a generic property, hardware property or config is set then it
-      replaces the value or values from all lower levels. This allows for example setting a
-      property that is right for most hosts in the Global Template and then replace it in
-      a specific Host Template used for the few exceptions. The screenshot shows 2 examples.
-      The Host Template replaces the configs for NetConfigName, SlurmPartitionName and
-      SlurmGroupName of the Global Template (red box) and the number of CPU cores is directly
-      assigned replacing the value from the Host Template (green box).
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/enclosure_view/properties_and_configs.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Overwritten properties/configs.
+        </phrase></textobject>
+        <caption><para>
+          Overwritten properties/configs.
+        </para></caption>
+      </mediaobject>
+      If a generic/hardware property or config is set and assigned in a particular hierarchy
+      level, it overwrites the corresponding assignment(s)/value(s) from all lower priority
+      levels. This introduces great flexibility. For example it allows setting a property in
+      the Global Template that is right for most hosts and then replace it in a particular Host
+      Template that is used for a few exceptional hosts. The screenshot shows two examples of
+      this strategy: The Host Template replaces the configs for <literal>Net Config</literal>,
+      <literal>Slurm Partition</literal> and <literal>Slurm Node Group</literal> of the Global
+      Template (red box) and the number of CPU cores is directly assigned replacing the value
+      from the Host Template (green box).
     </para>
+    <note>
+      <para>
+	The tree representation of a host's properties/configs in the enclosure view clearly
+	indicates overwritten assignments by displaying them in a light gray.
+      </para>
+    </note>
   </section>
 </chapter>

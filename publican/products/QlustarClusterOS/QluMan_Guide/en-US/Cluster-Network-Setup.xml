@@ -340,7 +340,7 @@
     </note>
     <para>
       The name for Infiniband adaptors is the name of the <firstterm>IP-over-IB</firstterm>
-      device in the kernel, which has the form <filename>ib<N></filename> starting with
+      device in the kernel, which has the form <filename>ib&#60;N&#62;</filename> starting with
       <filename>ib0</filename>. Even simpler the the name for IPMI adaptors is
       <filename>ipmi0</filename>.
     </para>
