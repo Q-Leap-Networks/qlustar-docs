@@ -83,7 +83,7 @@
       configuration files. You can access the latter from <guimenuitem>Manage
       Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
       Files</guibutton> button at the bottom right of the main window. The button is an
-      indicator for the presence of pending changes: It is greyed out if there aren't any, and
+      indicator for the presence of pending changes: It is grayed out if there aren't any, and
       fully visible otherwise.
     </para>
     <para>
@@ -184,13 +184,13 @@
           Changing a Boot Config
         </para></caption>
       </mediaobject>
-      By expanding a <classname>Boot Config</classname> item, the configured <productname>Qlustar</productname> image,
-      PXELinux command, and kernel parameters become visible. You can change any of the values,
-      by simply selecting a different option from the drop-down menus. In case of kernel
-      parameters, you can also directly edit the entry and save the result by pressing
-      <keycap>return</keycap>. Furthermore, it is possible to add multiple kernel parameters or
-      remove them through the context menu. Each added kernel parameter will be added to the
-      kernel command line.
+      By expanding a <classname>Boot Config</classname> item, the configured
+      <productname>Qlustar</productname> image, PXELinux command, and kernel parameters become
+      visible. You can change any of the values, by simply selecting a different option from
+      the drop-down menus. In case of kernel parameters, you can also directly edit the entry
+      and save the result by pressing <keycap>return</keycap>. Furthermore, it is possible to
+      add multiple kernel parameters or remove them through the context menu. Each selected
+      kernel parameter will be added to the kernel command line.
     </para>
     <para>
       <mediaobject>
