@@ -106,10 +106,10 @@
         fileref="images/hw_wizard/template-existing-tooltip.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          Tooltip explaining the coloring
+          Tool-tip explaining the coloring
         </phrase></textobject>
         <caption><para>
-          Tooltip explaining the coloring
+          Tool-tip explaining the coloring
         </para></caption>
       </mediaobject>
       The individual properties belonging to the <classname>Hardware Property Set</classname>
@@ -178,16 +178,18 @@
       new one can be created.  In both cases, a name for the new template must be given.
     </para>
     <para>
-      For clusters with identical hardware, excluding the headnode and possibly login nodes, it
-      can also make sense to directly change the <literal>Global Template</literal>. Click
-      <guibutton>Modify Global Template</guibutton> to go that way.
+      For clusters with identical node hardware, it can also make sense to directly change the
+      <literal>Global Template</literal>. Click <guibutton>Modify Global Template</guibutton>
+      to go that way.
     </para>
     <note>
       <para>
-	Changing the <literal>Global Template</literal> affects all hosts. After finishing with
-	the Hardware Wizard make sure the headnode and login nodes are still correctly configured
-	or add the correct overrides to their <literal>Host Template</literal> or assign the right
-	properties and configs directly.
+	Changing the <literal>Global Template</literal> affects all hosts, so when this has
+	been done, after exiting the Hardware Wizard, make sure the head-node and login nodes
+	are still correctly configured (they usually have different hardware or configuration
+	requirements compared to the rest). If they aren't, add the correct overrides to their
+	<literal>Host Template</literal> or assign the correct properties and configs directly
+	to them.
       </para>
     </note>
   </section>
@@ -332,9 +334,8 @@
     </para>
     <note>
       <para>
-	If <literal>Modify Global Template</literal> was chosen previously then choises will be
-	limited to use the existing Hardware Property Set <classname>Global Hardware Property
-	Set</classname>.
+	If <literal>Modify Global Template</literal> was chosen previously, choices will be
+	limited to select the existing Hardware Property Set or the global one.
       </para>
     </note>
   </section>
@@ -473,9 +474,8 @@
     </para>
     <note>
       <para>
-	If <literal>Modify Global Template</literal> was chosen previously then choises will be
-	limited to use the existing Generic Property Set <classname>Global Generic Property
-	Set</classname> and the existing Config Set <classname>Global Config Set</classname>.
+	If <literal>Modify Global Template</literal> was chosen previously, choices will be
+	limited to select the existing Generic Property/Config Set or the global one.
       </para>
     </note>
   </section>
@@ -506,11 +506,11 @@
     <note>
       <para>
 	If an existing <classname>Host Template</classname>, an existing <classname>Hardware
-	Property Set</classname> or the <classname>Global Template</classname> was modified during
-	the wizard procedure, then this is the last chance
-	to drop out. By clicking <guibutton>Finish</guibutton>, all the modifications are made
-	permanent, and the configuration settings will be assigned to the selected hosts. The
-	latter should then be fully configured, and after writing the changes (see <xref
+	Property Set</classname> or the <classname>Global Template</classname> was modified
+	during the wizard procedure, this is the last chance to drop out. By clicking
+	<guibutton>Finish</guibutton>, all the modifications are made permanent, and the
+	configuration settings will be assigned to the selected hosts. The latter should then
+	be fully configured, and after writing the changes (see <xref
 	linkend="sec-Writing-Config-Files"/>), will be ready to (re)boot.
       </para>
     </note>
