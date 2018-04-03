@@ -42,11 +42,12 @@
     </para>
     <note>
       <para>
-	Over time the number of saved messages rises using up more and more space in the databse.
-	More importantly the messages are transmitted to the GUI client when connecting. Having
-	more than 1000 messages starts to become noticeable and more than about 30000 saved
-	messages can become problematic and can cause wrongfull timeouts on connect. It is
-	therefore recommended to review and clear messages from time to time.
+	As time goes on, the number of saved messages rises, using up more and more space in
+	the database. More serious, all the messages are transmitted to the GUI client when
+	connecting. Having more than 1000 messages starts to introduce a noticeable delay. More
+	than about 30000 saved messages can become really problematic, causing timeouts on
+	connect. It is therefore recommended to review and clear messages from time to time. Be
+	aware, that deleting several 1000 messages will take quite some time.
       </para>
     </note>
   </section>
