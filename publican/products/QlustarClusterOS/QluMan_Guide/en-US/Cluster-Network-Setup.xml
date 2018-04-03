@@ -22,7 +22,7 @@
     linkend="PropConf-Sets">Config Sets</link> or directly to cluster
     nodes. According to the chosen network config for a node, individual node network
     properties like IP or MAC addresses can then be assigned to the node in the <link
-    linkend="sec-Enclosure-View">Enclosure View</link>.
+    linkend="sec-Enclosure-View-Network-Info">Enclosure View</link>.
   </para>
   <section xml:id="sec-Network-Definitions">
       <title>Network Definitions</title>
@@ -140,12 +140,12 @@
       </para>
     </note>
     <para>
-      The IP addresses and MACs of individual hosts can be configured in the <link
-      linkend="sec-Enclosure-View">Enclosure View</link> once the host has been
+      Individual IP addresses and MACs of a host can be configured in the <link
+      linkend="sec-Enclosure-View-Network-Info">Enclosure View</link>, once the host has been
       assigned to a network config. As with other settings/configs, this assignment can also be
-      done in the <link linkend="sec-Enclosure-View">Enclosure View</link> by
-      assigning a network config in one of the available ways (direct assignment, host or
-      global template).
+      done in the <link linkend="sec-Enclosure-View-Other-Settings">Enclosure View</link> by
+      assigning a network config in one of the usual ways (direct assignment, host or global
+      template).
     </para>
     <para>
       <mediaobject>
@@ -517,8 +517,8 @@
       of the corresponding network can be entered. If no Host IP has been manually set for the
       host yet, then the lowest IP in the network will be suggested and the <guilabel>Host
       IP</guilabel> will be color coded to indicate unsaved changes. More info about color
-      coding and how to save changes can be found in the chapter <link
-      linkend="sec-Enclosure-View">Enclosure View</link>.
+      coding and how to save changes can be found in <link
+      linkend="sec-Enclosure-View-Network-Info">this section</link>.
     </para>
     <note>
       <para>

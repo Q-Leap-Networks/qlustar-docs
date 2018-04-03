@@ -57,75 +57,112 @@
       </mediaobject>
       Selecting a node in the tree displays its configuration info on the right hand
       side. Hovering over a host entry in the tree view brings up a tool-tip with additional
-      info about the host. The cluster node name can be edited at the top. Normally the node
-      name will be used as hostname and appear on the shell prompt when logged into the host
-      or outgoing mails. If a different hostname is desired an override hostname can be entered
-      by clicking the <guibutton>Override hostname</guibutton> check-mark and entering the name
-      in the text field next to it. 
-      <!--cbox(file: enclosure_view/override_hostname.png caption: )-->
-      A network must also be chosen from the networks the host belongs to from the drop down menu.
-      This determines the IP that used for the hostname in the NIS config and that applications
-      see when they resolve the hostname. 
+      info about the host.
     </para>
-    <para>
-      <!--cbox(file: enclosure_view/show_networks.png caption: )-->
-      In the middle of the window the hosts individual network config is shown. Normally only the
-      boot network is visible as in the screenshot. Clicking the <guibutton>&#62;</guibutton> will
-      open up the full list of networks. For each network the Host IP, MAC address and optional
-      aliases are shown. For more details see
-      <link linkend="sec-Host-Network-Settings">Host Networks Settings</link>.
-    </para>
-    <para>
-      While editing the label corresponding to the field being edited will change color indicating
-      the state of the edit. A green label means that the current input is a valid choice but has
-      not been saved yet. A yellow label means that the input itself is not valid but can still be
-      completed to be valid. This is only used for the MAC address for when a partial address is
-      entered. A red label means that the current input is invalid and can not be used. The
-      tool-tip (you'll see it when the mouse moves on top of it) gives the exact reason, why the
-      entered value is invalid. The most likely reason is that the input is already being used
-      somewhere else. The node name, hostname override, the host IPs, MAC addresses and aliases
-      must all be unique.
-    </para>
-    <para>
-      Along with the label changing color the <guibutton>save</guibutton> button will also
-      become enabled and change color whenever a field is edited and not yet saved. It will
-      turn red if any of the changes is invalid even if some are valid. Again the tool-tip
-      will point to the reason why changes are invalid. Changes can be saved by pressing return
-      in the text field to finish editing or by clicking the <guibutton>save</guibutton> button.
-      Once all changes have been saved in the database the coresponding labels will turn black
-      again and the <guibutton>save</guibutton> button will be come disabled.
-    </para>
-    <note>
+    <section xml:id="sec-Enclosure-View-Network-Info">
+      <title>Editing a host's individual network information</title>
       <para>
-	Trying to change to a different host by clicking it in the tree view or closing the
-	Enclosure View will pop up a reminder dialog asking to save the changes, undo the changes
-	or cancel the action.
+	The cluster node name can be edited at the top. Normally, the node name will also be
+	used as the real hostname (displayed by the <command>hostname</command> command). If a
+	different hostname is desired, it can be entered by clicking the <guibutton>Override
+	hostname</guibutton> check-mark and entering the name in the text field next to it.
       </para>
-    </note>
-    <para>
-      For nodes that are not part of a <literal>multi-host enclosure</literal> (like a Blade
-      or Twin chassis) the enclosure type can be changed to one of the single-slot host
-      enclosures (1U, 2U, etc.). A new enclosure of the chosen type will then be created if
-      the node is not already part of one. If a node is included in a multi-host enclosure,
-      this field will be ghosted.
-    </para>
-    <para>
-      The template field allows to select a so-called <link linkend="Host-Templates">Host
-      Template</link> for the node. Usually, large groups of nodes have an identical hardware
-      and software configuration and will use the same template. Deviations from the properties
-      coming from the template can be set for individual hosts by direct assignment of either a
-      property/config set or individual properties/configs directly to the host through its
-      context menu. In case of unique properties, direct assignments override settings from the
-      template (or property set), for non-unique properties this is additive.
+      <para>
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/override_hostname.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Overriding the hostname of a node.
+          </phrase></textobject>
+          <caption><para>
+            Overriding the hostname of a node.
+          </para></caption>
+	</mediaobject>
+	To complete the change of the hostname, the network that the chosen new hostname should
+	be part of, must be selected from the list offered in the drop-down menu at the right
+	of the text-field. This choice determines the IP address of the host, which will be
+	used for the hostname in the NIS config, and which applications will see when they
+	resolve the hostname.
+      </para>
+      <para>
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/show_networks.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Toggling the full network display.
+          </phrase></textobject>
+          <caption><para>
+            Toggling the full network display.
+          </para></caption>
+	</mediaobject>
+	In the center of the window, the host's individual network config is shown. Initially,
+	only the boot network is visible, as shown in the screenshot. Clicking the
+	<guibutton>&#62;</guibutton> button will display the complete list of networks assigned
+	to the host through its Network Config. For each network, the Host IP, MAC address and
+	optional aliases are shown (more details in section <link
+	linkend="sec-Host-Network-Settings">Host Networks Settings</link>).
+      </para>
+      <para>
+	While editing a field, the label corresponding to it, will change color indicating the
+	validity and state of the information entered so far. A green label means that the
+	current input is a valid choice, but has not been saved yet. A yellow label means that
+	the input is incomplete, but can still be completed to become valid (this only applies
+	to the MAC address field, in case a partial address is entered). A red label indicates
+	that the current input is invalid and can not be used.
+      </para>
+      <para>
+	The tool-tip, displayed when the mouse moves on top of the label, states the reason,
+	why the entered value is invalid. The most likely reason is, that the input is already
+	used by another host. The node name, hostname override, the host IPs, MAC
+	addresses and aliases must all be unique.
+      </para>
+      <para>
+	Along with the color coding of the label, the <guibutton>save</guibutton> button will
+	also become enabled and change color, whenever a field is edited and not yet saved. It
+	will turn red if any of the changes are invalid, even if some of them are. Again, the
+	tool-tip will point to the reason why values are invalid. Changes can be saved by
+	pressing return in the text field or by clicking the <guibutton>save</guibutton>
+	button. Once all changes have been saved in the database, the corresponding labels will
+	turn black again and the <guibutton>save</guibutton> button will become disabled.
+      </para>
       <note>
 	<para>
-	  Any changes made in the configuration only affect the active node (as indicated by
-	  the hostname in the info part of the enclosure view), and not all selected
-	  nodes. Configurations for all selected nodes can be made by using the context menu
-	  (right click) in the tree view.
+	  As long as changes have not been saved, trying to work on a different host by
+	  clicking on it in the tree view, or closing the Enclosure View all together, will pop
+	  up a reminder dialog asking to save/undo the changes or cancel the action.
 	</para>
       </note>
-    </para>
+    </section>
+    <section xml:id="sec-Enclosure-View-Other-Settings">
+     <title>Other host specific settings</title>
+     <para>
+       For nodes that are not part of a <literal>multi-host enclosure</literal> (like a Blade
+       or Twin chassis) the enclosure type can be changed to one of the single-slot host
+       enclosures (1U, 2U, etc.). A new enclosure of the chosen type will then be created if
+       the node is not already part of one. If a node is included in a multi-host enclosure,
+       this field will be ghosted.
+     </para>
+     <para>
+       The template field allows to select a so-called <link linkend="Host-Templates">Host
+       Template</link> for the node. Usually, large groups of nodes have an identical hardware
+       and software configuration and will use the same template. Deviations from the
+       properties coming from the template can be set for individual hosts by direct assignment
+       of either a property/config set or individual properties/configs directly to the host
+       through its context menu. In case of unique properties, direct assignments override
+       settings from the template (or property set), for non-unique properties this is
+       additive.
+       <note>
+	 <para>
+	   Any changes made in the configuration only affect the active node (as indicated by
+	   the hostname in the info part of the enclosure view), and not all selected
+	   nodes. Configurations for all selected nodes can be made by using the context menu
+	   (right click) in the tree view.
+	 </para>
+       </note>
+     </para>
+    </section>
   </section>
   <section xml:id="sec-Managing-Enclosures">
     <title>Managing Enclosures</title>
