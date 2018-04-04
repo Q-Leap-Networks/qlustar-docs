@@ -30,7 +30,7 @@
       <para>
 	This will first thoroughly check your network connectivity and then complete the
 	installation by executing the remaining configuration steps as detailed below. During
-	the package update process you might be asked whether to keep locally modified
+	the package update process, you might be asked whether to keep locally modified
 	configuration files. In this case always choose the option
       <screen>
 keep the local version currently installed.
@@ -95,8 +95,8 @@ keep the local version currently installed.
 	      </mediaobject>
 	      An <firstterm>ssh key</firstterm> for the root user is generated next. You can
 	      enter an optional <firstterm>pass-phrase</firstterm> for it. This key, will be
-	      used to enable login by root to any node of the cluster without specifying a
-	      password.
+	      used to enable login by root on the head-node to any net-boot node of the cluster
+	      without specifying a password.
 	    </para>
 	    <note>
 	      <para>
@@ -205,9 +205,11 @@ keep the local version currently installed.
 	Reboot again once all the previous steps are complete by pressing
 	<keycap>Enter</keycap>. After the head-node is up and running again, test its network
 	connectivity by pinging its public IP address (hostname). Do the same for the virtual
-	front-end node, if you have chosen to configure one. It should have booted as well
-	after the head-node is up and running. You can try to login to it using ssh. A test
-	mail should have been sent to the e-mail address(es) you specified during the
+	front-end node, if you have chosen to configure one. It should have booted as well,
+	after the head-node is up and running. You can try to login to it using ssh.
+      </para>
+      <para>
+	A test mail should have been sent to the e-mail address(es) you specified during the
 	installation. If you didn't receive one, review your settings in
 	<filename>/etc/aliases</filename> and/or <filename>/etc/postfix/main.cf</filename>. In
 	case some of them are wrong, you can execute
@@ -273,8 +275,10 @@ keep the local version currently installed.
 	  <listitem>
 	    <para>
 	      <application>Nagios3</application> (monitoring/alerts) with its web interface at
-	      http://<replaceable>headnode</replaceable>/nagios3/. Login as user
-	      <literal>nagiosadmin</literal> with the password you specified previously.
+	      http://<replaceable>headnode</replaceable>/nagios3/
+	      (<replaceable>headnode</replaceable> is the hostname of the head-node you have
+	      chosen during installation). You may login as user <literal>nagiosadmin</literal>
+	      with the password you specified previously.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -302,11 +306,11 @@ keep the local version currently installed.
 	  <listitem>
 	    <para>
 	      Depending on your choice of software packages: <application>Slurm</application>
-	      (DB + control daemon), <application>Torque</application> server,
-	      <application>Corosync</application> (HA), <application>Munge</application>
-	      (authentification for slurm/torque). Note that among the latter only slurm and
-	      munge are configured automatically during installation. Torque and Corosync
-	      require a manual configuration.
+	      (DB + control daemon), <application>Corosync</application> (HA),
+	      <application>Munge</application> (authentification for slurm),
+	      <application>BeeGFS management daemon</application>. Note that among the latter,
+	      only Slurm, Munge and BeeGFS are configured automatically during
+	      installation. Corosync requires a manual configuration.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -326,7 +330,7 @@ keep the local version currently installed.
 	  </listitem>
 	  <listitem>
 	    <para>
-	      <application>QluMan</application> server (Qlustar Management)
+	      <application>QluMan</application> server components (Qlustar Management)
 	    </para>
 	  </listitem>
 	</itemizedlist>
@@ -353,11 +357,12 @@ keep the local version currently installed.
 	xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
 	platform</link> was automatically created. The chroots are located at
 	<filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	<replaceable>chroot name</replaceable> would be xenial. Each of them contains
-	a full-featured installation of the corresponding Qlustar edge platform. To change into
-	a chroot, convenience bash shell aliases of the form chroot-<replaceable>chroot
-	name</replaceable> are defined for the root user on the head-node. You may use them as
-	follows (e.g. for Ubuntu/Xenial, if it was selected at install):
+	<replaceable>chroot name</replaceable> would be <filename>xenial</filename>. Each of
+	them contains a full-featured installation of the corresponding Qlustar edge
+	platform. To change into a chroot, convenience bash shell aliases of the form
+	chroot-<replaceable>chroot name</replaceable> are defined for the root user on the
+	head-node. You may use them as follows (e.g. for Ubuntu/Xenial, if it was selected at
+	install):
 	<screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>chroot-xenial</command>
@@ -550,13 +555,22 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    container images with the QluMan GUI are available on our <link
 		    xlink:href="https://qlustar.com/download___blank___">Download
 		    page</link>. This makes it really easy to start the GUI as a non-root user
-		    on any Linux machine with Singularity installed. Download the desired
-		    version of the image and execute:
+		    on any machine with Singularity installed. Download the desired version of
+		    the image and execute:
 	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
 <command>singularity exec <replaceable>&lt;path to singularity qluman image&gt;</replaceable> qluman-qt</command>
 	    </screen>
 		  </para>
+		    <note>
+		      <para>
+			The singularity container might not be able to resolve the hostname of
+			your cluster head-node. In that case, you will have to use its IP
+			address in the <emphasis>Local</emphasis> field of <link
+			xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
+			connection info</link> dialog for it.
+		      </para>
+		    </note>
 		  <note>
 		    <para>
 		      Q-Leap hosts a <link
@@ -601,8 +615,10 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    <note>
 		      <para>
 			If you always want to run the latest version of the QluMan GUI, start
-			the script like <screen><command>./run-qluman-docker
-			latest</command></screen>
+			the script like
+			<screen>
+<command>./run-qluman-docker latest</command>
+			</screen>
 		      </para>
 		    </note>
 		    <note>
@@ -626,10 +642,10 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    </variablelist>
 	    <important>
 	      <para>
-		The base version (e.g. 3.0.0) of the QluMan packages/containers on the
+		The base version (e.g. 10.0.0) of the QluMan packages/containers on the
 		workstation should be the same as on the head-node(s) to ensure correct
-		operation. Some close unequal version combinations (e.g. 3.0.1.7 and 3.0.0.12)
-		usually work too, but are not well tested.
+		operation. Some close unequal version combinations (e.g. 10.0.0.7 and
+		10.0.0.12) usually work too, but are not well tested.
 	      </para>
 	    </important>
 	  </para>
@@ -642,8 +658,8 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	Authenticating users in the cluster can be done in many ways, hence the creation of
 	users depends on what method is used. The most basic method is to use NIS. If there is
 	no requirement of keeping user authentification in sync with some external service like
-	e.g. <firstterm>LDAP</firstterm> this is sufficient. A NIS database is setup during the
-	initial installation process and cluster users can be authenticated against
+	e.g. <firstterm>LDAP</firstterm>, this is sufficient. A NIS database is setup during
+	the initial installation process and cluster users can be authenticated against
 	it. Creating accounts that should use other authentification mechanisms is more complex
 	and beyond the scope of this guide. Some options are explained in the admin manual. Add
 	a test user by executing a command like this:
@@ -718,7 +734,7 @@ salloc: Job allocation 3 has been revoked.
       <title>Running the Linpack benchmark</title>
       <para>
 	The <link xlink:href="http://www.top500.org/project/linpack/___blank___">Linpack
-	benchmark</link> s used to classify supercomputers in the The <link
+	benchmark</link> s used to classify supercomputers in the <link
 	xlink:href="http://www.top500.org/___blank___">Top 500</link> list. That's why on most
 	clusters, it's probably run as one of the first parallel programs to check
 	functionality, stability and performance. Qlustar comes with an optimized pre-compiled
@@ -729,7 +745,7 @@ salloc: Job allocation 3 has been revoked.
       </para>
       <para>
 	The test user has some pre-defined shell aliases to simplify the submission of Linpack
-	jobs. Type alias to see what's available. They are defined in
+	jobs. Type <command>alias</command> to see what's available. They are defined in
 	<filename>$HOME/.bash/alias</filename>. Example submission (assuming you have 4 running
 	demo nodes):
 	<screen>
