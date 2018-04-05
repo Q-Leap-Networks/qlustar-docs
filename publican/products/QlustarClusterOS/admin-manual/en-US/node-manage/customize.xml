@@ -13,170 +13,88 @@
  xml:id="admin-man-sect-node-customize">
   <title>Node Customization</title>
   <indexterm><primary>Node Customization</primary></indexterm>
-  
   <para>
     This section describes the customization options/tools for the configuration of Qlustar
     cluster-nodes.
   </para>
-  
   <section xml:id="admin-man-sect-node-options">
     <title>Dynamic Configuration Settings</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Dynamic Configuration Settings</secondary></indexterm>
-     <para>
-       A number of configuration options are configured dynamically when a node boots. These
-       settings will be stored either in the file <filename>/etc/qlustar/options</filename> or
-       in a separate file in the directory <filename>/etc/qlustar/options.d</filename> of the
-       nodes root filesystem. Usual BASH shell syntax is used for the options. An example for
-       the latter are the configuration settings for a nodes Infiniband stack. They will be
-       placed in the file <filename>ib</filename>, which is created on the fly by the QluMan
-       execd process while booting (see also the <xref linkend="admin-man-sect-qluman-execd"
-       xrefstyle="template:previous section"/> and <xref
-       linkend="admin-man-sect-infiniband"/>).
-     </para>
-     <note>
-       <para>
-	 The settings in <filename>/etc/qlustar/options</filename> as well as the config files
-	 generated in <filename>/etc/qlustar/options.d</filename> should usually not be edited
-	 manually. However, when a node has trouble starting certain services or configuring
-	 some system components, it can make sense to inspect and possibly change the settings
-	 in these files to see whether that solves the problem. Please report such a situation
-	 as a bug, so that it can be fixed in a future release.
-       </para>
-     </note>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>Dynamic Configuration Settings</secondary></indexterm>
+    <para>
+      As explained above, a number of configuration options are configured dynamically by the
+      QluMan execution server when a node boots. These settings will be stored either in the
+      file <filename>/etc/qlustar/options</filename> or in a separate file in the directory
+      <filename>/etc/qlustar/options.d</filename> of the nodes root filesystem. Usual BASH
+      shell syntax is used for the options.
+    </para>
+    <note>
+      <para>
+	The settings in <filename>/etc/qlustar/options</filename> as well as the config files
+	generated in <filename>/etc/qlustar/options.d</filename> should usually not be edited
+	manually. However, when a node has trouble starting certain services or configuring
+	some system components, it can make sense to inspect and possibly change the settings
+	in these files to see whether that solves the problem. Please report such a situation
+	as a bug, so that it can be fixed in a future release.
+      </para>
+    </note>
   </section>
-
   <section xml:id="admin-man-sect-DHCP-client">
     <title>DHCP-Client</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>DHCP-Client</secondary></indexterm>
-     
-     <para>
-       The dhclient process started during the boot process of compute-nodes will configure the
-       IP addresses and other parameters given. By default, only the network interface from
-       which the node boots is managed by DHCP. In a QluMan boot config, you can set the kernel
-       parameter <parameter>dhcp_ifaces</parameter> to a comma separated list of interface
-       names to manage other interfaces as well. Example:
-       <parameter>dhcp_ifaces=eth0,eth1</parameter>. The first interface in this list is the
-       primary interface. Extended information like NIS-domain and NIS-servers is queried
-       through this interface.
-     </para>
-     <para>
-       Setting <parameter>dhcp_ifaces=bond0:eth0:eth1</parameter> you can easily define a
-       bonding interface. This line would cause the interfaces
-       <interfacename>eth0</interfacename> and <interfacename>eth1</interfacename> to act as
-       slave interfaces associated to <interfacename>bond0</interfacename>. You can add
-       additional options for the bonding interface separated with plus signs. These options
-       include mode (defaults to 0) and miimon (defaults to 100). See the output of the command
-       <command>modinfo bonding</command> for a short explanation of these options.
-     </para>
-
-     <variablelist>
-       <varlistentry><term>Examples</term>
-       <listitem>
-	 <itemizedlist>
-	   <listitem>
-	     <para>
-	       To set the mode to active-backup
-	       <screen>
-dhcp_ifaces=bond0:eth0:eth1+mode=1
-	       </screen>
- 	     </para>
-	   </listitem>
-	   <listitem>
-	     <para>
-	       To increase the link check interval to 200ms:
-	       <screen>
-dhcp_ifaces=bond0:eth0:eth1+miimon=200
-	       </screen>
-	     </para>
-	   </listitem>
-	   <listitem>
-	     <para>
-	       To add another interface <interfacename>eth2</interfacename> that dhcp-client
-	       should configure:
-	       <screen>
-dhcp_ifaces=bond0:eth0:eth1,eth2
-	       </screen>
-	     </para>
-	   </listitem>
-	 </itemizedlist>
-       </listitem>
-       </varlistentry>
-       <varlistentry><term>Bridging</term>
-       <listitem>
-	 <itemizedlist>
-	   <listitem>
-	     <para>
-	       Additionally you can define a bridge interface like this:
-	       <screen>
-dhcp_ifaces=br0:eth0
-	       </screen>
-	       This makes the interface <interfacename>eth0</interfacename> be the the bridge
-	       port for <interfacename>br0</interfacename>.
-	     </para>
-	   </listitem>
-	 </itemizedlist>
-       </listitem>
-       </varlistentry>
-     </variablelist>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>DHCP-Client</secondary></indexterm>
+    <para>
+      The dhclient process started during the boot process of compute-nodes will configure the
+      IP addresses and other parameters given. By default, only the network interface from
+      which the node boots is managed by DHCP.
+    </para>
   </section>
-  
   <section xml:id="admin-man-sect-config-dir">
     <title>Cluster-wide Configuration Directory</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Cluster-wide Configuration Directory</secondary></indexterm>
-
-     <para>
-       The directory <filename>/etc/qlustar/common</filename> contains cluster-wide
-       configuration files for the nodes. At an early stage of the boot processs this directory
-       is mounted as an NFS directory from the head-node. By default the following arguments to
-       mount are used:
-     </para>
-
-     <screen>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>Cluster-wide Configuration Directory</secondary></indexterm>
+    <para>
+      The directory <filename>/etc/qlustar/common</filename> contains cluster-wide
+      configuration files for the nodes. At an early stage of the boot processs this directory
+      is mounted as an NFS directory from the head-node. By default the following arguments to
+      mount are used:
+    </para>
+    <screen>
 -t nfs -o rw,hard,intr 192.168.52.254:/srv/ql-common
-     </screen>
-
-     <para>
-       If you want to use different arguments, you can set the following DHCP parameter in the
-       QluMan DHCP template (see also <xref linkend="admin-man-sect-dhcp"/>):
-     </para>
-
-     <screen>
+    </screen>
+    <para>
+      If you want to use different arguments, you can set the following DHCP parameter in the
+      QluMan DHCP template (see also <xref linkend="admin-man-sect-dhcp"/>):
+    </para>
+    <screen>
 option qlustar-cfgmnt code 132 = text;
 option qlustar-cfgmnt "-t nfs -o rw,hard,intr 192.168.52.254:/srv/ql-common";
-     </screen>
-
+    </screen>
   </section>
-
   <section xml:id="admin-man-sect-NFS-boot-scripts">
     <title>NFS boot scripts</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>NFS boot scripts</secondary></indexterm>
-      
-     <para>
-       To allow for flexible configuration of compute-nodes, a specific NFS directory
-       (<filename>/etc/qlustar/common/rc.boot</filename>) is searched for executable scripts in
-       a late phase of the boot process. The scripts found are then executed one by one. You
-       can use this mechanism to perform arbitrary modifications/customization of the compute
-       node OS.
-     </para>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>NFS boot scripts</secondary></indexterm>
+    <para>
+      To allow for flexible configuration of compute-nodes, a specific NFS directory
+      (<filename>/etc/qlustar/common/rc.boot</filename>) is searched for executable scripts in
+      a late phase of the boot process (after unionfs is fully initialized, so that you can use
+      programs from the chroot here as well). The scripts found are then executed one by
+      one. You can use this mechanism to perform arbitrary modifications/customization of the
+      compute node OS.
+    </para>
   </section>
-
   <section xml:id="admin-man-sect-add-dirs-files-links">
     <title>Adding directories, files, links</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Adding directories, files, links</secondary></indexterm>
-      
-     <para>
-       The script <filename>/lib/qlustar/copy-files</filename>, which is also executed at boot,
-       consults a configuration file
-       <filename>/etc/qlustar/common/image-files/destinations</filename>, where each line
-       describes a directory to be created, a file to be copied from an NFS path to a local
-       path, or a link that needs to be created in the RAM-disk. Example:
-
-       <screen>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>Adding directories, files, links</secondary></indexterm>
+    <para>
+      The script <filename>/lib/qlustar/copy-files</filename>, which is also executed at boot,
+      consults a configuration file
+      <filename>/etc/qlustar/common/image-files/destinations</filename>, where each line
+      describes a directory to be created, a file to be copied from an NFS path to a local
+      path, or a link that needs to be created in the RAMdisk. Example:
+      <screen>
 # remotefile is a path relative to /etc/qlustar/common/image-files
 # and destdir is the absolute path of the directory where remotefile
 # should be copied to. mode is used as input to chmod.
@@ -195,181 +113,126 @@ etc/timezone            /etc            root:root       644
 # Symbolic links
 # Source                target
 /l/home                 /home
-       </screen>
-     </para>
-     <para>
-       With this mechanism, it is also possible to specify additional files to process by
-       adding an <parameter>#include</parameter> line like this:
-       <screen>
+      </screen>
+    </para>
+    <para>
+      With this mechanism, it is also possible to specify additional files to process by adding
+      an <parameter>#include</parameter> line like this:
+      <screen>
 #include ldapfiles
-       </screen>
-       In this example, the file <filename>ldapfile</filename> will be processed just like
-       the <filename>destinations</filename> file.
-     </para>
-     <para>
-       Furthermore, if the file <filename>/etc/qlustar/common/softgroups</filename> exists, it
-       may specify a group name directly (without whitespace) followed by a colon followed by a
-       hostlist. An example softgroups file may look like this:
-       <screen>
+      </screen>
+      In this example, the file <filename>ldapfile</filename> will be processed just like
+      the <filename>destinations</filename> file.
+    </para>
+    <para>
+      Furthermore, if the file <filename>/etc/qlustar/common/softgroups</filename> exists, it
+      may specify a group name directly (without whitespace) followed by a colon, followed by a
+      hostlist. An example softgroups file may look like this:
+      <screen>
 version2: beo-[01-04]
 version3: beo-[05-08]
-       </screen>
-       This will make hosts <systemitem class="systemname">beo-01</systemitem> - <systemitem
-       class="systemname">beo-04</systemitem> additionally consult the file
-       <filename>/etc/qlustar/common/image-files/destinations.version2</filename> and hosts
-       <systemitem class="systemname">beo-05</systemitem> - <systemitem
-       class="systemname">beo-08</systemitem> consult
-       <filename>/etc/qlustar/common/image-files/destinations.version3</filename>. The group
-       name defined in the softgroups is the extension to the destinations file. The files
-       could look like this: <screen># destinations.version2 - use version2 of the program:
-       /apps/local/bin/program.version2 /usr/bin/program # destinations.version3 - use version3
-       of the program: /apps/local/bin/program.version3 /usr/bin/program
-       </screen>
-       Hence, with this mechanism, you can have parts of your cluster use different
-       versions of the same program.
-     </para>
+      </screen>
+      This will make hosts beo-[01-04] additionally consult the file
+      <filename>/etc/qlustar/common/image-files/destinations.version2</filename> and hosts
+      beo-[05-08] the file
+      <filename>/etc/qlustar/common/image-files/destinations.version3</filename>. The group
+      name defined in the softgroups is the extension to the destinations file. The files could
+      look like this:
+      <screen>
+# destinations.version2 - use version2 of the program:
+/apps/local/bin/program.version2 /usr/bin/program
+# destinations.version3 - use version3 of the program:
+/apps/local/bin/program.version3 /usr/bin/program
+      </screen>
+      Hence, with this mechanism, you can have parts of your cluster use different
+      versions of the same program.
+    </para>
   </section>
-
-   <section xml:id="admin-man-sect-mail-trans-agent">
-     <title>Mail Transport Agent</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Mail Transport Agent</secondary></indexterm>
-
-     <para>
-       By default the compute-nodes do not send mail. You can however activate the simple MTA
-       <application>ssmtp</application> by assigning the QluMan generic property
-       <emphasis>Activate Mail</emphasis> to cluster nodes.
-     </para>
-     <para>
-       The configuration of <application>ssmtp</application> needs to be done in the directory
-       <filename>/etc/qlustar/common/ssmtp</filename> and consists of two files,
-       <filename>ssmtp.conf</filename> and <filename>revaliases</filename>. In
-       <filename>ssmtp.conf</filename> you should set the following parameters:
-     </para>
-     <variablelist>
-       <varlistentry>
-	 <term>
-	   Root
-	 </term>
-	 <listitem>
-	   <para>
-	     The address to send mail to for users with id less than 1000.
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   Mailhub
-	 </term>
-	 <listitem>
-	   <para>
-	     The host to send all mail to.
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   RewriteDomain
-	 </term>
-	 <listitem>
-	   <para>
-	     Make all mail look like originating from this domain.
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   FromLineOverride
-	 </term>
-	 <listitem>
-	   <para>
-	     Allow users to override the domain, must be “yes” or “no”.
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   Hostname
-	 </term>
-	 <listitem>
-	   <para>
-	     The fully qualified name of this host
-	   </para>
-	 </listitem>
-       </varlistentry>
-     </variablelist>
-     <para>
-       An example configuration file would be:
-     </para>
-     <screen>
+  <section xml:id="admin-man-sect-mail-trans-agent">
+    <title>Mail Transport Agent</title>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>Mail Transport Agent</secondary></indexterm>
+    <para>
+      By default the compute-nodes do not send mail. You can however activate the simple MTA
+      <application>ssmtp</application> by assigning the QluMan generic property
+      <emphasis>Activate Mail</emphasis> to cluster nodes.
+    </para>
+    <para>
+      The configuration of <application>ssmtp</application> needs to be done in the directory
+      <filename>/etc/qlustar/common/ssmtp</filename> and consists of two files,
+      <filename>ssmtp.conf</filename> and <filename>revaliases</filename>. In
+      <filename>ssmtp.conf</filename> you should set the following parameters:
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term>
+	  Root
+	</term>
+	<listitem>
+	  <para>
+	    The address to send mail to for users with id less than 1000.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  Mailhub
+	</term>
+	<listitem>
+	  <para>
+	    The host to send all mail to.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  RewriteDomain
+	</term>
+	<listitem>
+	  <para>
+	    Make all mail look like originating from this domain.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  FromLineOverride
+	</term>
+	<listitem>
+	  <para>
+	    Allow users to override the domain, must be “yes” or “no”.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  Hostname
+	</term>
+	<listitem>
+	  <para>
+	    The fully qualified name of this host
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      An example configuration file would be:
+    </para>
+    <screen>
 Root=user@domain.com
 Mailhub=relayhost
 RewriteDomain=domain.com
 FromLineOverride=Yes
 Hostname=thishost.domain.com
-     </screen>
-     <para>
-       In the file <filename>revaliases</filename>, you can specify how mails to local accounts
-       should be forwarded to outgoing addresses and which mail server to use. Example:
-     </para>
-     <screen>
+    </screen>
+    <para>
+      In the file <filename>revaliases</filename>, you can specify how mails to local accounts
+      should be forwarded to outgoing addresses and which mail server to use. Example:
+    </para>
+    <screen>
 user:user@mailprovider.com:mailserver.mailprovider.com
-     </screen>
-   </section>
-   <section xml:id="admin-man-sect-infiniband">
-     <title>Infiniband</title>
-     <indexterm><primary>Node Customization</primary>
-     <secondary>Infiniband</secondary></indexterm>
-     <para>
-       If the dynamically created file <filename>/etc/qlustar/options.d/ib</filename> exists
-       (see <xref linkend="admin-man-sect-node-options"/> for details on the mechanism), the
-       Infiniband stack will be initialized according to the settings in there as follows:
-       <itemizedlist>
-	 <listitem>
-	   <para>
-	   The required kernel modules will be loaded
-	   </para>
-	 </listitem>
-	 <listitem>
-	   <para>
-	     The IPoIB (IP over IB) adapter <filename>ib0</filename> will receive an IP
-	     address.
-	   </para>
-	 </listitem>
-       </itemizedlist>
-       The available parameters in this file are:
-     </para>
-     <variablelist>
-       <varlistentry>
-	 <term>
-	   IB_IP
-	 </term>
-	 <listitem>
-	   <para>
-	     the IPoIB IP address of the adapter
-	   </para>
-	 </listitem>
-       </varlistentry>
-       <varlistentry>
-	 <term>
-	   IB_MASK
-	 </term>
-	 <listitem>
-	   <para>
-	     The network mask of the IB network
-	   </para>
-	 </listitem>
-       </varlistentry>
-     </variablelist>
-     <para>
-      An example <filename>/etc/qlustar/options.d/ib</filename> options file:
-     </para>
-     <screen>
-IB_IP=192.168.83.3
-IB_MASK=255.255.255.0
-     </screen>
-   </section>
- </section>
-
+    </screen>
+  </section>
+</section>
 <!--  LocalWords:  sched
 -->

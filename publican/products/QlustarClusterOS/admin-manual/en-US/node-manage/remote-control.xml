@@ -26,7 +26,7 @@
     <para>
       The kernel commandline that is passed to a node is configured in a <link
       xlink:href="../QluMan_Guide/index.html#sec-Boot-Configs___blank___">QluMan
-      BootConfig</link>. If you need to set/modify the serial console parameter you can change
+      BootConfig</link>. If you need to set/modify the serial console parameter, you can change
       it there. There are already pre-defined variants of kernel commandlines for the most
       common cases.
     </para>
@@ -39,7 +39,7 @@
 	  <para>
 	    To access the serial console use the command <command>console-login</command>.  It
 	    allows to select the node for which the console should be opened. Depending on the
-	    type of console you need different keystrokes to exit. If you are using
+	    type of console, you need different keystrokes to exit. If you are using
 	  </para>
 	</listitem>
       </varlistentry>

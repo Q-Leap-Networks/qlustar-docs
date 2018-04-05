@@ -13,21 +13,17 @@
  xml:id="admin-man-sect-boot-process">
   <title>Boot Process</title>
   <indexterm><primary>Boot Process</primary></indexterm>
-  
   <para>
     This section describes the boot process of Qlustar cluster-nodes.
   </para>
-  
   <section xml:id="admin-man-sect-comp-node-boot">
     <title>Compute-node booting</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>Compute-node booting</secondary></indexterm>
-
     <para> 
-      The boot process of the compute-nodes follows precise rules. It takes place in four
+      The boot process of the compute-nodes follows precise rules. It takes place in five
       steps:
     </para>
-
     <orderedlist>
       <listitem>
 	<para>
@@ -51,31 +47,44 @@
       </listitem>
       <listitem>
 	<para>
-	  The usual Linux boot process proceeds.
+	  A Qlustar specific script <filename>/sbin/init.qlustar</filename> is executed as the
+	  initial init process.  This script performs dynamic customization/configurations of
+	  the node before systemd starts. Amongst others, QluMan execd is started in a one-shot
+	  fashion to receive all the node specific options from the head-node. Disk
+	  initialization and basic setup of the unionfs structure is also done at this stage.
+	</para>
+	<para>
+	  Log files concerning this boot phase are located under
+	  <filename>/var/log/qlustar</filename>. Adding the parameter
+	  <emphasis>early-shell</emphasis> to the kernel cmdline, will interrupt the boot
+	  process when entering <filename>/sbin/init.qlustar</filename> and give the
+	  opportunity to debug in case of possible problems.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  The root filesystem is changed to the basic unionfs mount and systemd is started in
+	  this new root file-system as the final init process to proceed with the usual Linux
+	  boot procedure.
 	</para>
       </listitem>
     </orderedlist>
-    
   </section>
-
   <section xml:id="admin-man-sect-tftp-boot-serv">
     <title>TFTP Boot Server</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>TFTP Boot Server</secondary></indexterm>
-      
     <para>
       The Advanced TFTP server transfers the boot image to the compute-nodes. All files that
       should be served by tftp must reside in the directory
       <filename>/var/lib/tftpboot</filename>. On a Qlustar installation, it contains three
       symbolic links:
     </para>
-    
 <screen>
 pxelinux.0 -> <filename>/usr/lib/syslinux/pxelinux.0</filename>
 pxelinux.cfg -> <filename>/etc/qlustar/pxelinux.cfg</filename>
 qlustar -> <filename>/var/lib/qlustar</filename>
 </screen>
-
     <para>
       The directory <filename>/etc/qlustar/pxelinux.cfg</filename> contains the PXE boot
       configuration files for the compute-nodes. There is a default configuration that applies
@@ -86,14 +95,11 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       about how to define boot configurations see the corresponding section of the <link
       xlink:href="../QluMan_Guide/index.html#sec-Boot-Configs___blank___">QluMan Guide</link>.
     </para>
-
   </section>
-
   <section xml:id="admin-man-sect-RAM-disk-img">
     <title>RAM-disk image</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>RAM-disk image</secondary></indexterm>
-
     <para>
       The RAM-disk image is the file-system holding the node OS that is mounted as the root
       filesystem of the compute-nodes. It is assembled on the head-node(s) from the image
@@ -104,7 +110,6 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       in QluMan and the configuration and assembly of images is done automatically from within
       QluMan.
     </para>
-
     <note>
       <para>
 	By default, the root password of a Qlustar OS image and hence the node booting it, is
@@ -115,7 +120,6 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	root password for the node OS image.
       </para>
     </note>
-
     <variablelist>
       <varlistentry>
 	<term>
@@ -137,9 +141,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	</listitem>
       </varlistentry>
     </variablelist>
-
   </section>
-    
   <section xml:id="admin-man-sect-qluman-execd">
     <title>QluMan Remote Execution Server</title>
     <indexterm><primary>QluMan</primary>
@@ -149,46 +151,96 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       compute-node of a Qlustar cluster. It is one of Qlustar's main components, responsible
       for executing remote commands as well as writing configurations to disk.
     </para>
-
     <section xml:id="admin-man-sect-execd-dynamic-boot-scripts">
-      <title>Dynamic Boot Script Excecution</title>
+      <title>Dynamic Node Customization/Configuration</title>
       <indexterm><primary>Boot Process</primary>
-      <secondary>Dynamic Execution</secondary></indexterm>
+      <secondary>Dynamic Node Customization</secondary></indexterm>
       <para>
-	When a compute-node boots and qluman-execd starts, it automatically performs some
-	initialization/configuration tasks depending on the nodes QluMan configuration
-	options. The following is a list of tasks managed by qluman-execd:
+	When a compute-node boots, qluman-execd initially starts in a one-shot fashion (starts
+	and exits when done with its configuration tasks) during the pre-systemd boot phase
+	(see <xref linkend="admin-man-sect-comp-node-boot"/> for details). At this stage, it
+	performs a number of initialization/configuration tasks depending on the node's QluMan
+	configuration options. Generated option files are written under
+	<filename>/etc/qlustar/options.d</filename>. The following is a list of these tasks:
       </para>
       <variablelist>
 	<varlistentry>
 	  <term>
-	    Infiniband IP configuration
+	    Network configuration
 	  </term>
 	  <listitem>
 	    <para>
-	      Configuration of the Infiniband IPoIB address, if a node is configured to use
-	      Infiniband within QluMan.
+	      Configuration of all network parameters in the corresponding configuration files,
+	      so that they can be activated later on by systemd. If the node boots Ubuntu or
+	      Debian, the information is written to
+	      <filename>/etc/network/interfaces.d/qluman</filename>.
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
 	  <term>
-	    Infiniband OpenSM startup
+	    Disk configuration
 	  </term>
 	  <listitem>
 	    <para>
-	      Startup of OpenSM in case the node is configured to do so.
+	      Writing of the host's QluMan defined disk configuration into the file
+	      <filename>/etc/qlustar/options.d/disk-config</filename> for later use by the disk
+	      initialization script.
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
 	  <term>
-	    IPMI IP configuration and channel selection
+	    Infiniband OpenSM activation
+	  </term>
+	  <listitem>
+	    <para>
+	      Activation of OpenSM in case the node is configured to run it.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    IPMI IP configuration
 	  </term>
 	  <listitem>
 	    <para>
 	      Reconfiguration of the node's IPMI address, if a node is configured
 	      correspondingly within QluMan.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    UnionFS chroot
+	  </term>
+	  <listitem>
+	    <para>
+	      If configured in QluMan, a custom unionfs chroot will be setup rather than the
+	      one that is defined in the Qlustar image.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    SSH authorized_keys
+	  </term>
+	  <listitem>
+	    <para>
+	      The ssh keys that are configured in QluMan to allow password-less login to the
+	      node as root, are copied into <filename>/root/.ssh/authorized_keys</filename>.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Miscellaneous
+	  </term>
+	  <listitem>
+	    <para>
+	      If configured in QluMan, mail transport will be activated on the node and ssh
+	      access for normal users will be limited to those users having a running slurm or
+	      torque job on the node by making changes to the pam config.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -198,12 +250,6 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	section of the <link
       xlink:href="../QluMan_Guide/index.html#chap-RX-Engine___blank___">QluMan Guide</link>.
       </para>
-      <note>
-	<para>
-	  If required for debugging, etc., the boot scripts managed by QluMan Execd can still
-	  be executed manually, like normal System V boot scripts.
-	</para>
-      </note>
     </section>
   </section>
 </section>
