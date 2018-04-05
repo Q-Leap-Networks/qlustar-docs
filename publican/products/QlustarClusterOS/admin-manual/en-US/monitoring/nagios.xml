@@ -13,15 +13,12 @@
  xml:id="admin-man-sect-nagios">
   <title>Nagios</title>
   <indexterm><primary>Nagios</primary></indexterm>
-  
   <para>
     This section describes the Qlustar Nagios setup.
   </para>
-  
   <section xml:id="admin-man-sect-nag-plug-ins">
     <title>Nagios Plugins</title>
     <indexterm><primary>Nagios</primary><secondary>Nagios Plugins</secondary></indexterm>
-
     <para>
       The package <package>qlustar-nagios-plugins</package> contains the tools required to
       process the data received from Ganglia. The thresholds, services and nodes to monitor and
@@ -30,7 +27,6 @@
       lists the nodes. This file is auto-generated from QluMan. A few lines are required for
       each node as shown in this example:
     </para>
-
     <screen>
 define host {
   host_name      beo-01 
@@ -43,12 +39,10 @@ define host {
   register       1
 }
     </screen>
-
     <para>
       The file <filename>hostgroup-definitions.cfg</filename> defines which nodes belong to
       which hostgroup:
     </para>
-    
     <screen>
 define hostgroup {
   hostgroup_name        ganglia-nodes
@@ -56,7 +50,6 @@ define hostgroup {
   register              1
 }
     </screen>
-
     <para>
       The regular expression <systemitem class="systemname">beo-0.</systemitem> specifies, that
       all nodes with a hostname matching the expression are member of this group. If you need
@@ -64,7 +57,6 @@ define hostgroup {
       set of available metrics, or with metrics that require different thresholds, then you can
       define them here. Example:
     </para>
-
     <screen>
 define hostgroup {
   hostgroup_name          opterons
@@ -72,7 +64,6 @@ define hostgroup {
   register                1 
 }
     </screen>
-
     <para>
       The file <filename>services.cfg</filename> lists all metrics that should be monitored. It
       includes the thresholds, and for which groups each service is defined. For cluster nodes,
@@ -80,7 +71,6 @@ define hostgroup {
       the fan speed for the members of the group <systemitem
       class="systemname">opterons</systemitem>:
     </para>
-
     <screen>
 define service {
   use                      generic-service
@@ -90,7 +80,6 @@ define service {
   register                 1
 }
     </screen>
-
     <para>
       With this definition, the service will enter the <literal>warning state</literal> once
       the fan-speed goes below 3000, and if it completely fails (speed 0), it will enter the
@@ -100,7 +89,6 @@ define service {
       The following is an example for a service that is monitored for the members of two
       hostgroups:
     </para>
-   
     <screen>
 define service {
   use                     generic-service
@@ -110,95 +98,77 @@ define service {
   register                1
 }
     </screen>
- </section>
-
- <section xml:id="admin-man-sect-head-node">
-   <title>Monitoring the head-node(s)</title>
-   <indexterm><primary>Nagios</primary><secondary>head-node</secondary></indexterm>
-
-   <para>
-     The file <filename>localhost.cfg</filename> lists the services that should be monitored
-     for the head-node(s). The definitions are different because the data is not collected
-     through Ganglia.
+  </section>
+  <section xml:id="admin-man-sect-head-node">
+    <title>Monitoring the head-node(s)</title>
+    <indexterm><primary>Nagios</primary><secondary>head-node</secondary></indexterm>
+    <para>
+      The file <filename>localhost.cfg</filename> lists the services that should be monitored
+      for the head-node(s). The definitions are different because the data is not collected
+      through Ganglia.
    </para>
-
    <note>
      <para>
        The software RAID (md) devices are monitored by mdadm and mail is sent to root if a
        device fails. The RAID devices are not monitored with the nagios setup by default.
      </para>
    </note>
-   
- </section>
- 
- <section xml:id="admin-man-sect-web-interface">
-   <title>Webinterface</title>
-   <indexterm><primary>Nagios</primary><secondary>Webinterface</secondary></indexterm>
-   
-   <para>
-     You can open the Nagios web interface at the address
-     <literal>http://<replaceable>&lt;head-node&gt;</replaceable>/nagios3/</literal>. Login as
-     nagiosadmin. The password can be changed by executing the following command as root:
-   </para>
-   <screen>
+  </section>
+  <section xml:id="admin-man-sect-web-interface">
+    <title>Webinterface</title>
+    <indexterm><primary>Nagios</primary><secondary>Webinterface</secondary></indexterm>
+    <para>
+      You can open the Nagios web interface at the address
+      <literal>http://<replaceable>&lt;head-node&gt;</replaceable>/nagios3/</literal>. Login as
+      nagiosadmin. The password can be changed by executing the following command as root:
+    </para>
+    <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
 htpasswd /etc/nagios3/htpasswd.users nagiosadmin</command>
-   </screen>
- </section>
- 
- <section xml:id="admin-man-sect-restart">
-   <title>Restart</title>
-   <indexterm><primary>Nagios</primary><secondary>Restart</secondary></indexterm>
-
-   <para>
-     Nagios uses the information collected by Ganglia. In case this information source is not
-     available, nagios will send warning mails. To avoid being flooded by these mails when
-     you need to restart Ganglia, you should first stop Nagios:
-   </para>
-
-   <screen>
+    </screen>
+  </section>
+  <section xml:id="admin-man-sect-restart">
+    <title>Restart</title>
+    <indexterm><primary>Nagios</primary><secondary>Restart</secondary></indexterm>
+    <para>
+      Nagios uses the information collected by Ganglia. In case this information source is not
+      available, nagios will send warning mails. To avoid being flooded by these mails when
+      you need to restart Ganglia, you should first stop Nagios:
+    </para>
+    <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-/etc/init.d/nagios3 stop</command>
-   </screen>
-   
-   <para>
-     Then you can restart Ganglia:
-   </para>
-   
-   <screen>
+service nagios3 stop</command>
+    </screen>
+    <para>
+      Then you can restart Ganglia:
+    </para>
+    <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-/etc/init.d/ganglia-monitor restart</command>
-
+service ganglia-monitor restart</command>
 <prompt>0 root@cl-head ~ #</prompt><command>
-/etc/init.d/gmetad restart</command>
-   </screen>
-
-   <para>
-    After restarting Ganglia on the head-node you need to restart Ganglia on the compute
-    nodes as well:
-   </para>
-
-   <screen>
+service gmetad restart</command>
+    </screen>
+    <para>
+      After restarting Ganglia on the head-node you need to restart Ganglia on the compute
+      nodes as well (this shows how to do it on the cmdline, you can also use the QluMan
+      RXengine for this, possibly creating a pre-defined command):
+    </para>
+    <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-dsh -a /etc/init.d/ganglia-monitor restart</command>
-
+dsh -a service ganglia-monitor restart</command>
 <prompt>0 root@cl-head ~ #</prompt><command>
-dsh -a /etc/init.d/gmetric stop</command>
-
+dsh -a service gmetric stop</command>
 <prompt>0 root@cl-head ~ #</prompt><command>
-dsh -a /etc/init.d/gmetric start</command>
-   </screen>
-
-   <para>
-     Finally you can start Nagios again
-   </para>
-
-   <screen>
+dsh -a service gmetric start</command>
+    </screen>
+    <para>
+      Finally you can start Nagios again
+    </para>
+    <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-/etc/init.d/nagios3 start</command>
-   </screen>
-   
- </section>
+service nagios3 start</command>
+    </screen>
+  </section>
 </section>
 
 <!--  LocalWords:  hwmonitord
