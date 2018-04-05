@@ -60,18 +60,18 @@
 	Schematic view of a basic Qlustar HPC Cluster.
       </para></caption>
     </mediaobject>
-    Most of the time, compute and cloud nodes are stripped-down servers with SATA hard disk
-    drives (sometimes also disk-less), often without keyboard and mouse connection. These days,
-    servers typically have a remote management interface (<firstterm>IPMI</firstterm>), that
-    allows to perform most hardware related tasks of a node (like reset, power cycling etc.)
-    over the network. In addition, IPMI provides remote access to a nodes console.
+    Most of the time, compute and cloud nodes are stripped-down servers with SSDs or SATA hard
+    disk drives (sometimes also disk-less), often without keyboard and mouse connection. These
+    days, servers typically have a remote management interface (<firstterm>IPMI</firstterm>),
+    that allows to perform most hardware related tasks of a node (like reset, power cycling
+    etc.) over the network. In addition, IPMI provides remote access to a nodes console.
   </para>
   <para>
     The above figure shows a schematic description of the components building a basic HPC
     Cluster. The head-node typically requires a more powerful hardware configuration than the
     compute nodes to guarantee higher availability and to accommodate central disk storage. A
-    Gigabit Ethernet and/or Infiniband network are the most common network interconnects of HPC
-    clusters today.
+    Gigabit/10G Ethernet and/or Infiniband/OmniPath network are the most common network
+    interconnects of HPC clusters today.
   </para>
   <para>
     <mediaobject>
