@@ -29,9 +29,9 @@
        </para>
        <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-apt-get update</command>
+apt update</command>
 <prompt>0 root@cl-head ~ #</prompt><command>
-apt-get dist-upgrade</command>
+apt dist-upgrade</command>
        </screen>
        <para>
 	 This will update all packages. In most cases, if new versions of the
@@ -104,31 +104,31 @@ qlustar-image-update -s -H &lt;hostlist&gt;</command>
 	 <orderedlist>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y.z</type>, e.g. 9.1.1. In
+	       Selected image version is of <type>type x.y.z</type>, e.g. 10.0.0. In
 	       this case, the image will be rebuilt if and only if there is an update for the
-	       selected version (9.1.1) of the modules. Such updates will always be
+	       selected version (10.0.0) of the modules. Such updates will always be
 	       bug-/security-fixes.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y</type>, e.g. 9.1 with 9.1.1
-	       being the most recent 9.1.z version before applying the update. In this case the
-	       image is rebuilt, if the update entails a new maintenance release (e.g. 9.1.2
+	       Selected image version is of <type>type x.y</type>, e.g. 10.0 with 10.0.0 being
+	       the most recent 10.0.z version before applying the update. In this case the
+	       image is rebuilt, if the update entails a new maintenance release (e.g. 10.0.1
 	       which will then become the new real image version) or an update for the
-	       currently installed (9.1.1) modules.
+	       currently installed (10.0.0) modules.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x</type>, e.g. 9 with 9.1
-	       being the most recent 9.y and 9.1.1 being the most recent 9.1.z version before
-	       applying the update. In this case the image is rebuilt, if either the update
-	       entails a new feature release (e.g. 9.2, the latest 9.2.z will then become the
-	       new real image version) or a new maintenance release (e.g. 9.1.2 which will then
-	       become the new real image version) or an update for the currently installed
-	       (9.1.1) modules. With this option, manual intervention to obtain a new image
-	       version is only necessary when upgrading to a new major release (e.g. 10.y.z).
+	       Selected image version is of <type>type x</type>, e.g. 10 with 10.0 being the
+	       most recent 10.y and 10.0.0 being the most recent 10.0.z version before applying
+	       the update. In this case the image is rebuilt, if either the update entails a
+	       new feature release (e.g. 10.1, the latest 10.1.z will then become the new real
+	       image version) or a new maintenance release (e.g. 10.0.1 which will then become
+	       the new real image version) or an update for the currently installed (10.0.0)
+	       modules. With this option, manual intervention to obtain a new image version is
+	       only necessary when upgrading to a new major release (e.g. 11.y.z).
 	     </para>
 	   </listitem>
 	 </orderedlist>

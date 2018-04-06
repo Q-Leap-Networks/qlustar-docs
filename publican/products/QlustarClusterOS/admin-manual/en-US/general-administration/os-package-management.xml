@@ -38,11 +38,11 @@
       the Internet either directly or through a http proxy the file will look like this:
     </para>
     <screen>
-deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty main universe non-free
-deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty-proposed-updates main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 10.0-xenial main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 10.0-xenial-proposed-updates main universe non-free
     </screen>
     <para>
-      This enables access to the Qlustar 8.1 software repository.
+      This enables access to the Qlustar 10.0 software repository.
     </para>
     <note>
       <para>
@@ -69,17 +69,16 @@ deb http://repo.qlustar.com/repo/ubuntu 9.1-trusty-proposed-updates main univers
     <indexterm><primary>Package Management</primary><secondary>apt</secondary></indexterm>
     <para>
       <command>apt</command> is the high-level package management tool for Ubuntu/Debian.
-      <command>apt-get</command> (<command>man apt-get</command>)
-      with its sub-commands provides all the functionality needed to maintain an Ubuntu/Debian
-      system. A seem-less and fast upgrade of an Ubuntu/Debian system is typically performed
-      running the two commands
+      <command>apt</command> (<command>man apt</command>) with its sub-commands provides all
+      the functionality needed to maintain an Ubuntu/Debian system. A seem-less and fast
+      upgrade of an Ubuntu/Debian system is typically performed running the two commands
     </para>
     <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-apt-get update</command>
+apt update</command>
 
 <prompt>0 root@cl-head ~ #</prompt><command>
-apt-get dist-upgrade.</command>
+apt dist-upgrade.</command>
     </screen>
     <para>
       Detailed upgrade instructions for a Qlustar system can be found
@@ -87,7 +86,7 @@ apt-get dist-upgrade.</command>
     </para>
     <para>
       New packages can be installed by running 
-      <command>apt-get install <replaceable>&lt;package name&gt;</replaceable></command>. If  
+      <command>apt install <replaceable>&lt;package name&gt;</replaceable></command>. If  
       <replaceable>package name</replaceable>
       depends on, or conflicts with other packages those will be automatically installed
       or removed upon confirmation.
@@ -98,166 +97,93 @@ apt-get dist-upgrade.</command>
      <indexterm><primary>Package Management</primary>
      <secondary>alternatives</secondary></indexterm>
      <para>
-       The possibility to concurrently run different versions of the same
-       application on a single cluster is often crucial. In principle, this is achievable in
-       a couple of ways, each one requiring more or less handwork depending on the type of
-       application in question. Fortunately, Ubuntu/Debian provides the built-in "alternatives
-       mechanism" to manage software versions in automated form. It has the additional
-       advantage that it works appropriately for any kind of application.
+       The possibility to concurrently run different versions of the same application on a
+       single cluster is often crucial. In principle, this is achievable in a couple of ways,
+       each one requiring more or less handwork depending on the type of application in
+       question. Fortunately, Ubuntu/Debian provides the built-in <firstterm>alternatives
+       mechanism</firstterm> to manage software versions in automated form. It has the
+       additional advantage that it works appropriately for any kind of application.
      </para>
      <para>
-       Let us consider the case of the GNU C compiler 
-       <command>gcc</command> as an example of the situation described above. 
-       Simply installing the <package>gcc</package> package via <command>apt-get
-       </command> is all you need to do in this case. The alternatives are automatically
-       configured for you.  
-     </para>
-     <screen>
+       Let us consider the case of the GNU C compiler <command>gcc</command> as an example of
+       the situation described above. Simply installing the <package>gcc</package> package via
+       <command>apt</command> is all you need to do in this case. The alternatives are
+       automatically configured for you.
+       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-gcc --version</command>
-
-gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
-Copyright (C) 2011 Free Software Foundation, Inc.
+cc --version</command>
+cc (Ubuntu 5.4.0-6ubuntu1~16.04.9) 5.4.0 20160609
+Copyright (C) 2015 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     </screen>
-     <para>
-       This tells us that currently we are running the version 4.6.3 of the GNU C compiler. Let
-       us inspect the <application>gcc</application> binary.
-     </para>
-     <screen>
+       </screen>
+       This tells us that currently we are running the version 5.4.0 of the GNU C compiler. Let
+       us inspect the <application>cc</application> binary.
+       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-which gcc</command>
-
-/usr/bin/gcc
-
+type cc</command>
+cc is hashed (/usr/bin/cc)
 <prompt>0 root@cl-head ~ #</prompt><command>
-ls -l /usr/bin/gcc</command>
-
-lrwxrwxrwx ... /usr/bin/gcc -> /etc/alternatives/gcc
-     </screen>
-     <para>
-       As we tried to locate the <command>gcc</command> command, we found that
+ls -l /usr/bin/cc</command>
+lrwxrwxrwx ... /usr/bin/cc -> /etc/alternatives/cc
+       </screen>
+       As we tried to locate the <command>cc</command> command, we found that
        it was being executed from the <filename>/usr/bin</filename> path. However we 
        also discovered, that it’s a symbolic link pointing to 
-       <filename>/etc/alternatives/gcc</filename>. The directory 
+       <filename>/etc/alternatives/cc</filename>. The directory 
        <filename>/etc/alternatives</filename> is the place, where all the 
        software alternatives are configured in Ubuntu/Debian. Let us inspect a little further.
-     </para>
-     <screen>
+       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-ls -l /etc/alternatives/gcc</command>
-
-lrwxrwxrwx 1 root root 16 Mai 13 19:23 /etc/alternatives/gcc -> /usr/bin/gcc-4.6
-
-<prompt>0 root@cl-head ~ #</prompt><command>
-ls -l /usr/bin/gcc-4.6</command>
-
--rwxr-xr-x 1 root root 353216 Apr 16  2012 /usr/bin/gcc-4.6
-     </screen>
-     <para>
-       We have another symbolic link, this time referring to 
-       <filename>/usr/bin/gcc-4.6</filename> and a little digging afterward reveals that
-       this is the real <command>gcc</command> executable. If alternative versions for a
-       program are available, the alternatives system will create a link with the 
-       name of the program in the default path pointing to the appropriate
-       file in <filename>/etc/alternatives</filename>. This will finally link to the 
-       executable, we actually want to use. Instead of manually manipulating these links,
-       choosing a different default version for a program
-       should be done using the command <command>update-alternatives</command>.
+ls -l /etc/alternatives/cc</command>
+lrwxrwxrwx ... /etc/alternatives/cc -> /usr/bin/gcc
+       </screen>
+       We have another symbolic link, this time referring to <filename>/usr/bin/gcc</filename>
+       and a little digging afterward reveals that this is a link to the real
+       <command>gcc</command> executable. If alternative versions for a program are available,
+       the alternatives system will create a link with the name of the program in the default
+       path pointing to the appropriate file in <filename>/etc/alternatives</filename>. This
+       will finally link to the executable, we actually want to use. Instead of manually
+       manipulating these links, choosing a different default version for a program should be
+       done using the command <command>update-alternatives</command>.
      </para>
      <para>
        Using <command>update-alternatives</command> we can quickly figure out which 
        alternatives are currently configured for a certain executable. Let us look at the 
-       current setup of <application>gcc</application>.
-     </para>
-     <screen>
+       current setup of <application>cc</application>.
+       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
 update-alternatives --display gcc</command>
-
-gcc - auto mode
-link currently points to /usr/bin/gcc-4.6
-/usr/bin/gcc-4.8 - priority 20
-/usr/bin/gcc-4.6 - priority 50
-Current ‘best’ version is /usr/bin/gcc-4.6
+cc - auto mode
+  link best version is /usr/bin/gcc
+  link currently points to /usr/bin/gcc
+  link cc is /usr/bin/cc
+  slave cc.1.gz is /usr/share/man/man1/cc.1.gz
+/usr/bin/gcc - priority 20
+  slave cc.1.gz: /usr/share/man/man1/gcc.1.gz
      </screen>
-     <para>
-       As you can see the current link points to <filename>/usr/bin/gcc-4.6</filename> as we
-       already discovered. There is another alternative, namely
-       <filename>/usr/bin/gcc-4.8</filename> with a priority of 20. The priority of
-       <filename>/usr/bin/gcc-4.6</filename> is 50. The line <code>'gcc - auto mode’</code>
-       means that the alternatives system will look for the package with the highest priority
-       in order to use that executable.
+       As you can see the current link points to <filename>/usr/bin/gcc</filename> as we
+       already discovered. There might be another alternative, with a different priority. The
+       line <code>'gcc - auto mode’</code> means that the alternatives system will look for the
+       package with the highest priority in order to use that executable.
      </para>
      <para>
        The last line in the above output says that the current best priority link is
-       <filename>/usr/bin/gcc-4.6</filename>. Now if we want to use version 4.8 instead,
-       we can tell <command>update-alternatives</command> to use exactly this version:
-     </para>
-     <screen>
+       <filename>/usr/bin/gcc</filename>. If we had installed an alternative for cc and would want to want to use it instead,
+       we could tell <command>update-alternatives</command> to use this variant as follows:
+       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-update-alternatives --config gcc</command>
-
-There are 2 alternatives which provide ‘gcc’.
-Selection Alternative
------------------------------------------------
-+ 1 /usr/bin/gcc-4.8
-2 /usr/bin/gcc-4.6
-*Press enter to keep the default[*], or type selection number:
-     </screen>
-     <para>
-       We already knew by looking at the output that there where only two options. Now we
-       can select which option we want. Let’s look at the output of the command again.
-     </para>
-     <screen>
-<prompt>0 root@cl-head ~ #</prompt><command>
-update-alternatives --display gcc</command>
-
-gcc - status is manual.
-link currently points to /usr/bin/4.8
-/usr/bin/gcc-4.6 - priority 50
-/usr/bin/gcc-4.8 - priority 20
-Current ‘best’ version is /usr/bin/gcc-4.6.
-     </screen>
-     <para>
-       We got a link currently pointing to <filename>/usr/bin/gcc-4.8</filename>
-       so we quickly do the same checking as we did before.
-     </para>
-     <screen>
-<prompt>0 root@cl-head ~ #</prompt><command>
-which gcc</command>
-
-/usr/bin/gcc
-
-<prompt>0 root@cl-head ~ #</prompt><command>
-ls -l /usr/bin/gcc</command>
-
-lrwxrwxrwx 1 root root 21 Sep  2 18:32 /usr/bin/gcc -> /etc/alternatives/gcc
-
-<prompt>0 root@cl-head ~ #</prompt><command>
-ls -l /etc/alternatives/gcc</command>
-
-lrwxrwxrwx 1 root root 16 Sep  2 18:32 /etc/alternatives/gcc -> /usr/bin/gcc-4.8
-
-<prompt>0 root@cl-head ~ #</prompt><command>
-gcc --version</command>
-
-gcc (Ubuntu 4.8.1-2ubuntu1~10.04.1) 4.8.1
-Copyright (C) 2013 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     </screen>
-     <para>
-       Only the link within <filename>/etc/alternatives</filename> has changed.
-       When looking at the gcc version we see that it’s using the gcc-4.8 version.
+update-alternatives --config cc</command>
+       </screen>
      </para>
      <para>
-       A further useful feature of <command>update-alternatives</command> is the
-       possibility of creating groups of files having a relation with each other. These so
-       called slaves will not only allow you to update the link to the desired executable but
-       also any other information related to it like man pages, documentation, etc.
-       Please consult <command>man update-alternatives</command> for more information on the
-       capabilities of this powerful software versioning method.
+       A further useful feature of <command>update-alternatives</command> is the possibility of
+       creating groups of files having a relation with each other. These so called slaves will
+       not only allow you to update the link to the desired executable, but also any other
+       information related to it like man pages, documentation, etc. as shown for the
+       <application>cc</application> example above. Please consult <command>man
+       update-alternatives</command> for more information on the capabilities of this powerful
+       software versioning method.
      </para>
    </section>
  </section>
