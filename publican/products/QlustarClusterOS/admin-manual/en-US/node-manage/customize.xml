@@ -217,21 +217,46 @@ version3: beo-[05-08]
     </variablelist>
     <para>
       An example configuration file would be:
-    </para>
-    <screen>
+      <screen>
 Root=user@domain.com
 Mailhub=relayhost
 RewriteDomain=domain.com
 FromLineOverride=Yes
 Hostname=thishost.domain.com
-    </screen>
-    <para>
+      </screen>
       In the file <filename>revaliases</filename>, you can specify how mails to local accounts
       should be forwarded to outgoing addresses and which mail server to use. Example:
-    </para>
-    <screen>
+      <screen>
 user:user@mailprovider.com:mailserver.mailprovider.com
-    </screen>
+      </screen>
+    </para>
+  </section>
+  <section xml:id="admin-man-sect-sssd">
+    <title>LDAP integration with sssd</title>
+    <indexterm><primary>Node Customization</primary>
+    <secondary>LDAP integration/sssd</secondary></indexterm>
+    <para>
+      The <application>sssd</application> daemon is used if LDAP integration is required
+      for the cluster. The sssd config file <filename>/etc/sssd/sssd.conf</filename> of the
+      head-node is automatically imported into generated Qlustar images, if one is found. So
+      all you have to do is configure sssd correctly for the head-node, then all other nodes
+      will have a functioning configuration as well, provided they can reach the LDAP server
+      specified in the sssd configuration file.
+    </para>
+    <note>
+      <para>
+	If a different <filename>sssd.conf</filename> is needed on cluster nodes, this can be
+	achieved as follows: Assuming the nodes are configured to boot the image named
+	<literal>img1</literal>, you can put the custom <filename>sssd.conf</filename> for
+	these nodes in the directory
+	<filename>/etc/qlustar/images/img1/etc/sssd</filename>. This directory needs to be
+	created manually. Then recreate the image:
+	<screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>qlustar-image-reconfigure img1</command>
+	</screen>
+      </para>
+    </note>
   </section>
 </section>
 <!--  LocalWords:  sched
