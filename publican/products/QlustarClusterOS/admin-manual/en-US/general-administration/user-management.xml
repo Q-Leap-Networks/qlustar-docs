@@ -20,51 +20,45 @@
     <title>Adding User Accounts</title>
     <indexterm><primary>User Management</primary>
     <secondary>Adding users</secondary></indexterm>
-    
-    <para>Adding users is conveniently performed by invoking the script</para>
-    <para><command>/usr/sbin/adduser.sh.</command> Example:</para>
     <para>
+      Adding users is conveniently performed by invoking the
+      script<command>/usr/sbin/adduser.sh.</command>. Example:
     <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
 /usr/sbin/adduser.sh -u <replaceable>username</replaceable> -n <replaceable>'real name'</replaceable></command>
     </screen>
     </para>
     <para>
-    This script performs all the tasks necessary for creating a new user account. There are a
-    number of options to this script that you can see when invoking it using the
-    <command>-h</command> flag. This script reads the configuration file
-    <filename>/etc/qlustar/common/adduser.cf</filename> for default values. Please note that
-    the user ids of new accounts should be greater than 1000 to avoid a conflict with existing
-    system accounts.
+      This script performs all the tasks necessary for creating a new user account. There are a
+      number of options to it, that you can see when invoking it using the
+      <command>-h</command> flag. It reads the configuration file
+      <filename>/etc/qlustar/common/adduser.cf</filename> for default values.
     </para>
+    <note>
+      <para>
+	The user ids of new accounts should be greater than 1000 to avoid a
+	conflict with existing system accounts.
+      </para>
+    </note>
   </section>
   <section xml:id="admin-man-sect-rem-user">
     <title>Removing User Accounts</title>
     <indexterm><primary>User Management</primary>
     <secondary>Removing users</secondary></indexterm>
     <para>
-      Use the script <filename>/usr/sbin/removeuser.sh</filename> to remove a user
-      account from the system.
-      Example:
-    </para>
+      Use the script <filename>/usr/sbin/removeuser.sh</filename> to remove a user account from
+      the system. Example:
       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
 removeuser.sh <replaceable>username</replaceable></command>
       </screen>
-      <para>
-	To recursively remove the user’s home-directory as well add the 
-	<command>-r</command> option:
-      </para>
-
+      To recursively remove the user’s home-directory as well add the <command>-r</command>
+      option:
       <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
 removeuser.sh -r <replaceable>username</replaceable></command>
       </screen>
-
-      <para>There are other options to this script that you can view when invoking it with the
-      <command>-h</command> flag. This script also uses the configuration file
-      <filename>/etc/qlustar/common/adduser.cf</filename> for default values.
-      </para>
+    </para>
   </section>
   <section xml:id="admin-man-sect-man-user-restr">
     <title>Managing user restrictions</title>
@@ -72,10 +66,11 @@ removeuser.sh -r <replaceable>username</replaceable></command>
     <secondary>Managing restrictions</secondary></indexterm>
     <para>
       In the default configuration of a Qlustar cluster, all registered users are allowed to
-      login by ssh on the cluster nodes. However, it is easily possible for cluster admins to
-      change this default behavior. Users will then be allowed to ssh only into nodes where one
-      of their jobs is running. To activate this setting for a node, use QluMan to assign the
-      <link xlink:href="../QluMan_Guide/index.html#Generic-Properties___blank___">generic
+      login by ssh on the cluster nodes. If this is not wanted, it is easily possible for
+      cluster admins to change the default behavior. Users will then be allowed to ssh only
+      into nodes where one of their jobs is running. To activate this setting for a node, use
+      QluMan to assign the <link
+      xlink:href="../QluMan_Guide/index.html#Generic-Properties___blank___">generic
       property</link> <emphasis>Limit User Logins</emphasis> with a value
       <emphasis>yes</emphasis> to it.
     </para>
@@ -86,7 +81,7 @@ removeuser.sh -r <replaceable>username</replaceable></command>
     <para>
       The Qlustar shell setup supports <replaceable>tcsh</replaceable> and
       <replaceable>bash</replaceable>. There are global initialization files that are used in
-      both shells so you only have to modify one file for environment variables, aliases and
+      both shells, so you only have to modify one file for environment variables, aliases and
       path variables. The global files are:
     </para>
     <variablelist>
@@ -99,7 +94,6 @@ removeuser.sh -r <replaceable>username</replaceable></command>
 	    (#) and empty lines are ignored. Every other line consists of a variable name and
 	    the value for this variable separated with a space. Example: the following line
 	    sets the variable <envar>VISUAL</envar> to <command>vi</command>:
-
 	    <screen>
 VISUAL vi
 	    </screen>
@@ -134,12 +128,12 @@ VISUAL vi
 	    line in this file is a directory to add to this environment variable. If the line
 	    begins with a ’p’ followed by a space followed by a directory, then this directory
 	    is prepended to the path variable otherwise it is appended. A user can create
-	    his/her own <filename>~/.paths</filename> directory and so can use the same setup.
+	    his/her own <filename>~/.paths</filename> directory and so can use the same
+	    mechanism.
 	  </para>
 	</listitem>
       </varlistentry>
     </variablelist>
- 
     <section xml:id="admin-man-sect-bash-setup">
       <title>Bash Setup</title>
       <indexterm><primary>Shell setup</primary><secondary>Bash Setup</secondary></indexterm>
@@ -179,7 +173,7 @@ VISUAL vi
 	  <term><filename>/etc/qlustar/common/skel/bash/functions</filename></term>
 	  <listitem>
 	    <para>
-	      You can use this file if you plan making bash functions available to users.
+	      You can use this file if you plan to create bash functions available to users.
 	    </para>
 	  </listitem>
 	</varlistentry>

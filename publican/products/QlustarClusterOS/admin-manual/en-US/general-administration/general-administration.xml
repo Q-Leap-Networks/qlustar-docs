@@ -13,10 +13,6 @@
       xml:id="admin-man-chap-gen-adm">
   <title>General Administration Tasks</title>
   <indexterm><primary>General Administration Tasks</primary></indexterm>
-  <para>
-    Qlustar supports the most common GPU hardware types for GPU computing. There are hardware
-    dependent packages and general development tools.
-  </para>
 
   <xi:include href="user-management.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="storage-management.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
