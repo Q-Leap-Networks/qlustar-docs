@@ -24,7 +24,8 @@
 	After the server has booted the newly installed Qlustar OS, log in as root and start
 	the post-install configuration process by running the command
 	<screen>
-/usr/sbin/qlustar-initial-config
+<prompt>0 root@cl-head ~ #</prompt>
+<command>/usr/sbin/qlustar-initial-config</command>
 	</screen>
       </para>
       <para>
@@ -555,11 +556,17 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    container images with the QluMan GUI are available on our <link
 		    xlink:href="https://qlustar.com/download___blank___">Download
 		    page</link>. This makes it really easy to start the GUI as a non-root user
-		    on any machine with Singularity installed. Download the desired version of
-		    the image and execute:
+		    on any machine with Singularity installed (minimum Singularity version is
+		    2.4.1 for QluMan 10 containers): Just download the desired version of the
+		    image, check its sha256sum, make it executable and execute it (assuming you
+		    saved it as <filename>$HOME/qluman-10.0.0.15-singularity.sqsh</filename>):
 	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>singularity exec <replaceable>&lt;path to singularity qluman image&gt;</replaceable> qluman-qt</command>
+<command>sha256sum $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<prompt>0 user@workstation ~ $</prompt>
+<command>chmod 755 $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<prompt>0 user@workstation ~ $</prompt>
+<command>$HOME/qluman-10.0.0.15-singularity.sqsh</command>
 	    </screen>
 		  </para>
 		    <note>
