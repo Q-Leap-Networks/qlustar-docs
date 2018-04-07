@@ -312,6 +312,10 @@
 	  <para>
 	    <classname>singularity</classname>: 2.4.5
 	  </para>
+	  <para>
+	    Singularity is now installed per default in generated UnionFS chroots and hence
+	    available on all Compute-/FrontEnd nodes.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
