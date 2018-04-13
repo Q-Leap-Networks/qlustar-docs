@@ -54,7 +54,7 @@
     <title>Basic Info</title>
       <para>
 	The Qlustar 10.0 release is based on Ubuntu 16.04.4. It includes all security fixes and
-	other package updates published before March 31st 2018. Available security updates
+	other package updates published before April 12th 2018. Available security updates
 	relevant to Qlustar 10.0, that have appeared after this date, will be announced on the
 	Qlustar website and in the Qlustar security newsletter. For now, Ubuntu 16.04 (Xenial)
 	is the only <classname>edge platform</classname>, but at least one additional one will
@@ -265,12 +265,24 @@
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
+	    <term>BeeGFS</term>
+	    <listitem>
+	      <para>
+		Qlustar 10.0 has integrated the most recent BeeGFS release 6.18 for clients and
+		servers with ready-to-use image modules. Furthermore, a new startup mechanism
+		has been implemented for clean systemd integration even when using
+		multi-target configurations. As a result, ZFS backed BeeGFS deployments on
+		Qlustar are extremely simple and robust.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
 	    <term>Lustre</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.0 ships the most recent Lustre 2.10.3 release for clients and server
-		with ready-to-use image modules. This results in really easy deployment of this
-		ultra-fast parallel filesystem backed by ZFS on your storage cluster.
+		Qlustar 10.0 ships the most recent Lustre 2.10.3 release for clients and
+		servers with ready-to-use image modules. This allows really easy deployment of
+		this ultra-fast parallel filesystem backed by ZFS on your storage cluster.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -287,7 +299,7 @@
       </para>
   </section>
   <section>
-    <title>Other package version updates</title>
+    <title>Other notable package version updates</title>
     <para>
       <itemizedlist>
 	<listitem>
@@ -296,11 +308,6 @@
 	    have been updated to support the new versions Intel Parallel Studio 2018 and full
 	    support for the PGI community edition 17.10 (package qlustar-pgi-dev-tools).
 	    Corresponding OpenMPI package variants for these compilers are also provided.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    <classname>BeeGFS</classname>: 6.12
 	  </para>
 	</listitem>
 	<listitem>
