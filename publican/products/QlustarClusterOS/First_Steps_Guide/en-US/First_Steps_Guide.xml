@@ -559,14 +559,14 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    on any machine with Singularity installed (minimum Singularity version is
 		    2.4.1 for QluMan 10 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
-		    saved it as <filename>$HOME/qluman-10.0.0.15-singularity.sqsh</filename>):
+		    saved it as <filename>$HOME/qluman-10.0.0.19-singularity.sqsh</filename>):
 	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>sha256sum $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>sha256sum $HOME/qluman-10.0.0.19-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>chmod 755 $HOME/qluman-10.0.0.19-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>$HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>$HOME/qluman-10.0.0.19-singularity.sqsh</command>
 	    </screen>
 		  </para>
 		    <note>
@@ -769,7 +769,7 @@ JOBID PARTITION     NAME     USER  ST  TIME  NODES  NODELIST(REASON)
 	Now ssh to one of the nodes in the <literal>NODELIST</literal> and check with
 	<application>top</application> that Linpack is running at full steam, like:
 	<screen>
-<prompt>0 testuser@cl-front ~ $</prompt>
+<prompt>0 testuser@beo-201 ~ $</prompt>
 <command>top</command>
   PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                 
 18307 test  20   0  354m 280m 2764 R  100 28.0   6:42.92 xhpl-openblas           
