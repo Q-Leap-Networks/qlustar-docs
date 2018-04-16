@@ -39,11 +39,14 @@
 	provide a strong foundation for QluMan's future.
       </para>
       <para>
-	Sponsored by Intel, Qlustar 10 introduces out-of-the-box support for the OmniPath network technology. All components necessary to setup and operate an OmniPath network including the fabric manager are available as Qlustar packages.
+	As a result of Q-Leap development on hardware sponsored by Intel, Qlustar 10 introduces
+	out-of-the-box support for the OmniPath network technology. All components necessary to
+	setup and operate an OmniPath network including the fabric manager are available as
+	Qlustar packages.
       </para>
       <para>
 	The highlights among the numerous component updates and bug fixes are: Kernel 4.9.x,
-	Slurm 17.02.7, CUDA 9.0, Lustre 2.10.3 and ZFS 0.7.5.
+	Slurm 17.02.7, CUDA 9.0, BeeGFS 6.18, Lustre 2.10.3 and ZFS 0.7.5.
       </para>
     </abstract>
     <author><orgname><inlinemediaobject><imageobject>
