@@ -18,35 +18,19 @@
     <edition>1</edition>
     <abstract>
       <para>
-	The 10.0 release starts a new era for Qlustar, since it marks the beginning of its
-	<classname>100% Open Source</classname> future. It ships version 10.0 of the management
-	software QluMan which is absolutely free in any sense now being licensed under the GNU
-	Affero public license. The QluMan messaging framework QluNet has been put under the GNU
-	Lesser Public license.
+	The 10.1 release extends Qlustar's reach significantly by adding CentOS as a fully
+	supported edge platform together with a tight OpenHPC integration. A second major
+	milestone is the revamp of the node boot process which now supports fault-tolerant
+	multicast.
       </para>
       <para>
-	On the feature side, we introduce <classname>workstation management</classname> as a
-	whole new use case for Qlustar. Based on the XFCE desktop environment, you can now
-	manage workstations as easy as cluster nodes.
+	To prepare for ExaScale support, we now support pmix as the default MPI startup method
+	from within slurm and ucx as a new communication library implementing a
+	high-performance messaging layer for MPI, PGAS, and RPC frameworks.
       </para>
       <para>
-	The highlight of QluMan 10.0 is a powerful and flexible new network management
-	interface. Under the hood, QluMan's messaging framework <classname>QluNet</classname>
-	was revamped to use <link
-	xlink:href="https://developers.google.com/protocol-buffers/docs/overview/___blank___">Google’s
-	Protocol Buffers</link> as the data exchange format for QluMan messages. Protocol
-	Buffers are a way of encoding structured data in an efficient yet extensible format and
-	provide a strong foundation for QluMan's future.
-      </para>
-      <para>
-	As a result of Q-Leap development on hardware sponsored by Intel, Qlustar 10 introduces
-	out-of-the-box support for the OmniPath network technology. All components necessary to
-	setup and operate an OmniPath network including the fabric manager are available as
-	Qlustar packages.
-      </para>
-      <para>
-	The highlights among the numerous component updates and bug fixes are: Kernel 4.9.x,
-	Slurm 17.02.7, CUDA 9.0, BeeGFS 6.18, Lustre 2.10.3 and ZFS 0.7.5.
+	The highlights among the numerous component updates and bug fixes are: Kernel 4.14.x,
+	Slurm 17.11.7, CUDA 9.1, OpenMPI 3.1.2, Lustre 2.11.
       </para>
     </abstract>
     <author><orgname><inlinemediaobject><imageobject>
@@ -56,16 +40,78 @@
   <section>
     <title>Basic Info</title>
       <para>
-	The Qlustar 10.0 release is based on Ubuntu 16.04.4. It includes all security fixes and
-	other package updates published before April 12th 2018. Available security updates
-	relevant to Qlustar 10.0, that have appeared after this date, will be announced on the
-	Qlustar website and in the Qlustar security newsletter. For now, Ubuntu 16.04 (Xenial)
-	is the only <classname>edge platform</classname>, but at least one additional one will
-	be added with Qlustar 10.1.
+	The Qlustar 10.1 release is based on Ubuntu 16.04.5. It includes all security fixes and
+	other package updates published before Aug 31st 2018. Available security updates
+	relevant to Qlustar 10.1, that have appeared after this date, will be announced on the
+	Qlustar website and in the Qlustar security newsletter. Supported edge-platforms are
+	Ubuntu 16.04 (Xenial) and the newly available CentOS 7.5 with integration of OpenHPC
+	1.3.5.
       </para>
   </section>
   <section>
     <title>New features</title>
+    <section>
+      <title>CentOS edge-platform</title>
+      <variablelist>
+	<varlistentry>
+	  <term>CentOS image modules</term>
+	  <listitem>
+	    <para>
+	      The following Qlustar image modules are provided to create CentOS based boot
+	      images with exactly the same functionality as their Ubuntu counterparts:
+	      <itemizedlist>
+		<listitem>
+		  <para>
+		    Core
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    Slurm
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    OFED
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    Nvidia
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    Lustre Client
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    BeeGFS client
+		  </para>
+		</listitem>
+		<listitem>
+		  <para>
+		    Samba
+		  </para>
+		</listitem>
+	      </itemizedlist>
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>OpenHPC integration</term>
+	  <listitem>
+	    <para>
+	      The <link xlink:href="https://openhpc.community/"> OpenHPC</link> 1.3.5 software
+	      repository is automatically available in Qlustar CentOS chroots. If selected at
+	      install time, a basic set of OpenHPC packages is available in the CentOS chroot
+	      that is created for netboot nodes. 
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </section>
     <section>
       <title>QluMan 10.0</title>
 	<variablelist>
@@ -79,21 +125,6 @@
 		definitions and their configuration on specific nodes. Check <link
 		xlink:href="../QluMan_Guide/index.html#chap-Cluster-Network-Setup___blank___">
 		the corresponding section</link> of the QluMan guide to read about the details.
-	      </para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>QluNet Messaging Framework</term>
-	    <listitem>
-	      <para>
-		QluNet has been largely redesigned to use <link
-		xlink:href="https://developers.google.com/protocol-buffers/docs/overview/___blank___">Google’s
-		Protocol Buffers</link> as the underlying messaging format. This introduces a
-		high degree of type-safety for the components of a message and as a consequence
-		leads to improved efficiency and stability. With this change, QluMan's
-		messaging stands on firm footing for the future. Along with this redesign, a
-		number of additional improvements have been made to enhance QluMan's messaging
-		reliability.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -129,29 +160,6 @@
 	    </listitem>
 	  </varlistentry>
 	</variablelist>
-    </section>
-    <section>
-      <title>Workstation Management</title>
-      <para>
-	Qlustar now supports to run workstations like cluster nodes. There are four new Qlustar
-	image modules: ws-base, ws-nvidia, ws-xfce and ws-lxde. By defining an image that
-	contains the modules ws-base and ws-xfce, adding it to a Boot Config and assigning the
-	latter to a group of workstations, you can boot them from the Qlustar head-node and
-	provide a unified, nice and clean XFCE desktop experience to your users. While XFCE is
-	the default and suggested desktop environment, LXDE can be used as an alternative.
-      </para>
-    </section>
-    <section>
-      <title>Support for OmniPath networks</title>
-      <para>
-	Qlustar now fully supports the <emphasis>OmniPath</emphasis> network technology. The
-	Qlustar kernel provides the hardware drivers for the OmniPath adapters and up-to-date
-	firmware comes from our linux-firmware package. Our new packages opa-ff and opa-fm
-	provide fabric tools and the fabric manager daemon which is required for message
-	routing in an OmniPath network. Finally, the psm2 user-space library was packaged to
-	allow high-level access to the hardware. Qlustar OpenMPI is built against libpsm2 and
-	hence provides out-of-the-box support for OmniPath networks.
-      </para>
     </section>
     <section>
       <title>LDAP integration with sssd</title>
