@@ -348,29 +348,36 @@ keep the local version currently installed.
     </section>
     <section xml:id="sec-Adding-Software">
       <title>Adding Software</title>
-      <para>
-	As explained <link
-	xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
-	elsewhere</link>, the RAM-based root file-system of a Qlustar compute/storage node can
-	be supplemented by a global NFS-exported chroot to allow access to software not already
-	contained in the boot images themselves. During installation, one chroot per selected
-	<link
-	xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
-	platform</link> was automatically created. The chroots are located at
-	<filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	<replaceable>chroot name</replaceable> would be <filename>xenial</filename>. Each of
-	them contains a full-featured installation of the corresponding Qlustar edge
-	platform. To change into a chroot, convenience bash shell aliases of the form
-	chroot-<replaceable>chroot name</replaceable> are defined for the root user on the
-	head-node. You may use them as follows (e.g. for Ubuntu/Xenial, if it was selected at
-	install):
-	<screen>
+      <section xml:id="sec-Adding-Software-Background">
+	<title>Background</title>
+	<para>
+	  As explained <link
+	  xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
+	  elsewhere</link>, the RAM-based root file-system of a Qlustar compute/storage node is
+	  typically supplemented by a global NFS-exported chroot to allow access to software
+	  not already contained in the boot images themselves. During installation, one chroot
+	  per selected <link
+	  xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
+	  platform</link> was automatically created. The chroots are located at
+	  <filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
+	  <replaceable>chroot name</replaceable> would be e.g. <filename>xenial</filename> or
+	  <filename>centos7</filename>. Each of them contains a full-featured installation of
+	  the corresponding Qlustar edge platform. To change into a chroot, convenience bash
+	  shell aliases of the form chroot-<replaceable>chroot name</replaceable> are defined
+	  for the root user on the head-node. You may use them as follows:
+	</para>
+      </section>
+      <section xml:id="sec-Adding-Software-Deb">
+	<title>Ubuntu/Debian</title>
+	<para>
+	  Example for Ubuntu/Xenial, if it was selected at install
+	  <screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>chroot-xenial</command>
-	</screen>
-	Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
-	its software packages, e.g.
-	<screen>
+	  </screen>
+	  Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
+	  its software packages, e.g.
+	  <screen>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
 <command>apt update</command>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
@@ -379,18 +386,98 @@ keep the local version currently installed.
 <command>apt install <replaceable>package</replaceable></command>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
 <command>exit</command>
-	</screen>
-	The nice thing about this mechanism is that software from packages installed in a
-	particular chroot will be available instantaneously on all compute/storage nodes that
-	are configured to use that chroot.
-      </para>
-      <important>
+	  </screen>
+	</para>
+      </section>
+      <section xml:id="sec-Adding-Software-RPM">
+	<title>Centos</title>
 	<para>
-	  There is usually no need to install additional packages on the head-node itself (only
-	  in the chroot). Software packages installed directly on the head-node will not be
-	  visible cluster-wide.
-      </para>
-      </important>
+	  Example for CentOS 7, if it was selected at install
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>chroot-centos7</command>
+	  </screen>
+	  Once you're inside a chroot, you can use the standard CentOS tools to control its
+	  software packages, e.g.
+	  <screen>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>yum update</command>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>yum install <replaceable>package</replaceable></command>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>exit</command>
+	  </screen>
+	</para>
+	<note>
+	  <para>
+	    The Qlustar CentOS edge platform integrates four package sources via the
+	    corresponding yum repository config files below
+	    <filename>/etc/yum.repos.d</filename>:
+	    <variablelist>
+	      <varlistentry>
+		<term>
+		  CentOS
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original CentOS repositories.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  EPEL
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original EPEL repository.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  OpenHPC
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original OpenHPC repository. Some
+		    packages that are not needed on Qlustar (like e.g. warewulf stuff) are
+		    filtered and hence not available in this mirror.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  Qlustar
+		</term>
+		<listitem>
+		  <para>
+		    This is the repository that provides Qlustar specific packages for CentOS.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    All four repositories are enabled per default, so you can easily install packages
+	    from any of them.
+	  </para>
+	</note>
+      </section>
+      <section xml:id="sec-Adding-Software-Comments">
+	<title>Comments</title>
+	<para>
+	  The nice thing about this overlay mechanism is that software from packages installed
+	  in a particular chroot will be available instantaneously on all compute/storage nodes
+	  that are configured to use that chroot.
+	</para>
+	<important>
+	  <para>
+	    Apart from the chroot, there is usually no need to install additional packages on
+	    the head-node itself, unless you want to add functionality specifically running on
+	    it. Be aware, that software packages installed directly on the head-node will not
+	    be visible cluster-wide.
+	  </para>
+	</important>
+      </section>
     </section>
     <section xml:id="sec-Running-QluMan">
       <title>Running the Cluster Manager QluMan</title>
