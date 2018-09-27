@@ -315,10 +315,9 @@
 	  </para>
 	  <note>
 	  <para>
-	    Note that Qlustar requires cluster-internal IP networks to be in a
-	    <emphasis role="bold">non-public</emphasis> range. If you're unhappy with the range
-	    suggested,
-	    you can change NK to another number (e.g. NK=1000 suggests 10.x.x.x,
+	    Note that Qlustar requires cluster-internal IP networks to be in a <emphasis
+	    role="bold">non-public</emphasis> range. If you're unhappy with the range
+	    suggested, you can change NK to another number (e.g. NK=1000 suggests 10.x.x.x,
 	    NK=200 172.16.x.x and NK=16 192.168.x.x).
 	  </para>
 	  </note>
@@ -536,9 +535,9 @@
 		<para>
 		  Qlustar supports multiple so-called
 		  <link xlink:href="https://qlustar.com/intro/platform___blank___">
-		  Edge Platforms</link>. In 10.0, the only available one is <emphasis
-		  role="bold">Ubuntu/Xenial</emphasis>, but one more will follow in
-		  10.1. Please select your favorite platform(s). Multiple choices are
+		  Edge Platforms</link>. In 10.1, the available ones are <emphasis
+		  role="bold">Ubuntu/Xenial</emphasis>, and <emphasis role="bold">CentOS
+		  7.5</emphasis>. Please select your favorite platform(s). Multiple choices are
 		  possible. At least one must be selected. In essence, this option corresponds
 		  to the choice of what Linux distribution you (or your users, if you're an
 		  administrator) like to work with/develop for.
@@ -566,7 +565,7 @@
 		  </mediaobject>
 		  Technically, choosing a specific edge platform (e.g. Ubuntu/Xenial) will
 		  cause Qlustar images based on Ubuntu/Xenial to be created along with an
-		  associated chroot during the installation process. The chroot will hold a
+		  associated chroot during the installation process. This chroot will hold a
 		  complete Ubuntu/Xenial installation in which you can <link
 		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">add
 		  packages</link> later on. By assigning this Qlustar image later to some
@@ -576,10 +575,9 @@
 		</para>
 		<note>
 		  <para>
-		    When multiple edge platforms are available, it is fully supported and
-		    easily achieved to have subsets of nodes running Ubuntu/Xenial and a
-		    different edge platform <emphasis role="bold">simultaneously</emphasis> in
-		    the same cluster.
+		    It is fully supported and easily achieved to have one subset of nodes
+		    running Ubuntu/Xenial and another one running CentOS 7 <emphasis
+		    role="bold">simultaneously</emphasis> in the same cluster.
 		  </para>
 		</note>
 	      </listitem>
@@ -604,6 +602,12 @@
 		  <link 
 		      xlink:href="../First_Steps_Guide/index.html___blank___">
 		    First Steps Guide</link>, Slurm is a requirement.
+		</para>
+		<para>
+		  This is also the place to add basic <firstterm>OpenHPC</firstterm> packages
+		  (MPI, most recent GNU compilers) to a CentOS installation. The screenshot
+		  shows an example. Other OpenHPC packages are readily available for
+		  installation from the Qlustar mirror of the OpenHPC repository.
 		</para>
 		<note>
 		  <para>
