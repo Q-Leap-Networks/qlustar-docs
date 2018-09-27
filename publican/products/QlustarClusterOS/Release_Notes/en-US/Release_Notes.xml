@@ -48,7 +48,7 @@
     <title>Basic Info</title>
       <para>
 	The Qlustar 10.1 release is based on Ubuntu 16.04.5. It includes all security fixes and
-	other package updates published before Sep 19th 2018. Available security updates
+	other package updates published before Oct 8th 2018. Available security updates
 	relevant to Qlustar 10.1, that have appeared after this date, will be announced on the
 	Qlustar website and in the Qlustar security newsletter. Supported edge-platforms are
 	Ubuntu 16.04 (Xenial) and the newly available CentOS 7.5 with integration of OpenHPC
@@ -126,6 +126,18 @@
       <para>
 	<variablelist>
 	  <varlistentry>
+	    <term>QluMan 10.1</term>
+	    <listitem>
+	      <para>
+		QluMan 10.1 adds a much improvement calculation of the node-specific memory
+		available to slurm jobs. This makes sure that nodes are not oversubscribed
+		concerning RAM allocation and prevents unjustified killing of jobs by the
+		kernel OOM killer. It now also automatically detects/configures CPU hardware
+		threads for usage in slurm. Additionally a number of bugs were fixed.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
 	    <term>Kernel 4.14</term>
 	    <listitem>
 	      <para>
@@ -165,7 +177,7 @@
 	      <para>
 		Qlustar 10.1 has integrated the most recent Lustre release 2.11 for clients and
 		servers with ready-to-use image modules. This is the first release with the
-		long awaited <firstterm>Data on MDT</firstterm> feature to significantly
+		long awaited <firstterm>Data on MDT (DoM)</firstterm> feature to significantly
 		improve small-file performance.
 	      </para>
 	    </listitem>
@@ -294,6 +306,13 @@
 	    <link
 	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">write</link>
 	    the slurm config.
+	    <note>
+	      <para>
+		After this change, if you want to run MPI programs compiled before the update,
+		you need to add the srun option <emphasis>--mpi=pmi2</emphasis> to your submit
+		scripts.
+	      </para>
+	    </note>
 	  </para>
 	</step>
 	<step>
