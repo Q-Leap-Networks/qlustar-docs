@@ -41,17 +41,22 @@
       </listitem>
       <listitem>
 	<para>
-	  PXELinux downloads the Qlustar Linux kernel and the assigned RAM-disk (OS) image,
-	  boots the kernel and mounts the RAM-disk.
+	  PXELinux downloads the Qlustar Linux kernel and the assigned initial RAM-disk image
+	  and boots the kernel.
 	</para>
       </listitem>
       <listitem>
 	<para>
 	  A Qlustar specific script <filename>/sbin/init.qlustar</filename> is executed as the
-	  initial init process.  This script performs dynamic customization/configurations of
-	  the node before systemd starts. Amongst others, QluMan execd is started in a one-shot
-	  fashion to receive all the node specific options from the head-node. Disk
-	  initialization and basic setup of the unionfs structure is also done at this stage.
+	  initial init process. This script starts QluMan execd in a one-shot fashion where the
+	  latter a) downloads the real squashfs-based OS image assigned to the node b) receives
+	  all the node specific options from the head-node and c) executes corresponding
+	  scripts to process the options received.
+	</para>
+	<para>
+	  This dynamic customization/configuration of the node must be done before systemd
+	  starts. Disk initialization and the basic setup of the unionfs structure with the
+	  downloaded squashfs image as the base layer, is also done at this stage.
 	</para>
 	<para>
 	  Log files concerning this boot phase are located under
@@ -101,10 +106,10 @@ qlustar -> <filename>/var/lib/qlustar</filename>
     <indexterm><primary>Boot Process</primary>
     <secondary>RAM-disk image</secondary></indexterm>
     <para>
-      The RAM-disk image is the file-system holding the node OS that is mounted as the root
-      filesystem of the compute-nodes. It is assembled on the head-node(s) from the image
-      modules, you are able to select in QluMan. Every RAM-disk image contains at least the
-      core module. See the corresponding section of the <link
+      The squashfs-based RAM-disk image is the file-system holding the node OS that is mounted
+      as the root filesystem of the compute-nodes. It is assembled on the head-node(s) from the
+      image modules, you are able to select in QluMan. Every RAM-disk image contains at least
+      the core module. See the corresponding section of the <link
       xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___">QluMan
       Guide</link> for more details. All available image modules are displayed and selectable
       in QluMan and the configuration and assembly of images is done automatically from within
@@ -159,8 +164,9 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	When a compute-node boots, qluman-execd initially starts in a one-shot fashion (starts
 	and exits when done with its configuration tasks) during the pre-systemd boot phase
 	(see <xref linkend="admin-man-sect-comp-node-boot"/> for details). At this stage, it
-	performs a number of initialization/configuration tasks depending on the node's QluMan
-	configuration options. Generated option files are written under
+	downloads the squashfs-based RAM-disk image via multicast from the head-node's qlumand
+	service and performs a number of initialization/configuration tasks depending on the
+	node's QluMan configuration options. Generated option files are written under
 	<filename>/etc/qlustar/options.d</filename>. The following is a list of these tasks:
       </para>
       <variablelist>
@@ -173,7 +179,8 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	      Configuration of all network parameters in the corresponding configuration files,
 	      so that they can be activated later on by systemd. If the node boots Ubuntu or
 	      Debian, the information is written to
-	      <filename>/etc/network/interfaces.d/qluman</filename>.
+	      <filename>/etc/network/interfaces.d/qluman</filename>, for CentOS in adapter
+	      specific files under <filename>/etc/sysconfig/network-scripts</filename>.
 	    </para>
 	  </listitem>
 	</varlistentry>

@@ -47,11 +47,10 @@ apt dist-upgrade</command>
      <section xml:id="updating-chroots">
        <title>Updating the chroot(s)</title>
        <para>
-	 This is also a standard Debian upgrade as explained in the
+	 This is either also a standard Debian or a standard CentOS upgrade as explained in the
 	 <link
-	 xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">First
-	 Step Guide</link>. If you have setup multiple chroots, you'll
-	 have to update all of them.
+	 xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">First Step
+	 Guide</link>. If you have setup multiple chroots, you'll have to update all of them.
        </para>
      </section>
      <section xml:id="updating-nodes">
@@ -104,29 +103,29 @@ qlustar-image-update -s -H &lt;hostlist&gt;</command>
 	 <orderedlist>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y.z</type>, e.g. 10.0.0. In
+	       Selected image version is of <type>type x.y.z</type>, e.g. 10.1.0. In
 	       this case, the image will be rebuilt if and only if there is an update for the
-	       selected version (10.0.0) of the modules. Such updates will always be
+	       selected version (10.1.0) of the modules. Such updates will always be
 	       bug-/security-fixes.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x.y</type>, e.g. 10.0 with 10.0.0 being
-	       the most recent 10.0.z version before applying the update. In this case the
-	       image is rebuilt, if the update entails a new maintenance release (e.g. 10.0.1
+	       Selected image version is of <type>type x.y</type>, e.g. 10.1 with 10.1.0 being
+	       the most recent 10.1.z version before applying the update. In this case the
+	       image is rebuilt, if the update entails a new maintenance release (e.g. 10.1.1
 	       which will then become the new real image version) or an update for the
-	       currently installed (10.0.0) modules.
+	       currently installed (10.1.0) modules.
 	     </para>
 	   </listitem>
 	   <listitem>
 	     <para>
-	       Selected image version is of <type>type x</type>, e.g. 10 with 10.0 being the
-	       most recent 10.y and 10.0.0 being the most recent 10.0.z version before applying
+	       Selected image version is of <type>type x</type>, e.g. 10 with 10.1 being the
+	       most recent 10.y and 10.1.0 being the most recent 10.1.z version before applying
 	       the update. In this case the image is rebuilt, if either the update entails a
-	       new feature release (e.g. 10.1, the latest 10.1.z will then become the new real
-	       image version) or a new maintenance release (e.g. 10.0.1 which will then become
-	       the new real image version) or an update for the currently installed (10.0.0)
+	       new feature release (e.g. 10.2, the latest 10.2.z will then become the new real
+	       image version) or a new maintenance release (e.g. 10.1.1 which will then become
+	       the new real image version) or an update for the currently installed (10.1.0)
 	       modules. With this option, manual intervention to obtain a new image version is
 	       only necessary when upgrading to a new major release (e.g. 11.y.z).
 	     </para>
