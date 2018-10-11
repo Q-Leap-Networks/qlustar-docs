@@ -819,9 +819,17 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	</link>.
       </para>
       <para>
-	Once this is done, still being logged in as the test user and assuming at least two
-	demo nodes are started, we can submit the two "hello world" programs created previously
-	to slurm as follows:
+	It is also possible, that the demo nodes will still be in the slurm state
+	<emphasis>DRAINED</emphasis> after this. To check this and possibly change the state,
+	<link xlink:href="../QluMan_Guide/index.html#sec-Slurm-Manage___blank___">use the Slurm
+	Node State Management </link> of the QluMan GUI. If the nodes are indeed in state
+	<emphasis>DRAINED</emphasis>, first restart the slurmd on the nodes and then undrain
+	them using this GUI dialog.
+      </para>
+      <para>
+	Once all this is done and the nodes are in state <emphasis>IDLE</emphasis>, still being
+	logged in as the test user and assuming at least two demo nodes are started, we can
+	submit the two "hello world" programs created previously to slurm as follows:
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo srun hello-world-c</command>
