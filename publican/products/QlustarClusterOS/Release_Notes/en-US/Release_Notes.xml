@@ -48,7 +48,7 @@
     <title>Basic Info</title>
       <para>
 	The Qlustar 10.1 release is based on Ubuntu 16.04.5. It includes all security fixes and
-	other package updates published before Oct 8th 2018. Available security updates
+	other package updates published before Oct 12th 2018. Available security updates
 	relevant to Qlustar 10.1, that have appeared after this date, will be announced on the
 	Qlustar website and in the Qlustar security newsletter. Supported edge-platforms are
 	Ubuntu 16.04 (Xenial) and the newly available CentOS 7.5 with integration of OpenHPC
@@ -129,11 +129,12 @@
 	    <term>QluMan 10.1</term>
 	    <listitem>
 	      <para>
-		QluMan 10.1 adds a much improvement calculation of the node-specific memory
+		QluMan 10.1 adds a much improved calculation of the node-specific memory
 		available to slurm jobs. This makes sure that nodes are not oversubscribed
 		concerning RAM allocation and prevents unjustified killing of jobs by the
 		kernel OOM killer. It now also automatically detects/configures CPU hardware
-		threads for usage in slurm. Additionally a number of bugs were fixed.
+		threads for usage in slurm. Additionally a large number of minor improvements
+		were made and several bugs fixed.
 	      </para>
 	    </listitem>
 	  </varlistentry>
