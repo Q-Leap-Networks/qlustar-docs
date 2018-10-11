@@ -809,9 +809,19 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
     <section xml:id="sec-Running-MPI">
       <title>Running an MPI Job</title>
       <para>
-	Still logged in as the test user and assuming at least two demo nodes are started, we
-	can submit the two "hello world" programs created previously as follows (commands are
-	given for slurm):
+	Before running a multi-node MPI job via slurm on the demo nodes, the slurm config most
+	likely needs to be updated with the exact RAM values available to these nodes for slurm
+	jobs. This is due to the fact that Qlustar nodes report their available RAM during the
+	boot process to the qlumand on the head-node, and these values can be different to the
+	ones originally assumed by the installer. To accomplish this, write the slurm config as
+	explained <link
+	xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">here
+	</link>.
+      </para>
+      <para>
+	Once this is done, still being logged in as the test user and assuming at least two
+	demo nodes are started, we can submit the two "hello world" programs created previously
+	to slurm as follows:
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo srun hello-world-c</command>
