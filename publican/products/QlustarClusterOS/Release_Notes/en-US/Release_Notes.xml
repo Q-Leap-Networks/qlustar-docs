@@ -151,7 +151,7 @@
 	    <listitem>
 	      <para>
 		Qlustar 10.1 introduces the Slurm 17.11 series with the current version being
-		17.2.9.2.
+		17.11.9.2.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -159,7 +159,7 @@
 	    <term>OpenMPI</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.1 upgrades to OpenMPI 3.1.2 now including support for ucx.
+		Qlustar 10.1 upgrades to OpenMPI 3.1.2 now including support for libfabric.
 	      </para>
 	    </listitem>
 	  </varlistentry>
