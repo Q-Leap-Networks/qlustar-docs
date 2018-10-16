@@ -118,152 +118,275 @@
   </section>
   <section xml:id="sec-Configuring-Hosts">
     <title>Configuring Hosts</title>
-    <para>
-      The configuration of a host consists of the definition and assignment of different
-      types of properties and config classes. Properties are always a key + value pair and
-      are further split into generic, hardware and specific properties.
-    </para>
-    <bridgehead xml:id="Hardware-Properties">Hardware Properties</bridgehead>
-    <para>
-      <literal>Hardware properties</literal> are used to describe the hardware of a
-      host. Among others, hardware properties like the amount of RAM or number of CPU cores
-      are used to configure resource management systems like slurm or torque, so jobs can be
-      assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
-      purely informational and might be used for inventory management.
-    </para>
-    <bridgehead xml:id="Generic-Properties">Generic Properties</bridgehead>
-    <para>
-      A property that is not hardware related and not specific to a host is called generic.
-      <literal>Generic properties</literal> can be configuration options, like
-      <parameter>OpenSM Host</parameter>, or purely informational, like <parameter>Paid
-      by</parameter>. While hardware properties are meant to be more rigid, typically with a
-      configurable set of fixed values, generic properties are more flexible and can be defined
-      at will. This will become more apparent in future versions of
-      <application>QluMan</application>. <literal>Generic properties</literal> are also not
-      necessarily unique, making it possible to assign multiple values for a single generic
-      property. This is useful e.g. to add multiple torque host tags or to put hosts in
-      multiple groups for dsh/pdsh (via the 'Host tag').
-    </para>
-    <bridgehead xml:id="Specific-Properties">Specific Properties</bridgehead>
-    <para>
-      As the name suggests, <literal>specific properties</literal> are specific to a single
-      host. The best example for such a property is the serial number of the host.
-    </para>
-    <bridgehead xml:id="PropConf-Sets">Property/Config Sets</bridgehead>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/enclosure_view/select_template.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Selecting a Host Template
-        </phrase></textobject>
-        <caption><para>
-          Selecting a Host Template
-        </para></caption>
-      </mediaobject>
-      Individual generic properties, hardware properties and config classes can be used to
-      define generic property sets, hardware property sets and config sets. This is simply a
-      means of grouping them together so they can be used as a single entity. A <literal>Host
-      Template</literal> can then be created by choosing one generic property set, one
-      hardware property set and one config set.
-    </para>
-    <bridgehead xml:id="Host-Templates">Host Templates</bridgehead>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/enclosure_view/select_template2.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Selecting a Host Template for multiple hosts
-        </phrase></textobject>
-        <caption><para>
-          Selecting a Host Template for multiple hosts
-        </para></caption>
-      </mediaobject>
-      When a correct <literal>Host Template</literal> exists, a host can be configured by
-      selecting the desired template in the <classname>Enclosure View</classname> window.  For
-      a single host, this can be done by selecting it in the tree view. This brings up the host
-      information on the right and a template can be selected from the drop-down menu. To
-      configure multiple hosts, you would select them in the tree view and choose a
-      <literal>Host Template</literal> from the context menu. The check-marks in the sub-menu
-      indicate which <literal>Host Templates</literal> are currently assigned (if any) for the
-      selected nodes. This action will override the previous assignment for all selected hosts.
-    </para>
-    <bridgehead xml:id="Global-Template">Global Template</bridgehead>
-    <para>
-    Even more generic is the <literal>Global Template</literal>. It applies to all hosts in the
-    cluster and consists of the <literal>Global</literal> Generic/Hardware Property and Config
-    Set. In principle, the latter are just like any other set, with the one difference that
-    they always apply to all hosts. This is useful when defining a base configuration for a
-    cluster.
-    </para>
-    <bridgehead xml:id="x2host-mapping">Directly assigned properties, configs and
-    sets</bridgehead>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/enclosure_view/select_generic_property.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Selecting a Generic Property
-        </phrase></textobject>
-        <caption><para>
-          Selecting a Generic Property
-        </para></caption>
-      </mediaobject>
-      Generic/hardware properties, configs and their corresponding sets can also be
-      individually assigned to a host. Such assigned properties take precedence over ones of
-      the same type selected through the Host or Global Template. This is useful when a
-      particular (or a few) node(s) require a special property/config (set) while everything
-      else should be set the same as for other hosts with the same template.
-    </para>
-    <note>
+    <section xml:id="sec-Levels-of-Configuration">
+      <title>Four Levels of configuration</title>
       <para>
-	By default, every new host has the generic property <parameter>Schedule Format:
-	always</parameter>, which is required to format the disk on the first boot. This
-	property should be removed (or changed to <literal>never</literal>) after the first
-	successful boot of the host, so that log files will be preserved across boots in the
-	future.
+        The configuration of a host consists of the definition and assignment of different
+        types of properties and <literal>config classes</literal>. Properties are always a
+        key + value pair and are further split into <literal>generic properties</literal>,
+        <literal>hardware properties</literal>. Generic/hardware properties and config
+        classes can be individually assigned to a host. This is the highest level of
+        configuration.
       </para>
-    </note>
-    <bridgehead xml:id="levels-of-configuration">Four Levels of configuration</bridgehead>
-    <para>
-      Overall, the configuration of a host is determined by the hierarchy of the four
-      assignment levels described above. Going from lowest to highest priority these are:
-      <literal>Global Template</literal>, <literal>Host Template</literal>, directly assigned
-      sets and directly assigned properties and configs.
-    </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/enclosure_view/properties_and_configs.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Overwritten properties/configs.
-        </phrase></textobject>
-        <caption><para>
-          Overwritten properties/configs.
-        </para></caption>
-      </mediaobject>
-      If a generic/hardware property or config is set and assigned to a host in a particular
-      hierarchy level, it overwrites the corresponding assignment(s)/value(s) from all lower
-      priority levels. This introduces a lot of flexibility while retaining consistency.
-    </para>
-    <para>
-      For example it allows setting a property in the Global Template that is right for most
-      hosts and then replace it in a particular Host Template that is used for a few
-      exceptional hosts. The screenshot shows two examples of this strategy: The assigned Host
-      Template of the chosen host replaces the configs for <literal>Net Config</literal>,
-      <literal>Slurm Partition</literal> and <literal>Slurm Node Group</literal> of the Global
-      Template (red box) and the number of CPU cores is directly assigned replacing the value
-      from the Host Template (green box).
-    </para>
-    <note>
       <para>
-	The tree representation of a host's properties/configs in the Enclosure View clearly
-	indicates overwritten assignments by displaying them in a light gray.
+        They can also be used to define <literal>generic property sets</literal>,
+        <literal>hardware property sets</literal> and <literal>config sets</literal>. This is
+        simply a means of grouping them together so they can be used as a single entity.
+        These sets, too, can be individually assigned to a host. This is the second level of
+        configuration.
       </para>
-    </note>
+      <para>
+        A <literal>Host Template</literal> can be created by choosing one
+        The third level of configuration are <literal>Host Templates</literal>. A Host
+        Template consists of one <literal>Config Set</literal>, one <literal>Generic
+        Property Set</literal> and one <literal>Hardware Property Set</literal>.
+      </para>
+      <para>
+        The fourth and most generic level of configuration is the <literal>Global
+        Template</literal>. It applies to all hosts in the cluster and consists of the
+        <literal>Global</literal> Generic/Hardware Property and Config Set. In principle,
+        the latter are just like any other set, with the one difference that they always
+        apply to all hosts. This is useful when defining a base configuration for a cluster.
+      </para>
+      <para>
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/properties_and_configs.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Overwritten properties/configs.
+          </phrase></textobject>
+          <caption><para>
+            Overwritten properties/configs.
+          </para></caption>
+        </mediaobject>
+        If a generic/hardware property or config is set and assigned to a host in a particular
+        hierarchy level, it overwrites the corresponding assignment(s)/value(s) from all lower
+        priority levels. This introduces a lot of flexibility while retaining consistency.
+      </para>
+      <para>
+        For example it allows setting a property in the Global Template that is right for most
+        hosts and then replace it in a particular Host Template that is used for a few
+        exceptional hosts. The screen-shot shows two examples of this strategy: The assigned Host
+        Template of the chosen host replaces the configs for <literal>Net Config</literal>,
+        <literal>Slurm Partition</literal> and <literal>Slurm Node Group</literal> of the Global
+        Template (red box) and the number of CPU cores is directly assigned replacing the value
+        from the Host Template (green box).
+      </para>
+      <note>
+        <para>
+	  The tree representation of a host's properties/configs in the Enclosure View clearly
+	  indicates overwritten assignments by displaying them in a light gray.
+        </para>
+      </note>
+    </section>
+    <section xml:id="sec-properties">
+      <title>Generic and Hardware Properties</title>
+      <bridgehead xml:id="Hardware-Properties">Hardware Properties</bridgehead>
+      <para>
+        <literal>Hardware properties</literal> are used to describe the hardware of a
+        host. Among others, hardware properties like the amount of RAM or number of CPU cores
+        are used to configure resource management systems like slurm or torque, so jobs can be
+        assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
+        purely informational and might be used for inventory management.
+      </para>
+      <para>
+        <!--cbox(file: images/enclosure_view/select_host.png caption: Detected Hardware Properties)-->
+        <literal>Hardware properties</literal> usually don't have to be entered by hand. The
+        basic hardware properties are detected when a host boots and reported to the server.
+        They can be seen as tool tip in the <literal>Enclosure View</literal> when hovering
+        over a host. The <literal>Hardware Wizard</literal> uses the reported values to
+        create the right configuration for a set of hosts and is the best way to create the
+        initial configuration for hosts. The <literal>Hardware Wizard</literal> can also be
+        used to correct the configuration of hosts when their hardware was changed. The
+        <literal>Hardware Wizard</literal> is explained in <xref linkend="chap-HWwizard"/>.
+      </para>
+      <bridgehead xml:id="Generic-Properties">Generic Properties</bridgehead>
+      <para>
+        A property that is not hardware related and not specific to a host is called generic.
+        <literal>Generic properties</literal> can be configuration options, like
+        <parameter>OpenSM Host</parameter>, or purely informational, like <parameter>Paid
+        by</parameter>. While hardware properties are meant to be more rigid, typically with a
+        configurable set of fixed values, generic properties are more flexible and can be defined
+        at will. <literal>Generic properties</literal> are also not
+        necessarily unique, making it possible to assign multiple values for a single generic
+        property. This is useful e.g. to add multiple torque host tags or to put hosts in
+        multiple groups for dsh/pdsh (via the 'Host tag').
+      </para>
+      <para>
+        <!--cbox(file: images/generic_property_set/edit-properties.png caption: Editing Properties)-->
+        <!--cbox(file: images/hardware_property_set/property-editor.png caption: Property Editor)-->
+        Generic/Hardware properties and their values are managed by the <literal>Property
+        Editor</literal> reachable from the Generic/Hardware Property Sets windows (see below)
+        respectively.
+      </para>
+      <para>
+        <!--cbox(file: images/hardware_property_set/new-property.png caption: Creating a new Property)-->
+        A new Generic/Hardware property can be created by clicking the
+        <guibutton>New</guibutton> button. Each property has a name and a description. The
+        name must be unique and the <guibutton>Ok</guibutton> button will only be enabled
+        if that is the case. The description is optional and will be shown as tool-tip when
+        hovering over the property in other windows.
+      </para>
+      <para>
+        <!--cbox(file: images/hardware_property_set/property-editor-select.png caption: Select Property)-->
+        <!--cbox(file: images/hardware_property_set/property-editor-context-menu.png caption: Add property value)-->
+        Once a property exists values can be added to the property. First the property must
+        be selected from the drop down menu at the top of the Property Editor. Then values
+        be added or deleted using the context menu.
+      </para>
+      <para>
+        <!--cbox(file: images/hardware_property_set/property-editor-edit-name.png caption: Editing name of property)-->
+        With the exception of essential predefined properties the name of a property can be
+        edited by clicking at the name. Beware that changes must be saved by pressing
+        <keycap>return</keycap>. The properties that can not be edited (or deleted) are used
+        for example to generate the <literal>slurm.conf</literal> and changing the name would
+        lead to errors in the generated file. Similar some property values can not be deleted
+        and will be shown greyed out.
+      </para>
+    </section>
+    <section xml:id="sec-PropConf-Sets">
+      <title>Property/Config Sets</title>
+      <para>
+	<!--(screen-shot: Hardware Property Sets)-->
+	<!--(screen-shot: Generic Property Sets)-->
+	<!--(screen-shot: Config Sets)-->
+	Generic/hardware sets and config sets are the biggest tool to simplifying the
+	configuration of hosts. They are a means of grouping generic/hardware properties or
+	configs together so they can be used as a single entity. They can then be assigned to
+	individual hosts directly or used in a <literal>Host Template</literal>. There exists
+	also a global set for each of them that is always assigned to every host through the
+	<literal>Global Template</literal>. The generic/hardware sets and config sets can be
+	managed by opening the respective window from the <guimenuitem>Manage
+	Sets</guimenuitem> menu.
+      </para>
+      <bridgehead xml:id="Hardware-Generic-Property-Sets">Hardware/Generic Property Sets</bridgehead>
+      <para>
+	<!--(screen-shot: Property Set new button / context menu)-->
+	<!--(screen-shot: New Property Set dialog)-->
+	Property sets are shown in tree form with the name of each property set as the top
+	level item and the key/value pairs of assigned properties as children. The first entry
+	is always the global property set. A new property set can be create by clicking the
+	<guibutton>New</guibutton> button or from the context menu. An existing property set
+	can be renamed or the description changed by selecting <guimenuitem>Edit Property
+	Set</guimenuitem> from the context menu. A property set that is not in use can be
+	deleted also from the context menu.
+      </para>
+      <para>
+	<!--(screen-shot: property set / add property menu tree)-->
+	New properties can be added to a property set by opening the <guimenuitem>Add
+	Property</guimenuitem> sub-menu in the context menu, selecting the wanted property and
+	the wanted value. Only properties and values that don't conflict with already included
+	properties or values are shown in the sub-menu. Already included properties can changed
+	in 2 ways. First a different value can be selected from the drop down menu. Secondly
+	the value can be edited directly, in which case editing must be confirmed by pressing
+	<keycap>return</keycap>. If the entered value does not yet exist for the property a new
+	value is automatically created. Another way to create new values and the only way to
+	delete them is through the property editor from <xref linkend="Generic-Properties"/> by
+	clicking <guibutton>Edit Properties</guibutton>. The property editor also allows adding
+	or deleting properties them self.
+      </para>
+      <bridgehead xml:id="Config-Sets">Config Sets</bridgehead>
+      <para>
+	<!--(screen-shot: config set / add config menu tree)-->
+	Config sets are managed the same way as property sets. Shown as a tree with the global
+	set at the top and the key/value pairs of assigned config classes as children. Creating
+	a new config set can be done by clicking the<guibutton>New</guibutton> button or from
+	the context menu same as for property sets. Adding and removing config classes to/from
+	a set also works the same way.
+      </para>
+      <para>
+	Unlike property sets though the list of usable config classes is fixed and values can
+	not be edited directly from this window. Config classes require a more complex and
+	individual config. So for each config class there is a menu item in the
+	<guimenuitem>Manage Configs</guimenuitem> menu.
+      </para>
+    </section>
+    <section xml:id="sec-Assigning-Config">
+      <title>Assigning a configuration to hosts</title>
+      <para>
+      As mentioned in the beginning of this chapter there are 4 levels of configuration. Going
+      from lowest to highest priority these are: <literal>Global Template</literal>,
+      <literal>Host Template</literal>, directly assigned sets and directly assigned properties
+      and configs.
+      </para>
+      <bridgehead xml:id="Global-Template">Global Template</bridgehead>
+      <para>
+	The <literal>Global Template</literal> is the most generic way to assign configurations
+	to hosts. It applies to all hosts in the cluster and consists of the
+	<literal>Global</literal> Generic/Hardware Property and Config Set. In principle, the
+	latter are just like any other set, with the one difference that they always apply to
+	all hosts. This is useful when defining a base configuration for a cluster.
+      </para>
+      <bridgehead xml:id="Host-Templates">Host Templates</bridgehead>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/enclosure_view/select_template.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Selecting a Host Template
+	  </phrase></textobject>
+	  <caption><para>
+	    Selecting a Host Template
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/enclosure_view/select_template2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Selecting a Host Template for multiple hosts
+	  </phrase></textobject>
+	  <caption><para>
+	    Selecting a Host Template for multiple hosts
+	  </para></caption>
+	</mediaobject>
+	The next level of configuration is the <literal>Host Template</literal>. When a correct
+	<literal>Host Template</literal> exists, a host can be configured by selecting the
+	desired template in the <classname>Enclosure View</classname> window. For a single
+	host, this can be done by selecting it in the tree view. This brings up the host
+	information on the right and a template can be selected from the drop-down menu. To
+	configure multiple hosts, you would select them in the tree view and choose a
+	<literal>Host Template</literal> from the context menu. The check-marks in the sub-menu
+	indicate which <literal>Host Templates</literal> are currently assigned (if any) for
+	the selected nodes. This action will override the previous assignment for all selected
+	hosts.
+      </para>
+      <para>
+	Alternatively, especially when no correct <literal>Host Template</literal> exists yet,
+	the Hardware Wizard can be used to to create a new or modify an existing <literal>Host
+	Template</literal> and assign it to hosts. The Hardware Wizard is explained in <xref
+	linkend="chap-HWwizard"/>.
+      </para>
+      <bridgehead xml:id="x2host-mapping">Directly assigned properties, configs and sets</bridgehead>
+      <para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/enclosure_view/select_generic_property.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Selecting a Generic Property
+	  </phrase></textobject>
+	  <caption><para>
+	    Selecting a Generic Property
+	  </para></caption>
+	</mediaobject>
+	Generic/hardware properties, configs and their corresponding sets can also be
+	individually assigned to a host. Such assigned properties take precedence over ones of
+	the same type selected through the Host or Global Template. This is useful when a
+	particular (or a few) node(s) require a special property/config (set) while everything
+	else should be set the same as for other hosts with the same template.
+      </para>
+      <note>
+	<para>
+	  By default, every new host has the generic property <parameter>Schedule Format:
+	  always</parameter>, which is required to format the disk on the first boot. This
+	  property should be removed (or changed to <literal>never</literal>) after the first
+	  successful boot of the host, so that log files will be preserved across boots in the
+	  future.
+	</para>
+      </note>
+    </section>
   </section>
 </chapter>
