@@ -121,24 +121,23 @@
     <section xml:id="sec-Levels-of-Configuration">
       <title>Four Levels of configuration</title>
       <para>
-        The configuration of a host consists of the definition and assignment of different
-        types of properties and <literal>config classes</literal>. Properties are always a
-        key + value pair and are further split into <literal>generic properties</literal>,
-        <literal>hardware properties</literal>. Generic/hardware properties and config
-        classes can be individually assigned to a host. This is the highest level of
-        configuration.
+        The configuration of a host results from the assignment of different types of
+        properties and <literal>Config Classes</literal> to it. A property is always a key +
+        value pair. They are further divided into <literal>Generic Properties</literal> and
+        <literal>Hardware Properties</literal>. Generic/hardware properties and config classes
+        can be individually assigned to a host. This is the configuration level with highest
+        priority, meaning that such an assignment will always be effective.
       </para>
       <para>
-        They can also be used to define <literal>generic property sets</literal>,
-        <literal>hardware property sets</literal> and <literal>config sets</literal>. This is
-        simply a means of grouping them together so they can be used as a single entity.
-        These sets, too, can be individually assigned to a host. This is the second level of
-        configuration.
+        They can also be used to define <literal>Generic Property Sets</literal>,
+        <literal>Hardware Property Sets</literal> and <literal>Config Sets</literal>. This is
+        simply a means of grouping them together, so they can be used as a single entity. These
+        sets may also be individually assigned to a host. This is the configuration level with
+        second highest priority.
       </para>
       <para>
-        A <literal>Host Template</literal> can be created by choosing one
         The third level of configuration are <literal>Host Templates</literal>. A Host
-        Template consists of one <literal>Config Set</literal>, one <literal>Generic
+        Template consists of exactly one <literal>Config Set</literal>, one <literal>Generic
         Property Set</literal> and one <literal>Hardware Property Set</literal>.
       </para>
       <para>
@@ -160,18 +159,19 @@
             Overwritten properties/configs.
           </para></caption>
         </mediaobject>
-        If a generic/hardware property or config is set and assigned to a host in a particular
-        hierarchy level, it overwrites the corresponding assignment(s)/value(s) from all lower
-        priority levels. This introduces a lot of flexibility while retaining consistency.
+        If a generic/hardware property or config is defined and assigned to a host in a
+        particular hierarchy level, it overwrites the corresponding assignment(s)/value(s) from
+        all lower priority levels. This introduces a lot of flexibility while retaining
+        consistency.
       </para>
       <para>
         For example it allows setting a property in the Global Template that is right for most
-        hosts and then replace it in a particular Host Template that is used for a few
-        exceptional hosts. The screen-shot shows two examples of this strategy: The assigned Host
-        Template of the chosen host replaces the configs for <literal>Net Config</literal>,
-        <literal>Slurm Partition</literal> and <literal>Slurm Node Group</literal> of the Global
-        Template (red box) and the number of CPU cores is directly assigned replacing the value
-        from the Host Template (green box).
+        hosts and then replace it in a particular Host Template being used for a few
+        exceptional hosts. The screen-shot shows two examples of this strategy: The assigned
+        Host Template of the chosen host replaces the configs for <literal>Net
+        Config</literal>, <literal>Slurm Partition</literal> and <literal>Slurm Node
+        Group</literal> of the Global Template (red box) and the number of CPU cores is
+        directly assigned replacing the value from the Host Template (green box).
       </para>
       <note>
         <para>
@@ -184,65 +184,131 @@
       <title>Generic and Hardware Properties</title>
       <bridgehead xml:id="Hardware-Properties">Hardware Properties</bridgehead>
       <para>
-        <literal>Hardware properties</literal> are used to describe the hardware of a
+        <literal>Hardware Properties</literal> are used to describe the hardware of a
         host. Among others, hardware properties like the amount of RAM or number of CPU cores
-        are used to configure resource management systems like slurm or torque, so jobs can be
-        assigned to the desired hosts. Others, like e.g. the server model or BIOS version, are
-        purely informational and might be used for inventory management.
+        are used to configure the Slurm workload manager, so jobs can be assigned to the
+        desired hosts. Others, like e.g. the HW type, are purely informational and might be
+        used for inventory management.
       </para>
       <para>
-        <!--cbox(file: images/enclosure_view/select_host.png caption: Detected Hardware Properties)-->
-        <literal>Hardware properties</literal> usually don't have to be entered by hand. The
-        basic hardware properties are detected when a host boots and reported to the server.
-        They can be seen as tool tip in the <literal>Enclosure View</literal> when hovering
-        over a host. The <literal>Hardware Wizard</literal> uses the reported values to
-        create the right configuration for a set of hosts and is the best way to create the
-        initial configuration for hosts. The <literal>Hardware Wizard</literal> can also be
-        used to correct the configuration of hosts when their hardware was changed. The
-        <literal>Hardware Wizard</literal> is explained in <xref linkend="chap-HWwizard"/>.
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/select_host.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Detected Hardware Properties
+          </phrase></textobject>
+          <caption><para>
+            Detected Hardware Properties
+          </para></caption>
+        </mediaobject>
+        <literal>Hardware Properties</literal> usually don't have to be entered by hand. When a
+        host boots, the basic hardware properties are detected and reported to the server.
+        They are shown as a tool-tip in the <literal>Enclosure View</literal> when hovering
+        over a host. The <link linkend="chap-HWwizard">Hardware Wizard</link> uses the reported
+        values to create the correct configuration for a set of hosts and is the best way to
+        create their initial configuration. It can also be used to correct the configuration of
+        hosts in case their hardware was changed.
       </para>
       <bridgehead xml:id="Generic-Properties">Generic Properties</bridgehead>
       <para>
-        A property that is not hardware related and not specific to a host is called generic.
-        <literal>Generic properties</literal> can be configuration options, like
-        <parameter>OpenSM Host</parameter>, or purely informational, like <parameter>Paid
-        by</parameter>. While hardware properties are meant to be more rigid, typically with a
-        configurable set of fixed values, generic properties are more flexible and can be defined
-        at will. <literal>Generic properties</literal> are also not
-        necessarily unique, making it possible to assign multiple values for a single generic
-        property. This is useful e.g. to add multiple torque host tags or to put hosts in
-        multiple groups for dsh/pdsh (via the 'Host tag').
+        A property that is not hardware related is called generic. <literal>Generic
+        Properties</literal> can be configuration options, like <parameter>OpenSM
+        Host</parameter>, or purely informational, like <parameter>Paid by</parameter>. While
+        hardware properties are meant to be more rigid, typically with a configurable set of
+        fixed values, generic properties are more flexible and can be defined at
+        will. <literal>Generic Properties</literal> are also not necessarily unique, making it
+        possible to assign multiple values for a single generic property. This is useful
+        e.g. to put hosts in multiple groups for dsh/pdsh (via the 'Host tag').
       </para>
       <para>
-        <!--cbox(file: images/generic_property_set/edit-properties.png caption: Editing Properties)-->
-        <!--cbox(file: images/hardware_property_set/property-editor.png caption: Property Editor)-->
-        Generic/Hardware properties and their values are managed by the <literal>Property
-        Editor</literal> reachable from the Generic/Hardware Property Sets windows (see below)
-        respectively.
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/property-editor.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Property Editor
+          </phrase></textobject>
+          <caption><para>
+            Property Editor
+          </para></caption>
+        </mediaobject>
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/generic_property_set/edit-properties.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Editing Properties
+          </phrase></textobject>
+          <caption><para>
+            Editing Properties
+          </para></caption>
+        </mediaobject>
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/new-property.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Creating a new Property
+          </phrase></textobject>
+          <caption><para>
+            Creating a new Property
+          </para></caption>
+        </mediaobject>
+        Generic/Hardware properties and their values are managed by the corresponding
+        <literal>Property Editor</literal>. It is reachable from the Generic/Hardware Property
+        Sets windows.  A new Generic/Hardware property can be created by clicking the
+        <guibutton>New</guibutton> button. Each property has a name and a description. The name
+        must be unique and the <guibutton>Ok</guibutton> button will only be enabled if that is
+        the case. The description is optional and will be shown as a tool-tip when hovering
+        over the property in other windows.
       </para>
       <para>
-        <!--cbox(file: images/hardware_property_set/new-property.png caption: Creating a new Property)-->
-        A new Generic/Hardware property can be created by clicking the
-        <guibutton>New</guibutton> button. Each property has a name and a description. The
-        name must be unique and the <guibutton>Ok</guibutton> button will only be enabled
-        if that is the case. The description is optional and will be shown as tool-tip when
-        hovering over the property in other windows.
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/property-editor-select.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Select Property
+          </phrase></textobject>
+          <caption><para>
+            Select Property
+          </para></caption>
+        </mediaobject>
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/property-editor-context-menu.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Add property value
+          </phrase></textobject>
+          <caption><para>
+            Add property value
+          </para></caption>
+        </mediaobject>
+        Once a property exists, values can be added to it. To accomplish this, the property
+        must first be selected from the drop-down menu at the top of the Property Editor. Then
+        values may be added or deleted using the context-menu.
       </para>
       <para>
-        <!--cbox(file: images/hardware_property_set/property-editor-select.png caption: Select Property)-->
-        <!--cbox(file: images/hardware_property_set/property-editor-context-menu.png caption: Add property value)-->
-        Once a property exists values can be added to the property. First the property must
-        be selected from the drop down menu at the top of the Property Editor. Then values
-        be added or deleted using the context menu.
-      </para>
-      <para>
-        <!--cbox(file: images/hardware_property_set/property-editor-edit-name.png caption: Editing name of property)-->
-        With the exception of essential predefined properties the name of a property can be
-        edited by clicking at the name. Beware that changes must be saved by pressing
-        <keycap>return</keycap>. The properties that can not be edited (or deleted) are used
-        for example to generate the <literal>slurm.conf</literal> and changing the name would
-        lead to errors in the generated file. Similar some property values can not be deleted
-        and will be shown greyed out.
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/property-editor-edit-name.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Editing name of property
+          </phrase></textobject>
+          <caption><para>
+            Editing name of property
+          </para></caption>
+        </mediaobject>
+        With the exception of essential pre-defined properties, the name of a property can be
+        edited by clicking at it when it is selected from the drop-down menu. Beware that
+        changes must be saved by pressing <keycap>return</keycap>. Examples of properties that
+        can not be edited (or deleted) are the ones used to generate the
+        <literal>slurm.conf</literal>. Changing their name would lead to errors in the
+        generated file. Similarly, some property values can not be deleted and will be shown
+        grayed out.
       </para>
     </section>
     <section xml:id="sec-PropConf-Sets">
@@ -251,13 +317,12 @@
 	<!--(screen-shot: Hardware Property Sets)-->
 	<!--(screen-shot: Generic Property Sets)-->
 	<!--(screen-shot: Config Sets)-->
-	Generic/hardware sets and config sets are the biggest tool to simplifying the
-	configuration of hosts. They are a means of grouping generic/hardware properties or
-	configs together so they can be used as a single entity. They can then be assigned to
-	individual hosts directly or used in a <literal>Host Template</literal>. There exists
-	also a global set for each of them that is always assigned to every host through the
-	<literal>Global Template</literal>. The generic/hardware sets and config sets can be
-	managed by opening the respective window from the <guimenuitem>Manage
+	Generic/hardware sets and config sets simplify the configuration of hosts
+	substantially. They are a means of grouping generic/hardware properties or configs, so
+	they can be used as a single entity and be assigned to individual hosts directly or via
+	a <literal>Host Template</literal>. There is also a global set of each type which is
+	always assigned to <emphasis>every</emphasis> host. The generic/hardware and config
+	sets can be managed by opening the corresponding window from the <guimenuitem>Manage
 	Sets</guimenuitem> menu.
       </para>
       <bridgehead xml:id="Hardware-Generic-Property-Sets">Hardware/Generic Property Sets</bridgehead>
