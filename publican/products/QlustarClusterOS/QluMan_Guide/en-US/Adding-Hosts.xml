@@ -248,9 +248,9 @@
     <section xml:id="sec-PropConf-Sets">
       <title>Property/Config Sets</title>
       <para>
-	<!--(screen-shot: Hardware Property Sets)-->
-	<!--(screen-shot: Generic Property Sets)-->
-	<!--(screen-shot: Config Sets)-->
+	<!--cbox(file: images/hardware_property_set/hardware-prop-sets.png caption: Hardware Property Sets)-->
+	<!--cbox(file: images/generic_property_set/generic-prop-sets.png caption: Generic Property Sets)-->
+	<!--cbox(file: images/config_set/config-sets.png caption: Config Sets)-->
 	Generic/hardware sets and config sets are the biggest tool to simplifying the
 	configuration of hosts. They are a means of grouping generic/hardware properties or
 	configs together so they can be used as a single entity. They can then be assigned to
@@ -262,8 +262,8 @@
       </para>
       <bridgehead xml:id="Hardware-Generic-Property-Sets">Hardware/Generic Property Sets</bridgehead>
       <para>
-	<!--(screen-shot: Property Set new button / context menu)-->
-	<!--(screen-shot: New Property Set dialog)-->
+	<!--cbox(file: images/hardware_property_set/hardware-prop-sets-new.png caption: New Property Set)-->
+	<!--cbox(file: images/hardware_property_set/hardware-prop-sets-new2.png caption: New Property Set dialog)-->
 	Property sets are shown in tree form with the name of each property set as the top
 	level item and the key/value pairs of assigned properties as children. The first entry
 	is always the global property set. A new property set can be create by clicking the
@@ -273,7 +273,7 @@
 	deleted also from the context menu.
       </para>
       <para>
-	<!--(screen-shot: property set / add property menu tree)-->
+	<!--cbox(file: images/hardware_property_set/hardware-prop-set-add-prop.png caption: Add Property to Set)-->
 	New properties can be added to a property set by opening the <guimenuitem>Add
 	Property</guimenuitem> sub-menu in the context menu, selecting the wanted property and
 	the wanted value. Only properties and values that don't conflict with already included
@@ -288,7 +288,7 @@
       </para>
       <bridgehead xml:id="Config-Sets">Config Sets</bridgehead>
       <para>
-	<!--(screen-shot: config set / add config menu tree)-->
+	<!--cbox(file: images/config_set/config-set-add-config.png caption: Add Config Class to Set)-->
 	Config sets are managed the same way as property sets. Shown as a tree with the global
 	set at the top and the key/value pairs of assigned config classes as children. Creating
 	a new config set can be done by clicking the<guibutton>New</guibutton> button or from
@@ -299,7 +299,10 @@
 	Unlike property sets though the list of usable config classes is fixed and values can
 	not be edited directly from this window. Config classes require a more complex and
 	individual config. So for each config class there is a menu item in the
-	<guimenuitem>Manage Configs</guimenuitem> menu.
+	<guimenuitem>Manage Configs</guimenuitem> menu. Depending on the config class one or
+	more values for that class can be assigned to a <literal>Config Set</literal>. For example
+	2 Slurm Partitions can be added to a <literal>Config Set</literal>. The sub-menu will only
+	show config classes and values that can be added without conflicting with existing entries.
       </para>
     </section>
     <section xml:id="sec-Assigning-Config">
