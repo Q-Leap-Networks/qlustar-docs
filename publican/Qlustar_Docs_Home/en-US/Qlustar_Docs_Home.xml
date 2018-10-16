@@ -37,23 +37,7 @@
 	  Qlustar DataStack</link></term>
 	<listitem>
 	  <para>
-	    Covers topics specific to Qlustar storage (Lustre, BeeGFS, Ceph, etc.) clusters.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>Qlustar VStack</term>
-	<listitem>
-	  <para>
-	    Covers topics specific to Qlustar virtualization (OpenStack) clusters.
-	  </para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>Qlustar BioStack</term>
-	<listitem>
-	  <para>
-	    Covers topics specific to Qlustar BioInformatics clusters.
+	    Covers topics specific to Qlustar storage (Lustre, BeeGFS, etc.) clusters.
 	  </para>
 	</listitem>
       </varlistentry>

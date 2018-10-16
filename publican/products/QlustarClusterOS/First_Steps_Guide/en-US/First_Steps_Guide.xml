@@ -348,29 +348,36 @@ keep the local version currently installed.
     </section>
     <section xml:id="sec-Adding-Software">
       <title>Adding Software</title>
-      <para>
-	As explained <link
-	xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
-	elsewhere</link>, the RAM-based root file-system of a Qlustar compute/storage node can
-	be supplemented by a global NFS-exported chroot to allow access to software not already
-	contained in the boot images themselves. During installation, one chroot per selected
-	<link
-	xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
-	platform</link> was automatically created. The chroots are located at
-	<filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	<replaceable>chroot name</replaceable> would be <filename>xenial</filename>. Each of
-	them contains a full-featured installation of the corresponding Qlustar edge
-	platform. To change into a chroot, convenience bash shell aliases of the form
-	chroot-<replaceable>chroot name</replaceable> are defined for the root user on the
-	head-node. You may use them as follows (e.g. for Ubuntu/Xenial, if it was selected at
-	install):
-	<screen>
+      <section xml:id="sec-Adding-Software-Background">
+	<title>Background</title>
+	<para>
+	  As explained <link
+	  xlink:href="../QluMan_Guide/index.html#sec-UnionFS-Chroots___blank___">
+	  elsewhere</link>, the RAM-based root file-system of a Qlustar compute/storage node is
+	  typically supplemented by a global NFS-exported chroot to allow access to software
+	  not already contained in the boot images themselves. During installation, one chroot
+	  per selected <link
+	  xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
+	  platform</link> was automatically created. The chroots are located at
+	  <filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
+	  <replaceable>chroot name</replaceable> would be e.g. <filename>xenial</filename> or
+	  <filename>centos7</filename>. Each of them contains a full-featured installation of
+	  the corresponding Qlustar edge platform. To change into a chroot, convenience bash
+	  shell aliases of the form chroot-<replaceable>chroot name</replaceable> are defined
+	  for the root user on the head-node. You may use them as follows:
+	</para>
+      </section>
+      <section xml:id="sec-Adding-Software-Deb">
+	<title>Ubuntu/Debian</title>
+	<para>
+	  Example for Ubuntu/Xenial, if it was selected at install
+	  <screen>
 <prompt>0 root@cl-head ~ #</prompt>
 <command>chroot-xenial</command>
-	</screen>
-	Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
-	its software packages, e.g.
-	<screen>
+	  </screen>
+	  Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
+	  its software packages, e.g.
+	  <screen>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
 <command>apt update</command>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
@@ -379,18 +386,98 @@ keep the local version currently installed.
 <command>apt install <replaceable>package</replaceable></command>
 <prompt>(xenial) 0 root@cl-head ~ #</prompt>
 <command>exit</command>
-	</screen>
-	The nice thing about this mechanism is that software from packages installed in a
-	particular chroot will be available instantaneously on all compute/storage nodes that
-	are configured to use that chroot.
-      </para>
-      <important>
+	  </screen>
+	</para>
+      </section>
+      <section xml:id="sec-Adding-Software-RPM">
+	<title>Centos</title>
 	<para>
-	  There is usually no need to install additional packages on the head-node itself (only
-	  in the chroot). Software packages installed directly on the head-node will not be
-	  visible cluster-wide.
-      </para>
-      </important>
+	  Example for CentOS 7, if it was selected at install
+	  <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>chroot-centos7</command>
+	  </screen>
+	  Once you're inside a chroot, you can use the standard CentOS tools to control its
+	  software packages, e.g.
+	  <screen>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>yum update</command>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>yum install <replaceable>package</replaceable></command>
+<prompt>(centos7) 0 root@cl-head ~ #</prompt>
+<command>exit</command>
+	  </screen>
+	</para>
+	<note>
+	  <para>
+	    The Qlustar CentOS edge platform integrates four package sources via the
+	    corresponding yum repository config files below
+	    <filename>/etc/yum.repos.d</filename>:
+	    <variablelist>
+	      <varlistentry>
+		<term>
+		  CentOS
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original CentOS repositories.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  EPEL
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original EPEL repository.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  OpenHPC
+		</term>
+		<listitem>
+		  <para>
+		    This is the Qlustar mirror of the original OpenHPC repository. Some
+		    packages that are not needed on Qlustar (like e.g. warewulf stuff) are
+		    filtered and hence not available in this mirror.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  Qlustar
+		</term>
+		<listitem>
+		  <para>
+		    This is the repository that provides Qlustar specific packages for CentOS.
+		  </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    All four repositories are enabled per default, so you can easily install packages
+	    from any of them.
+	  </para>
+	</note>
+      </section>
+      <section xml:id="sec-Adding-Software-Comments">
+	<title>Comments</title>
+	<para>
+	  The nice thing about this overlay mechanism is that software from packages installed
+	  in a particular chroot will be available instantaneously on all compute/storage nodes
+	  that are configured to use that chroot.
+	</para>
+	<important>
+	  <para>
+	    Apart from the chroot, there is usually no need to install additional packages on
+	    the head-node itself, unless you want to add functionality specifically running on
+	    it. Be aware, that software packages installed directly on the head-node will not
+	    be visible cluster-wide.
+	  </para>
+	</important>
+      </section>
     </section>
     <section xml:id="sec-Running-QluMan">
       <title>Running the Cluster Manager QluMan</title>
@@ -516,9 +603,9 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    Then if you have <literal>Ubuntu/Xenial</literal> execute:
 	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.0-xenial main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.1-xenial main non-free'</command>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.0-xenial-proposed-updates main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.1-xenial-proposed-updates main non-free'</command>
 	    </screen>
 	    After this you can install qluman-qt the usual way:
 	    <screen>
@@ -559,14 +646,14 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    on any machine with Singularity installed (minimum Singularity version is
 		    2.4.1 for QluMan 10 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
-		    saved it as <filename>$HOME/qluman-10.0.0.15-singularity.sqsh</filename>):
+		    saved it as <filename>$HOME/qluman-10.1.0.19-singularity.sqsh</filename>):
 	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>sha256sum $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>sha256sum $HOME/qluman-10.1.0.19-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 $HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>chmod 755 $HOME/qluman-10.1.0.19-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>$HOME/qluman-10.0.0.15-singularity.sqsh</command>
+<command>$HOME/qluman-10.1.0.19-singularity.sqsh</command>
 	    </screen>
 		  </para>
 		    <note>
@@ -649,10 +736,10 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    </variablelist>
 	    <important>
 	      <para>
-		The base version (e.g. 10.0.0) of the QluMan packages/containers on the
+		The base version (e.g. 10.1.0) of the QluMan packages/containers on the
 		workstation should be the same as on the head-node(s) to ensure correct
-		operation. Some close unequal version combinations (e.g. 10.0.0.7 and
-		10.0.0.12) usually work too, but are not well tested.
+		operation. Some close unequal version combinations (e.g. 10.1.0.7 and
+		10.1.0.12) usually work too, but are not well tested.
 	      </para>
 	    </important>
 	  </para>
@@ -686,30 +773,63 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	(Message Passing Interface)</link> is the de facto standard for distributed parallel
 	programming on Linux clusters. The default <firstterm>MPI</firstterm> variant in
 	Qlustar is <firstterm>OpenMPI</firstterm> and is automatically installed in the
-	standard chroot during installation. You can test the correct installation of MPI with
-	two small <emphasis>hello world</emphasis> test programs (one in C ,the other one in
-	FORTRAN90) as the test user you created earlier: Login on the front-end node as this
-	user and execute
+	standard chroot during installation under Ubuntu and also under CentOS if
+	<firstterm>OpenHPC</firstterm> has also been selected.
+      </para>
+      <para>
+	You can test the correct installation of MPI with two small <emphasis>hello
+	world</emphasis> test programs (one in C ,the other one in FORTRAN90) as the test user
+	you created earlier. The procedure is slightly different depending on whether you're on
+	Ubuntu or CentOS. Login on the front-end node as this test user and if on Ubuntu
+	execute
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpicc.openmpi-gcc -o hello-world-c hello-world.c</command>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpif90.openmpi-gcc -o hello-world-f hello-world.f90</command>
 	</screen>
+	On CentOS, you need to activate the correct compiler and openmpi stack from OpenHPC
+	first via the <firstterm>modules</firstterm> infrastructure
+	<screen>
+<prompt>0 testuser@cl-front ~ $</prompt>
+<command>module load openmpi3/3.1.0 gnu7/7.3.0</command>
+<prompt>0 testuser@cl-front ~ $</prompt>
+<command>mpicc -o hello-world-c hello-world.c</command>
+<prompt>0 testuser@cl-front ~ $</prompt>
+<command>mpif90 -o hello-world-f hello-world.f90</command>
+	</screen>
 	After this you should have created two executables. Check it with
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>ls -l hello-world-?</command>
 	</screen>
-	Now we're prepared to test the queuing system with the two programs.
+	Now we're prepared to test the queuing system with these two programs.
       </para>
     </section>
     <section xml:id="sec-Running-MPI">
       <title>Running an MPI Job</title>
       <para>
-	Still logged in as the test user and assuming at least two demo nodes are started, we
-	can submit the two "hello world" programs created previously as follows (commands are
-	given for slurm):
+	Before running a multi-node MPI job via slurm on the demo nodes, the slurm config most
+	likely needs to be updated with the exact RAM values available to these nodes for slurm
+	jobs. This is due to the fact that Qlustar nodes report their available RAM during the
+	boot process to the qlumand on the head-node, and these values can be different to the
+	ones originally assumed by the installer. To accomplish this, write the slurm config as
+	explained <link
+	xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">here
+	</link>.
+      </para>
+      <para>
+	It is also possible, that the demo nodes will still be in the slurm state
+	<emphasis>DRAINED</emphasis> after this. To check this and possibly change the state,
+	<link xlink:href="../QluMan_Guide/index.html#sec-Slurm-Manage___blank___">use the Slurm
+	Node State Management </link> of the QluMan GUI. If the nodes are indeed in state
+	<emphasis>DRAINED</emphasis>, first restart the slurmd on the nodes and then undrain
+	them using this GUI dialog.
+      </para>
+      <para>
+	Once all this is done and the nodes are in state <emphasis>IDLE</emphasis>, still being
+	logged in as the test user and assuming at least two demo nodes are started, we can
+	submit the two "hello world" programs created previously to slurm as follows:
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>salloc -N 2 --ntasks-per-node=2 --mem=20 -p demo srun hello-world-c</command>
@@ -727,10 +847,10 @@ salloc: Job allocation 3 has been revoked.
 	</screen>
       </para>
       <para>
-	Similarly the F90 version can be submitted as a batch job using the script
-	<filename>hello-world-f90-slurm.sh</filename> (to see the output, execute <command>cat
-	slurm-<replaceable>&lt;job#&gt;</replaceable>.out</command> after the job has
-	finished):
+	Similarly, the F90 version can be submitted as a batch job using the script
+	<filename>hello-world-f90-slurm.sh</filename> (to check the output, execute
+	<command>cat slurm-<replaceable>&lt;job#&gt;</replaceable>.out</command> after the job
+	has finished):
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
@@ -741,7 +861,7 @@ salloc: Job allocation 3 has been revoked.
       <title>Running the Linpack benchmark</title>
       <para>
 	The <link xlink:href="http://www.top500.org/project/linpack/___blank___">Linpack
-	benchmark</link> s used to classify supercomputers in the <link
+	benchmark</link> is used to classify supercomputers in the <link
 	xlink:href="http://www.top500.org/___blank___">Top 500</link> list. That's why on most
 	clusters, it's probably run as one of the first parallel programs to check
 	functionality, stability and performance. Qlustar comes with an optimized pre-compiled
@@ -769,7 +889,7 @@ JOBID PARTITION     NAME     USER  ST  TIME  NODES  NODELIST(REASON)
 	Now ssh to one of the nodes in the <literal>NODELIST</literal> and check with
 	<application>top</application> that Linpack is running at full steam, like:
 	<screen>
-<prompt>0 testuser@cl-front ~ $</prompt>
+<prompt>0 testuser@beo-201 ~ $</prompt>
 <command>top</command>
   PID USER  PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                 
 18307 test  20   0  354m 280m 2764 R  100 28.0   6:42.92 xhpl-openblas           
