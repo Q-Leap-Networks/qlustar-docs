@@ -302,9 +302,8 @@
             Editing name of property
           </para></caption>
         </mediaobject>
-        With the exception of essential pre-defined properties, the name of a property can be
-        edited by clicking at it when it is selected from the drop-down menu. Beware that
-        changes must be saved by pressing <keycap>return</keycap>. Examples of properties that
+        With the exception of essential pre-defined properties, a property can be
+        edited by clicking the <guibutton>Edit></guibutton> button. Examples of properties that
         can not be edited (or deleted) are the ones used to generate the
         <literal>slurm.conf</literal>. Changing their name would lead to errors in the
         generated file. Similarly, some property values can not be deleted and will be shown
