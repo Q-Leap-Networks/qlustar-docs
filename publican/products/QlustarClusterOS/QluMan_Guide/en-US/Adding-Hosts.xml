@@ -224,17 +224,6 @@
       <para>
         <mediaobject>
           <imageobject><imagedata
-          fileref="images/hardware_property_set/property-editor.png"
-          width="85%" format="PNG"/></imageobject>
-          <textobject><phrase>
-            Property Editor
-          </phrase></textobject>
-          <caption><para>
-            Property Editor
-          </para></caption>
-        </mediaobject>
-        <mediaobject>
-          <imageobject><imagedata
           fileref="images/generic_property_set/edit-properties.png"
           width="85%" format="PNG"/></imageobject>
           <textobject><phrase>
@@ -242,6 +231,17 @@
           </phrase></textobject>
           <caption><para>
             Editing Properties
+          </para></caption>
+        </mediaobject>
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/hardware_property_set/property-editor.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Property Editor
+          </phrase></textobject>
+          <caption><para>
+            Property Editor
           </para></caption>
         </mediaobject>
         <mediaobject>
@@ -303,7 +303,7 @@
           </para></caption>
         </mediaobject>
         With the exception of essential pre-defined properties, a property can be
-        edited by clicking the <guibutton>Edit></guibutton> button. Examples of properties that
+        edited by clicking the <guibutton>Edit</guibutton> button. Examples of properties that
         can not be edited (or deleted) are the ones used to generate the
         <literal>slurm.conf</literal>. Changing their name would lead to errors in the
         generated file. Similarly, some property values can not be deleted and will be shown
