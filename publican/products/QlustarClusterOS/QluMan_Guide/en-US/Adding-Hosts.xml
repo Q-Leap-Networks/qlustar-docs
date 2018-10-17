@@ -403,7 +403,7 @@
 	Property</guimenuitem> sub-menu in the context menu: Select the desired property and
 	its value. Only properties and values that don't conflict with already included
 	properties or values are shown in the sub-menu. Already included properties may be
-	changed in two ways: Either a different value is selected from the drop down menu or
+	changed in two ways: Either a different value is selected from the drop-down menu or
 	the value is edited directly, in which case the change must be confirmed by pressing
 	<keycap>return</keycap>. If the entered value for the property doesn't exist yet, a new
 	value is automatically created. Another way to create new values and the only way to
@@ -423,20 +423,26 @@
 	    Add Config Class to Set
 	  </para></caption>
 	</mediaobject>
-	Config sets are managed the same way as property sets. Shown as a tree with the global
-	set at the top and the key/value pairs of assigned config classes as children. Creating
-	a new config set can be done by clicking the<guibutton>New</guibutton> button or from
-	the context menu same as for property sets. Adding and removing config classes to/from
-	a set also works the same way.
+	Config sets are managed the same way as property sets. They are displayed as a tree
+	with the global set at the top and the key/value pairs of assigned config classes as
+	children. Creating a new config set can be done by clicking the
+	<guibutton>New</guibutton> button or from the context menu just like for property
+	sets. Adding and removing config classes to/from a set also works the same way.
       </para>
       <para>
-	Unlike property sets though the list of usable config classes is fixed and values can
-	not be edited directly from this window. Config classes require a more complex and
-	individual config. So for each config class there is a menu item in the
-	<guimenuitem>Manage Configs</guimenuitem> menu. Depending on the config class one or
-	more values for that class can be assigned to a <literal>Config Set</literal>. For example
-	2 Slurm Partitions can be added to a <literal>Config Set</literal>. The sub-menu will only
-	show config classes and values that can be added without conflicting with existing entries.
+	Unlike property sets though, the list of usable config classes is fixed and values can
+	not be edited directly from this window. <link linkend="chap-Config-Classes">Config
+	classes</link> require a more complex and individual config. So for each config class
+	there is a menu item in the <guimenuitem>Manage Configs</guimenuitem> menu. Depending
+	on the type of config class, one or more values for that class can be assigned to a
+	<literal>Config Set</literal> (slurm partitions are an example where multiple values
+	are assignable).
+	<note>
+	  <para>
+	    The sub-menu only shows config classes and values that can be added without
+	    conflicting with already assigned entries.
+	  </para>
+	</note>
       </para>
     </section>
     <section xml:id="sec-Assigning-Config">
@@ -451,9 +457,7 @@
       <para>
 	The <literal>Global Template</literal> is the most generic way to assign configurations
 	to hosts. It applies to all hosts in the cluster and consists of the
-	<literal>Global</literal> Generic/Hardware Property and Config Set. In principle, the
-	latter are just like any other set, with the one difference that they always apply to
-	all hosts. This is useful when defining a base configuration for a cluster.
+	<literal>Global</literal> Generic/Hardware Property and Config Set.
       </para>
       <bridgehead xml:id="Host-Templates">Host Templates</bridgehead>
       <para>
@@ -492,9 +496,8 @@
       </para>
       <para>
 	Alternatively, especially when no correct <literal>Host Template</literal> exists yet,
-	the Hardware Wizard can be used to to create a new or modify an existing <literal>Host
-	Template</literal> and assign it to hosts. The Hardware Wizard is explained in <xref
-	linkend="chap-HWwizard"/>.
+	the <link linkend="chap-HWwizard">Hardware Wizard</link> can be used to to create a new
+	or modify an existing <literal>Host Template</literal> and assign it to hosts.
       </para>
       <bridgehead xml:id="x2host-mapping">Directly assigned properties, configs and sets</bridgehead>
       <para>
