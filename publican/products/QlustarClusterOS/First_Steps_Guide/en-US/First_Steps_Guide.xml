@@ -792,7 +792,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	first via the <firstterm>modules</firstterm> infrastructure
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>module load openmpi3/3.1.0 gnu7/7.3.0</command>
+<command>module load openmpi3/3.1.2 gnu8/8.2.0</command>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpicc -o hello-world-c hello-world.c</command>
 <prompt>0 testuser@cl-front ~ $</prompt>
@@ -855,6 +855,18 @@ salloc: Job allocation 3 has been revoked.
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
 	</screen>
+	<note>
+	  <para>
+	    On Ubuntu you might have to set the following environment variable to prevent
+	    warning messages about missing CUDA libraries (the latter are only present if you
+	    added Nvidia support during installation or if you created a custom image that
+	    includes the Nvidia module):
+	    <screen>
+<prompt>0 testuser@cl-front ~ $</prompt>
+<command>export OMPI_MCA_mpi_cuda_support=0</command>
+	    </screen>
+	  </para>
+	</note>
       </para>
     </section>
     <section xml:id="sec-Running-Linpack">
