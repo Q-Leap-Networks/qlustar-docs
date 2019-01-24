@@ -29,31 +29,37 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    A 64bit x86 server/PC (or virtual machine) with
+	    A 64bit x86 server/PC (or virtual machine) with:
 	    <itemizedlist>
 	      <listitem>
 	  	<para>
-		    at least two network adapters
+		    At least two network adapters.
 		</para>
 	      </listitem>
 	      <listitem>
 	  	<para>
-		  at least one disk with a minimum size of 160GB
+		  At least one disk with a minimum size of 160GB.
 		</para>
 	      </listitem>   
 	      <listitem>
 	  	<para>
-		  optionally a second (or more) disk(s) with a minimum size of 160GB
+		  Optionally a second (or more) disk(s) with a minimum size of 160GB.
 		</para>
 	      </listitem> 
 	      <listitem>
 	  	<para>
-		  CPU supporting virtualization (for virtual front-end and demo nodes)
+		  A CPU supporting virtualization (only for virtual front-end and demo nodes).
 		</para>
 	      </listitem> 
 	      <listitem>
 	  	<para>
-		  Internet connection
+		  A minimum of 1GB of RAM, but 2GB if you choose a virtual front-end node and
+		  an additional 1GB for each demo node you want to run simultaneously.
+		</para>
+	      </listitem> 
+	      <listitem>
+	  	<para>
+		  Internet connection.
 		</para>
 	      </listitem> 
 	    </itemizedlist>
