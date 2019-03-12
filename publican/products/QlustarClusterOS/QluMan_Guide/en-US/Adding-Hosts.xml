@@ -109,6 +109,34 @@
       button.
     </para>
     <para>
+      <!--cbox(file: images/new_host/window-import-macs-1.png caption: Import MACs from file)-->
+      <!--cbox(file: images/new_host/import-macs-2.png caption: Import MACs file dialog)-->
+      <!--cbox(file: images/new_host/import-macs-error.png caption: Failure to import MACs)-->
+      <!--cbox(file: images/new_host/window-import-macs-3.png caption: Imported MACs)-->
+      Another way is to import a list of mac addresses from a file by clicking the
+      <guibutton>Import MACs</guibutton>. Switches with management interface generally have an
+      option to list the MAC addresses for each port. Capture this list and save it in a file.
+      The file might need some editing to conform to the syntax Qluman-qt expects, which is as
+      follows. Lines starting with an '#' and empty lines are taken as comment. Everything else
+      must start with a MAC address in the standard hexadezimal notation with ':' as separator.
+      Any text following the mac address is taken as comment. Example:
+      <pre>
+# Rack 1
+02:00:00:00:01:01 # node 1
+02:00:00:00:01:02 # node 2
+# Rack 2
+02:00:00:00:02:01
+02:00:00:00:02:02
+02:00:00:00:02:03
+      </pre>
+      In case the file can not be parsed an error is shown with the line number at which parsing
+      failed. Otherwise the MAC addresses will be shown in place of the unassigned MAC addresses
+      detected by the dhcp server. Adding single hosts or groups of host from the list works the
+      same way as with the detected MACs as described above. Clicking the
+      <guibutton>Clear MACs</guibutton> button clears the imported MACs and returns to the list
+      of MACs detected by the dhcp server.
+    </para>
+    <para>
       At the bottom of the window a <link linkend="Host-Templates">Host Template</link>
       can be selected that will be used as the default for new hosts. Most of the time, no
       additional configuration is needed for a new host. As an alternative way to make settings
