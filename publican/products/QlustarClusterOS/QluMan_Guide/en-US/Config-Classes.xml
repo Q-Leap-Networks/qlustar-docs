@@ -363,16 +363,20 @@
     <para>
       When you are satisfied with your changes, you can preview the resulting
       <filename>dhcpd.conf</filename> file together with a diff to the old version on disk by
-      clicking the <guibutton>Preview</guibutton> button. This will also show the
-      <filename>ql-mcastd.conf</filename> file that configures the ql-mcastd that imrpoves
-      the PXE boot process started by the DHCP server by transfering
-      <productname>Qlustar</productname> images using multicast. The changes will only take full
-      effect when you click the <guibutton>Write</guibutton> button. This will also tell the
-      DHCP server to reload its configuration. The same can also be done through the main
-      menus <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem>
-      entry or the <guibutton>Write Files</guibutton> button at the bottom of the cluster
-      window and then selecting <guibutton>Preview</guibutton> or
-      <guibutton>Write</guibutton> button in the DHCP Configs row.
+      clicking the <guibutton>Preview</guibutton> button. This will also display
+      <filename>ql-mcastd.conf</filename>, the configuration file for the Qlustar 'OS image
+      pusher' <classname>ql-mcastd</classname>. The latter hugely speeds up the PXE boot
+      process when starting many nodes in parallel by transferring
+      <productname>Qlustar</productname> images using <firstterm>multicast</firstterm>.
+    </para>
+    <para>
+      The changes will only take full effect when you click the <guibutton>Write</guibutton>
+      button. This will also tell the DHCP server to reload its configuration. The same can
+      also be done through the main menus <guimenuitem>Manage
+      Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> entry or the
+      <guibutton>Write Files</guibutton> button at the bottom of the cluster window and then
+      selecting <guibutton>Preview</guibutton> or <guibutton>Write</guibutton> button in the
+      DHCP Configs row.
     </para>
   </section>
   <section xml:id="sec-Disk-Configs">
