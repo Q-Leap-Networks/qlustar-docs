@@ -363,7 +363,10 @@
     <para>
       When you are satisfied with your changes, you can preview the resulting
       <filename>dhcpd.conf</filename> file together with a diff to the old version on disk by
-      clicking the <guibutton>Preview</guibutton> button. The changes will only take full
+      clicking the <guibutton>Preview</guibutton> button. This will also show the
+      <filename>ql-mcastd.conf</filename> file that configures the ql-mcastd that imrpoves
+      the PXE boot process started by the DHCP server by transfering
+      <productname>Qlustar</productname> images using multicast. The changes will only take full
       effect when you click the <guibutton>Write</guibutton> button. This will also tell the
       DHCP server to reload its configuration. The same can also be done through the main
       menus <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem>
