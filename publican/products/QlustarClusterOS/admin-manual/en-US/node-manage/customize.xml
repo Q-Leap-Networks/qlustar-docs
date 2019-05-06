@@ -83,6 +83,14 @@ option qlustar-cfgmnt "-t nfs -o rw,hard,intr 192.168.52.254:/srv/ql-common";
       one. You can use this mechanism to perform arbitrary modifications/customization of the
       compute node OS.
     </para>
+    <note>
+      <para>
+	The scripts placed into <filename>/etc/qlustar/common/rc.boot</filename> must be
+	executable and conform to the naming standard that the command
+	<command>run-parts</command> defines (see <command>man run-parts</command> on the
+	head-node).
+      </para>
+    </note>
   </section>
   <section xml:id="admin-man-sect-add-dirs-files-links">
     <title>Adding directories, files, links</title>
