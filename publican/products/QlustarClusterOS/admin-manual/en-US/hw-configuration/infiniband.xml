@@ -17,8 +17,9 @@
     Many clusters with the need for high-throughput and/or low-latency communication between
     nodes use Infiniband (IB) network hardware. Qlustar fully supports Infiniband via the <link
     xlink:href="https://www.openfabrics.org/___blank___">OFED software
-    stack</link>. The basic configuration for Infiniband networks is explained later in <xref
-    linkend="admin-man-sect-infiniband"/>.
+    stack</link>. The basic configuration for Infiniband networks is explained in the <link
+    xlink:href="../QluMan_Guide/index.html#sec-Configuring-IB___blank___">QluMan
+    Guide</link>.
   </para>
   <section xml:id="admin-man-sect-hw-IB-diag">
     <title>IB Fabric Verification/Diagnosis</title>
