@@ -676,70 +676,13 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		  </note>
 		</listitem>
 	      </varlistentry>
-	      <varlistentry>
-		<term>Docker container</term>
-		<listitem>
-		  <para>
-		    A <link
-		    xlink:href="https://hub.docker.com/r/qlustar/qluman-gui/___blank___">docker
-		    container with the QluMan GUI</link> is available on the Docker Hub. You
-		    will need the docker engine installed on your workstation to run it. To
-		    install the docker engine for your platform, check the instructions at
-		    <link
-		    xlink:href="https://docs.docker.com/engine/installation/___blank___">the
-		    official Docker site</link>. Once you have it installed, you can <link
-		    xlink:href="https://qlustar.com/sites/default/files/downloads/run-qluman-docker___blank___">
-		    download our run script</link> and execute it like (from the directory to
-		    where you saved it)
-		    <screen>
-<prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 run-qluman-docker</command>
-<prompt>0 user@workstation ~ $</prompt>
-<command>./run-qluman-docker</command>
-		    </screen>
-		    <note>
-		      <para>
-			The Docker container will most likely not be able to resolve the
-			hostname of your cluster head-node. Hence, you will have to use its
-			IP address in the <emphasis>Local</emphasis> field of <link
-			xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
-			connection info</link> dialog for it.
-		      </para>
-		    </note>
-		    <note>
-		      <para>
-			If you always want to run the latest version of the QluMan GUI, start
-			the script like
-			<screen>
-<command>./run-qluman-docker latest</command>
-			</screen>
-		      </para>
-		    </note>
-		    <note>
-		      <para>
-			In case you are running the docker container as a non-root user and if
-			that user has its home directory on an NFS mount point, carefully read
-			and follow the instructions/output of the script.
-		      </para>
-		    </note>
-		    <important>
-		      <para>
-			Be sure to verify the sha256 checksum of the
-			<application>run-qluman-docker</application> script after the
-			download. It is:
-			1ee39af0953af315ba05494f0554efe905d7bb4c337573606b620edb4868de19
-		      </para>
-		    </important>
-		  </para>
-		</listitem>
-	      </varlistentry>
 	    </variablelist>
 	    <important>
 	      <para>
-		The base version (e.g. 10.1.0) of the QluMan packages/containers on the
+		The base version (e.g. 11.0.0) of the QluMan packages/containers on the
 		workstation should be the same as on the head-node(s) to ensure correct
-		operation. Some close unequal version combinations (e.g. 10.1.0.7 and
-		10.1.0.12) usually work too, but are not well tested.
+		operation. Some close unequal version combinations (e.g. 11.0.0.7 and
+		11.0.0.12) usually work too, but are not well tested.
 	      </para>
 	    </important>
 	  </para>
