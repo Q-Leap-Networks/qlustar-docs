@@ -290,7 +290,8 @@ keep the local version currently installed.
 	  </listitem>
 	  <listitem>
 	    <para>
-	      <application>DHCP/ATFTP</application> boot services
+	      <application>DHCP/TFTP</application> boot services and DNS name service provided
+	      by dnsmasq.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -360,7 +361,7 @@ keep the local version currently installed.
 	  xlink:href="../Installation_Guide/index.html#Edge-Platform-Selection___blank___">edge
 	  platform</link> was automatically created. The chroots are located at
 	  <filename>/srv/apps/chroots/<replaceable>chroot name</replaceable></filename>, where
-	  <replaceable>chroot name</replaceable> would be e.g. <filename>xenial</filename> or
+	  <replaceable>chroot name</replaceable> would be e.g. <filename>bionic</filename> or
 	  <filename>centos7</filename>. Each of them contains a full-featured installation of
 	  the corresponding Qlustar edge platform. To change into a chroot, convenience bash
 	  shell aliases of the form chroot-<replaceable>chroot name</replaceable> are defined
@@ -370,21 +371,21 @@ keep the local version currently installed.
       <section xml:id="sec-Adding-Software-Deb">
 	<title>Ubuntu/Debian</title>
 	<para>
-	  Example for Ubuntu/Xenial, if it was selected at install
+	  Example for Ubuntu/Bionic, if it was selected at install
 	  <screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>chroot-xenial</command>
+<command>chroot-bionic</command>
 	  </screen>
 	  Once you're inside a chroot, you can use the standard Debian/Ubuntu tools to control
 	  its software packages, e.g.
 	  <screen>
-<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
 <command>apt update</command>
-<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
 <command>apt dist-upgrade</command>
-<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
 <command>apt install <replaceable>package</replaceable></command>
-<prompt>(xenial) 0 root@cl-head ~ #</prompt>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
 <command>exit</command>
 	  </screen>
 	</para>
@@ -600,12 +601,12 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	    </para>
 	  </note>
 	  <para>
-	    Then if you have <literal>Ubuntu/Xenial</literal> execute:
+	    Then if you have <literal>Ubuntu/Bionic</literal> execute:
 	    <screen>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.1-xenial main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 11.0-bionic main non-free'</command>
 <prompt>0 root@workstation ~ #</prompt>
-<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 10.1-xenial-proposed-updates main non-free'</command>
+<command>add-apt-repository 'deb http://repo.qlustar.com/repo/qluman 11.0-bionic-proposed-updates main non-free'</command>
 	    </screen>
 	    After this you can install qluman-qt the usual way:
 	    <screen>
@@ -646,14 +647,14 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    on any machine with Singularity installed (minimum Singularity version is
 		    2.4.1 for QluMan 10 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
-		    saved it as <filename>$HOME/qluman-10.1.0.39-singularity.sqsh</filename>):
+		    saved it as <filename>$HOME/qluman-11.0.0.23-singularity.sqsh</filename>):
 	    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>sha256sum $HOME/qluman-10.1.0.39-singularity.sqsh</command>
+<command>sha256sum $HOME/qluman-11.0.0.23-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 $HOME/qluman-10.1.0.39-singularity.sqsh</command>
+<command>chmod 755 $HOME/qluman-11.0.0.23-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>$HOME/qluman-10.1.0.39-singularity.sqsh</command>
+<command>$HOME/qluman-11.0.0.23-singularity.sqsh</command>
 	    </screen>
 		  </para>
 		    <note>
