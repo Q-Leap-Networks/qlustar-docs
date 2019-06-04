@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "QluMan_Guide.ent">
+%BOOK_ENTITIES;
+<!ENTITY % sgml.features "IGNORE">
+<!ENTITY % xml.features "INCLUDE">
+<!ENTITY % DOCBOOK_ENTS PUBLIC "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" "/usr/share/xml/docbook/schema/dtd/4.5/dbcentx.mod">
+%DOCBOOK_ENTS;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xml:id="chap-Network-Settings">
+  <title>Network Settings</title>
+  <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: Network Settings Dialog)--> 
+  <para>
+    Some network settings can not be assigned to any group of nodes but relate to the cluster
+    as a whole and how it connects to the outside world. This includes the configuration of the
+    <firstterm>dynamic name system (DNS)</firstterm> and the <firstterm>HTTP Proxy</firstterm>.
+    Open the Network Settings from the <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>
+    Global Configs</guimenuitem> menu.
+  </para>
+  <section xml:id="sec-DNS">
+    <title>Dynamic Name System (DNS)</title>
+    <para>
+      The Dynamic Name System is design hierarchical. Each computer knows about a DNS server to
+      handle local requests. Should the request fall outside the scope of the local server it
+      will ask the next higher server. Starting with Qlustar 11, local DNS requests are handled
+      by DNSMasq and will answer requests concerning any configured node automatically. Requests
+      about other hosts are affected by 3 settings: The external DNS servers, the DNS search
+      domains and Cluster-external Hosts.
+    </para>
+    <section xml:id="sec-DNS-external">
+      <title>External DNS servers</title>
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: External DNS servers)--> 
+      <para>
+	External DNS servers will be used to resolve any DNS request about hosts outside of the
+	cluster. Since this is used to resolve names into IP addresses the nameserver can not
+	be configured by name but must be specified by their IP address. This is usually a
+	server maintained by the local IT department or by your internet service provider (ISP).
+	There are also public DNS servers anyone can use as a fallback, for example Googles
+	DNS public DNS server under the IP 8.8.8.8.
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server__edit.png caption: Saving changes)-->
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server__save.png caption: Saving changes)-->
+      <para>
+	The nameserver specified during the installer should already be set. If the IP of
+	the nameserver changes it can be edited by either pressing the up/down arrows next
+	to each part of the IP or by clicking at the number and entering it directly. Once
+	the correct IP address has been entered it needs to be saved by either pressing return
+	or by clicking the <guibutton>Save</guibutton> button. The <guibutton>Undo</guibutton>
+	reverts the nameserver to the last saved IP.
+      </para>
+      <note>
+	<para>
+	  Saving changes doesn't activate the new config immediately but only saves the setting
+	  in the database. To finally activate the changes the DNSMasq Config must be written
+	  from the Write Files window (see <xref linkend="sec-Writing-Config-Files"/>). This
+	  will reconfigure and restart the DNSMasq server so the new settings take effect.
+	</para>
+      </note>
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server__add.png caption: Adding a second DNS server)-->
+      <para>
+	For redundancy purposes more than one nameserver can be set. To add an additional
+	nameserver click the <guibutton>Add</guibutton> button. This will add a new nameserver
+	entry to the GUI defaulting to Googles public DNS server and can then be edited as
+	described above. Use this also when upgrading from a previous version of Qlustar to add
+	the first nameserver.
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server__up.png caption: Reordering DNS servers)-->
+      <para>
+	When a DNS request can not be answered locally the external nameservers will be asked
+	one by one in the order shown in the GUI. This order can be changed by pressing the
+	<guibutton>UP</guibutton> button next to the nameserver. This will move the respective
+	nameserver on position up in the list.
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server__del.png caption: Removing a DNS servers)-->
+      <para>
+	When a server is no longer valid or wanted it can also be removed by pressing the
+	<guibutton>X</guibutton> button next to the nameserver.
+      </para>
+    </section>
+  </section>
+</chapter>
+
