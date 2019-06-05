@@ -12,7 +12,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xml:id="chap-Network-Settings">
   <title>Network Settings</title>
-  <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: Network Settings Dialog)--> 
+  <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: Network Settings Dialog)-->
   <para>
     Some network settings can not be assigned to any group of nodes but relate to the cluster
     as a whole and how it connects to the outside world. This includes the configuration of the
@@ -32,7 +32,7 @@
     </para>
     <section xml:id="sec-DNS-external">
       <title>External DNS servers</title>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: External DNS servers)--> 
+      <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: External DNS servers)-->
       <para>
 	External DNS servers will be used to resolve any DNS request about hosts outside of the
 	cluster. Since this is used to resolve names into IP addresses the nameserver can not
@@ -80,6 +80,106 @@
 	When a server is no longer valid or wanted it can also be removed by pressing the
 	<guibutton>X</guibutton> button next to the nameserver.
       </para>
+    </section>
+    <section xml:id="sec-DNS-search-domain">
+      <title>DNS search domains</title>
+      <!--cbox(file: network_settings/global_config__network_settings__search_domains.png caption: DNS search domains)-->
+      <para>
+	A DNS search domain is what the DNS service will use to resolve hostnames that are not
+	fully qualified. A fully qualified domain name is one that can be resolved by working
+	down from the root domain (which is just an empty string) and eventually ending up
+	with an IP address. In less technical terms, it's one that ends in a top-level-domain
+	such as .de, .net, .org, .com, etc...
+      </para>
+      <para>
+	In practical terms whenever something tries to resolve a host name that can not be
+	resolved as is the search domains are appended to the hostname and tried one by one
+	to see if it resolves then. It usually contains at least the overall domain of the
+	firm or institution the cluster is located at but often also sub-domains. For example:
+	The search domain is set to my-department.my-firm.com and my-firm.com. If something
+	tries to look up the IP address for the host mailserv then first mailserv is tried as
+	is. If that fails mailserv.my-department.my-firm.com is tried and if that fails as well
+	mailserv.my-firm.com. This allows using the shorter hostname to refer to host that
+	are outside the cluster but still in the local environment.
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__search_domains__edit.png caption: Editing a search domain)-->
+      <para>
+	A search domain can be edited by clicking the text field for the domain. As soon as
+	changes are made the <guibutton>Undo</guibutton> and <guibutton>Save</guibutton>
+	buttons will become enabled. Changes are saved by either pressing return or by clicking
+	the <guibutton>Save</guibutton> button.
+      </para>
+      <para>
+	<!--cbox(file: network_settings/global_config__network_settings__search_domains__add.png caption: Adding a search domain)-->
+	An additional search domain can be included by clicking the <guibutton>add</guibutton>
+	button. 
+      </para>
+      	<!--cbox(file: network_settings/global_config__network_settings__search_domains__up1.png caption: Ordering search domains)-->
+	<!--cbox(file: network_settings/global_config__network_settings__search_domains__up2.png caption: Deleting a search domain)-->
+	<para>
+	The search domains will be tried in the order shown in the GUI. Just like with the
+	nameservers the order can be changed by clicking the <guibutton>up</guibutton> button.
+	This will move the selected domain one slot upwards. Search domains can also be removed
+	by clicking the <guibutton>X</guibutton> button.
+	</para>
+	<note>
+	  <para>
+	    The DNS search domains are set on each host as it boots and are not updated at
+	    runtime. So any changes made will only affect host booted after the change was
+	    saved. Already running hosts need to be rebooted to catch the change.
+	  </para>
+	</note>
+    </section>
+    <section xml:id="sec-Cluster-external-Hosts">
+      <title>Cluster-external Hosts</title>
+      <!--cbox(file: network_settings/global_config__network_settings__external_host.png caption: Cluster-external Hosts)-->
+      <para>
+	Qluman manages all the DNS for the nodes in the cluster and any hardware with a network
+	connection that resides inside the networks of the cluster such be defined as a node in
+	the Enclosure view (<xref linkend="sec-Enclosure-View"/>). This includes managed network
+	switches or power strips. But sometimes there are also hosts outside the cluster
+	networks that Qluman should know about.
+      </para>
+            <!--cbox(file: network_settings/global_config__network_settings__external_host__add.png caption: Adding a Cluster-external Hosts)-->
+      <para>
+	One such case are servers that export a filesystem over NFS. Such filesystem exports
+	can be added to Qluman under <guimenuitem>Manage
+	Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem> (<xref
+	linkend="sec-Filesystem-Exports"/>). and then mounted on individual hosts or group of
+	hosts using the <firstterm>Network FS Mounts</firstterm> config class (<xref
+	linkend="sec-Network-FS-Mounts"/>). But for this the host exporting the filesystem
+	must be know to Qluman. Simply click the <guibutton>Add</guibutton> and enter the
+	name of the host to add.
+      </para>
+      <para>
+	Qluman can also, and this is the second reason to add a Cluster-external Host, add
+	the host to the DNS config for the cluster. For new entries that is not done and the
+	<guibutton>DNS external</guibutton> checkbox is checked. 
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__external_host__with_ip.png caption: Adding DNS service for Cluster-external Host)-->
+      <para>
+	To add DNS service to a Cluster-external Host uncheck the <guibutton>DNS
+	external</guibutton> checkbox to activate the IP widget and enter the correct IP. To
+	finalize the input and save the IP press return or click the
+	<guibutton>Save</guibutton> button.
+      </para>
+      <!--cbox(file: network_settings/global_config__network_settings__external_host__edit1.png caption: Editing a Cluster-external Host)-->
+      <para>
+	The name or IP of the Cluster-external Host can be edited at any time by selecting the
+	name of the host or the IP or clicking the <guibutton>up</guibutton> or
+	<guibutton>down</guibutton> arrows on the IP. Don't  forget to press return or click the
+	<guibutton>Save</guibutton> button to confirm the changes.
+      </para>
+      <note>
+	<para>
+	  To finally activate the changes to Cluster-external Hosts the <classname>DNSMasq
+	  Config</classname> must be written from the Write Files window (see
+	  <xref linkend="sec-Writing-Config-Files"/>). This will reconfigure and restart the
+	  DNSMasq server so the new settings take effect. But this will only affect the DNS
+	  part of the change. Filesystems mounted on hosts will see the change the next time
+	  the host boots.
+	</para>
+      </note>
     </section>
   </section>
 </chapter>
