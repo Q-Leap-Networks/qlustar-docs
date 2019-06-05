@@ -54,9 +54,10 @@
       <note>
 	<para>
 	  Saving changes doesn't activate the new config immediately but only saves the setting
-	  in the database. To finally activate the changes the DNSMasq Config must be written
-	  from the Write Files window (see <xref linkend="sec-Writing-Config-Files"/>). This
-	  will reconfigure and restart the DNSMasq server so the new settings take effect.
+	  in the database. To finally activate the changes the <classname>DNSMasq
+	  Config</classname> must be written from the Write Files window (see
+	  <xref linkend="sec-Writing-Config-Files"/>). This will reconfigure and restart the
+	  DNSMasq server so the new settings take effect.
 	</para>
       </note>
       <!--cbox(file: network_settings/global_config__network_settings__dns_server__add.png caption: Adding a second DNS server)-->
