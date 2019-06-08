@@ -18,26 +18,24 @@
     <edition>1</edition>
     <abstract>
       <para>
-	The 10.1 release extends Qlustar's reach significantly by adding <link
-	xlink:href="https://www.centos.org/___blank___">CentOS</link> as a fully supported
-	<link
-	xlink:href="https://www.qlustar.com/intro/platform___blank___">edge-platform</link>
-	together with a tight <link
-	xlink:href="https://openhpc.community/___blank___">OpenHPC</link> integration. A second
-	major milestone is the revamp of the node boot process which now supports
-	fault-tolerant multi-cast.
+	The 11.0 release updates Qlustar's core platform to current Ubuntu 18.04 LTS.  The
+	CentOS edge platform is now based on 7.6. As a result of our continuous platform
+	optimization/simplification process we moved to <link
+	xlink:href="http://dnsmasq.org/___blank___">dnsmasq</link> as a replacement of the
+	previously used ISC DHCP and atftp TFTP server. dnsmasq also provides cluster internal
+	name services (DNS) replacing the NIS hosts map and acts as a DNS proxy.
       </para>
       <para>
-	To prepare for ExaScale support, we now ship <link
-	xlink:href="https://github.com/pmix/pmix___blank___">pmix</link> as the default MPI
-	startup method from within slurm and <link
-	xlink:href="http://www.openucx.org/___blank___">ucx</link> as a new communication
-	library implementing a high-performance messaging layer for MPI, PGAS, and RPC
-	frameworks.
+	In addition to the dnsmasq management interface, the second major feature of QluMan is
+	the possibility to handle Network filesystem resources. Initially this supports NFS
+	mounts including RDMA connections and a mechanism to automatically choose the optimal
+	network path to the NFS server. Mount resources are implemented as systemd automount
+	units. This new interface replaces the previously used automount daemon which is now
+	deactivated per default.
       </para>
       <para>
-	The highlights among the numerous component updates and bug fixes are: Kernel 4.14.x,
-	Slurm 17.11.x, CUDA 9.1, OpenMPI 3.1.2, Lustre 2.11.
+	The highlights among the numerous component updates and bug fixes are: Kernel 4.19.x,
+	Slurm 18.08.x, CUDA 10.1, OpenMPI 4.0.1, BeeGFS 7.1.3.
       </para>
     </abstract>
     <author><orgname><inlinemediaobject><imageobject>
@@ -47,78 +45,103 @@
   <section>
     <title>Basic Info</title>
       <para>
-	The Qlustar 10.1 release is based on Ubuntu 16.04.5. It includes all security fixes and
-	other package updates published before Oct 12th 2018. Available security updates
-	relevant to Qlustar 10.1, that have appeared after this date, will be announced on the
+	The Qlustar 11.0 release is based on Ubuntu 18.04.2. It includes all security fixes and
+	other package updates published before June 6th 2019. Available security updates
+	relevant to Qlustar 11.0, that have appeared after this date, will be announced on the
 	Qlustar website and in the Qlustar security newsletter. Supported edge-platforms are
-	Ubuntu 16.04 (Xenial) and the newly available CentOS 7.5 with integration of OpenHPC
-	1.3.5.
+	Ubuntu 18.04 (Bionic) and CentOS 7.6 with integration of OpenHPC 1.3.7.
       </para>
   </section>
   <section>
     <title>New features</title>
     <section>
-      <title>CentOS edge-platform</title>
+      <title>dnsmasq</title>
+      <para>
+      dnsmasq is now employed as a central Qlustar component to consolidate three network
+      services previously provided by three independent daemons and hence significantly reduces
+      complexity on the head-node. In addition it provides DNS proxy services per default which
+      had to be configured manually in earlier Qlustar releases.
+      </para>
       <variablelist>
 	<varlistentry>
-	  <term>CentOS image modules</term>
+	  <term>DHCP</term>
 	  <listitem>
 	    <para>
-	      The following Qlustar image modules are provided to create CentOS based OS
-	      images with exactly the same functionality as their Ubuntu counterparts:
-	      <itemizedlist>
-		<listitem>
-		  <para>
-		    Core, Slurm, OFED, Nvidia, Lustre Client, BeeGFS client and Samba
-		  </para>
-		</listitem>
-	      </itemizedlist>
+	      dnsmasq now provides cluster-internal DHCP services replacing the previously used
+	      ISC DHCP server software.
 	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term>OpenHPC integration</term>
+	  <term>TFTP</term>
 	  <listitem>
 	    <para>
-	      The OpenHPC 1.3.5 software repository is automatically available in Qlustar
-	      CentOS chroots. If selected at install time, a basic set of OpenHPC packages is
-	      available in the CentOS chroot that is created for netboot nodes. Additional
-	      desired packages can be installed in a standard fashion using yum.
-	      <note>
-		<para>
-		  Since OpenHPC provides a full-blown development stack for HPC applications,
-		  Qlustar relies on these packages rather than providing its own stack as for
-		  Ubuntu.
-		</para>
-	      </note>
+	      dnsmasq also acts as a TFTP/PXE boot server making the previously used atftpd
+	      obsolete.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Cluster-internal DNS</term>
+	  <listitem>
+	    <para>
+	      dnsmasq provides DNS name resolution both for cluster-internal nodes as well as
+	      external machines via its proxy functionality. As a consequence, the NIS host map
+	      is not needed anymore and has been removed for new installations.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Legacy support</term>
+	  <listitem>
+	    <para>
+	      When updating from an earlier release, you have the option to keep the previous
+	      DHCP/TFTP setup through a legacy option for now.
 	    </para>
 	  </listitem>
 	</varlistentry>
       </variablelist>
     </section>
     <section>
-      <title>Fault-tolerant multi-cast booting of OS images</title>
-      <para>
-	Extending our revamp of the netboot process for Qlustar nodes in the 10.0 release, two
-	major improvements were made:
-	<itemizedlist>
+      <title>QluMan 11.0</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Network Mount Management</term>
 	  <listitem>
 	    <para>
-	      QluMan now supports downloading the OS image via a fast and fault-tolerant
-	      multi-cast mechanism. This can reduce boot-time dramatically and allows for
-	      simultaneous booting of a virtually unlimited number of cluster nodes without
-	      increasing overall boot-time.
+	      QluMan has a new config class that allows to configure and assign network mounts
+	      to nodes. Initially NFS mounts including RDMA variants are supported. They are
+	      setup on the nodes as systemd automount units.
+	    </para>
+	    <para>
+	      QluMan automatically activates NFSoRDMA on clients that support it with an option
+	      to switch back to TCP if needed. It also allows to define priorities for the
+	      available networks, so that the network to be used for a mount is optimally
+	      chosen if a node provides multiple paths to the corresponding NFS server.
 	    </para>
 	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>DNSmasq Management</term>
 	  <listitem>
 	    <para>
-	      Qlustar OS images are now created using squashfs with compression. This reduces
-	      the memory footprint of the OS by roughly 66% so that a standard compute node
-	      image with slurm and IB support now consumes a mere 160MB of RAM.
+	      The newly introduced dnsmasq is fully manageable via QluMan. A new dialog has
+	      been introduced to add external DNS servers and search domains, as well as
+	      name/IPs for cluster external machines.
 	    </para>
 	  </listitem>
-	</itemizedlist>
-      </para>
+	</varlistentry>
+	<varlistentry>
+	  <term>Preview node-specific configs</term>
+	  <listitem>
+	    <para>
+	      The context menu of a node in the Enclosure View now includes an entry that
+	      allows a preview of all files/configs that are assigned and sent to a node when
+	      booting.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
     </section>
   </section>
   <section>
@@ -126,23 +149,13 @@
       <para>
 	<variablelist>
 	  <varlistentry>
-	    <term>QluMan 10.1</term>
+	    <term>Kernel 4.19</term>
 	    <listitem>
 	      <para>
-		QluMan 10.1 adds a much improved calculation of the node-specific memory
-		available to slurm jobs. This makes sure that nodes are not oversubscribed
-		concerning RAM allocation and prevents unjustified killing of jobs by the
-		kernel OOM killer. It now also automatically detects/configures CPU hardware
-		threads for usage in slurm. Additionally a large number of minor improvements
-		were made and several bugs fixed.
-	      </para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>Kernel 4.14</term>
-	    <listitem>
-	      <para>
-		Qlustar 10.1 is based on the 4.14 LTS kernel series.
+		Qlustar 11.0 is based on the 4.19 LTS kernel series (Ubuntu only). The new
+		kernel option <emphasis>mitigations=off</emphasis> has been added to QluMan for
+		an easy way to run compute nodes without performance penalties from CPU
+		security bug mitigations (Spectre etc.).
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -150,8 +163,8 @@
 	    <term>Slurm</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.1 introduces the Slurm 17.11 series with the current version being
-		17.11.9.2.
+		Qlustar 11.0 introduces the Slurm 18.08 series with the current version being
+		18.08.7.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -159,7 +172,10 @@
 	    <term>OpenMPI</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.1 upgrades to OpenMPI 3.1.2 now including support for libfabric.
+		Qlustar 11.0 upgrades to OpenMPI 4.0.1 now using ucx transport per
+		default. Furthermore, we added support for multiple gcc versions, now with a
+		gcc7 flavor based on the Ubuntu default compiler (gcc 7.x) and a gcc8 flavor
+		based on gcc 8.3.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -167,19 +183,17 @@
 	    <term>Nvidia CUDA</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.1 provides optimal support for Nvidia GPU hardware by supplying
-		pre-compiled and up-to-date kernel drivers as well as CUDA 9.1.
+		Qlustar 11.0 provides optimal support for Nvidia GPU hardware by supplying
+		pre-compiled and up-to-date kernel drivers as well as CUDA 10.1.
 	      </para>
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term>Lustre</term>
+	    <term>BeeGFS</term>
 	    <listitem>
 	      <para>
-		Qlustar 10.1 has integrated the most recent Lustre release 2.11 for clients and
-		servers with ready-to-use image modules. This is the first release with the
-		long awaited <firstterm>Data on MDT (DoM)</firstterm> feature to significantly
-		improve small-file performance.
+		Qlustar 11.0 has integrated the most recent BeeGFS release 7.1.3 for clients
+		and servers with ready-to-use image modules.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -192,41 +206,41 @@
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <classname>rdma-core</classname>: 18.1 (Ubuntu only, on CentOS, the original RHEL
+	    <classname>rdma-core</classname>: 21.0 (Ubuntu only, on CentOS, the original RHEL
 	    OFED stack is used).
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
 	    <classname>Intel/PGI Compiler support</classname>: The Qlustar wrapper packages
-	    have been updated to support the new version of the PGI community edition 18.4
-	    (package qlustar-pgi-dev-tools). Corresponding OpenMPI package variants for this
-	    compiler are also provided (both Ubuntu only).
+	    have been updated to support the new version of the Intel parallel studio (2019)
+	    and PGI community edition 2018.4/10 (package qlustar-pgi-dev-tools). Corresponding
+	    OpenMPI package variants for this compiler are also provided (both Ubuntu only).
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>BeeGFS</classname>: 6.19
+	    <classname>Lustre</classname>: 2.12.2
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>ZFS</classname>: 0.7.10
+	    <classname>ZFS</classname>: 0.7.13
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>singularity</classname>: 2.6.0
+	    <classname>singularity</classname>: 3.2.0
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>openblas</classname>: 3.2
+	    <classname>openblas</classname>: 0.3.5
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>hwloc</classname>: 1.11.7
+	    <classname>hwloc</classname>: 2.0.3
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -238,8 +252,10 @@
 	<itemizedlist>
 	  <listitem>
 	    <para>
-	      Removed support for BLCR checkpoint/restart due to lack of upstream support for
-	      newer kernels.
+	      The automount daemon together with the corresponding NIS maps have been replaced
+	      in favor of the new network mount config class provided by QluMan (see
+	      above). Legacy setups based on automount/NIS will continue to function and will
+	      be supported.
 	    </para>
 	  </listitem>
 	</itemizedlist>
@@ -253,7 +269,7 @@
 	<step>
 	  <title>Preparations</title>
 	  <para>
-	    Upgrading to Qlustar 10.1 is only supported from a 10.0.x release.
+	    Upgrading to Qlustar 11.0 is only supported from a 10.1.x release.
 	  </para>
 	  <note><para>
 	    Make sure that you have no unwritten changes in the QluMan database. If you do,
@@ -265,29 +281,75 @@
 	<step>
 	  <title>Optionally clone chroots</title>
 	  <para>
-	    Clone existing Ubuntu 16.04 chroots based on 10.0 and then afterwards upgrade the
-	    clones to 10.1. That allows for easy rollback.
+	    Clone existing Ubuntu 16.04 and CentOS7 chroots based on 10.1 and then afterwards
+	    upgrade the clones to 11.0. That allows for easy rollback.
 	  </para>
 	</step>
 	<step>
-	  <title>Update to 10.1 package sources list</title>
+	  <title>Update to 11.0 package sources list</title>
 	  <para>
 	    The Qlustar apt sources list needs to be changed as follows both on the
-	    head-node(s) and in all existing chroot(s) that should be updated.
+	    head-node(s) and in all existing Ubuntu based chroot(s) that should be updated.
 	    <screen>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>apt-get update</command>
+<command>apt update</command>
 <prompt>0 root@cl-head ~ #</prompt>
-<command>apt-get install qlustar-sources-list-10.1</command>
+<command>apt install qlustar-sources-list-11.0</command>
+	    </screen>
+	  </para>
+	  <para>
+	    To prepare a CentOS7 based chroot for the upgrade, change into it and execute the
+	    following:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+sed -i -e 's/10.1/11.0/g'  /etc/yum.repos.d/qlustar-10.1-centos7.repo</command>
 	    </screen>
 	  </para>
 	</step>
 	<step>
 	  <title>Update packages</title>
 	  <para>
-	    Now proceed as explained in the <link
-	    xlink:href="../Administration_Manual/index.html#chap-Updating-Qlustar___blank___">
-	    Qlustar Administration Manual</link>.
+	    On the head-node execute
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt update</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt dist-upgrade</command>
+	    </screen>
+	  </para>
+	  <note>
+	    <para>
+	      When asked about whether you want to update the configuration file for some
+	      package, you should answer 'N' (keep the old version) unless you have a specific
+	      reason to change it.
+	    </para>
+	  </note>
+	  <para>
+	    Change into each Ubuntu based chroot you want to update (e.g.)
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>chroot-bionic</command>
+	    </screen>
+	    and also execute:
+	    <screen>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
+<command>apt update</command>
+<prompt>(bionic) 0 root@cl-head ~ #</prompt>
+<command>apt dist-upgrade</command>
+	    </screen>
+	    Change into each CentOS based chroot you want to update (e.g.)
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt>
+<command>chroot-centos7</command>
+	    </screen>
+	    and execute (twice the same command):
+	    <screen>
+<prompt>(centos7-11.0) 0 root@cl-head ~ #</prompt>
+<command>yum update</command>
+<prompt>(centos7-11.0) 0 root@cl-head ~ #</prompt>
+<command>yum update</command>
+	    </screen>
+	    Confirm the import of the new Qlustar GPG key.
 	  </para>
 	</step>
 	<step>
@@ -297,39 +359,101 @@
 	  </para>
 	</step>
 	<step>
-	  <title>Change default MPI startup for slurm</title>
-	  <para>
-	    To make use of <link
-	    xlink:href="https://github.com/pmix/pmix___blank___">pmix</link> as the default MPI
-	    startup method, <link
-	    xlink:href="../QluMan_Guide/index.html#sec-Slurm-Config___blank___">edit the slurm
-	    config header</link> in QluMan and set <emphasis>MpiDefault=pmix</emphasis>. Then
-	    <link
-	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">write</link>
-	    the slurm config.
-	    <note>
-	      <para>
-		After this change, if you want to run MPI programs compiled before the update,
-		you need to add the srun option <emphasis>--mpi=pmi2</emphasis> to your submit
-		scripts.
-	      </para>
-	    </note>
-	  </para>
-	</step>
-	<step>
 	  <title>Regenerating Qlustar images</title>
 	  <para>
-	    Regenerate your Qlustar images with the 10.1 image modules. To accomplish this,
-	    you'll have to select <emphasis>Version 10.1</emphasis> in the QluMan <link
+	    Regenerate your Qlustar images with the 11.0 image modules. To accomplish this,
+	    you'll have to select <emphasis>Version 11.0</emphasis> in the QluMan <link
 	    xlink:href="../QluMan_Guide/index.html#sec-Qlustar-OS-Images___blank___"> Qlustar
 	    Images dialog</link>. If you have new cloned chroots, select those as well.
+	  </para>
+	  <note>
+	    <para>
+	      If your images include image modules that have a version in their name
+	      (e.g. beegfs-6-server), make sure that you change to the corresponding module
+	      with the most recent version (e.g. beegfs-7-server).
+	    </para>
+	  </note>
+	</step>
+	<step>
+	  <title>Migration to dnsmasq</title>
+	  <para>
+	    Migration to dnsmasq is not absolutely required during this upgrade, but highly
+	    recommended. If you want to delay the migration for now, you can do so by checking
+	    the <link
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">legacy
+	    checkbox in QluMan</link>. In this case you still have to disable systemd-timesyncd
+	    though in order for ntp to work:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+service systemd-timesyncd stop
+systemctl disable systemd-timesyncd
+</command>
+	    </screen>
+	    After this, you can reboot the head-node once more and proceed with step 8.
+	  </para>
+	  <warning>
+	    <para>
+	      Support for the old legacy setup with separate DHCP and TFTP servers will be
+	      discontinued starting with the 11.1 release. So you'll have to do the migration
+	      sometime before updating to 11.1. To do so, just follow the remainder of this
+	      step at any time.
+	    </para>
+	  </warning>
+	  <para>
+	    To start the migration you first have to install dnsmasq and disable the old DHCP
+	    and TFTP server as well as some systemd services:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt install dnsmasq</command>
+<prompt>0 root@cl-head ~ #</prompt><command>
+for s in isc-dhcp-server atftpd systemd-resolved systemd-timesyncd; do
+  service $s stop
+  systemctl disable $s
+done</command>
+	    </screen>
+	    Also remove <emphasis>nis</emphasis> from the <emphasis>hosts</emphasis> entry in
+	    <filename>nsswitch.conf</filename>:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+sed -ie 's/^hosts:.*/hosts:\t\tfiles dns/g' /etc/nsswitch.conf</command>
+	    </screen>
+	    Now add at least one of your external DNS servers in the corresponding <link
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___"> QluMan
+	    dialog</link> and afterwards <link
+	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___"> write
+	    the dnsmasq config</link>.
+	    <warning>
+	      <para>
+		This <emphasis>write step</emphasis> is essential. If you forget it, qlumand
+		won't be able to start after a reboot and you'll be left with a system in an
+		inconsistent state that needs manual repair.
+	    </para>
+	  </warning>
+	    Also change the <emphasis>dns-nameservers</emphasis> entry in
+	    <filename>/etc/network/interfaces</filename> to <emphasis>localhost</emphasis>, so
+	    that the head-node itself is using dnsmasq for DNS lookups.
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+sed -ie 's/  dns-nameservers.*/  dns-nameservers localhost/g' /etc/network/interfaces</command>
+	    </screen>
+	    Finally reboot the head-node once more. Once it is up again, check that dnsmasq is
+	    running:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+service dnsmasq status</command>
+	    </screen>
+	    If everything is working as expected, you can remove the now obsolete packages:
+	    <screen>
+<prompt>0 root@cl-head ~ #</prompt><command>
+apt remove atftpd isc-dhcp-server</command>
+	    </screen>
 	  </para>
 	</step>
 	<step>
 	  <title>Write config file changes</title>
 	  <para>
-	    To activate all changes in the QluMan database that were introduced by the update,
-	    they need to be written to disk now. Check the QluMan Guide about <link
+	    To activate all remaining changes in the QluMan database that were introduced by
+	    the update, they need to be written to disk now. Check the QluMan Guide about <link
 	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___"> how to
 	    write such changes</link>.
 	  </para>
@@ -349,9 +473,9 @@
     <title>Changelogs</title>
     <para>
       A detailed log of changes in the image modules can be found in the directories
-      <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-10.1.0</filename>.
+      <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-11.0.0</filename>.
       As an example, in the directory
-      <filename>/usr/share/doc/qlustar-module-core-xenial-amd64-10.1.0</filename> you will
+      <filename>/usr/share/doc/qlustar-module-core-xenial-amd64-11.0.0</filename> you will
       find a summary changelog in <filename>core.changelog</filename>, a complete list of
       packages with version numbers entering the current core module in
       <filename>core.packages.version.gz</filename>, a complete changelog of the core modules
