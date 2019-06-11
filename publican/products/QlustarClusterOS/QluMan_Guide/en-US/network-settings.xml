@@ -181,6 +181,12 @@
 	</para>
       </note>
     </section>
+    <section xml:id="sec-qlustar-common-path">
+      <para>
+        The qlustar/common path is an NFS share mounted by all nodes to access some shared config
+        files. Do not change this unless you know what you are doing.
+      </para>
+    </section>
   </section>
 </chapter>
 
