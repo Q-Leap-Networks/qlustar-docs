@@ -431,18 +431,20 @@
     <!--cbox(file: network-fs-mounts__overview.png caption: Network FS Mounts overview-->
     <para>
       <productname>Qlustar</productname> also supports mounting Network Filesystems from both
-      server inside the cluster and from outside the cluster network. First Qluman has to be told
-      what filesystems are exported and from where using <guimenuitem>Manage
-      Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>. Next a Network FS Mounts
-      config can be created under <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>Network FS
-      Mounts</guimenuitem>. And last the config can be assigned to hosts through the Global Template,
-      Host Template, Config Set or direct assignment to a host.
+      server inside the cluster and from outside the cluster network. First Qluman has to be
+      told what filesystems are exported and from where using <guimenuitem>Manage
+      Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>. Next a Network FS
+      Mounts config can be created under <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>Network FS Mounts</guimenuitem>. And last the config
+      can be assigned to hosts through the Global Template, Host Template, Config Set or direct
+      assignment to a host.
     </para>
-    <section xml:id="sec-Filesystem-Exports>
+    <section xml:id="sec-Filesystem-Exports">
       <!--cbox(file: filesystem_exports/filesystem_exports.png-->
       <!--cbox(file: filesystem_exports/filesystem_exports__new.png-->
       <!--cbox(file: filesystem_exports/filesystem_exports__new2.png-->
       <!--cbox(file: filesystem_exports/filesystem_exports__edit.png-->
+      <title>Filesystem Exports</title>
       <para>
         The Filesystem Exports dialog shows the list of exported filesystems by name and filesystem
         type. Selecting an entry will show details for this filesystem export on the right. A new
