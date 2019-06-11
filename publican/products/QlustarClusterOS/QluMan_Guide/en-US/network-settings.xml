@@ -182,9 +182,29 @@
       </note>
     </section>
     <section xml:id="sec-qlustar-common-path">
+      <!--cbox(file: network_settings/global_config__network_settings__qlustar_common.png-->
       <para>
         The qlustar/common path is an NFS share mounted by all nodes to access some shared config
         files. Do not change this unless you know what you are doing.
+      </para>
+    </section>
+    <section xml:id="sec-HTTP-Proxy">
+      <!--cbox(file: network_settings/global_config__network_settings__proxy__none.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/global_config__network_settings__proxy__name.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/global_config__network_settings__proxy__ip.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/global_config__network_settings__proxy__auth.png caption: HTTP Proxy configuration-->
+      <para>
+        Click the
+        check-mark before <guilabel>Http Proxy</guilabel> to enable proxy support and enter the
+        hostname together with the port of the proxy. If the proxy requires authentication,
+        click the check-mark before <guilabel>Authenticate</guilabel> and enter a username and
+        password. The <guilabel>Http Proxy</guilabel> label and <guilabel>User/pass</guilabel>
+        label will turn green when you edit the entries, the new input is acceptable but has
+        not been saved. The labels will turn red when the current input is invalid and turn
+        back to black once the input has been saved. The input can be saved by pressing return
+        or will be saved automatically when the input field looses focus. Note that specifying
+        an empty user name will disable authentication as will clearing the
+        <guilabel>Authenticate</guilabel> check-mark.
       </para>
     </section>
   </section>

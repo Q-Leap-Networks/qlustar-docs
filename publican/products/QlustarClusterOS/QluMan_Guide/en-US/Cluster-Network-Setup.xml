@@ -198,7 +198,7 @@
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="images/network_config/proxy.png"
+        fileref="images/network_settings/global_config__network_settings__proxy__none.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
           Configuring an HTTP proxy
@@ -209,20 +209,10 @@
       </mediaobject>
       If the head-node does not have direct access to the Internet, a <parameter>http
       proxy</parameter> must be configured. QluMan uses this proxy to download packages from
-      the <guilabel>Qlustar repository</guilabel>, when creating a new chroot. Open the HTTP
-      proxy settings from the <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Global
-      Configs</guimenuitem> menu. Click the
-      check-mark before <guilabel>Http Proxy</guilabel> to enable proxy support and enter the
-      hostname together with the port of the proxy. If the proxy requires authentication,
-      click the check-mark before <guilabel>Authenticate</guilabel> and enter a username and
-      password. The <guilabel>Http Proxy</guilabel> label and <guilabel>User/pass</guilabel>
-      label will turn green when you edit the entries, the new input is acceptable but has
-      not been saved. The labels will turn red when the current input is invalid and turn
-      back to black once the input has been saved. The input can be saved by pressing return
-      or will be saved automatically when the input field looses focus. Note that specifying
-      an empty user name will disable authentication as will clearing the
-      <guilabel>Authenticate</guilabel> check-mark.
-    </para>
+      the <guilabel>Qlustar repository</guilabel>, when creating a new chroot. The HTTP proxy
+      can be configured under <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Global
+      Configs</guimenuitem>-><guimenuitem>Network Settings</guimenuitem> (<xref
+      linkend="sec-HTTP-Proxy"/>).
     <bridgehead>
       Configuring slave networks
     </bridgehead>
