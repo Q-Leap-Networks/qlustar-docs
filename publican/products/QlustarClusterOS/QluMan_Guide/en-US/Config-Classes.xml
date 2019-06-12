@@ -431,7 +431,7 @@
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="network-fs-mounts__overview.png"
+        fileref="network_fs_mounts/overview.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
           Network FS Mounts overview
@@ -451,9 +451,9 @@
       assignment.
     </para>
     <section xml:id="sec-Filesystem-Exports">
-      <!--cbox(file: filesystem_exports/filesystem_exports__new.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__new2.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__edit.png)-->
+      <!--cbox(file: filesystem_exports/new.png)-->
+      <!--cbox(file: filesystem_exports/new2.png)-->
+      <!--cbox(file: filesystem_exports/edit.png)-->
       <title>Filesystem Exports</title>
       <para>
 	<!--cbox(file: filesystem_exports/filesystem_exports.png)-->
@@ -482,9 +482,9 @@
         the path must start with a "/" and must not have a trailing /. The <guilabel>Path</guilabel>
         will turn green if the path is acceptable and red otherwise. 
       </para>
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__remove.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__add.png)-->
+      <!--cbox(file: filesystem_exports/network_priority.png)-->
+      <!--cbox(file: filesystem_exports/network_priority__remove.png)-->
+      <!--cbox(file: filesystem_exports/network_priority__add.png)-->
       <para>
         If all fields are entered correctly the <guibutton>OK</guibutton> will be enabled and the
         Filesystem Export can be added and will appear in the Filesystem Exports window. Qluman
