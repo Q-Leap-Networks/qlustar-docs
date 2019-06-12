@@ -141,6 +141,17 @@
 	of multiple head-nodes e.g. in a high-availability configuration.
       </para>
     </note>
+    <!--cbox(file: enclosure_view/preview_config.png caption: Preview of a hosts generated config files-->
+    <!--cbox(file: enclosure_view/preview_config2.png caption: Preview of a hosts generated config files-->
+    <para>
+      Other configurations managed in the <application>QluMan</application> GUI via
+      <classname>Config Classes</classname> and sub-classes, are translated into automatically
+      generated configuration files for the individual hosts. These will be send to the host
+      and written as it boots. There is generally no update mechanism for running systems and
+      changes only take effect on the next reboot. A preview of the generated configs can be
+      seen by selecting <guimenuitem>Preview config</guimenuitem> from the context menu of
+      a host.
+    </para>
   </section>
   <section xml:id="sec-Boot-Configs">
     <title>Boot Configs</title>
@@ -219,166 +230,6 @@
       edited, or deleted.
     </para>
   </section>
-  <section xml:id="sec-DHCP-Config">
-    <title>DHCP Config</title>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/global.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          The global DHCP template
-        </phrase></textobject>
-        <caption><para>
-          The global DHCP template
-        </para></caption>
-      </mediaobject>
-      The <classname>DHCP config</classname> dialog allows the configuration of the DHCP
-      server and is provide by the main menu <guimenuitem>Manage
-      Configs</guimenuitem>-><guimenuitem>DHCP Configs</guimenuitem>. The final DHCP server
-      configuration file on disk is assembled from the header which defines global settings
-      and the host part which contains the MAC/IP address and hostname of all the hosts
-      registered with <application>QluMan</application>. The header can freely be edited in
-      the <classname>Global DHCP Template</classname> part of the dialog. An initial version
-      of it is created during installation and in most cases doesn't need to be changed. It
-      contains many important parameters required for the cluster to function
-      properly. Please consult the documentation of the DHCP server and the
-      <filename>dhcpd.conf</filename> man page for the syntax of this file.
-    </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/edit_global.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Editing the global DHCP template
-        </phrase></textobject>
-        <caption><para>
-          Editing the global DHCP template
-        </para></caption>
-      </mediaobject>
-      To prevent multiple persons from editing at the same time and overwriting each others
-      changes accidentally you must acquire a lock for the template by clicking the
-      <guibutton>Edit</guibutton> button. If another user is already editing the file the
-      button will be ghosted and the tool tip will show which user is holding a lock for the
-      template.
-    </para>
-    <para>
-      After having finished editing a template, don't forget to save your changes by clicking
-      the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/save_global.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Saving the global DHCP template
-        </phrase></textobject>
-        <caption><para>
-          Saving the global DHCP template
-        </para></caption>
-      </mediaobject>
-      save. You can undo all your changes up to the last time the template was saved by
-      clicking the <guibutton>Undo</guibutton> button. In case another admin has made changes
-      to a template while you are viewing or editing it, the <guibutton>Refresh</guibutton>
-      button will become enabled. By clicking it, the updated template is shown and you loose
-      any unsaved changes you have already made in your own edit field. To delete a template
-      click the <guibutton>Delete</guibutton> button.
-      <note>
-	<para>
-	  Note that the "Global Template" can not be deleted, since it is needed for the
-	  DHCP server to function correctly.
-	</para>
-      </note>
-    </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/template/lock_expire.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Lock expiration pop-up
-        </phrase></textobject>
-        <caption><para>
-          Lock expiration pop-up
-        </para></caption>
-      </mediaobject>
-      The template lock expires automatically after some time without activity so that the
-      template is not deadlocked if someone forgets to release the lock. In such a case the
-      above dialog will be shown notifying you about it. By selecting
-      <guibutton>OK</guibutton> a new lock will be requested. If another user is editing the
-      template at that time though the request will fail and an error dialog will inform you
-      of the failure.
-    </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/menu.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Choosing group templates
-        </phrase></textobject>
-        <caption><para>
-          Choosing group templates
-        </para></caption>
-      </mediaobject>
-      DHCP options can also be set in separate group templates and targeted to specific
-      hosts. For simple clusters, this is hardly ever needed, but for large clusters e.g. you
-      might want to have more than one boot server to speed up cluster boot time. In this
-      case you could assign different groups of hosts to different boot servers using this
-      method. The defined group templates are available as configs to be added to config sets
-      or hosts directly. You can select a group template from the drop-down menu at the
-      bottom to view or edit it. As an example 2 templates specifying different boot-servers
-      are included.
-    </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/new.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Creating a new template
-        </phrase></textobject>
-        <caption><para>
-          Creating a new template
-        </para></caption>
-      </mediaobject>
-       <mediaobject>
-        <imageobject><imagedata
-        fileref="images/dhcp_config/edit_new.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Saving the new template
-        </phrase></textobject>
-        <caption><para>
-          Saving the new template
-        </para></caption>
-      </mediaobject>
-     The drop-down menu also lets you create new templates by selecting the <guimenuitem>new
-      DHCP group</guimenuitem> entry. Enter the name of the template in the text field and
-      fill in the contents and description of the template. Pressing <keycap>return</keycap>
-      after entering the name will automatically acquire a lock for the new template and go
-      into edit mode. You can then enter the contents of the new template. Don't forget to
-      click the <guibutton>Save</guibutton> button at the end.
-    </para>
-    <para>
-      When you are satisfied with your changes, you can preview the resulting
-      <filename>dhcpd.conf</filename> file together with a diff to the old version on disk by
-      clicking the <guibutton>Preview</guibutton> button. This will also display
-      <filename>ql-mcastd.conf</filename>, the configuration file for the Qlustar 'OS image
-      pusher' <classname>ql-mcastd</classname>. The latter hugely speeds up the PXE boot
-      process when starting many nodes in parallel by transferring
-      <productname>Qlustar</productname> images using <firstterm>multicast</firstterm>.
-    </para>
-    <para>
-      The changes will only take full effect when you click the <guibutton>Write</guibutton>
-      button. This will also tell the DHCP server to reload its configuration. The same can
-      also be done through the main menus <guimenuitem>Manage
-      Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> entry or the
-      <guibutton>Write Files</guibutton> button at the bottom of the cluster window and then
-      selecting <guibutton>Preview</guibutton> or <guibutton>Write</guibutton> button in the
-      DHCP Configs row.
-    </para>
-  </section>
   <section xml:id="sec-Disk-Configs">
     <title>Disk Configs</title>
     <para>
@@ -425,13 +276,51 @@
       enter the name of the new config in the text field and fill in the contents and
       description.
     </para>
+    <para>
+      <!--cbox(file: disk_config/edit.png caption: Editing a disk config)-->
+      To prevent multiple persons from editing at the same time and overwriting each others
+      changes accidentally you must acquire a lock for the template by clicking the
+      <guibutton>Edit</guibutton> button. If another user is already editing the file the
+      button will be ghosted and the tool tip will show which user is holding a lock for the
+      disk config.
+    </para>
+    <!--cbox(file: disk_config/save.png caption: Saving a disk config)-->
+    <para>
+      After having finished editing a template, don't forget to save your changes by clicking
+      the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
+      save. You can undo all your changes up to the last time the template was saved by
+      clicking the <guibutton>Undo</guibutton> button. In case another admin has made changes
+      to a disk config while you are viewing or editing it, the <guibutton>Refresh</guibutton>
+      button will become enabled. By clicking it, the updated disk config is shown and you loose
+      any unsaved changes you have already made in your own edit field. To delete a disk config
+      click the <guibutton>Delete</guibutton> button.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/template/lock_expire.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Lock expiration pop-up
+        </phrase></textobject>
+        <caption><para>
+          Lock expiration pop-up
+        </para></caption>
+      </mediaobject>
+      The template lock expires automatically after some time without activity so that the
+      template is not deadlocked if someone forgets to release the lock. In such a case the
+      above dialog will be shown notifying you about it. By selecting
+      <guibutton>OK</guibutton> a new lock will be requested. If another user is editing the
+      template at that time though the request will fail and an error dialog will inform you
+      of the failure.
+    </para>
   </section>
   <section xml:id="sec-Network-FS-Mounts-overview">
     <title>Network Filesystem Mounts</title>
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="network-fs-mounts__overview.png"
+        fileref="network_fs_mounts/overview.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
           Network FS Mounts overview
@@ -561,6 +450,60 @@
 	<para>
 	  If the selected server is cluster-external, it will obviously not have a choice of
 	  network priorities.
+	</para>
+      </note>
+    </section>
+    <section xml:id="sec-Network-FS-Mounts">
+      <!--cbox(file: network_fs_mounts/network_fs_mounts.png caption: Network FS Mounts)-->
+      <!--cbox(file: network_fs_mounts/new.png caption: Add a new Network FS Mounts config)-->
+      <para>
+        Once Filesystem Exports have been declared they can be used to define Network FS Mount
+	configs. Each config is a collection of filesystems mounts and mount options that
+	can be assigned directly or indirectly through a Host Template or Global Template to
+	hosts. Only one Network FS Mount config can be assigned per host. Click the
+	<guibutton>New Config</guibutton> to create a new Network FS Mount config.
+      </para>
+      <!--cbox(file: network_fs_mounts/select.png caption: Select a Network FS Mounts config)-->
+      <!--cbox(file: network_fs_mounts/select_mountpoint.png caption: Select a Mountpoint)-->
+      <para>
+	The new Network FS Mounts config will be automatically selected for viewing and editing.
+	A different config can be selected from the drop down menu in the top left. Below that
+	the list of mountpoints for the selected config is shown along with the filesystem type
+	for each mount. Select one of the mountpoints to show the details for the mount on the
+	right.
+      </para>
+      <!--cbox(file: network_fs_mounts/add_mountpoint.png caption: Add a Mountpoint)-->
+      <!--cbox(file: network_fs_mounts/add_mountpoint2.png caption: Add a Mountpoint)-->
+      <para>
+	A mountpoint can be deleted or a new mountpoint added to the config from the context menu.
+	For a new mountpoint enter the path where the filesystem should be mounted in the
+	Mount Filesystem dialog and select one of the Filesystem Export resources declared
+	earlier from the drop down menu. In most cases this is sufficient for the mount and the
+	next time a node that has this Network FS Mounts config boots it will mount the new
+	filesystem.
+      </para>
+      <!--cbox(file: network_fs_mounts/subdir.png caption: Mounting a subdirectory of a resource)-->
+      <!--cbox(file: network_fs_mounts/network_override.png caption: Overriding the Network)-->
+      <!--cbox(file: network_fs_mounts/options.png caption: Custom mount options)-->
+      <para>
+	To set further options for a filesystem mount first select the relevant mountpoint from
+	the list on the left. This will show the details for the selected mountpoint at the right.
+	For NFS filesystems subdirectory can be added to the <guilabel>Source Path</guilabel>
+	to mount just a part of the exported filesystem. The automatic selection of the network
+	used to mount the filesystem can also be overridden. First an override must be activated by
+	setting the check-mark for <guicheckbox>Override Network</guicheckbox>. The network
+	can then be selected from the drop-down menu to force the mount to use the specified
+	network regardless of what the resources network priorities say. Last any option that
+	mount accepts for an NFS mount can be set in the Mount Options field. There are too
+	many options to explain them all here. Please refer to <command>man mount</command> and
+	<command>man nfs</command> for the full list of possible options and their meaning.
+	After editing either the source path or the mount options be sure to press return or
+	click the <guibutton>Save</guibutton> button to save the changes.
+      </para>
+      <note>
+	<para>
+	  Filesystems are only mounted on boot. Any changes made to a Network FS Mount config will
+	  therefore only take affect when a host boots for the next time.
 	</para>
       </note>
     </section>

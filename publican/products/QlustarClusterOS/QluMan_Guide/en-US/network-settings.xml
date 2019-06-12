@@ -12,7 +12,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xml:id="chap-Network-Settings">
   <title>Network Settings</title>
-  <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: Network Settings Dialog)-->
+  <!--cbox(file: network_settings/dns_server.png caption: Network Settings Dialog)-->
   <para>
     Some network settings can not be assigned to any group of nodes but relate to the cluster
     as a whole and how it connects to the outside world. This includes the configuration of the
@@ -32,7 +32,7 @@
     </para>
     <section xml:id="sec-DNS-external">
       <title>External DNS servers</title>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server.png caption: External DNS servers)-->
+      <!--cbox(file: network_settings/dns_server.png caption: External DNS servers)-->
       <para>
 	External DNS servers will be used to resolve any DNS request about hosts outside of the
 	cluster. Since this is used to resolve names into IP addresses the nameserver can not
@@ -41,8 +41,8 @@
 	There are also public DNS servers anyone can use as a fallback, for example Googles
 	DNS public DNS server under the IP 8.8.8.8.
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server__edit.png caption: Saving changes)-->
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server__save.png caption: Saving changes)-->
+      <!--cbox(file: network_settings/dns_server__edit.png caption: Saving changes)-->
+      <!--cbox(file: network_settings/dns_server__save.png caption: Saving changes)-->
       <para>
 	The nameserver specified during the installer should already be set. If the IP of
 	the nameserver changes it can be edited by either pressing the up/down arrows next
@@ -60,7 +60,7 @@
 	  DNSMasq server so the new settings take effect.
 	</para>
       </note>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server__add.png caption: Adding a second DNS server)-->
+      <!--cbox(file: network_settings/dns_server__add.png caption: Adding a second DNS server)-->
       <para>
 	For redundancy purposes more than one nameserver can be set. To add an additional
 	nameserver click the <guibutton>Add</guibutton> button. This will add a new nameserver
@@ -68,14 +68,14 @@
 	described above. Use this also when upgrading from a previous version of Qlustar to add
 	the first nameserver.
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server__up.png caption: Reordering DNS servers)-->
+      <!--cbox(file: network_settings/dns_server__up.png caption: Reordering DNS servers)-->
       <para>
 	When a DNS request can not be answered locally the external nameservers will be asked
 	one by one in the order shown in the GUI. This order can be changed by pressing the
 	<guibutton>UP</guibutton> button next to the nameserver. This will move the respective
 	nameserver on position up in the list.
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__dns_server__del.png caption: Removing a DNS servers)-->
+      <!--cbox(file: network_settings/dns_server__del.png caption: Removing a DNS servers)-->
       <para>
 	When a server is no longer valid or wanted it can also be removed by pressing the
 	<guibutton>X</guibutton> button next to the nameserver.
@@ -83,7 +83,7 @@
     </section>
     <section xml:id="sec-DNS-search-domain">
       <title>DNS search domains</title>
-      <!--cbox(file: network_settings/global_config__network_settings__search_domains.png caption: DNS search domains)-->
+      <!--cbox(file: network_settings/search_domains.png caption: DNS search domains)-->
       <para>
 	A DNS search domain is what the DNS service will use to resolve hostnames that are not
 	fully qualified. A fully qualified domain name is one that can be resolved by working
@@ -102,7 +102,7 @@
 	mailserv.my-firm.com. This allows using the shorter hostname to refer to host that
 	are outside the cluster but still in the local environment.
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__search_domains__edit.png caption: Editing a search domain)-->
+      <!--cbox(file: network_settings/search_domains__edit.png caption: Editing a search domain)-->
       <para>
 	A search domain can be edited by clicking the text field for the domain. As soon as
 	changes are made the <guibutton>Undo</guibutton> and <guibutton>Save</guibutton>
@@ -110,12 +110,12 @@
 	the <guibutton>Save</guibutton> button.
       </para>
       <para>
-	<!--cbox(file: network_settings/global_config__network_settings__search_domains__add.png caption: Adding a search domain)-->
+	<!--cbox(file: network_settings/search_domains__add.png caption: Adding a search domain)-->
 	An additional search domain can be included by clicking the <guibutton>add</guibutton>
 	button. 
       </para>
-      	<!--cbox(file: network_settings/global_config__network_settings__search_domains__up1.png caption: Ordering search domains)-->
-	<!--cbox(file: network_settings/global_config__network_settings__search_domains__up2.png caption: Deleting a search domain)-->
+	<!--cbox(file: network_settings/search_domains__up1.png caption: Ordering search domains)-->
+	<!--cbox(file: network_settings/search_domains__up2.png caption: Deleting a search domain)-->
 	<para>
 	The search domains will be tried in the order shown in the GUI. Just like with the
 	nameservers the order can be changed by clicking the <guibutton>up</guibutton> button.
@@ -132,7 +132,7 @@
     </section>
     <section xml:id="sec-Cluster-external-Hosts">
       <title>Cluster-external Hosts</title>
-      <!--cbox(file: network_settings/global_config__network_settings__external_host.png caption: Cluster-external Hosts)-->
+      <!--cbox(file: network_settings/external_host.png caption: Cluster-external Hosts)-->
       <para>
 	Qluman manages all the DNS for the nodes in the cluster and any hardware with a network
 	connection that resides inside the networks of the cluster such be defined as a node in
@@ -140,7 +140,7 @@
 	switches or power strips. But sometimes there are also hosts outside the cluster
 	networks that Qluman should know about.
       </para>
-            <!--cbox(file: network_settings/global_config__network_settings__external_host__add.png caption: Adding a Cluster-external Hosts)-->
+            <!--cbox(file: network_settings/external_host__add.png caption: Adding a Cluster-external Hosts)-->
       <para>
 	One such case are servers that export a filesystem over NFS. Such filesystem exports
 	can be added to Qluman under <guimenuitem>Manage
@@ -156,14 +156,14 @@
 	the host to the DNS config for the cluster. For new entries that is not done and the
 	<guibutton>DNS external</guibutton> checkbox is checked. 
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__external_host__with_ip.png caption: Adding DNS service for Cluster-external Host)-->
+      <!--cbox(file: network_settings/external_host__with_ip.png caption: Adding DNS service for Cluster-external Host)-->
       <para>
 	To add DNS service to a Cluster-external Host uncheck the <guibutton>DNS
 	external</guibutton> checkbox to activate the IP widget and enter the correct IP. To
 	finalize the input and save the IP press return or click the
 	<guibutton>Save</guibutton> button.
       </para>
-      <!--cbox(file: network_settings/global_config__network_settings__external_host__edit1.png caption: Editing a Cluster-external Host)-->
+      <!--cbox(file: network_settings/external_host__edit1.png caption: Editing a Cluster-external Host)-->
       <para>
 	The name or IP of the Cluster-external Host can be edited at any time by selecting the
 	name of the host or the IP or clicking the <guibutton>up</guibutton> or
@@ -182,17 +182,17 @@
       </note>
     </section>
     <section xml:id="sec-qlustar-common-path">
-      <!--cbox(file: network_settings/global_config__network_settings__qlustar_common.png-->
+      <!--cbox(file: network_settings/qlustar_common.png-->
       <para>
         The qlustar/common path is an NFS share mounted by all nodes to access some shared config
         files. Do not change this unless you know what you are doing.
       </para>
     </section>
     <section xml:id="sec-HTTP-Proxy">
-      <!--cbox(file: network_settings/global_config__network_settings__proxy__none.png caption: HTTP Proxy configuration-->
-      <!--cbox(file: network_settings/global_config__network_settings__proxy__name.png caption: HTTP Proxy configuration-->
-      <!--cbox(file: network_settings/global_config__network_settings__proxy__ip.png caption: HTTP Proxy configuration-->
-      <!--cbox(file: network_settings/global_config__network_settings__proxy__auth.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/proxy__none.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/proxy__name.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/proxy__ip.png caption: HTTP Proxy configuration-->
+      <!--cbox(file: network_settings/proxy__auth.png caption: HTTP Proxy configuration-->
       <para>
         Click the
         check-mark before <guilabel>Http Proxy</guilabel> to enable proxy support and enter the
