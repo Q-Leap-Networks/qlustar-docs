@@ -277,14 +277,34 @@
       description.
     </para>
     <para>
-      <!--cbox(file: disk_config/edit.png caption: Editing a disk config)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/disk_config/edit.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Editing a disk config
+        </phrase></textobject>
+        <caption><para>
+          Editing a disk config
+        </para></caption>
+      </mediaobject>
       To prevent multiple persons from editing at the same time and overwriting each others
       changes accidentally you must acquire a lock for the template by clicking the
       <guibutton>Edit</guibutton> button. If another user is already editing the file the
       button will be ghosted and the tool tip will show which user is holding a lock for the
       disk config.
     </para>
-    <!--cbox(file: disk_config/save.png caption: Saving a disk config)-->
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/disk_config/save.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Saving a disk config
+      </phrase></textobject>
+      <caption><para>
+        Saving a disk config
+      </para></caption>
+    </mediaobject>
     <para>
       After having finished editing a template, don't forget to save your changes by clicking
       the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
@@ -316,7 +336,7 @@
     </para>
   </section>
   <section xml:id="sec-Network-FS-Mounts-overview">
-    <title>Network Filesystem Mounts</title>
+    <title>Network Filesystem Exports/Mounts</title>
     <para>
       <mediaobject>
         <imageobject><imagedata
@@ -439,12 +459,13 @@
 	  </para></caption>
 	</mediaobject>
         Qluman automatically adds the networks available on the selected server to the Network
-        priorities. Later, when mounting the filesystem, the networks available on the client
-        are checked against this list and the first common entry is used to mount the
-        filesystem. Shown entries can be removed or additional networks added from the context
-        menu. Entries can also be moved up or down using drag and drop. This is useful e.g. to
-        ensure that an NFS export is mounted via Infiniband/RDMA on all hosts that are
-        connected to the IB fabric and via Ethernet on nodes without IB.
+        priorities. Later, when a node boots and requests its config files from the head-node,
+        the networks available on the client are checked against this list and the first common
+        entry is used for the network path via which filesystem will be mounted. Shown entries
+        can be removed or additional networks added from the context menu. Entries can also be
+        moved up or down using drag and drop. This is useful e.g. to ensure that an NFS export
+        is mounted via Infiniband/RDMA on all hosts that are connected to the IB fabric and via
+        Ethernet on nodes without IB.
       </para>
       <note>
 	<para>
@@ -454,56 +475,167 @@
       </note>
     </section>
     <section xml:id="sec-Network-FS-Mounts">
-      <!--cbox(file: network_fs_mounts/network_fs_mounts.png caption: Network FS Mounts)-->
-      <!--cbox(file: network_fs_mounts/new.png caption: Add a new Network FS Mounts config)-->
+      <title>Network Filesystem Mounts</title>
       <para>
-        Once Filesystem Exports have been declared they can be used to define Network FS Mount
-	configs. Each config is a collection of filesystems mounts and mount options that
-	can be assigned directly or indirectly through a Host Template or Global Template to
-	hosts. Only one Network FS Mount config can be assigned per host. Click the
-	<guibutton>New Config</guibutton> to create a new Network FS Mount config.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/network_fs_mounts.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a Network FS Mounts config
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a Network FS Mounts config
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/new.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Config Name
+	  </phrase></textobject>
+	  <caption><para>
+	    Config Name
+	  </para></caption>
+	</mediaobject>
+        Once Filesystem Exports have been defined, they can be used to configure Network FS
+        Mount configs. Each config is a collection of filesystems mounts combined with their
+        mount options. As ususal, such a config can be assigned to hosts either directly or
+        indirectly through a template. Only one Network FS Mount config can be assigned per
+        host, so all mounts that should be available on the booted node must be added to
+        it. Click the <guibutton>New Config</guibutton> button to create a new Network FS Mount
+        config.
       </para>
-      <!--cbox(file: network_fs_mounts/select.png caption: Select a Network FS Mounts config)-->
-      <!--cbox(file: network_fs_mounts/select_mountpoint.png caption: Select a Mountpoint)-->
       <para>
-	The new Network FS Mounts config will be automatically selected for viewing and editing.
-	A different config can be selected from the drop down menu in the top left. Below that
-	the list of mountpoints for the selected config is shown along with the filesystem type
-	for each mount. Select one of the mountpoints to show the details for the mount on the
-	right.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/select.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Select a Network FS Mounts config
+	  </phrase></textobject>
+	  <caption><para>
+	    Select a Network FS Mounts config
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/select_mountpoint.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Select a Mountpoint
+	  </phrase></textobject>
+	  <caption><para>
+	    Select a Mountpoint
+	  </para></caption>
+	</mediaobject>
+	A newly created Network FS Mounts config will be automatically selected for viewing and
+	editing. Previously defined configs may be selected from the drop-down menu in the top
+	left. Below that, the list of mountpoints for the selected config is shown along with
+	the filesystem type for each mount. Selecting one of the mountpoints will show its
+	configuration details on the right.
       </para>
-      <!--cbox(file: network_fs_mounts/add_mountpoint.png caption: Add a Mountpoint)-->
-      <!--cbox(file: network_fs_mounts/add_mountpoint2.png caption: Add a Mountpoint)-->
       <para>
-	A mountpoint can be deleted or a new mountpoint added to the config from the context menu.
-	For a new mountpoint enter the path where the filesystem should be mounted in the
-	Mount Filesystem dialog and select one of the Filesystem Export resources declared
-	earlier from the drop down menu. In most cases this is sufficient for the mount and the
-	next time a node that has this Network FS Mounts config boots it will mount the new
-	filesystem.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/add_mountpoint.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding/deleting a mount
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding/deleting a mount
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/add_mountpoint2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Select the export resource
+	  </phrase></textobject>
+	  <caption><para>
+	    Select the export resource
+	  </para></caption>
+	</mediaobject>
+	A mount definition can be deleted or a new one added to the config from the context
+	menu. To define a new one, enter the path where the filesystem should be mounted in
+	the Mount Filesystem dialog. Also select one of the Filesystem Export resources
+	declared earlier from the drop-down menu. In most cases this information is already
+	sufficient. The next time when a node assigned to this Network FS Mounts config boots,
+	it will mount this filesystem.
       </para>
-      <!--cbox(file: network_fs_mounts/subdir.png caption: Mounting a subdirectory of a resource)-->
-      <!--cbox(file: network_fs_mounts/network_override.png caption: Overriding the Network)-->
-      <!--cbox(file: network_fs_mounts/options.png caption: Custom mount options)-->
       <para>
-	To set further options for a filesystem mount first select the relevant mountpoint from
-	the list on the left. This will show the details for the selected mountpoint at the right.
-	For NFS filesystems subdirectory can be added to the <guilabel>Source Path</guilabel>
-	to mount just a part of the exported filesystem. The automatic selection of the network
-	used to mount the filesystem can also be overridden. First an override must be activated by
-	setting the check-mark for <guicheckbox>Override Network</guicheckbox>. The network
-	can then be selected from the drop-down menu to force the mount to use the specified
-	network regardless of what the resources network priorities say. Last any option that
-	mount accepts for an NFS mount can be set in the Mount Options field. There are too
-	many options to explain them all here. Please refer to <command>man mount</command> and
-	<command>man nfs</command> for the full list of possible options and their meaning.
-	After editing either the source path or the mount options be sure to press return or
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/subdir.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Mounting a subdirectory of a resource
+	  </phrase></textobject>
+	  <caption><para>
+	    Mounting a subdirectory of a resource
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/network_override.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Overriding the Network
+	  </phrase></textobject>
+	  <caption><para>
+	    Overriding the Network
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_fs_mounts/options.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Setting custom mount options
+	  </phrase></textobject>
+	  <caption><para>
+	    Setting custom mount options
+	  </para></caption>
+	</mediaobject>
+	To set special options for a filesystem mount, first select the corresponding
+	mountpoint from the list on the left. The following customizations can be made for NFS
+	filesystems:
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      A subdirectory can be added to the <guilabel>Source Path</guilabel> to mount just
+	      a part of the exported filesystem.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The automatic selection of the network used to mount the filesystem may also be
+	      overridden. First the override must be activated by setting the check-mark for
+	      <guilabel>Override Network</guilabel>. A network can then be selected from the
+	      drop-down menu to force the mount to use this particular one regardless of what
+	      the network priorities of the associated export resource say.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Last, any option that the mount command accepts for an NFS mount can be set in
+	      the <guilabel>Mount Options</guilabel> field. There are too many of them to
+	      explain them all here. Please refer to <command>man mount</command> and
+	      <command>man nfs</command> for the full list of possible options and their
+	      meaning.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+	After editing either the source path or the mount options, be sure to press return or
 	click the <guibutton>Save</guibutton> button to save the changes.
       </para>
       <note>
 	<para>
-	  Filesystems are only mounted on boot. Any changes made to a Network FS Mount config will
-	  therefore only take affect when a host boots for the next time.
+	  Filesystems are only mounted on boot. Any changes made to a Network FS Mount config
+	  of a node will therefore only take affect the next time it boots.
 	</para>
       </note>
     </section>
