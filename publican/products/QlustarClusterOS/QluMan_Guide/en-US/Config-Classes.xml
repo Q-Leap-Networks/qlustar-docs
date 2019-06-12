@@ -428,42 +428,53 @@
   </section>
   <section xml:id="sec-Network-FS-Mounts-overview">
     <title>Network Filesystem Mounts</title>
-    <!--cbox(file: network-fs-mounts__overview.png caption: Network FS Mounts overview-->
     <para>
-      <productname>Qlustar</productname> also supports mounting Network Filesystems from both
-      server inside the cluster and from outside the cluster network. First Qluman has to be
-      told what filesystems are exported and from where using <guimenuitem>Manage
-      Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>. Next a Network FS
-      Mounts config can be created under <guimenuitem>Manage
-      Configs</guimenuitem>-><guimenuitem>Network FS Mounts</guimenuitem>. And last the config
-      can be assigned to hosts through the Global Template, Host Template, Config Set or direct
-      assignment to a host.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="network-fs-mounts__overview.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Network FS Mounts overview
+        </phrase></textobject>
+        <caption><para>
+          Network FS Mounts overview
+        </para></caption>
+      </mediaobject>
+      <application>QluMan</application> also supports the configuration and management of
+      Network Filesystem (FS) mounts for cluster nodes. The setup for this consists of two
+      parts: 1) A Filesystem Export resource must be defined using the dialog at
+      <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>.
+      2) A Network FS Mounts config must be created using the dialog at <guimenuitem>Manage
+      Configs</guimenuitem>-><guimenuitem>Network FS Mounts</guimenuitem>. Such a config may
+      contain multiple network mount definitions and as with other config classes, it can then
+      be assigned to nodes through the Global or a Host Template, Config Set or direct
+      assignment.
     </para>
     <section xml:id="sec-Filesystem-Exports">
-      <!--cbox(file: filesystem_exports/filesystem_exports.png-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__new.png-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__new2.png-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__edit.png-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__new.png)-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__new2.png)-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__edit.png)-->
       <title>Filesystem Exports</title>
       <para>
-        The Filesystem Exports dialog shows the list of exported filesystems by name and filesystem
-        type. Selecting an entry will show details for this filesystem export on the right. A new
-        Filesystem Export can be added by clicking the <guibutton>New</guibutton> button. To
-        add a new Filesystem Export requires a unique name that will be used inside Qluman
-        to identify the resource. The Resource Name field will turn green if the entered name is
-        unique. Currently only NFS exports are supported for the Filesystem type making the choice
-        easy. Support for Lustre and BeeGeFS is in the works and will be added in a future version.
+	<!--cbox(file: filesystem_exports/filesystem_exports.png)-->
+        The Filesystem Exports dialog shows the list of exported filesystems by name and
+        filesystem type. Selecting an entry will show details for this filesystem export on the
+        right. A new Filesystem Export can be added by clicking the <guibutton>New</guibutton>
+        button. To add a new Filesystem Export requires a unique name that will be used inside
+        Qluman to identify the resource. The Resource Name field will turn green if the entered
+        name is unique. Currently only NFS exports are supported for the Filesystem
+        type. Support for Lustre and BeeGFS is planned for future versions.
       </para>
       <para>
         Next the server exporting the filesystem has to be selected. The default is beosrv-c as
-        the most likely server to export a filesystem. The server can be selected from a list of
-        servers used for other exports using the drop down menu. This makes it easier if a server
-        exports multiple filesystems. For a new server the name has to be entered manually and
-        can be any name known to Qluman. The <guilabel>Server</guilabel> label will turn green if
-        the entered text is acceptable. Known names include all nodes configured in the Enclosure
-        View and any Cluster-external host defined in <guimenuitem>Manage
-        Cluster</guimenuitem>-><guimenuitem>Global Settings</guimenuitem>-><guimenuitem>Network
-        Settings</guimenuitem>.
+        the most likely server to export a filesystem. The server can be selected from a list
+        of servers used for other exports using the drop down menu. This makes it easier if a
+        server exports multiple filesystems. For a new server the name has to be entered
+        manually and can be any name known to Qluman. The <guilabel>Server</guilabel> label
+        will turn green if the entered text is acceptable. Known names include all nodes
+        configured in the Enclosure View and any Cluster-external host defined in
+        <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Global
+        Settings</guimenuitem>-><guimenuitem>Network Settings</guimenuitem>.
       </para>
       <para>
         Last the path of the filesystem on the server has to be entered. Because the path will
@@ -471,9 +482,9 @@
         the path must start with a "/" and must not have a trailing /. The <guilabel>Path</guilabel>
         will turn green if the path is acceptable and red otherwise. 
       </para>
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority.png-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__remove.png-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__add.png-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority.png)-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__remove.png)-->
+      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__add.png)-->
       <para>
         If all fields are entered correctly the <guibutton>OK</guibutton> will be enabled and the
         Filesystem Export can be added and will appear in the Filesystem Exports window. Qluman
