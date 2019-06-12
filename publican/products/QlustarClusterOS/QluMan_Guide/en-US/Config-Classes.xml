@@ -451,49 +451,118 @@
       assignment.
     </para>
     <section xml:id="sec-Filesystem-Exports">
-      <!--cbox(file: filesystem_exports/filesystem_exports__new.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__new2.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__edit.png)-->
       <title>Filesystem Exports</title>
       <para>
-	<!--cbox(file: filesystem_exports/filesystem_exports.png)-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/filesystem_exports/filesystem_exports__new.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Creating a new FS export
+        </phrase></textobject>
+        <caption><para>
+          Creating a new FS export
+        </para></caption>
+      </mediaobject>
         The Filesystem Exports dialog shows the list of exported filesystems by name and
-        filesystem type. Selecting an entry will show details for this filesystem export on the
-        right. A new Filesystem Export can be added by clicking the <guibutton>New</guibutton>
-        button. To add a new Filesystem Export requires a unique name that will be used inside
-        Qluman to identify the resource. The Resource Name field will turn green if the entered
-        name is unique. Currently only NFS exports are supported for the Filesystem
-        type. Support for Lustre and BeeGFS is planned for future versions.
+        filesystem type. Selecting an entry will show the details for this filesystem export on
+        the right. A new Filesystem Export resource can be added by clicking the
+        <guibutton>New</guibutton> button. This requires choosing a unique name that will be
+        used inside Qluman to identify the resource. The <emphasis>Resource Name</emphasis>
+        field will turn green if the entered name is unique. Currently only NFS exports are
+        supported for the Filesystem type. Support for Lustre and BeeGFS is planned for future
+        versions.
       </para>
       <para>
-        Next the server exporting the filesystem has to be selected. The default is beosrv-c as
-        the most likely server to export a filesystem. The server can be selected from a list
-        of servers used for other exports using the drop down menu. This makes it easier if a
-        server exports multiple filesystems. For a new server the name has to be entered
-        manually and can be any name known to Qluman. The <guilabel>Server</guilabel> label
-        will turn green if the entered text is acceptable. Known names include all nodes
-        configured in the Enclosure View and any Cluster-external host defined in
-        <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Global
-        Settings</guimenuitem>-><guimenuitem>Network Settings</guimenuitem>.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filesystem_exports/filesystem_exports__new2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Defining export properties
+	  </phrase></textobject>
+	  <caption><para>
+	    Defining export properties
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filesystem_exports/filesystem_exports__edit.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Saving the export resource
+	  </phrase></textobject>
+	  <caption><para>
+	    Saving the export resource
+	  </para></caption>
+	</mediaobject>
+        Next the server exporting the filesystem has to be selected. The default is beosrv-c,
+        the cluster-internal hostname of the head-node, as the most likely server to export a
+        filesystem. The server can be selected from a list of servers used for other exports
+        using the drop-down menu. To use a new server, the name has to be entered manually. It
+        can be any hostname known to Qluman. The <guilabel>Server</guilabel> label will turn
+        green if the entered name is a known host. This includes all nodes configured in the
+        Enclosure View and any cluster-external host defined in <guimenuitem>Manage
+        Cluster</guimenuitem>-><guimenuitem>Global Settings</guimenuitem>-><guimenuitem>Network
+        Settings</guimenuitem>.
       </para>
       <para>
-        Last the path of the filesystem on the server has to be entered. Because the path will
-        later be used in a Systemd .mount file there are some restrictions on the syntax. For example
-        the path must start with a "/" and must not have a trailing /. The <guilabel>Path</guilabel>
-        will turn green if the path is acceptable and red otherwise. 
+        Finally, the path of the filesystem to be exported on the server has to be
+        entered. Because the path will later be used in a systemd mount unit file, there are
+        some restrictions on the syntax. For example the path must start with a "/" and must
+        not have a trailing "/". The <guilabel>Path</guilabel> will turn green if the path is
+        acceptable and red otherwise. Once all fields are entered correctly, the
+        <guibutton>Save</guibutton> button will be enabled and the Filesystem Export can be
+        added. It will then appear in the Filesystem Exports window.
       </para>
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__remove.png)-->
-      <!--cbox(file: filesystem_exports/filesystem_exports__network_priority__add.png)-->
       <para>
-        If all fields are entered correctly the <guibutton>OK</guibutton> will be enabled and the
-        Filesystem Export can be added and will appear in the Filesystem Exports window. Qluman
-        automatically adds the networks available on the selected server (does not apply to
-        Cluster-external hosts) to the Network priorities. Later, when mounting the filesystem,
-        the networks available on the client is checked against this list and the first common
-        entry is used to mount the filesystem. Shown entries can be removed or unused networks
-        added from the context menu. Entries can also be moved up or down using drag and drop.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filesystem_exports/filesystem_exports__network_priority.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Networks available for an export
+	  </phrase></textobject>
+	  <caption><para>
+	    Networks available for an export
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filesystem_exports/filesystem_exports__network_priority__add.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a network for an export
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a network for an export
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/filesystem_exports/filesystem_exports__network_priority__remove.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Removing a network for an export
+	  </phrase></textobject>
+	  <caption><para>
+	    Removing a network for an export
+	  </para></caption>
+	</mediaobject>
+        Qluman automatically adds the networks available on the selected server to the Network
+        priorities. Later, when mounting the filesystem, the networks available on the client
+        are checked against this list and the first common entry is used to mount the
+        filesystem. Shown entries can be removed or additional networks added from the context
+        menu. Entries can also be moved up or down using drag and drop. This is useful e.g. to
+        ensure that an NFS export is mounted via Infiniband/RDMA on all hosts that are
+        connected to the IB fabric and via Ethernet on nodes without IB.
       </para>
+      <note>
+	<para>
+	  If the selected server is cluster-external, it will obviously not have a choice of
+	  network priorities.
+	</para>
+      </note>
     </section>
   </section>
 </chapter>
