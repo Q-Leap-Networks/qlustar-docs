@@ -825,7 +825,7 @@
           Global Network Settings Dialog
         </para></caption>
       </mediaobject>
-      Some network settings can not be assigned to any group of nodes but relate to the cluster
+      Some network settings can not be assigned to a group of nodes but relate to the cluster
       as a whole and how it connects to the outside world. This includes the configuration of
       the <firstterm>dynamic name system (DNS)</firstterm> and the <firstterm>HTTP
       Proxy</firstterm>. To configure these global network settings, open <guilabel>Network
@@ -835,161 +835,282 @@
     <section xml:id="sec-DNS">
       <title>Dynamic Name System (DNS)</title>
       <para>
-	The Dynamic Name System is design hierarchical. Each computer knows about a DNS server
-	to handle local requests. Should the request fall outside the scope of the local server
-	it will ask the next higher server. Starting with Qlustar 11, local DNS requests are
-	handled by DNSMasq and will answer requests concerning any configured node
-	automatically. Requests about other hosts are affected by 3 settings: The external DNS
-	servers, the DNS search domains and Cluster-external Hosts.
+	The Dynamic Name System has a hierarchical design. Each correctly configured computer
+	knows about a DNS server that will handle local requests. Should the request fall
+	outside the scope of the local server, it will ask the next higher server in the
+	hierarchy. Starting with Qlustar 11, local DNS requests are handled by
+	<application>dnsmasq</application> which will answer requests concerning any QluMan
+	configured node automatically. The handling of requests about external hosts are
+	affected by three QluMan settings: The external DNS servers, the DNS search domains and
+	Cluster-external Hosts.
     </para>
     <section xml:id="sec-DNS-external">
       <title>External DNS servers</title>
-      <!--xcbox(file: network_settings/dns_server.png caption: External DNS servers)-->
       <para>
-	External DNS servers will be used to resolve any DNS request about hosts outside of the
-	cluster. Since this is used to resolve names into IP addresses the nameserver can not
-	be configured by name but must be specified by their IP address. This is usually a
-	server maintained by the local IT department or by your internet service provider (ISP).
-	There are also public DNS servers anyone can use as a fallback, for example Googles
-	DNS public DNS server under the IP 8.8.8.8.
+	External DNS servers will be needed to resolve any DNS request about hosts outside of
+	the cluster. Since this is used to resolve hostnames into IP addresses a nameserver
+	can not be identified by its hostname, but must be specified by its IP address. This
+	are usually servers maintained by the local IT department or by your internet service
+	provider (ISP). There are also public DNS servers anyone can use as a fallback, for
+	example Googles public DNS server (IP 8.8.8.8).
       </para>
-      <!--xcbox(file: network_settings/dns_server__edit.png caption: Saving changes)-->
-      <!--xcbox(file: network_settings/dns_server__save.png caption: Saving changes)-->
       <para>
-	The nameserver specified during the installer should already be set. If the IP of
-	the nameserver changes it can be edited by either pressing the up/down arrows next
-	to each part of the IP or by clicking at the number and entering it directly. Once
-	the correct IP address has been entered it needs to be saved by either pressing return
-	or by clicking the <guibutton>Save</guibutton> button. The <guibutton>Undo</guibutton>
-	reverts the nameserver to the last saved IP.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_settings/dns_server__edit.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Editing a DNS server entry
+        </phrase></textobject>
+        <caption><para>
+          Editing a DNS server entry
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_settings/dns_server__save.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Saving the DNS server entry
+        </phrase></textobject>
+        <caption><para>
+          Saving the DNS server entry
+        </para></caption>
+      </mediaobject>
+	The nameserver specified during the installation process should already be set unless
+	you upgraded from Qlustar 10.1. If the IP of the nameserver changes, it can be edited
+	by either pressing the up/down arrows next to each part of the IP or by clicking at the
+	number and entering it directly. Once the correct IP address has been entered it needs
+	to be saved by either pressing <keycap>return</keycap>, or by clicking the
+	<guibutton>Save</guibutton> button. The <guibutton>Undo</guibutton> button reverts the
+	nameserver entry to the last saved IP.
       </para>
       <note>
 	<para>
-	  Saving changes doesn't activate the new config immediately but only saves the setting
-	  in the database. To finally activate the changes the <classname>DNSMasq
-	  Config</classname> must be written from the Write Files window (see
-	  <xref linkend="sec-Writing-Config-Files"/>). This will reconfigure and restart the
-	  DNSMasq server so the new settings take effect.
+	  Saving changes in this dialog doesn't activate the new config immediately but only
+	  saves them in the QluMan database. To finally activate them, the <classname>dnsmasq
+	  Config</classname> must be written from the <link
+	  linkend="sec-Writing-Config-Files">Write Files window</link>. This will reconfigure
+	  and restart the dnsmasq server.
 	</para>
       </note>
-      <!--xcbox(file: network_settings/dns_server__add.png caption: Adding a second DNS server)-->
       <para>
-	For redundancy purposes more than one nameserver can be set. To add an additional
-	nameserver click the <guibutton>Add</guibutton> button. This will add a new nameserver
-	entry to the GUI defaulting to Googles public DNS server and can then be edited as
-	described above. Use this also when upgrading from a previous version of Qlustar to add
-	the first nameserver.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/network_settings/dns_server__add.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Adding a DNS server
+        </phrase></textobject>
+        <caption><para>
+          Adding a DNS server
+        </para></caption>
+      </mediaobject>
+      For redundancy purposes more than one nameserver can be set. To add an additional
+      nameserver click the <guibutton>Add</guibutton> button. This will add a new nameserver
+      entry to the GUI defaulting to Googles public DNS server. The entry may then be edited as
+      described above. Use this also when upgrading from a previous version of Qlustar to add
+      the first nameserver.
       </para>
-      <!--xcbox(file: network_settings/dns_server__up.png caption: Reordering DNS servers)-->
       <para>
-	When a DNS request can not be answered locally the external nameservers will be asked
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/dns_server__up.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Reordering DNS servers
+	  </phrase></textobject>
+	  <caption><para>
+	    Reordering DNS servers
+	  </para></caption>
+	</mediaobject>
+	When a DNS request cannot be answered locally, the external nameservers will be asked
 	one by one in the order shown in the GUI. This order can be changed by pressing the
 	<guibutton>UP</guibutton> button next to the nameserver. This will move the respective
-	nameserver on position up in the list.
+	nameserver up one position in the list.
       </para>
-      <!--xcbox(file: network_settings/dns_server__del.png caption: Removing a DNS servers)-->
       <para>
-	When a server is no longer valid or wanted it can also be removed by pressing the
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/dns_server__del.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Removing a DNS server
+	  </phrase></textobject>
+	  <caption><para>
+	    Removing a DNS server
+	  </para></caption>
+	</mediaobject>
+	When a server is no longer valid or wanted, it can be removed by pressing the
 	<guibutton>X</guibutton> button next to the nameserver.
       </para>
     </section>
     <section xml:id="sec-DNS-search-domain">
       <title>DNS search domains</title>
-      <!--xcbox(file: network_settings/search_domains.png caption: DNS search domains)-->
       <para>
 	A DNS search domain is what the DNS service will use to resolve hostnames that are not
 	fully qualified. A fully qualified domain name is one that can be resolved by working
 	down from the root domain (which is just an empty string) and eventually ending up
 	with an IP address. In less technical terms, it's one that ends in a top-level-domain
-	such as .de, .net, .org, .com, etc...
+	such as .de, .net, .org, .com, etc..
       </para>
       <para>
-	In practical terms whenever something tries to resolve a host name that can not be
-	resolved as is the search domains are appended to the hostname and tried one by one
-	to see if it resolves then. It usually contains at least the overall domain of the
-	firm or institution the cluster is located at but often also sub-domains. For example:
-	The search domain is set to my-department.my-firm.com and my-firm.com. If something
-	tries to look up the IP address for the host mailserv then first mailserv is tried as
-	is. If that fails mailserv.my-department.my-firm.com is tried and if that fails as well
-	mailserv.my-firm.com. This allows using the shorter hostname to refer to host that
-	are outside the cluster but still in the local environment.
-      </para>
-      <!--xcbox(file: network_settings/search_domains__edit.png caption: Editing a search domain)-->
+	In practice, whenever a device tries to resolve a hostname that can not be resolved as
+	is, the resolver code appends search domains to the hostname and tries the resulting
+	names one by one to see if it resolves then. The list of search domains usually
+	contains at least the main domain of the organization the cluster is located at, but
+	often also sub-domains of it. Example: The search domain list contains
+	my-department.my-firm.com and my-firm.com. A look-up for the host mailserv will then
+	first try mailserv as is. If that fails, mailserv.my-department.my-firm.com is tried
+	and if that also fails, finally mailserv.my-firm.com. This mechanism allows using the
+	shorter hostname to refer to some hosts that are outside the cluster.
+     </para>
       <para>
-	A search domain can be edited by clicking the text field for the domain. As soon as
-	changes are made the <guibutton>Undo</guibutton> and <guibutton>Save</guibutton>
-	buttons will become enabled. Changes are saved by either pressing return or by clicking
-	the <guibutton>Save</guibutton> button.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/search_domains__edit.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Editing a search domain
+	  </phrase></textobject>
+	  <caption><para>
+	    Editing a search domain
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/search_domains__add.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a search domain
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a search domain
+	  </para></caption>
+	</mediaobject>
+      	A search domain may be edited by clicking the text-field for the domain. As soon as
+      	changes are made, the <guibutton>Undo</guibutton> and <guibutton>Save</guibutton>
+      	buttons will become enabled. Changes are saved by either pressing
+      	<keycap>return</keycap>, or by clicking the <guibutton>Save</guibutton> button. An
+      	additional search domain can be included by clicking the <guibutton>add</guibutton>
+      	button.
       </para>
       <para>
-	<!--xcbox(file: network_settings/search_domains__add.png caption: Adding a search domain)-->
-	An additional search domain can be included by clicking the <guibutton>add</guibutton>
-	button. 
-      </para>
-	<!--xcbox(file: network_settings/search_domains__up1.png caption: Ordering search domains)-->
-	<!--xcbox(file: network_settings/search_domains__up2.png caption: Deleting a search domain)-->
-	<para>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/search_domains__up1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Reordering search domains
+	  </phrase></textobject>
+	  <caption><para>
+	    Reordering search domains
+	  </para></caption>
+	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/search_domains__up2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Deleting a search domain
+	  </phrase></textobject>
+	  <caption><para>
+	    Deleting a search domain
+	  </para></caption>
+	</mediaobject>
 	The search domains will be tried in the order shown in the GUI. Just like with the
-	nameservers the order can be changed by clicking the <guibutton>up</guibutton> button.
-	This will move the selected domain one slot upwards. Search domains can also be removed
-	by clicking the <guibutton>X</guibutton> button.
+	nameserver entries, the order can be changed by clicking the <guibutton>up</guibutton>
+	button. This will move the selected domain one slot upwards. Search domains can also
+	be removed by clicking the <guibutton>X</guibutton> button.
 	</para>
 	<note>
 	  <para>
-	    The DNS search domains are set on each host as it boots and are not updated at
-	    runtime. So any changes made will only affect host booted after the change was
-	    saved. Already running hosts need to be rebooted to catch the change.
+	    The DNS search domains are set via DHCP on each host as it boots and are not
+	    updated at runtime. So any changes made, will only affect hosts booted after the
+	    change was saved. Already running hosts need to be rebooted to catch the change.
 	  </para>
 	</note>
     </section>
     <section xml:id="sec-Cluster-external-Hosts">
       <title>Cluster-external Hosts</title>
-      <!--xcbox(file: network_settings/external_host.png caption: Cluster-external Hosts)-->
       <para>
-	Qluman manages all the DNS for the nodes in the cluster and any hardware with a network
-	connection that resides inside the networks of the cluster such be defined as a node in
-	the Enclosure view (<xref linkend="sec-Enclosure-View"/>). This includes managed network
-	switches or power strips. But sometimes there are also hosts outside the cluster
-	networks that Qluman should know about.
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/external_host.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Definitions of cluster-external hosts
+	  </phrase></textobject>
+	  <caption><para>
+	    Definitions of cluster-external hosts
+	  </para></caption>
+	</mediaobject>
+	While QluMan automatically manages the DNS entries for the nodes in the cluster (any
+	node that is shown in the <link linkend="sec-Enclosure-View">Enclosure view</link>),
+	sometimes there are also hosts outside of the cluster networks that QluMan should know
+	about, e.g. external file-servers that are used in <link
+	linkend="sec-Filesystem-Exports">Filesystem Exports</link>.
       </para>
-            <!--xcbox(file: network_settings/external_host__add.png caption: Adding a Cluster-external Hosts)-->
       <para>
-	One such case are servers that export a filesystem over NFS. Such filesystem exports
-	can be added to Qluman under <guimenuitem>Manage
-	Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem> (<xref
-	linkend="sec-Filesystem-Exports"/>). and then mounted on individual hosts or group of
-	hosts using the <firstterm>Network FS Mounts</firstterm> config class (<xref
-	linkend="sec-Network-FS-Mounts"/>). But for this the host exporting the filesystem
-	must be know to Qluman. Simply click the <guibutton>Add</guibutton> and enter the
-	name of the host to add.
+        <mediaobject>
+          <imageobject><imagedata
+          fileref="images/network_settings/external_host__add.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Adding a cluster-external hosts
+          </phrase></textobject>
+          <caption><para>
+            Adding a cluster-external hosts
+          </para></caption>
+        </mediaobject>
+	To add an entry for such an external host, simply click the <guibutton>Add</guibutton>
+	button and enter its name. QluMan also allows to add the host to the DNS config for
+	the cluster, but by default, for new entries that is not the case, and the
+	<guibutton>DNS external</guibutton> checkbox is checked.
       </para>
       <para>
-	Qluman can also, and this is the second reason to add a Cluster-external Host, add
-	the host to the DNS config for the cluster. For new entries that is not done and the
-	<guibutton>DNS external</guibutton> checkbox is checked. 
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/external_host__with_ip.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding a DNS entry for a cluster-external host
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding a DNS entry for a cluster-external host
+	  </para></caption>
+	</mediaobject>
+	To add a DNS entry for a cluster-external host, uncheck the <guibutton>DNS
+	external</guibutton> checkbox. This activates the IP widget and you can enter the
+	correct IP. To finalize the input and save the IP, press <keycap>return</keycap> or
+	click the <guibutton>Save</guibutton> button.
       </para>
-      <!--xcbox(file: network_settings/external_host__with_ip.png caption: Adding DNS service for Cluster-external Host)-->
       <para>
-	To add DNS service to a Cluster-external Host uncheck the <guibutton>DNS
-	external</guibutton> checkbox to activate the IP widget and enter the correct IP. To
-	finalize the input and save the IP press return or click the
-	<guibutton>Save</guibutton> button.
-      </para>
-      <!--xcbox(file: network_settings/external_host__edit1.png caption: Editing a Cluster-external Host)-->
-      <para>
-	The name or IP of the Cluster-external Host can be edited at any time by selecting the
-	name of the host or the IP or clicking the <guibutton>up</guibutton> or
-	<guibutton>down</guibutton> arrows on the IP. Don't  forget to press return or click the
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/network_settings/external_host__edit1.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Editing a cluster-external host
+	  </phrase></textobject>
+	  <caption><para>
+	    Editing a cluster-external host
+	  </para></caption>
+	</mediaobject>
+	The name or IP of a cluster-external host may be edited at any time by selecting it,
+	or by clicking the <guibutton>up</guibutton>/<guibutton>down</guibutton> arrows on the
+	IP. Don't forget to press <keycap>return</keycap> or click the
 	<guibutton>Save</guibutton> button to confirm the changes.
       </para>
       <note>
 	<para>
-	  To finally activate the changes to Cluster-external Hosts the <classname>DNSMasq
-	  Config</classname> must be written from the Write Files window (see
-	  <xref linkend="sec-Writing-Config-Files"/>). This will reconfigure and restart the
-	  DNSMasq server so the new settings take effect. But this will only affect the DNS
-	  part of the change. Filesystems mounted on hosts will see the change the next time
-	  the host boots.
+	  To finally activate the changes to cluster-external hosts the <classname>dnsmasq
+	  Config</classname> must be written from the Write Files window (see <xref
+	  linkend="sec-Writing-Config-Files"/>). This will reconfigure and restart the dnsmasq
+	  server so the new settings take effect. However this will only affect the DNS part of
+	  the change. If hostnames used for <link linkend="sec-Filesystem-Exports">Filesystem
+	  Exports</link> definitions are involved, a host that uses the corresponding mounts
+	  will see the change only the next time it boots.
 	</para>
       </note>
     </section>
@@ -1007,11 +1128,11 @@
         </para></caption>
       </mediaobject>
       <para>
-        The qlustar/common path specifies the location of <link
+        The qlustar/common path specifies the location of the <link
         xlink:href="../Administration_Manual/index.html#admin-man-sect-config-dir___blank___">cluster-wide
-        configuration directory</link> on the head-node that is used for its NFS export.
-	This path value should not be changed unless there is a good reason for it. A custom
-        value is usually required only for a head-node setup in high-availability mode.
+        configuration directory</link> on the head-node that is used for its NFS export.  This
+        path value should not be changed unless there is a good reason for it. A custom value
+        is usually required only for a head-node setup in high-availability mode.
       </para>
     </section>
     <section xml:id="sec-HTTP-Proxy">
@@ -1039,12 +1160,6 @@
 	    Setting a name for the proxy server
 	  </para></caption>
 	</mediaobject>
-	Sometimes the cluster head-node does not have direct access to the internet and
-	requires a proxy server for a connection to the Qlustar repository servers. To enable
-	support for such scenarios, click the check-mark before <guilabel>Http Proxy</guilabel>
-	and enter the hostname of the proxy server together with the proxy port. If the proxy
-	requires authentication, click the check-mark before <guilabel>Authenticate</guilabel>
-	and enter a username and password.
 	<mediaobject>
 	  <imageobject><imagedata
 	  fileref="images/network_settings/proxy__ip.png"
@@ -1056,6 +1171,12 @@
 	    Setting an IP for the proxy server
 	  </para></caption>
 	</mediaobject>
+	Sometimes the cluster head-node does not have direct access to the internet and
+	requires a proxy server for a connection to the Qlustar repository servers. To enable
+	support for such scenarios, click the check-mark before <guilabel>Http Proxy</guilabel>
+	and enter the hostname of the proxy server together with the proxy port.
+      </para>
+      <para>
 	<mediaobject>
 	  <imageobject><imagedata
 	  fileref="images/network_settings/proxy__auth.png"
@@ -1067,13 +1188,15 @@
 	    Setting authentication info for the proxy server
 	  </para></caption>
 	</mediaobject>
-	The <guilabel>Http Proxy</guilabel> and <guilabel>User/pass</guilabel> label will turn
-	green when entries are edited with acceptable input but has not been saved yet. The
+	If the proxy requires authentication, click the check-mark before
+	<guilabel>Authenticate</guilabel> and enter a username and password.
+	The <guilabel>Http Proxy</guilabel> and <guilabel>User/Pass</guilabel> label will turn
+	green when entries are edited with acceptable input but have not been saved yet. The
 	labels will turn red when the current input is invalid and turn back to black once the
-	input has been saved. The input can be saved by pressing return or will be saved
-	automatically when the input field looses focus. Leaving the user name field empty will
-	disable authentication just the same as clearing the <guilabel>Authenticate</guilabel>
-	check-mark.
+	input has been saved. The input can be saved by pressing <keycap>return</keycap>, or
+	will be saved automatically when the input field looses focus. Leaving the user name
+	field empty will disable authentication just the same as clearing the
+	<guilabel>Authenticate</guilabel> check-mark.
       </para>
     </section>
   </section>
