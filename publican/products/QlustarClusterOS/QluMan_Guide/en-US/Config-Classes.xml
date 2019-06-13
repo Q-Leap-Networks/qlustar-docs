@@ -340,7 +340,7 @@
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="network_fs_mounts/overview.png"
+        fileref="images/network_fs_mounts/overview.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
           Network FS Mounts overview
