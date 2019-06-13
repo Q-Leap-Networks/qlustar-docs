@@ -141,17 +141,41 @@
 	of multiple head-nodes e.g. in a high-availability configuration.
       </para>
     </note>
-    <!--cbox(file: enclosure_view/preview_config.png caption: Preview of a hosts generated config files-->
-    <!--cbox(file: enclosure_view/preview_config2.png caption: Preview of a hosts generated config files-->
-    <para>
-      Other configurations managed in the <application>QluMan</application> GUI via
-      <classname>Config Classes</classname> and sub-classes, are translated into automatically
-      generated configuration files for the individual hosts. These will be send to the host
-      and written as it boots. There is generally no update mechanism for running systems and
-      changes only take effect on the next reboot. A preview of the generated configs can be
-      seen by selecting <guimenuitem>Preview config</guimenuitem> from the context menu of
-      a host.
-    </para>
+    <section xml:id="sec-Host-Specific-Configs">
+      <title>Host-specific Configs</title>
+      <para>
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/preview_config.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Initiating a preview of host specific config files
+          </phrase></textobject>
+          <caption><para>
+            Initiating a preview of host specific config files
+          </para></caption>
+	</mediaobject>
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/enclosure_view/preview_config2.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Preview of host specific config files
+          </phrase></textobject>
+          <caption><para>
+            Preview of host specific config files
+          </para></caption>
+	</mediaobject>
+	Various configurations managed in the <application>QluMan</application> GUI via
+	<classname>Config Classes</classname> and sub-classes translate into automatically
+	generated configuration files for the individual hosts. These will be sent to the host
+	and written by its <application>execd</application> in the pre-systemd phase of the
+	boot process. There is generally no update mechanism for running systems and changes
+	only take effect on the next reboot. A preview of the generated configs can be
+	initiated by selecting <guimenuitem>Preview config</guimenuitem> from the context menu
+	of a host.
+      </para>
+    </section>
   </section>
   <section xml:id="sec-Boot-Configs">
     <title>Boot Configs</title>
@@ -627,10 +651,17 @@
 	      <command>man nfs</command> for the full list of possible options and their
 	      meaning.
 	    </para>
+	    <note>
+	      <para>
+		To mount an NFS share via an IB network without using RDMA you need to specify
+		the option proto=tcp.
+	      </para>
+	    </note>
 	  </listitem>
 	</itemizedlist>
-	After editing either the source path or the mount options, be sure to press return or
-	click the <guibutton>Save</guibutton> button to save the changes.
+	After editing either the source path or the mount options, be sure to press
+	<keycap>return</keycap>, or click the <guibutton>Save</guibutton> button to save the
+	changes.
       </para>
       <note>
 	<para>
