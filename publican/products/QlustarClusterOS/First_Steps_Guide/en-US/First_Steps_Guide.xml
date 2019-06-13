@@ -645,34 +645,25 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    xlink:href="https://qlustar.com/download___blank___">Download
 		    page</link>. This makes it really easy to start the GUI as a non-root user
 		    on any machine with Singularity installed (minimum Singularity version is
-		    2.4.1 for QluMan 10 containers): Just download the desired version of the
+		    2.4.1 for QluMan 11 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
-		    saved it as <filename>$HOME/qluman-11.0.0.23-singularity.sqsh</filename>):
-	    <screen>
+		    saved it as <filename>$HOME/qluman-11.0.0.15-singularity.sqsh</filename>):
+		    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>sha256sum $HOME/qluman-11.0.0.23-singularity.sqsh</command>
+<command>sha256sum $HOME/qluman-11.0.0.15-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 $HOME/qluman-11.0.0.23-singularity.sqsh</command>
+<command>chmod 755 $HOME/qluman-11.0.0.15-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>$HOME/qluman-11.0.0.23-singularity.sqsh</command>
-	    </screen>
+<command>$HOME/qluman-11.0.0.15-singularity.sqsh</command>
+		    </screen>
 		  </para>
-		    <note>
-		      <para>
-			The singularity container might not be able to resolve the hostname of
-			your cluster head-node. In that case, you will have to use its IP
-			address in the <emphasis>Local</emphasis> field of <link
-			xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
-			connection info</link> dialog for it.
-		      </para>
-		    </note>
 		  <note>
 		    <para>
-		      Q-Leap hosts a <link
-		      xlink:href="https://qlustar.com/docs/community-package-repo___blank___">community
-		      package repository</link> with Singularity packages for various Debian
-		      and Ubuntu versions. Given that you run one of the supported versions,
-		      you can easily use this to install Singularity on your workstation.
+		      The singularity container might not be able to resolve the hostname of
+		      your cluster head-node. In that case, you will have to use its IP address
+		      in the <emphasis>Local</emphasis> field of <link
+		      xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
+		      connection info</link> dialog for it.
 		    </para>
 		  </note>
 		</listitem>
@@ -736,7 +727,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	first via the <firstterm>modules</firstterm> infrastructure
 	<screen>
 <prompt>0 testuser@cl-front ~ $</prompt>
-<command>module load openmpi3/3.1.3 gnu8/8.3.0</command>
+<command>module load openmpi3/3.1.4 gnu8/8.3.0</command>
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>mpicc -o hello-world-c hello-world.c</command>
 <prompt>0 testuser@cl-front ~ $</prompt>
