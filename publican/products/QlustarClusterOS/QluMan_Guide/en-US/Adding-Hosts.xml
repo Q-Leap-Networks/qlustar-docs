@@ -142,14 +142,14 @@
           Imported MACs
         </para></caption>
       </mediaobject>
-      Added in QluMan 10.1.1.19, another option is to import a list of mac addresses from a
-      file by clicking <guibutton>Import MACs</guibutton>. Network switches with a management
-      interface often have an option to list the MAC addresses for each port, so you could
-      capture this list and save it in a file. The file might need some editing to conform to
-      the syntax qluman-qt expects, which is as follows: Lines starting with an '#' and empty
-      lines are treated as comments. Everything else must start with a MAC address in the
-      standard hexadecimal notation using ':' as separator. Any text following the MAC address
-      is displayed in the comment column after importing. Example (see also the corresponding
+      Another option is to import a list of mac addresses from a file by clicking
+      <guibutton>Import MACs</guibutton>. Network switches with a management interface often
+      have an option to list the MAC addresses for each port, so you could capture this list
+      and save it in a file. The file might need some editing to conform to the syntax
+      qluman-qt expects, which is as follows: Lines starting with an '#' and empty lines are
+      treated as comments. Everything else must start with a MAC address in the standard
+      hexadecimal notation using ':' as separator. Any text following the MAC address is
+      displayed in the comment column after importing. Example (see also the corresponding
       screenshot):
       <screen>
 # Rack 1
