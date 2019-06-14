@@ -657,15 +657,6 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 <command>$HOME/qluman-11.0.0.16-singularity.sqsh</command>
 		    </screen>
 		  </para>
-		  <note>
-		    <para>
-		      The singularity container might not be able to resolve the hostname of
-		      your cluster head-node. In that case, you will have to use its IP address
-		      in the <emphasis>Local</emphasis> field of <link
-		      xlink:href="../QluMan_Guide/index.html#sec-add-cluster___blank___">the
-		      connection info</link> dialog for it.
-		    </para>
-		  </note>
 		</listitem>
 	      </varlistentry>
 	    </variablelist>
