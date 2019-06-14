@@ -24,7 +24,7 @@
       <itemizedlist>
 	<listitem>
 	  <para>
-	    A DVD or a USB flash-drive (minimum size 2GB) loaded with the Qlustar installer
+	    A DVD or a USB flash-drive (minimum size 1GB) loaded with the Qlustar installer
 	  </para>
 	</listitem>
 	<listitem>
@@ -104,7 +104,7 @@
 	the following command:
 	<screen>
 <prompt>0 user@workstation ~ $ </prompt>
-<command>sha256sum qlustar-installer.iso.gz</command>
+<command>sha256sum qlustar-installer.iso</command>
 	</screen>
 	Now compare the such-generated checksum with the value that is published at the above
 	download page. If the checksums are not identical, do not proceed with the
@@ -119,13 +119,13 @@
     <para>
       The instructions in this guide only apply to the latest version. With the downloaded
       disk image you can easily create a bootable drive under Linux as follows (note that
-      the USB drive should have a minimum size of 2GB): Given that the downloaded installer
-      image file is named <filename>qlustar-installer.iso.gz</filename> and that the
+      the USB drive should have a minimum size of 1GB): Given that the downloaded installer
+      image file is named <filename>qlustar-installer.iso</filename> and that the
       device name of the drive is <filename>/dev/sdb</filename>, the following command 
       (executed as root) will load the image to the flash-drive:
       <screen>
 <prompt>0 root@workstation ~ # </prompt>
-<command>gunzip -c qlustar-installer.iso.gz | dd of=/dev/sdb</command>
+<command>dd if=qlustar-installer.iso of=/dev/sdb</command>
       </screen>
     </para>
     <para>
