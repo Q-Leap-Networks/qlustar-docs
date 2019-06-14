@@ -647,14 +647,14 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    on any machine with Singularity installed (minimum Singularity version is
 		    2.4.1 for QluMan 11 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
-		    saved it as <filename>$HOME/qluman-11.0.0.15-singularity.sqsh</filename>):
+		    saved it as <filename>$HOME/qluman-11.0.0.16-singularity.sqsh</filename>):
 		    <screen>
 <prompt>0 user@workstation ~ $</prompt>
-<command>sha256sum $HOME/qluman-11.0.0.15-singularity.sqsh</command>
+<command>sha256sum $HOME/qluman-11.0.0.16-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>chmod 755 $HOME/qluman-11.0.0.15-singularity.sqsh</command>
+<command>chmod 755 $HOME/qluman-11.0.0.16-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
-<command>$HOME/qluman-11.0.0.15-singularity.sqsh</command>
+<command>$HOME/qluman-11.0.0.16-singularity.sqsh</command>
 		    </screen>
 		  </para>
 		  <note>
@@ -673,8 +673,8 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 	      <para>
 		The base version (e.g. 11.0.0) of the QluMan packages/containers on the
 		workstation should be the same as on the head-node(s) to ensure correct
-		operation. Some close unequal version combinations (e.g. 11.0.0.7 and
-		11.0.0.12) usually work too, but are not well tested.
+		operation. Some close unequal version combinations (e.g. 11.0.0.9 and
+		11.0.0.16) usually work too, but are not well tested.
 	      </para>
 	    </important>
 	  </para>
@@ -790,18 +790,6 @@ salloc: Job allocation 3 has been revoked.
 <prompt>0 testuser@cl-front ~ $</prompt>
 <command>sbatch -N 2 --ntasks-per-node=2 --mem=20 -p demo hello-world-f90-slurm.sh</command>
 	</screen>
-	<note>
-	  <para>
-	    On Ubuntu you might have to set the following environment variable to prevent
-	    warning messages about missing CUDA libraries (the latter are only present if you
-	    added Nvidia support during installation or if you created a custom image that
-	    includes the Nvidia module):
-	    <screen>
-<prompt>0 testuser@cl-front ~ $</prompt>
-<command>export OMPI_MCA_mpi_cuda_support=0</command>
-	    </screen>
-	  </para>
-	</note>
       </para>
     </section>
     <section xml:id="sec-Running-Linpack">
