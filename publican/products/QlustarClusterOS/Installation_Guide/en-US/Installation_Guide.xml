@@ -493,7 +493,7 @@
 	      If you choose neither the option for the virtual FE node, nor the virtual
 	      demo-cluster, the necessary network pre-configurations (bridge setup, etc.) for
 	      starting VMs will not be done. This means, that you'll have to do a number of
-	      non-trivial manual steps after installation, in case you find out, that you need
+	      non-trivial manual steps after installation, in case you find out that you need
 	      support for VMs later on.
 	    </para>
 	  </note>
@@ -541,9 +541,9 @@
 		<para>
 		  Qlustar supports multiple so-called
 		  <link xlink:href="https://qlustar.com/intro/platform___blank___">
-		  Edge Platforms</link>. In 10.1, the available ones are <emphasis
-		  role="bold">Ubuntu/Xenial</emphasis>, and <emphasis role="bold">CentOS
-		  7.5</emphasis>. Please select your favorite platform(s). Multiple choices are
+		  Edge Platforms</link>. In 11.0, the available ones are <emphasis
+		  role="bold">Ubuntu/Bionic</emphasis>, and <emphasis role="bold">CentOS
+		  7.6</emphasis>. Please select your favorite platform(s). Multiple choices are
 		  possible. At least one must be selected. In essence, this option corresponds
 		  to the choice of what Linux distribution you (or your users, if you're an
 		  administrator) like to work with/develop for.
@@ -569,20 +569,20 @@
 		      Choosing an Edge Platform
 		    </para></caption>
 		  </mediaobject>
-		  Technically, choosing a specific edge platform (e.g. Ubuntu/Xenial) will
-		  cause Qlustar images based on Ubuntu/Xenial to be created along with an
+		  Technically, choosing a specific edge platform (e.g. Ubuntu/Bionic) will
+		  cause Qlustar images based on Ubuntu/Bionic to be created along with an
 		  associated chroot during the installation process. This chroot will hold a
-		  complete Ubuntu/Xenial installation in which you can <link
+		  complete Ubuntu/Bionic installation in which you can <link
 		  xlink:href="../First_Steps_Guide/index.html#sec-Adding-Software___blank___">add
 		  packages</link> later on. By assigning this Qlustar image later to some
 		  nodes in QluMan, you will have a <emphasis
-		  role="bold">full-featured</emphasis> Ubuntu/Xenial installation available on
+		  role="bold">full-featured</emphasis> Ubuntu/Bionic installation available on
 		  them, once they will have booted over the network.
 		</para>
 		<note>
 		  <para>
 		    It is fully supported and easily achieved to have one subset of nodes
-		    running Ubuntu/Xenial and another one running CentOS 7 <emphasis
+		    running Ubuntu/Bionic and another one running CentOS 7 <emphasis
 		    role="bold">simultaneously</emphasis> in the same cluster.
 		  </para>
 		</note>
