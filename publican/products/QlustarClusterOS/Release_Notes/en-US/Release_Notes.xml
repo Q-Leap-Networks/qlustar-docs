@@ -249,6 +249,21 @@
 	    <classname>hwloc</classname>: 2.0.3
 	  </para>
 	</listitem>
+	<listitem>
+	  <para>
+	    <classname>ucx</classname>: 1.5.1
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>libpsm2</classname>: 11.2.68
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <classname>OmniPath (OPA) stack</classname>: 10.8.0.0.201/2
+	  </para>
+	</listitem>
       </itemizedlist>
     </para>
   </section>
