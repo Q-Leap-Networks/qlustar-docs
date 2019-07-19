@@ -374,12 +374,12 @@
         </para></caption>
       </mediaobject>
       <application>QluMan</application> also supports the configuration and management of
-      Network Filesystem (FS) mounts for cluster nodes. The setup for this consists of two
-      parts: 1) A Filesystem Export resource must be defined using the dialog at
+      Network Filesystem (FS) and bind mounts for cluster nodes. The setup for this consists of two
+      parts: 1) For Network Filesystems a Filesystem Export resource must be defined using the dialog at
       <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>.
       2) A Network FS Mounts config must be created using the dialog at <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>Network FS Mounts</guimenuitem>. Such a config may
-      contain multiple network mount definitions and as with other config classes, it can then
+      contain multiple network and bind mount definitions and as with other config classes, it can then
       be assigned to nodes through the Global or a Host Template, Config Set or direct
       assignment.
     </para>
@@ -402,9 +402,9 @@
         the right. A new Filesystem Export resource can be added by clicking the
         <guibutton>New</guibutton> button. This requires choosing a unique name that will be
         used inside Qluman to identify the resource. The <emphasis>Resource Name</emphasis>
-        field will turn green if the entered name is unique. Currently only NFS exports are
-        supported for the Filesystem type. Support for Lustre and BeeGFS is planned for future
-        versions.
+        field will turn green if the entered name is unique. Qluman currently supports three
+	types of network filesystems: NFS, Lustre and BeeGFS. The Fileystem type of the
+	resource can be selected from the drop down menu.
       </para>
       <para>
 	<mediaobject>
@@ -440,13 +440,21 @@
         Settings</guimenuitem>.
       </para>
       <para>
-        Finally, the path of the filesystem to be exported on the server has to be
-        entered. Because the path will later be used in a systemd mount unit file, there are
-        some restrictions on the syntax. For example the path must start with a "/" and must
-        not have a trailing "/". The <guilabel>Path</guilabel> will turn green if the path is
-        acceptable and red otherwise. Once all fields are entered correctly, the
-        <guibutton>Save</guibutton> button will be enabled and the Filesystem Export can be
-        added. It will then appear in the Filesystem Exports window.
+	The remaining options depend on the selected fileystem type. In case of NFS the path of
+	the filesystem to be exported on the server has to be entered. Because the path will later
+	be used in a systemd mount unit file, there are some restrictions on the syntax. For
+	example the path must start with a "/" and must not have a trailing "/". The
+	<guilabel>Path</guilabel> will turn green if the path is acceptable and red otherwise.
+      </para>
+      <para>
+	In the case of Lustre the fileystem name has to be specified. Lustre limits this name to
+	eight characters and again too avoid complications in the systemd mount unit file later
+	only alphanumeric characters and some punctuations will be accepted.
+      </para>
+      <para>
+	In the case of BeeGFS there are no further options. Once all fields are entered correctly,
+	the <guibutton>OK</guibutton> button will be enabled and the Filesystem Export can be
+	added. It will then appear in the Filesystem Exports window.
       </para>
       <para>
 	<mediaobject>
