@@ -91,13 +91,6 @@
 	    inventory management.
 	  </para>
 	</listitem>
-	<listitem>
-	  <para>
-	    Finally, <xref linkend="Specific-Properties" xrefstyle="template:Specific
-	    Properties"/> are unique to a particular node, like its MAC address or a static IP
-	    address. Therefore, they can only be assigned individually to a particular node.
-	  </para>
-	</listitem>
       </itemizedlist>
     </para>
     <para>
