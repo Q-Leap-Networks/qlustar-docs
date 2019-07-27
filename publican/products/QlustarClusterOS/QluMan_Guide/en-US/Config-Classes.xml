@@ -258,21 +258,25 @@
     <title>Disk Configs</title>
     <para>
       <productname>Qlustar</productname> has a powerful mechanism to manage the configuration
-      of disks on a node. This mechanism is partly based on the setup_storage module of <link
-      xlink:href="http://fai-project.org/___blank___">FAI</link>. It basically allows for any
-      automatic setup of your hard drives including kernel software RAID (md) and
-      <firstterm>LVM</firstterm> setups. A detailed description of the syntax for disk
-      configurations is <link xlink:href="http://fai-project.org/doc/man/setup-storage.html">
-      available</link>. Since the OS of a <productname>Qlustar</productname> node is always
-      running from RAM, a disk-less configuration is obviously also possible. Note, that for
-      flawless operation this requires some extra configuration (handling of log messages and
-      in/output of batch jobs) that will be explained in the
-      <productname>Qlustar</productname> admin guide. Valid configurations require
-      definitions for two filesystems /var and /scratch as well as swap space (see
+      of disks on a node. It basically allows for any automatic setup of your hard drives
+      including any ZFS/zpool variant, kernel software RAID (md) and <firstterm>LVM</firstterm>
+      setups.
+    </para>
+    <note>
+      <para>
+	Non-ZFS setups use a mechanism that is partly based on the setup_storage module of
+	<link xlink:href="http://fai-project.org/___blank___">FAI</link>. A detailed
+	description of the syntax for disk configurations is <link
+	xlink:href="http://fai-project.org/doc/man/setup-storage.html___blank___">available</link>.
+      </para>
+    </note>
+    <para>
+      Since the OS of a <productname>Qlustar</productname> net-boot node is always running from
+      RAM, a disk-less configuration is obviously also possible. Valid disk configurations
+      require definitions for two filesystems /var and /scratch, swap space is optional (see
       examples). To permit the initial formatting of a new disk configuration on a node, it
-      must have assigned the <parameter>Schedule Format: always</parameter> generic property
-      during the initial boot (see the discussion <xref linkend="sec-PropConf-Sets"
-      endterm="sec-PropConf-Sets"/>.
+      must have assigned the <parameter>Schedule Format: always</parameter> <link
+      linkend="sec-PropConf-Sets">generic property</link> during the initial boot.
     </para>
     <para>
       <mediaobject>
@@ -288,17 +292,19 @@
       </mediaobject>
       Disk configurations can be managed using the <classname>Disk Configs</classname> dialog
       accessible from the main menu <guimenuitem>Manage
-      Configs</guimenuitem>-><guimenuitem>Disk Configs</guimenuitem>. You can select the
-      config to be viewed/edited from the drop-down menu at the bottom left. A couple of
-      example configurations are created during the installation. Note that there are two
-      special configs: (a) "disk-less" (not editable or deletable) and (b) "default"
-      (editable but not deletable). The default config is used for any node that doesn't have
-      a specific assignment to a disk config (via a Host Template, config set). The
-      configuration itself can be edited in the text field at the top of the dialog and
-      should conform to setup_storage syntax (see above). New configs can be created by
-      choosing <guimenuitem>new disk config</guimenuitem> from the drop-down menu. As usual,
-      enter the name of the new config in the text field and fill in the contents and
-      description.
+      Configs</guimenuitem>-><guimenuitem>Disk Configs</guimenuitem>. You can select the config
+      to be viewed/edited from the drop-down menu at the bottom left. A couple of example
+      configurations are created during the installation. Note that there are two special
+      configs: (a) <literal>disk-less</literal> (not editable or deletable) and (b)
+      <literal>default</literal> (editable but not deletable). The default config is used for
+      any node that doesn't have a specific assignment to a disk config (via a Host Template,
+      config set).
+    </para>
+    <para>
+       The configuration itself can be edited in the text field at the top of the dialog. New
+       configs can be created by choosing <guimenuitem>new disk config</guimenuitem> from the
+       drop-down menu. As usual, enter the name of the new config in the text field and fill in
+       the contents and description.
     </para>
     <para>
       <mediaobject>
@@ -312,11 +318,11 @@
           Editing a disk config
         </para></caption>
       </mediaobject>
-      To prevent multiple persons from editing at the same time and overwriting each others
-      changes accidentally you must acquire a lock for the template by clicking the
-      <guibutton>Edit</guibutton> button. If another user is already editing the file the
-      button will be ghosted and the tool tip will show which user is holding a lock for the
-      disk config.
+      To prevent multiple QluMan users from editing the same config simultaneously and
+      overwriting each others changes accidentally, a lock must be acquired for the template by
+      clicking the <guibutton>Edit</guibutton> button. If another user is already editing the
+      config, the button will be ghosted and the tool-tip will show which user is holding a
+      lock for it.
     </para>
     <mediaobject>
       <imageobject><imagedata
@@ -352,11 +358,11 @@
         </para></caption>
       </mediaobject>
       The template lock expires automatically after some time without activity so that the
-      template is not deadlocked if someone forgets to release the lock. In such a case the
-      above dialog will be shown notifying you about it. By selecting
-      <guibutton>OK</guibutton> a new lock will be requested. If another user is editing the
-      template at that time though the request will fail and an error dialog will inform you
-      of the failure.
+      template is not dead-locked if someone forgets to release the lock. In such a case an
+      info dialog will pop up to notify you about it. By selecting <guibutton>OK</guibutton> a
+      new lock will be requested. If another user is starting to edit the template at exactly
+      that time though, the request will fail and an error dialog will inform you of the
+      failure.
     </para>
   </section>
   <section xml:id="sec-Network-FS-Mounts-overview">
