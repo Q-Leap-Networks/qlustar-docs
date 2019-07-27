@@ -17,7 +17,7 @@
     configured for a cluster. There is a network config class that allows networks to be
     grouped in any number of network configs. The idea is, that any such network config
     reflects the network adapter configuration of a single or a group of nodes. Finally such a
-    network config can be assigned to <link linkend="PropConf-Sets">Config Sets</link> or
+    network config can be assigned to <link linkend="sec-PropConf-Sets">Config Sets</link> or
     directly to cluster nodes. According to the chosen network config for a node, individual
     node network properties like IP or MAC addresses can then be assigned to the node in the
     <link linkend="sec-Enclosure-View-Network-Info">Enclosure View</link>.

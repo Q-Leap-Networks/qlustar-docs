@@ -23,7 +23,6 @@
     <title>Basic Network Configuration</title>
     <indexterm><primary>Network Configuration</primary>
     <secondary>Basic Network Configuration</secondary></indexterm>
-    
     <para>
       The IP configuration of the head-node is defined in the file
       <filename>/etc/network/interfaces</filename> (type <command>man interfaces</command> for
@@ -45,30 +44,24 @@
         The cluster-internal network ranges can be conveniently chosen during installation.
       </para>
     </note>
-    
   </section>
   <section xml:id="admin-man-sect-dns">
     <title>DNS</title>
      <indexterm><primary>Network Configuration</primary><secondary>DNS</secondary></indexterm>
-     
      <para>
        This section describes how to configure the Domain Name System (DNS).
      </para>
-
      <para>
        The file <filename>/etc/resolv.conf</filename> contains the addresses of the DNS 
        servers to use and a list of domain names to search when looking up a short
        (not fully qualified) hostname.
        Example:
      </para>
-     
      <screen>search your.domain
-nameserver 10.0.0.252
-nameserver 10.0.0.253
+nameserver 127.0.0.1
      </screen>
      <para>
-       where 10.0.0.252 and 10.0.0.253 are the addresses of the DNS servers and your.domain is
-       the DNS domain name.
+       where 127.0.0.1 is the localhost address and your.domain is the DNS domain name.
      </para>
      <note>
        <para>
@@ -79,39 +72,20 @@ nameserver 10.0.0.253
 	 <parameter>dns-nameservers</parameter>, <parameter>dns-search</parameter>, and
 	 <parameter>dns-sortlist</parameter>. Get more details on these options by executing
 	 <command>man resolvconf</command>. The <parameter>dns-nameservers</parameter> entry is
-	 added and configured automatically during installation.
+	 added and configured automatically to use 127.0.0.1 (the head-node's dnsmasq instance)
+	 during installation.
        </para>
      </note>
-     <para>
-       If the compute-nodes also need DNS access, they should use the head-node(s) as a
-       forward-only DNS server. In that case the package <package>bind9</package> should be
-       installed and the addresses of the DNS servers be entered in the file
-       <filename>/etc/bind/named.conf.options</filename>. Example:
-     </para>
-     <screen>
-options {
-  ...
-  forwarders {
-    10.0.0.252;
-    10.0.0.253;
-  };
-  ...
-     </screen>
-
-     <para>
-       The compute-nodes must then use the cluster-internal address of the head-node
-       (192.168.52.254 in the example below) as their DNS server. This and the DNS domain name
-       have to be entered in the DHCP template file of QluMan as follows, so that the
-       compute-nodes may receive the required information via DHCP:
-     </para>
-     
-     <screen>...
-option domain-name "your.domain";
-option domain-name-servers 192.168.52.254;
-...
-     </screen>
+     <note>
+       <para>
+	 Starting from Qlustar 11.0, all <link
+	 xlink:href="../QluMan_Guide/index.html#sec-DNS___blank___">DNS configuration is done
+	 via QluMan</link> and <link
+	 xlink:href="http://dnsmasq.org/___blank___">dnsmasq</link> is used as a cluster-wide
+	 DNS server including proxy support.
+       </para>
+     </note>
    </section>
-  
   <section xml:id="admin-man-sect-dhcp">
     <title>DHCP</title>
     <indexterm><primary>Network Configuration</primary><secondary>DHCP</secondary></indexterm>

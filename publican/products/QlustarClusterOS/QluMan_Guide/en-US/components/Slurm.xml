@@ -143,7 +143,7 @@
 	    <para>
 	      The slurm node groups. Every host can belong to at most one such group. The
 	      membership is assigned (see <xref linkend="sec-Slurm-Assign-Hosts"/>) by adding
-	      the desired node group to the <link linkend="PropConf-Sets">Config Set</link>
+	      the desired node group to the <link linkend="sec-PropConf-Sets">Config Set</link>
 	      that is assigned to the node via its <link linkend="Host-Templates">Host
 	      Template</link> or via the alternative ways to assign config classes.
 	    </para>
@@ -627,9 +627,9 @@
 	Hosts are assigned to Slurm <classname>Node/Gres Groups</classname> and <emphasis
 	role="bold">Partitions</emphasis> by use of the global or a <link
 	linkend="Host-Templates">Host Template</link> (through its corresponding <link
-	linkend="PropConf-Sets">Config Set</link>) or by <link
+	linkend="sec-PropConf-Sets">Config Set</link>) or by <link
 	linkend="sec-Enclosure-View">direct assignment</link>, i.e. the standard <link
-	linkend="levels-of-configuration">four levels of configuration</link>. A
+	linkend="sec-Levels-of-Configuration">four levels of configuration</link>. A
 	<classname>Config Set</classname> may contain at most one <classname>Node
 	Group</classname> but any number of <classname>Gres Groups</classname> or
 	<classname>Partitions</classname>,
@@ -662,8 +662,8 @@
       </para>
       <note>
 	<para>
-	  The <link linkend="levels-of-configuration">four levels of configuration</link> allow
-	  overriding a setting in one particular level with a different value in a higher
+	  The <link linkend="sec-Levels-of-Configuration">four levels of configuration</link>
+	  allow overriding a setting in one particular level with a different value in a higher
 	  level. They do not allow removing a setting though. For this purpose, there exists a
 	  <literal>NONE</literal> value for <classname>Node Group</classname>,
 	  <classname>Partition</classname> and <classname>Gres Group</classname>. Assigning
