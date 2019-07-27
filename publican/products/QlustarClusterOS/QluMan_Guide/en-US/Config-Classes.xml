@@ -489,7 +489,12 @@
 	alphanumeric characters and some punctuation will be accepted.
       </para>
       <para>
-	In the case of <classname>BeeGFS</classname>, there are no further options. Once all
+	In the case of <classname>BeeGFS</classname>, you have the option to define the TCP and
+	UDP ports on which the management server listens for this FS resource. If the
+	management server manages just one BeeGFS FS, the default ports are usually fine.
+      </para>
+      <para>
+	Once all
 	fields are entered correctly, the <guibutton>OK</guibutton> button will be enabled and
 	the export definition can be added. It will then appear in the <classname>Filesystem
 	Exports</classname> window.
