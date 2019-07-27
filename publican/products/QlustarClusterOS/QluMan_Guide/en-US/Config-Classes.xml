@@ -271,8 +271,8 @@
       definitions for two filesystems /var and /scratch as well as swap space (see
       examples). To permit the initial formatting of a new disk configuration on a node, it
       must have assigned the <parameter>Schedule Format: always</parameter> generic property
-      during the initial boot (see the discussion <xref linkend="PropConf-Sets"
-      endterm="PropConf-Sets"/>.
+      during the initial boot (see the discussion <xref linkend="sec-PropConf-Sets"
+      endterm="sec-PropConf-Sets"/>.
     </para>
     <para>
       <mediaobject>
@@ -335,9 +335,9 @@
       save. You can undo all your changes up to the last time the template was saved by
       clicking the <guibutton>Undo</guibutton> button. In case another admin has made changes
       to a disk config while you are viewing or editing it, the <guibutton>Refresh</guibutton>
-      button will become enabled. By clicking it, the updated disk config is shown and you loose
-      any unsaved changes you have already made in your own edit field. To delete a disk config
-      click the <guibutton>Delete</guibutton> button.
+      button will become enabled. By clicking it, the updated disk config is shown and you
+      loose any unsaved changes you have already made in your own edit field. To delete a disk
+      config click the <guibutton>Delete</guibutton> button.
     </para>
     <para>
       <mediaobject>
@@ -374,14 +374,27 @@
         </para></caption>
       </mediaobject>
       <application>QluMan</application> also supports the configuration and management of
-      Network Filesystem (FS) and bind mounts for cluster nodes. The setup for this consists of two
-      parts: 1) For Network Filesystems a Filesystem Export resource must be defined using the dialog at
-      <guimenuitem>Manage Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>.
-      2) A Network FS Mounts config must be created using the dialog at <guimenuitem>Manage
-      Configs</guimenuitem>-><guimenuitem>Network FS Mounts</guimenuitem>. Such a config may
-      contain multiple network and bind mount definitions and as with other config classes, it can then
-      be assigned to nodes through the Global or a Host Template, Config Set or direct
-      assignment.
+      Network Filesystem (FS) and bind mounts for cluster nodes. The setup for this consists of
+      two parts:
+      <orderedlist>
+	<listitem>
+	  <para>
+	    For a network FS, a <classname>Filesystem Exports</classname> resource must be
+	    defined using the dialog at <guimenuitem>Manage
+	    Cluster</guimenuitem>-><guimenuitem>Filesystem Exports</guimenuitem>.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    A <classname>Network FS Mounts</classname> config must be created using the dialog
+	    at <guimenuitem>Manage Configs</guimenuitem>-><guimenuitem>Network FS
+	    Mounts</guimenuitem>.
+	  </para>
+	</listitem>
+      </orderedlist>
+      Such a config may contain multiple network and bind mount definitions. As with other
+      config classes, once defined, it can be assigned to nodes through the Global or a Host
+      Template, Config Set or direct assignment.
     </para>
     <section xml:id="sec-Filesystem-Exports">
       <title>Filesystem Exports</title>
@@ -397,14 +410,16 @@
           Creating a new FS export
         </para></caption>
       </mediaobject>
-        The Filesystem Exports dialog shows the list of exported filesystems by name and
-        filesystem type. Selecting an entry will show the details for this filesystem export on
-        the right. A new Filesystem Export resource can be added by clicking the
-        <guibutton>New</guibutton> button. This requires choosing a unique name that will be
-        used inside Qluman to identify the resource. The <emphasis>Resource Name</emphasis>
-        field will turn green if the entered name is unique. Qluman currently supports three
-	types of network filesystems: NFS, Lustre and BeeGFS. The Fileystem type of the
-	resource can be selected from the drop down menu.
+        The <classname>Filesystem Exports</classname> dialog shows the list of exported
+        filesystems by name and FS type. Selecting an entry will show the details for this FS
+        export on the right. A new <classname>Filesystem Exports</classname> resource can be
+        added by clicking the <guibutton>New</guibutton> button. This requires choosing a
+        unique name that will be used inside QluMan to identify the resource. The
+        <emphasis>Resource Name</emphasis> field will turn green if the entered name is
+        unique. QluMan currently supports three types of network filesystems:
+        <classname>NFS</classname>, <classname>Lustre</classname> and
+        <classname>BeeGFS</classname>. The FS type of the resource can be selected from the
+        drop-down menu.
       </para>
       <para>
 	<mediaobject>
@@ -429,32 +444,49 @@
 	    Saving the export resource
 	  </para></caption>
 	</mediaobject>
-        Next the server exporting the filesystem has to be selected. The default is beosrv-c,
-        the cluster-internal hostname of the head-node, as the most likely server to export a
-        filesystem. The server can be selected from a list of servers used for other exports
-        using the drop-down menu. To use a new server, the name has to be entered manually. It
+        Next the server exporting the FS has to be selected. The default is beosrv-c, the
+        cluster-internal hostname of the head-node, as the most likely server to export a
+        FS. Using the drop-down menu, the server can be selected from a list of servers already
+        used for other exports. To use a new server, the name has to be entered manually. It
         can be any hostname known to Qluman. The <guilabel>Server</guilabel> label will turn
         green if the entered name is a known host. This includes all nodes configured in the
         Enclosure View and any cluster-external host defined in <guimenuitem>Manage
         Cluster</guimenuitem>-><guimenuitem>Global Settings</guimenuitem>-><guimenuitem>Network
         Settings</guimenuitem>.
       </para>
+      <note>
+	<para>
+	  For a <classname>Lustre</classname> export resource the server(s) to be added are the
+	  MGS server(s) where the management target is mounted. If your
+	  <classname>Lustre</classname> FS is setup with high-availability, you can specify
+	  multiple MGS servers.
+	</para>
+      </note>
+      <note>
+	<para>
+	  For a <classname>BeeGFS</classname> export resource the name of the
+	  <classname>BeeGFS</classname> management server is to be entered here.
+	</para>
+      </note>
       <para>
-	The remaining options depend on the selected fileystem type. In case of NFS the path of
-	the filesystem to be exported on the server has to be entered. Because the path will later
-	be used in a systemd mount unit file, there are some restrictions on the syntax. For
-	example the path must start with a "/" and must not have a trailing "/". The
-	<guilabel>Path</guilabel> will turn green if the path is acceptable and red otherwise.
+	The remaining options depend on the selected FS type. In case of
+	<classname>NFS</classname>, the path of the FS to be exported on the server has to be
+	entered. Because the path will later be used in a systemd mount unit file, there are
+	some restrictions on the syntax. For example the path must start with a "/" and must
+	not have a trailing "/". The <guilabel>Path</guilabel> label will turn green if the
+	entered path is acceptable, otherwise it will turn red.
       </para>
       <para>
-	In the case of Lustre the fileystem name has to be specified. Lustre limits this name to
-	eight characters and again too avoid complications in the systemd mount unit file later
-	only alphanumeric characters and some punctuations will be accepted.
+	For a <classname>Lustre</classname> resource, the <classname>Lustre</classname> FS name
+	has to be specified. <classname>Lustre</classname> limits this name to eight characters
+	and again, to avoid complications in the systemd mount unit file later, only
+	alphanumeric characters and some punctuation will be accepted.
       </para>
       <para>
-	In the case of BeeGFS there are no further options. Once all fields are entered correctly,
-	the <guibutton>OK</guibutton> button will be enabled and the Filesystem Export can be
-	added. It will then appear in the Filesystem Exports window.
+	In the case of <classname>BeeGFS</classname>, there are no further options. Once all
+	fields are entered correctly, the <guibutton>OK</guibutton> button will be enabled and
+	the export definition can be added. It will then appear in the <classname>Filesystem
+	Exports</classname> window.
       </para>
       <para>
 	<mediaobject>
@@ -490,14 +522,14 @@
 	    Removing a network for an export
 	  </para></caption>
 	</mediaobject>
-        Qluman automatically adds the networks available on the selected server to the Network
-        priorities. Later, when a node boots and requests its config files from the head-node,
-        the networks available on the client are checked against this list and the first common
-        entry is used for the network path via which filesystem will be mounted. Shown entries
-        can be removed or additional networks added from the context menu. Entries can also be
-        moved up or down using drag and drop. This is useful e.g. to ensure that an NFS export
-        is mounted via Infiniband/RDMA on all hosts that are connected to the IB fabric and via
-        Ethernet on nodes without IB.
+        Qluman automatically adds the networks available on the selected server(s) to the
+        Network priorities. Later, when a node boots and requests its config files from the
+        head-node, the networks available on the client are checked against this list and the
+        first common entry is used for the network path via which the FS will be mounted. Shown
+        entries can be removed or additional networks added from the context menu. Entries can
+        also be moved up or down using drag&amp;drop. This is useful e.g. to ensure that an
+        <classname>NFS</classname> export is mounted via Infiniband/RDMA on all hosts that are
+        connected to the IB fabric and via Ethernet on nodes without IB.
       </para>
       <note>
 	<para>
@@ -531,13 +563,14 @@
 	    Config Name
 	  </para></caption>
 	</mediaobject>
-        Once Filesystem Exports have been defined, they can be used to configure Network FS
-        Mount configs. Each config is a collection of filesystems mounts combined with their
-        mount options. As ususal, such a config can be assigned to hosts either directly or
-        indirectly through a template. Only one Network FS Mount config can be assigned per
-        host, so all mounts that should be available on the booted node must be added to
-        it. Click the <guibutton>New Config</guibutton> button to create a new Network FS Mount
-        config.
+        Once <classname>Filesystem Exports</classname> have been defined, they can be used to
+        configure <classname>Network FS Mounts</classname> configs. Each config is a collection
+        of filesystems mounts combined with their mount options. As usual, such a config can
+        be assigned to hosts either directly or indirectly through a template. Only one
+        <classname>Network FS Mounts</classname> config can be assigned per host, so all mounts
+        that should be available on the booted node must be added to it. Click the
+        <guibutton>New Config</guibutton> button to create a new <classname>Network FS
+        Mounts</classname> config.
       </para>
       <para>
 	<mediaobject>
@@ -562,11 +595,11 @@
 	    Select a Mountpoint
 	  </para></caption>
 	</mediaobject>
-	A newly created Network FS Mounts config will be automatically selected for viewing and
-	editing. Previously defined configs may be selected from the drop-down menu in the top
-	left. Below that, the list of mountpoints for the selected config is shown along with
-	the filesystem type for each mount. Selecting one of the mountpoints will show its
-	configuration details on the right.
+	A newly created <classname>Network FS Mounts</classname> config will be automatically
+	selected for viewing and editing. Previously defined configs may be selected from the
+	drop-down menu in the top left. Below that, the list of mountpoints for the selected
+	config is shown along with the FS type for each mount. Selecting one of the
+	mountpoints will show its configuration details on the right.
       </para>
       <para>
 	<mediaobject>
@@ -592,24 +625,54 @@
 	  </para></caption>
 	</mediaobject>
 	A mount definition can be deleted or a new one added to the config from the context
-	menu. To define a new one, enter the path where the filesystem should be mounted in
-	the Mount Filesystem dialog. Also select one of the Filesystem Export resources
-	declared earlier from the drop-down menu. In most cases this information is already
-	sufficient. The next time when a node assigned to this Network FS Mounts config boots,
-	it will mount this filesystem.
+	menu. To define a new one, enter the path where the FS should be mounted in the Mount
+	Filesystem dialog. Also select one of the <classname>Filesystem Exports</classname>
+	resources declared earlier from the drop-down menu. In most cases this information is
+	already sufficient. The next time when a node assigned to this <classname>Network FS
+	Mounts</classname> config boots, it will mount this FS.
       </para>
-      <!--cbox(file: network_fs_mounts/add_bind.png caption: Adding a bind mount)-->
-      <!--cbox(file: network_fs_mounts/add_bind2.png caption: Select the path to bind mount)-->
       <para>
-        A bind mount can be added in a similar way. Except instead of selecting a external
-        resource to mount a local path has to be specified. Qluman-qt is unable to verify
-        the specified source path exists so it is worth double checking before adding the
-        bind mount.
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/network_fs_mounts/add_bind.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Adding a bind mount
+          </phrase></textobject>
+          <caption><para>
+            Adding a bind mount
+          </para></caption>
+	</mediaobject>
+	<mediaobject>
+          <imageobject><imagedata
+          fileref="images/network_fs_mounts/add_bind2.png"
+          width="85%" format="PNG"/></imageobject>
+          <textobject><phrase>
+            Defining the source path of a bind mount
+          </phrase></textobject>
+          <caption><para>
+            Defining the source path of a bind mount
+          </para></caption>
+	</mediaobject>
+        A bind mount can be added in a similar way. However, instead of selecting an external
+        resource to be mounted, the source path of the bind has to be specified. QluMan is
+        unable to verify the existence of the specified, so it is worth to double check before
+        adding the bind mount config.
       </para>
       <section xml:id="sec-Network-FS-Mounts-options-common">
         <title>Advanced common mount options</title>
         <para>
-          <!--cbox(file: network_fs_mounts/options-common.png caption: Advanced common mount options)-->
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-common.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Advanced common mount options
+            </phrase></textobject>
+            <caption><para>
+              Advanced common mount options
+            </para></caption>
+          </mediaobject>
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/network_fs_mounts/network_override.png"
@@ -621,7 +684,17 @@
 	      Overriding the Network
 	    </para></caption>
 	  </mediaobject>
-          <!--cbox(file: network_fs_mounts/options-rdma.png caption: Stop RDMA from being used)-->
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-rdma.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Stop RDMA from being used
+            </phrase></textobject>
+            <caption><para>
+              Stop RDMA from being used
+            </para></caption>
+          </mediaobject>
 	  <mediaobject>
 	    <imageobject><imagedata
 	    fileref="images/network_fs_mounts/custom-options.png"
@@ -633,13 +706,13 @@
 	      Setting custom mount options
 	    </para></caption>
 	  </mediaobject>
-          To set special options for a filesystem mount, first select the corresponding
+          To set special options for a FS mount, first select the corresponding
 	  mountpoint from the list on the left. Once selected there are advanced options
-          that can be set common to all filesystem types (except bind mounts have even less). 
+          that can be set common to all FS types (except bind mounts have even less). 
           <itemizedlist>
 	    <listitem>
 	      <para>
-	        The automatic selection of the network used to mount the filesystem may be
+	        The automatic selection of the network used to mount the FS may be
 	        overridden. First the override must be activated by setting the check-mark for
 	        <guilabel>Override Network</guilabel>. A network can then be selected from the
 	        drop-down menu to force the mount to use this particular one regardless of what
@@ -657,7 +730,7 @@
 	    </listitem>
 	    <listitem>
 	      <para>
-	        Last, any option that the mount command accepts for an mount can be set in
+	        Last, any option that the mount command accepts for a mount can be set in
 	        the <guilabel>Mount Options</guilabel> field. There are too many of them to
 	        explain them all here. Please refer to <command>man mount</command> for the
                 full list of possible options and their meaning.
@@ -669,8 +742,9 @@
         </para>
         <note>
 	  <para>
-	    Filesystems are only mounted on boot. Any changes made to a Network FS Mount
-            config of a node will therefore only take affect the next time it boots.
+	    Filesystems are only mounted on boot. Any changes made to a <classname>Network FS
+	    Mounts</classname> config of a node will therefore only take effect the next time
+	    it boots.
 	  </para>
         </note>
       </section>
@@ -682,78 +756,134 @@
 	    fileref="images/network_fs_mounts/subdir.png"
 	    width="85%" format="PNG"/></imageobject>
 	    <textobject><phrase>
-	      Mounting a subdirectory of a resource
+	      Mounting a sub-directory of a resource
 	    </phrase></textobject>
 	    <caption><para>
-	      Mounting a subdirectory of a resource
+	      Mounting a sub-directory of a resource
 	    </para></caption>
 	  </mediaobject>
-          For NFS filesystems a subdirectory can be added to the
-          <guilabel>Source Path</guilabel> to mount just a part of the exported filesystem.
+          For <classname>NFS</classname> filesystems a sub-directory can be added to the
+          <guilabel>Source Path</guilabel> to mount just a part of the exported FS.
         </para>
         <para>
-          There are also a number of custom mount options specific to NFS. Please refer to
-          <command>man nfs</command> for the full list of possible options and their meaning.
-          After editing either the source path or the mount options, be sure to press
-	  <keycap>return</keycap>, or click the <guibutton>Save</guibutton> button to save
-          the changes.
+          There are also a number of custom mount options specific to
+          <classname>NFS</classname>. Please refer to <command>man nfs</command> for the full
+          list of possible options and their meaning.  After editing either the source path or
+          the mount options, be sure to press <keycap>return</keycap>, or click the
+          <guibutton>Save</guibutton> button to save the changes.
         </para>
       </section>
       <section xml:id="sec-Network-FS-Mounts-options-lustre">
         <title>Advanced Lustre mount options</title>
         <para>
-          <!--cbox(file: network_fs_mounts/options-lustre.png caption: )-->
-          <!--cbox(file: network_fs_mounts/options-lustre-add.png caption: )-->
-          For Lustre filesystems some advanced client options are set as kernel module
-          options. Qluman-qt will have some options and their default values pre-defined.
-          These can be added using the context menu in the <guilabel>Kernel Module
-          Options</guilabel> box. Other options or values must be added using the
-          <guibutton>Kernel Module Options Editor</guibutton> first. This works the same
-          way as the property editor shown in <link linkend="Generic-Properties">property
-          editor</link>. New options must take the form
-          <literal>module_name:option_name</literal>. Please refer to the Lustre
-          documentation for a list of available options and their meaning.
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-lustre.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Lustre mount definition
+            </phrase></textobject>
+            <caption><para>
+              Lustre mount definition
+            </para></caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-lustre-add.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Specifying Lustre kernel module parameters
+            </phrase></textobject>
+            <caption><para>
+              Specifying Lustre kernel module parameters
+            </para></caption>
+          </mediaobject>
+          For <classname>Lustre</classname> filesystems, some advanced settings may be set via
+          kernel module parameters. QluMan pre-defines commonly used parameters together with
+          their suggested default values. They may be added using the context-menu in the
+          <guilabel>Kernel Module Options</guilabel> box. Additional options or values can be
+          added using the <guibutton>Kernel Module Options Editor</guibutton>. This works the
+          same way as for <link linkend="Generic-Properties">generic properties</link>. New
+          options must take the form <literal>module_name:option_name</literal>. Please refer
+          to the <classname>Lustre</classname> documentation for a list of available parameters
+          and their meaning.
         </para>
         <note>
           <para>
-            New Lustre filesystem mounts automatically <literal>localflock</literal> set
-            as a custom mount option. If other lock behaviour is desired this entry can
-            be changed.
+            Per default, new <classname>Lustre</classname> FS mounts have activated the custom
+            mount option <literal>localflock</literal>. If another lock behavior is desired,
+            this entry can easily be changed.
           </para>
         </note>
       </section>
       <section xml:id="sec-Network-FS-Mounts-options-beegfs">
         <title>Advanced BeeGFS mount options</title>
         <para>
-          <!--cbox(file: network_fs_mounts/options-beegfs.png caption: )-->
-          <!--cbox(file: network_fs_mounts/options-beegfs-add.png caption: )-->
-          BeeGFS clients allow a lot of customization. For most options the default values
-          are sufficient and don't have to be explicitly set. Anything diverging from
-          the defaults can be added in the <guilabel>BeeGFS Client Options</guilabel> box.
-          Most likely option to add is the sysXAttrEnabled option to enable the use of
-          extended attributes in the filesystem.
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-beegfs.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+               BeeGFS mount definition
+            </phrase></textobject>
+            <caption><para>
+               BeeGFS mount definition
+            </para></caption>
+          </mediaobject>
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-beegfs-add.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Adding a BeeGFS client option
+            </phrase></textobject>
+            <caption><para>
+              Adding a BeeGFS client option
+            </para></caption>
+          </mediaobject>
+          <classname>BeeGFS</classname> clients allow a lot of customization. For most options,
+          the default values are sufficient and don't have to be explicitly set. Anything
+          diverging from the defaults, can be added via the <guilabel>BeeGFS Client
+          Options</guilabel> box.  The most likely options to add are
+          <literal>quotaEnabled</literal> (to enable the support of quota),
+          <literal>sysACLsEnabled</literal> (to enable the support of POSIX ACLs) and
+          <literal>sysXAttrEnabled</literal> (to enable the support of extended attributes).
         </para>
         <para>
-          <!--cbox(file: network_fs_mounts/options-beegfs-tooltip.png caption: )-->
-          <!--cbox(file: network_fs_mounts/options-beegfs-editor.png caption: )-->
-          The pre-defined BeeGFS Client Options are generated from upstreams example
-          configuration. Each option should have a description that can be seen when
-          hovering over an option. The description can also be seen in the BeeGFS Client
-          Options Editor for each option. The editor can be opened by clicking the
-          <guibutton>BeeGFS Client Options Editor</guibutton> button and works the same way
-          as the property editor shown in <link linkend="Generic-Properties">property
-          editor</link>.
+          <!--cbox(file: network_fs_mounts/options-beegfs-tooltip.png caption:)-->
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-beegfs-editor.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Adding values for BeeGFS options
+            </phrase></textobject>
+            <caption><para>
+              Adding values for BeeGFS options
+            </para></caption>
+          </mediaobject>
+          The pre-defined <classname>BeeGFS</classname> client options shown by QluMan are
+          automatically generated from the example configuration file distributed in the
+          <classname>BeeGFS</classname> packages. Each option has a description that can be
+          seen as a tool-tip when hovering over an option that was already selected. The same
+          description is also shown in the <classname>BeeGFS Client Options Editor</classname>
+          for the option that is selected there. The editor can be opened by clicking the
+          <guibutton>BeeGFS Client Options Editor</guibutton> button and works the same way as
+          for <link linkend="Generic-Properties">generic properties</link>,
         </para>
         <para>
-          For options where a default is provided in the example config the default will
-          be pre-defined and immutable in qluman-qt. In case of boolean options both true and
-          false will be pre-defined regardless of the default. For other options additional
-          values must be added in the editor before they can be added to a client.
+          For options where a default value is provided in the example config file, this value
+          will be pre-defined and immutable in QluMan's <classname>BeeGFS Client Options
+          Editor</classname>. In case of boolean options, both <literal>true</literal> and
+          <literal>false</literal> will be pre-defined regardless of the default. For other
+          options, additional values must be added using the editor, before they can be
+          assigned to a <classname>BeeGFS</classname> mount config entry.
         </para>
         <note>
           <para>
-            Options with no default, like connAuthFile, will have no value pre-defined and
-            won't show up in the context menu unless a value is added through the editor.
+            Options without a default, like e.g. <literal>connAuthFile</literal>, will have no
+            value pre-defined and won't show up in the context-menu, unless a value is added
+            through the editor.
           </para>
         </note>
       </section>
