@@ -21,7 +21,7 @@
     <indexterm><primary>Boot Process</primary>
     <secondary>Compute-node booting</secondary></indexterm>
     <para> 
-      The boot process of the compute-nodes follows precise rules. It takes place in five
+      The boot process of the compute-nodes follows precise rules. It takes place in six
       steps:
     </para>
     <orderedlist>
@@ -42,38 +42,67 @@
       <listitem>
 	<para>
 	  PXELinux downloads the Qlustar Linux kernel and the assigned initial RAM-disk image
-	  and boots the kernel.
+	  and boots the kernel. This image doesn't hold the final OS, it has just enough
+	  functionality to download the real OS image in the next step.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  A Qlustar specific script <filename>/sbin/init.qlustar</filename> is executed as the
-	  initial init process. This script starts QluMan execd in a one-shot fashion where the
-	  latter a) downloads the real squashfs-based OS image assigned to the node b) receives
-	  all the node specific options from the head-node and c) executes corresponding
-	  scripts to process the options received.
+	  A Qlustar specific script <filename>/init</filename> is executed as the initial init
+	  process. This script sets up the unionfs filesystem structure as well as basic
+	  networking functionality and finally starts the Qlustar multicast client to download
+	  the real OS image assigned to the node and delivered by the Qlustar multicast image
+	  server <classname>ql-mcastd</classname>. This image is unpacked into the path
+	  <filename>/union/image</filename>.
+	</para>
+	<para>
+	  The system then moves to the next boot stage by changing the root filesystem to the
+	  new unpacked OS image. Control is now passed to the 2nd Qlustar init script
+	  <filename>/sbin/init.qlustar</filename>.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <filename>/sbin/init.qlustar</filename> first executes
+	  <application>systemd-udevd</application> to trigger the auto-loading of kernel
+	  drivers and then starts <classname>QluMan execd</classname> in a one-shot
+	  configure-mode. Hereby <classname>QluMan execd</classname> a) receives all the
+	  node-specific options from <classname>qlumand</classname> running on the head-node
+	  and b) executes corresponding scripts to process the options received.
 	</para>
 	<para>
 	  This dynamic customization/configuration of the node must be done before systemd
-	  starts. Disk initialization and the basic setup of the unionfs structure with the
-	  downloaded squashfs image as the base layer, is also done at this stage.
+	  starts. Among others, the following tasks are performed at this stage: Initialization
+	  of local disks, setup of systemd units for QluMan defined <classname>Network FS
+	  mounts</classname>, <classname>pam</classname> customization,
+	  <classname>sssd</classname> customization, <classname>OpenSM</classname>
+	  configuration (if desired) and a check whether <classname>NTP</classname> can
+	  synchronize the time from the head-node(s).
 	</para>
 	<para>
 	  Log files concerning this boot phase are located under
 	  <filename>/var/log/qlustar</filename>. Adding the parameter
 	  <emphasis>early-shell</emphasis> to the kernel cmdline, will interrupt the boot
 	  process when entering <filename>/sbin/init.qlustar</filename> and give the
-	  opportunity to debug in case of possible problems.
+	  opportunity to debug in case of possible problems. The kernel parameter
+	  <emphasis>debug</emphasis> will produce lots of debug messages during this phase.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  The root filesystem is changed to the basic unionfs mount and systemd is started in
-	  this new root file-system as the final init process to proceed with the usual Linux
-	  boot procedure.
+	  When all the above is finished, control is finally passed to
+	  <classname>systemd</classname> as the final init process. From here on, the boot
+	  procedure proceeds in the standard Linux fashion.
 	</para>
       </listitem>
     </orderedlist>
+    <note>
+      <para>
+	The details of the node boot process have changed substantially while going from
+	Qlustar 9.2 to 10.0, then 10.1 and finally 11.0. So make sure you check the
+	documentation of the release you're running to obtain correct information.
+      </para>
+    </note>
   </section>
   <section xml:id="admin-man-sect-tftp-boot-serv">
     <title>TFTP Boot Server</title>
