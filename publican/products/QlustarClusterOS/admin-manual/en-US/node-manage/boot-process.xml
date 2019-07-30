@@ -49,7 +49,7 @@
       <listitem>
 	<para>
 	  A Qlustar specific script <filename>/init</filename> is executed as the initial init
-	  process. This script sets up the unionfs filesystem structure as well as basic
+	  process. This script sets up the unionFS filesystem structure as well as basic
 	  networking functionality and finally starts the Qlustar multicast client to download
 	  the real OS image assigned to the node and delivered by the Qlustar multicast image
 	  server <classname>ql-mcastd</classname>. This image is unpacked into the path
@@ -211,8 +211,8 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       </para>
       <para>
 	Files created this way will be located underneath the path
-	<filename>/etc/qlustar/images</filename> on the head-node, either in the subdirectory
-	<filename>common</filename> (for files entering all images) or in the subdirectory
+	<filename>/etc/qlustar/images</filename> on the head-node, either in the sub-directory
+	<filename>common</filename> (for files entering all images) or in the sub-directory
 	<filename><replaceable>img</replaceable></filename> (for files entering just the
 	image <replaceable>img</replaceable>).
       </para>
@@ -259,22 +259,22 @@ qlustar -> <filename>/var/lib/qlustar</filename>
     <indexterm><primary>QluMan</primary>
     <secondary>Remote Execution Server</secondary></indexterm>
     <para>
-      The QluMan execution server (<firstterm>qluman-execd</firstterm>) runs on any head- and
-      compute-node of a Qlustar cluster. It is one of Qlustar's main components, responsible
-      for executing remote commands as well as writing configurations to disk.
+      The QluMan execution server (<application>qluman-execd</application>) runs on any head-
+      and compute-node of a Qlustar cluster. It is one of Qlustar's main components,
+      responsible for executing remote commands as well as writing configurations to disk.
     </para>
     <section xml:id="admin-man-sect-execd-dynamic-boot-scripts">
       <title>Dynamic Node Customization/Configuration</title>
       <indexterm><primary>Boot Process</primary>
       <secondary>Dynamic Node Customization</secondary></indexterm>
       <para>
-	When a compute-node boots, qluman-execd initially starts in a one-shot fashion (starts
-	and exits when done with its configuration tasks) during the pre-systemd boot phase
-	(see <xref linkend="admin-man-sect-comp-node-boot"/> for details). At this stage, it
-	downloads the squashfs-based RAM-disk image via multicast from the head-node's qlumand
-	service and performs a number of initialization/configuration tasks depending on the
-	node's QluMan configuration options. Generated option files are written under
-	<filename>/etc/qlustar/options.d</filename>. The following is a list of these tasks:
+	When a compute-node boots, <application>qluman-execd</application> initially starts in
+	a one-shot fashion (starts and exits when done with its configuration tasks) during the
+	pre-systemd boot phase (see <xref linkend="admin-man-sect-comp-node-boot"/> for
+	details). At this stage, it performs a number of initialization/configuration tasks
+	depending on the node's QluMan configuration options. Generated option files are
+	written under <filename>/etc/qlustar/options.d</filename>. The following is a list of
+	these tasks:
       </para>
       <variablelist>
 	<varlistentry>
@@ -283,11 +283,13 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	  </term>
 	  <listitem>
 	    <para>
-	      Configuration of all network parameters in the corresponding configuration files,
-	      so that they can be activated later on by systemd. If the node boots Ubuntu or
-	      Debian, the information is written to
-	      <filename>/etc/network/interfaces.d/qluman</filename>, for CentOS in adapter
-	      specific files under <filename>/etc/sysconfig/network-scripts</filename>.
+	      Configuration of all <link
+	      xlink:href="../QluMan_Guide/index.html#sec-Host-Network-Settings___blank___">network
+	      parameters</link> in the corresponding configuration files, so that they can be
+	      activated later on by systemd. If the node boots Ubuntu or Debian, the
+	      information is written to <filename>/etc/network/interfaces.d/qluman</filename>,
+	      for CentOS in adapter specific files under
+	      <filename>/etc/sysconfig/network-scripts</filename>.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -297,9 +299,23 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	  </term>
 	  <listitem>
 	    <para>
-	      Writing of the host's QluMan defined disk configuration into the file
+	      Writing of the host's <link
+	      xlink:href="../QluMan_Guide/index.html#sec-Disk-Configs___blank___">QluMan
+	      defined disk configuration</link> into the file
 	      <filename>/etc/qlustar/options.d/disk-config</filename> for later use by the disk
 	      initialization script.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    Setup of Network FS mounts
+	  </term>
+	  <listitem>
+	    <para>
+	      Writing of systemd (auto)mount unit files according to the <link
+	      xlink:href="../QluMan_Guide/index.html#sec-Network-FS-Mounts___blank___">Network
+	      FS mounts config</link> the host is assigned to in QluMan.
 	    </para>
 	  </listitem>
 	</varlistentry>
@@ -330,7 +346,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	  </term>
 	  <listitem>
 	    <para>
-	      If configured in QluMan, a custom unionfs chroot will be setup rather than the
+	      If configured in QluMan, a custom unionFS chroot will be setup rather than the
 	      one that is defined in the Qlustar image.
 	    </para>
 	  </listitem>
@@ -362,7 +378,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
       <para>
 	For details about the configuration of the above components, see the corresponding
 	section of the <link
-      xlink:href="../QluMan_Guide/index.html#chap-RX-Engine___blank___">QluMan Guide</link>.
+      xlink:href="../QluMan_Guide/index.html___blank___">QluMan Guide</link>.
       </para>
     </section>
   </section>
