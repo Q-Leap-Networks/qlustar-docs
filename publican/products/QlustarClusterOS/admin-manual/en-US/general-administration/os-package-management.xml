@@ -38,11 +38,11 @@
       the Internet either directly or through a http proxy the file will look like this:
     </para>
     <screen>
-deb http://repo.qlustar.com/repo/ubuntu 10.1-xenial main universe non-free
-deb http://repo.qlustar.com/repo/ubuntu 10.1-xenial-proposed-updates main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 11.0-bionic main universe non-free
+deb http://repo.qlustar.com/repo/ubuntu 11.0-bionic-proposed-updates main universe non-free
     </screen>
     <para>
-      This enables access to the Qlustar 10.1 software repository.
+      This enables access to the Qlustar 11.0 software repository.
     </para>
     <note>
       <para>

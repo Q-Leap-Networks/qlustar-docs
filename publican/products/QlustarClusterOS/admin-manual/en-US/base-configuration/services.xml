@@ -53,10 +53,9 @@
     <indexterm><primary>Services</primary>
     <secondary>NIS</secondary></indexterm>
     <para>
-      NIS (Network Information System) is used as the cluster wide name service database.  User
-      account (passwd and shadow map) and group information (group map), hostname resolution
-      (hosts map), auto-mounter (auto.master, auto.apps, auto.data), netgroup and services are
-      the most important maps. The head-node is configured as a NIS master server when running
+      NIS (Network Information System) is used as the default cluster wide name service
+      database for user account (passwd and shadow map) and group information (group map) The
+      head-node is configured as a NIS master server when running
       <command>qlustar-initial-config</command> during installation. In case of a HA head-node
       setup, the second head-node becomes a NIS slave server.
     </para>
@@ -65,9 +64,8 @@
       <filename>/var/yp</filename> and the corresponding source files in the directory
       <filename>/etc/qlustar/yp</filename>. The passwd and shadow tables are updated
       automatically by the script <filename>adduser.sh</filename> when users are added (see
-      <xref linkend="admin-man-sect-add-user"/>) and the host map is automatically generated
-      from QluMan. Apart from that, usually nothing needs to be changed in the provided NIS
-      configuration.
+      <xref linkend="admin-man-sect-add-user"/>). Apart from that, usually nothing needs to be
+      changed in the provided NIS configuration.
     </para>
     <para>
       For security reasons, the file <filename>/etc/qlustar/yp/shadow</filename> should be
@@ -77,11 +75,11 @@
       the NIS package HowTo at <filename>/usr/share/doc/nis/nis.debian.howto.gz</filename>.
     </para>
     <para>
-      Another important security aspect is the access restriction to the NIS server. Only the
-      compute-nodes should be allowed to contact the NIS server. In case the head-node is also
-      used as a work-group NIS server, additional access can be allowed for the corresponding
-      subnet to which the work-group workstations are connected. The access settings are
-      configured in <filename>/etc/ypserv.securenets</filename> (see <command>man
+      Another important security aspect is the access restriction to the NIS server. Usually,
+      only the cluster nodes should be allowed to contact the NIS server. In case the head-node
+      is also used as a work-group NIS server, additional access can be allowed for the
+      corresponding subnet to which the work-group workstations are connected. The access
+      settings are configured in <filename>/etc/ypserv.securenets</filename> (see <command>man
       ypserv</command>).
     </para>
     <para>
@@ -98,7 +96,7 @@
     <indexterm><primary>Services</primary>
     <secondary>NFS</secondary></indexterm> 
     <para>
-      To ensure a cluster wide homogeneous directory structure, the head-node provides NFS
+      To ensure a cluster wide homogeneous directory structure, the head-node provides <classname>NFS</classname>
       (Network File System) services to the compute-nodes. The kernel NFS server with protocol
       version 3 is used for accomplishing this goal. The typical Qlustar directory structure
       consists of three file-systems that are exported by the head-node via NFS to all other
@@ -149,51 +147,8 @@
     </para>
     <screen>
 <prompt>0 root@cl-head ~ #</prompt><command>
-service nfs-kernel-server status</command>
+service nfs-kernel-server reload</command>
     </screen>
-  </section>
-  <section xml:id="admin-man-sect-auto-mounter">
-    <title>Automounter</title>
-    <indexterm><primary>Services</primary><secondary>Automounter</secondary></indexterm>
-    <para>
-      By default, NFS mounts on Qlustar nodes booting via the network are managed by the kernel
-      automounter. The information needed to configure these mounts comes from the NIS
-      automounter maps <parameter>auto.apps</parameter> and
-      <parameter>auto.data</parameter>. You can view the contents of these maps using the
-      commands <command>ypcat -k auto.apps</command> and <command>ypcat -k
-      auto.data</command>. The automounter software is able to determine which mounts are being
-      consulted at a given time using so-called master maps. In Qlustar, this is the NIS map
-      <parameter>auto.master</parameter>. Its content is defined in the source file <filename>
-      /etc/qlustar/yp/auto.master</filename> with the following default settings:
-    </para>
-    <screen>/apps auto.apps
-/data auto.data
-    </screen>
-    <para>
-      This means that <filename>/apps</filename> is the base mount path for all entries in
-      auto.apps and <filename>/data</filename> for all entries in
-      <filename>auto.data</filename>. The referenced maps themselves have entries of the form
-      (example for <filename>auto.data</filename>):
-    </para>
-    <screen>home -fstype=nfs,rw,hard,intr $NFSSRV:/srv/data/&amp;
-    </screen>
-    <para>
-      The remote directory <filename>/srv/data/home</filename> should thus be mounted by the
-      automounter at the path <filename>/data/home</filename> on the NFS client. The variable
-      <envar>$NFSSRV</envar> contains the hostname of the NFS server. Its value defaults to
-      beosrv-c and could be modified by setting the DHCP option
-      <parameter>option-130</parameter> with the following lines in the QluMan DHCP template:
-    </para>
-    <screen>option option-130 code 130 = text;
-option option-130 "nfsserver";
-    </screen>
-    <warning>
-      <para>
-	In this example, the variable would be changed to
-	<parameter>nfsserver</parameter>. Changing the default is only recommended for very
-	special cases though.
-      </para>
-    </warning>
   </section>
   <section xml:id="admin-man-sect-ssh">
     <title>SSH - Secure Shell</title>
