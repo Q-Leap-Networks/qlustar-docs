@@ -109,10 +109,10 @@
     <indexterm><primary>Boot Process</primary>
     <secondary>TFTP Boot Server</secondary></indexterm>
     <para>
-      The Advanced TFTP server transfers the boot image to the compute-nodes. All files that
-      should be served by tftp must reside in the directory
-      <filename>/var/lib/tftpboot</filename>. On a Qlustar installation, it contains three
-      symbolic links:
+      The <classname>TFTP</classname> server component of <classname>dnsmasq</classname>
+      transfers the boot image to the compute-nodes. All files that should be served by tftp
+      must reside in the directory <filename>/var/lib/tftpboot</filename>. On a Qlustar
+      installation, it contains three symbolic links:
     </para>
 <screen>
 pxelinux.0 -> <filename>/usr/lib/syslinux/pxelinux.0</filename>
@@ -131,7 +131,7 @@ qlustar -> <filename>/var/lib/qlustar</filename>
     </para>
   </section>
   <section xml:id="admin-man-sect-RAM-disk-img">
-    <title>RAM-disk image</title>
+    <title>RAM-disk OS images</title>
     <indexterm><primary>Boot Process</primary>
     <secondary>RAM-disk image</secondary></indexterm>
     <para>
@@ -175,6 +175,84 @@ qlustar -> <filename>/var/lib/qlustar</filename>
 	</listitem>
       </varlistentry>
     </variablelist>
+    <section xml:id="admin-man-sect-RAM-disk-img-custom">
+      <title>Static node OS image customization/modification</title>
+      <indexterm><primary>Boot Process</primary>
+      <secondary>RAM-disk image</secondary></indexterm>
+      <para>
+	Node OS images are regenerated automatically, when the image module packages they are
+	based on are updated. That means, that files can't be simply modified or added to a
+	generated image as the changes would be lost on the next update.
+      </para>
+      <para>
+	<productname>Qlustar</productname> therefore provides a mechanism to add extra files to
+	images every time they are rebuild and hence make changes permanent. Files can be added
+	to all images or only to one specific image using the
+	<application>qlustar-image-edit</application> tool. All the commands in this section
+	must be executed as root on the head-node.
+      </para>
+      <para>
+	To modify or add the file <filename>/some/path/filename</filename> to all images
+	execute:
+      </para>
+      <screen>
+	<prompt>0 root@cl-head ~ #</prompt><command>
+	qlustar-image-edit -e /some/path/filename</command>
+      </screen>
+      <para>
+	To modify/add the file to a specific image <replaceable>img</replaceable>:
+      </para>
+      <screen>
+	<prompt>0 root@cl-head ~ #</prompt><command>
+	qlustar-image-edit -e <replaceable>img</replaceable> /some/path/filename</command>
+      </screen>
+      <para>
+	To edit the file again later, simply run the same command again.
+      </para>
+      <para>
+	Files created this way will be located underneath the path
+	<filename>/etc/qlustar/images</filename> on the head-node, either in the subdirectory
+	<filename>common</filename> (for files entering all images) or in the subdirectory
+	<filename><replaceable>img</replaceable></filename> (for files entering just the
+	image <replaceable>img</replaceable>).
+      </para>
+      <para>
+	The <emphasis>whole</emphasis> directory structure of a file is created there so the
+	full path of the above examples would be
+	<filename>/etc/qlustar/images/common/copy/some/path/filename</filename> or
+	<filename>/etc/qlustar/images/<replaceable>img</replaceable>/copy/some/path/filename</filename>
+	respectively. To undo adding such files to the images, simply remove these files.
+      </para>
+      <para>
+	A second mode of <application>qlustar-image-edit</application> is to directly edit the
+	generated images. Such changes are always temporary meaning they will be overwritten by
+	image module updates. This method is suitable to apply a quick fix for a problem that
+	is known to be solved in subsequent image module versions or for testing.
+      </para>
+      <para>
+	To edit the initial RAMdisk of the image <replaceable>img</replaceable> execute:
+	<screen>
+	  <prompt>0 root@cl-head ~ #</prompt><command>
+	  qlustar-image-edit -i <replaceable>img</replaceable></command>
+	</screen>
+	To edit the squashfs OS image do:
+	<screen>
+	  <prompt>0 root@cl-head ~ #</prompt><command>
+	  qlustar-image-edit -s <replaceable>img</replaceable></command>
+	</screen>
+	In both cases, you will be placed into the root directory of the corresponding
+	initrd/image. You can then manipulate any file in the initrd/image or add new ones to
+	it. When done, enter <code>exit</code> and the initrd/image will be regenerated.
+      </para>
+      <warning>
+	<para>
+	  By manipulating the image in this way, you can easily break things and in the worst
+	  case make the OS unbootable. Please be aware that you're on your own, if you choose
+	  to experiment with the above methods. In other words: The Qlustar team won't be able
+	  to give support for problems arising from a modified OS initrd/image.
+	</para>
+      </warning>
+    </section>
   </section>
   <section xml:id="admin-man-sect-qluman-execd">
     <title>QluMan Remote Execution Server</title>
