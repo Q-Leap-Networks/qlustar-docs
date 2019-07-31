@@ -324,6 +324,7 @@
       config, the button will be ghosted and the tool-tip will show which user is holding a
       lock for it.
     </para>
+    <para>
     <mediaobject>
       <imageobject><imagedata
       fileref="images/disk_config/save.png"
@@ -335,7 +336,6 @@
         Saving a disk config
       </para></caption>
     </mediaobject>
-    <para>
       After having finished editing a template, don't forget to save your changes by clicking
       the <guibutton>Save</guibutton> button. It will be ghosted, if there is nothing to
       save. You can undo all your changes up to the last time the template was saved by
@@ -861,7 +861,17 @@
           <literal>sysXAttrEnabled</literal> (to enable the support of extended attributes).
         </para>
         <para>
-          <!--cbox(file: network_fs_mounts/options-beegfs-tooltip.png caption:)-->
+          <mediaobject>
+            <imageobject><imagedata
+            fileref="images/network_fs_mounts/options-beegfs-tooltip.png"
+            width="85%" format="PNG"/></imageobject>
+            <textobject><phrase>
+              Tooltip explains BeeGFS options
+            </phrase></textobject>
+            <caption><para>
+              Tooltip explains BeeGFS options
+            </para></caption>
+          </mediaobject>
           <mediaobject>
             <imageobject><imagedata
             fileref="images/network_fs_mounts/options-beegfs-editor.png"
