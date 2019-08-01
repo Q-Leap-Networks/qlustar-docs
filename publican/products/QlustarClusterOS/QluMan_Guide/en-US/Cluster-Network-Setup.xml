@@ -1112,91 +1112,91 @@
 	</para>
       </note>
     </section>
-    <section xml:id="sec-qlustar-common-path">
-      <title>Netboot</title>
+  </section>
+  <section xml:id="sec-qlustar-common-path">
+    <title>Netboot</title>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/network_settings/qlustar_common.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Setting the qlustar/common path
+      </phrase></textobject>
+      <caption><para>
+        Setting the qlustar/common path
+      </para></caption>
+    </mediaobject>
+    <para>
+      The qlustar/common path specifies the location of the <link
+      xlink:href="../Administration_Manual/index.html#admin-man-sect-config-dir___blank___">cluster-wide
+      configuration directory</link> on the head-node that is used for its NFS export.  This
+      path value should not be changed unless there is a good reason for it. A custom value
+      is usually required only for a head-node setup in high-availability mode.
+    </para>
+  </section>
+  <section xml:id="sec-HTTP-Proxy">
+    <title>Other Network Settings</title>
+    <para>
       <mediaobject>
-        <imageobject><imagedata
-        fileref="images/network_settings/qlustar_common.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Setting the qlustar/common path
-        </phrase></textobject>
-        <caption><para>
-          Setting the qlustar/common path
-        </para></caption>
+	<imageobject><imagedata
+	fileref="images/network_settings/proxy__none.png"
+	width="85%" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  HTTP Proxy configuration
+	</phrase></textobject>
+	<caption><para>
+	  HTTP Proxy configuration
+	</para></caption>
       </mediaobject>
-      <para>
-        The qlustar/common path specifies the location of the <link
-        xlink:href="../Administration_Manual/index.html#admin-man-sect-config-dir___blank___">cluster-wide
-        configuration directory</link> on the head-node that is used for its NFS export.  This
-        path value should not be changed unless there is a good reason for it. A custom value
-        is usually required only for a head-node setup in high-availability mode.
-      </para>
-    </section>
-    <section xml:id="sec-HTTP-Proxy">
-      <title>Other Network Settings</title>
-      <para>
-	<mediaobject>
-	  <imageobject><imagedata
-	  fileref="images/network_settings/proxy__none.png"
-	  width="85%" format="PNG"/></imageobject>
-	  <textobject><phrase>
-	    HTTP Proxy configuration
-	  </phrase></textobject>
-	  <caption><para>
-	    HTTP Proxy configuration
-	  </para></caption>
-	</mediaobject>
-	<mediaobject>
-	  <imageobject><imagedata
-	  fileref="images/network_settings/proxy__name.png"
-	  width="85%" format="PNG"/></imageobject>
-	  <textobject><phrase>
-	    Setting a name for the proxy server
-	  </phrase></textobject>
-	  <caption><para>
-	    Setting a name for the proxy server
-	  </para></caption>
-	</mediaobject>
-	<mediaobject>
-	  <imageobject><imagedata
-	  fileref="images/network_settings/proxy__ip.png"
-	  width="85%" format="PNG"/></imageobject>
-	  <textobject><phrase>
-	    Setting an IP for the proxy server
-	  </phrase></textobject>
-	  <caption><para>
-	    Setting an IP for the proxy server
-	  </para></caption>
-	</mediaobject>
-	Sometimes the cluster head-node does not have direct access to the internet and
-	requires a proxy server for a connection to the Qlustar repository servers. To enable
-	support for such scenarios, click the check-mark before <guilabel>Http Proxy</guilabel>
-	and enter the hostname of the proxy server together with the proxy port.
-      </para>
-      <para>
-	<mediaobject>
-	  <imageobject><imagedata
-	  fileref="images/network_settings/proxy__auth.png"
-	  width="85%" format="PNG"/></imageobject>
-	  <textobject><phrase>
-	    Setting authentication info for the proxy server
-	  </phrase></textobject>
-	  <caption><para>
-	    Setting authentication info for the proxy server
-	  </para></caption>
-	</mediaobject>
-	If the proxy requires authentication, click the check-mark before
-	<guilabel>Authenticate</guilabel> and enter a username and password.
-	The <guilabel>Http Proxy</guilabel> and <guilabel>User/Pass</guilabel> label will turn
-	green when entries are edited with acceptable input but have not been saved yet. The
-	labels will turn red when the current input is invalid and turn back to black once the
-	input has been saved. The input can be saved by pressing <keycap>return</keycap>, or
-	will be saved automatically when the input field looses focus. Leaving the user name
-	field empty will disable authentication just the same as clearing the
-	<guilabel>Authenticate</guilabel> check-mark.
-      </para>
-    </section>
+      <mediaobject>
+	<imageobject><imagedata
+	fileref="images/network_settings/proxy__name.png"
+	width="85%" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  Setting a name for the proxy server
+	</phrase></textobject>
+	<caption><para>
+	  Setting a name for the proxy server
+	</para></caption>
+      </mediaobject>
+      <mediaobject>
+	<imageobject><imagedata
+	fileref="images/network_settings/proxy__ip.png"
+	width="85%" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  Setting an IP for the proxy server
+	</phrase></textobject>
+	<caption><para>
+	  Setting an IP for the proxy server
+	</para></caption>
+      </mediaobject>
+      Sometimes the cluster head-node does not have direct access to the internet and
+      requires a proxy server for a connection to the Qlustar repository servers. To enable
+      support for such scenarios, click the check-mark before <guilabel>Http Proxy</guilabel>
+      and enter the hostname of the proxy server together with the proxy port.
+    </para>
+    <para>
+      <mediaobject>
+	<imageobject><imagedata
+	fileref="images/network_settings/proxy__auth.png"
+	width="85%" format="PNG"/></imageobject>
+	<textobject><phrase>
+	  Setting authentication info for the proxy server
+	</phrase></textobject>
+	<caption><para>
+	  Setting authentication info for the proxy server
+	</para></caption>
+      </mediaobject>
+      If the proxy requires authentication, click the check-mark before
+      <guilabel>Authenticate</guilabel> and enter a username and password.
+      The <guilabel>Http Proxy</guilabel> and <guilabel>User/Pass</guilabel> label will turn
+      green when entries are edited with acceptable input but have not been saved yet. The
+      labels will turn red when the current input is invalid and turn back to black once the
+      input has been saved. The input can be saved by pressing <keycap>return</keycap>, or
+      will be saved automatically when the input field looses focus. Leaving the user name
+      field empty will disable authentication just the same as clearing the
+      <guilabel>Authenticate</guilabel> check-mark.
+    </para>
   </section>
   </section>
 </chapter>
