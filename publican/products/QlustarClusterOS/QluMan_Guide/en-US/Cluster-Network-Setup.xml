@@ -1198,6 +1198,39 @@
       <guilabel>Authenticate</guilabel> check-mark.
     </para>
   </section>
+  <section xml:id="sec-ql-mcastd">
+    <title>Qlustar Multicast Daemon (ql-mcastd)</title>
+    <para>
+      The boot process for <productname>Qlustar</productname> has 2 stages. First the kernel
+      and a minimal initramfs is loaded using PXE support from the nodes hardware. The
+      initramfs then downloads a squashfs image using multicast provided by the
+      Qlustar Multicast Daemon (ql-mcastd).
+    </para>
+    <para>
+      The ql-mcastd is configuration is generated to include any configured network that
+      has bootable nodes and can be previewed and written as part of the DNSMasq file class.
+      The generated configuration also includes IP and port parameters taken from the
+      <filename>/etc/qlustar/qluman/qlumand.cf</filename> in the MCastd section:
+    </para>
+    <screen>
+[MCastd]
+multicast_ip = 232.1.0.0
+multicast_control_port = 5000
+multicast_port_min = 5001
+multicast_port_max = 5999
+    </screen>
+    <para>
+      In the unlikely event of a conflict with other services in the same network the
+      multicast IP, control port and port range used for transfers can be changed.
+      After editing the file the qluman-server service must be restarted so the new
+      settings will be included in the ql-mcastd.conf. If the control port was changes
+      then, after writing ql-mcastd.conf, all Qlustar images must be rebuild as well using:
+    </para>
+    <screen>
+      <prompt>0 root@beosrv-c ~ #</prompt>
+<command>qlustar-image-reconfigure all</command>
+    </screen>
+  </section>
   </section>
 </chapter>
 
