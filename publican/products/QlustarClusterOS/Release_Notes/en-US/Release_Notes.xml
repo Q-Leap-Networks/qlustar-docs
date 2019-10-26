@@ -487,6 +487,46 @@ apt remove atftpd isc-dhcp-server</command>
 	    nodes. This completes the update procedure.
 	  </para>
 	</step>
+	<step>
+	  <title>Adjust root bash shell initialization</title>
+	  <para>
+	    Starting from this release, Qlustar supplied bash shell functions and some aliases
+	    for root on the head-node have been migrated to the qlustar-base package and now
+	    live underneath <filename>/etc/qlustar</filename>. Previously they have been
+	    generated on the fly during installation, and hence were not easily upgradeable.
+	  </para>
+	  <para>
+	    To move to the new scheme, the following modifications have to be made manually
+	    with a text editor on the cluster head-node(s). In the file
+	    <filename>/root/.bashrc</filename> replace the content at the end from
+	    <screen>
+# Source other files
+source_list="/root/.bash_aliases /root/.bash_functions"
+shopt -oq posix || source_list="$source_list /etc/bash_completion"
+for c in $source_list ; do
+  [ -r $c ] &amp;&amp; . $c ; done; unset c
+	    </screen>
+	    to
+	    <screen>
+# Source misc bash stuff:
+# First global Qlustar aliases/functions (from qlustar-base package)
+source_list="/etc/qlustar/bash.aliases /etc/qlustar/bash.functions"
+# ... then the local equivalents
+source_list="$source_list /root/.bash_aliases /root/.bash_functions"
+# Finally activate additional completions
+shopt -oq posix || source_list="$source_list /etc/bash_completion"
+for c in $source_list ; do
+  [ -r $c ] &amp;&amp; . $c ; done; unset c
+	    </screen>
+	    In the file <filename>/root/.bash_aliases</filename> delete or comment out the
+	    following two lines:
+	    <screen>
+alias console-fe-vm="connect_screen login-vm"
+alias console-demo-vms="connect_screen demo-system"
+	    </screen>
+	    These two aliases are now provided globally and the old ones will not work anymore.
+	  </para>
+	</step>
       </procedure>
     </task>
   </section>
@@ -496,9 +536,9 @@ apt remove atftpd isc-dhcp-server</command>
       A detailed log of changes in the image modules can be found in the directories
       <filename>/usr/share/doc/qlustar-module-&#60;module-name&#62;-*-amd64-11.0.0</filename>.
       As an example, in the directory
-      <filename>/usr/share/doc/qlustar-module-core-xenial-amd64-11.0.0</filename> you will
-      find a summary changelog in <filename>core.changelog</filename>, a complete list of
-      packages with version numbers entering the current core module in
+      <filename>/usr/share/doc/qlustar-module-core-xenial-amd64-11.0.0</filename> you will find
+      a summary changelog in <filename>core.changelog</filename>, a complete list of packages
+      with version numbers entering the current core module in
       <filename>core.packages.version.gz</filename>, a complete changelog of the core modules
       package versions in <filename>core.packages.version.gz</filename> and finally a complete
       log of changed files in <filename>core.contents.changelog.gz</filename>.
