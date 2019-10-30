@@ -64,6 +64,20 @@
 	</listitem>
 	<listitem>
 	  <para>
+	    Multiple commands can be run in tabs from the same <literal>Execute
+	    Commands</literal> window and multiple <literal>Execute Commands</literal>
+	    windows can be opened side by side.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    A history of executed commands is kept both locally for commands executed
+	    by the GUI on any cluster as well as separately on the cluster for commands
+	    executed by any user. This allows for auditing commands later.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
 	    The output is <emphasis role="bold">analyzed</emphasis> and updated in short
 	    intervals during the execution phase.
 	  </para>
@@ -121,15 +135,23 @@
         </para></caption>
       </mediaobject>
       Pre-Defined commands can be created using the <classname>Command Editor</classname> (see
-      <xref linkend="sec-RXE-Command-Editor"/> for details). To execute a pre-defined command,
+      <xref linkend="sec-RXE-Command-Editor"/> for details). Commands can be defined as cluster
+      commands stored on a specific cluster and usable by different users on the cluster or as
+      user commands stored in the GUI client and usable only by the user but across different
+      clusters. To execute a pre-defined command,
       open the pull-down menu of the <guibutton>Execute button</guibutton> at the bottom of the
-      <classname>Enclosure View</classname> and select an entry. This opens a new
-      <classname>Command Execution</classname> window for pre-defined commands. At the very top
-      of it, the selected pre-defined command is shown. It can be changed if required. Below
-      that is a list of the arguments, the selected command accepts. <guilabel>Execute
-      on</guilabel> is always present showing where the command will be executed. If defined,
-      additional arguments of the command are displayed underneath. Further below, the final
-      command is shown, with its arguments inserted at the right places. The command will be
+      <classname>Enclosure View</classname> and select a command from either the
+      <menuitem>Cluster Commands</menuitem> or <menuitem>User Commands</menuitem> sub-menu.
+      This opens a new
+      <classname>Execute Commands</classname> window with the pre-defined commands already
+      selected. At the very top of it, the <guilabel>Execute on</guilabel> is always present
+      showing where the command will be executed. Below that the selected pre-defined command is
+      shown. It can be changed if required by selecting a different command from the
+      <guibutton>Pull-down</guibutton> button. If defined,
+      additional arguments of the command are displayed underneath. Further below, the command
+      text is shown if <guibutton>Show Command</guibutton> is selected. The <guibutton>Evaluate
+      Filters</guibutton> will show the final command with all the arguments inserted at the right
+      places and filters evaluated to their respective hostlists. The command will be
       executed upon clicking the <guibutton>Execute</guibutton> button.
     </para>
     <para>
@@ -196,13 +218,13 @@
       </mediaobject>
       <mediaobject>
         <imageobject><imagedata
-        fileref="images/execute/main_with_edit_button.png"
+        fileref="images/execute/multi-line-custom-command.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          The RXengine window for custom commands
+          The RXengine window with multi-line custom commands
         </phrase></textobject>
         <caption><para>
-          The RXengine window for custom commands
+          The RXengine window with multi-line custom commands
         </para></caption>
       </mediaobject>
       To execute a custom command, open the pull-down menu of the <guimenu>Execute
@@ -219,35 +241,13 @@
     <para>
       <mediaobject>
         <imageobject><imagedata
-        fileref="images/execute/selected.png"
+        fileref="images/execute/current_selection.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
           Selecting hosts for remote execution
         </phrase></textobject>
         <caption><para>
           Selecting hosts for remote execution
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/update.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Updating the selection of hosts for remote execution
-        </phrase></textobject>
-        <caption><para>
-          Updating the selection of hosts for remote execution
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/past_command.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Choosing commands previously executed
-        </phrase></textobject>
-        <caption><para>
-          Choosing commands previously executed
         </para></caption>
       </mediaobject>
       In case hosts were selected in the <classname>Enclosure View</classname> before
@@ -256,16 +256,20 @@
       <emphasis role="bold">easy selection of hosts</emphasis> to run a command on by <link
       linkend="sec-Host-Selections">selecting them</link> in the <classname>Enclosure
       View</classname>. The hostlist can also be updated at a later time from the currently
-      selected hosts in the Enclosure View by clicking the <guibutton>Update</guibutton>
-      button. This makes it simple, to run the same command on different sets of hosts. When
-      a command is executed, it is added to the <literal>history</literal> and can be
-      accessed again later through the pull-down menu. This allows rerunning recently used
+      selected hosts in the Enclosure View by selecting the <menuitem>&lt;current
+      selection&gt;</menuitem> from the drop down menu for filters. This makes it simple, to
+      run the same command on different sets of hosts. When
+      a command is executed, it is added to the <literal>Command History</literal> in the GUI
+      client and on the cluster the command is executed on. The Command History (explained in
+      <xref linkend="sec-RXE-Command-History"/>) can be opened from the <menu>Manage
+      Cluster</menu> -> <menuitem>Command History</menuitem> and
+      allows viewing past commands and rerunning recently used
       commands without having to retype them every time.
       <note>
 	<para>
-	  Note, that the history is stored in the users home directory, hence every user has
-	  his own. The preferred way to manage frequently used commands is by pre-defining
-	  them (explained in <xref linkend="sec-RXE-Command-Editor"/>).
+	  Note, that the history, both local and cluster, is ment more as a log of commands than
+	  a repository of useful commands. The preferred way to manage frequently used commands
+	  is by pre-defining them (explained in <xref linkend="sec-RXE-Command-Editor"/>).
 	</para>
       </note>
     </para>
@@ -284,12 +288,10 @@
           RXEngine - Passing input to a command
         </para></caption>
       </mediaobject>
-      Sometimes it is necessary to pass some input to a command. This can be done by clicking
-      the <guibutton>Input</guibutton> button near the top. Another text box will then be
+      Sometimes it is necessary to pass some input to a command. This can be done by checking
+      the <guibutton>Show Input</guibutton> checkbox. Another text box will then be
       added to the window and will allow to specify, what should be passed to
-      <literal>stdin</literal> of the command on each host. <!--FIXME: rewrite when
-      implemented In future version the Browse button will allow selecting a file to be used
-      as stdin. -->
+      <literal>stdin</literal> of the command on each host.
     </para>
     <bridgehead>
       Command Syntax
