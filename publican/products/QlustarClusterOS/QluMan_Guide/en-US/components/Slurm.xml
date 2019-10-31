@@ -1627,7 +1627,7 @@
       <para>
 	Once the desired nodes are selected, an action can be chosen and then executed by
 	clicking the <classname>Execute</classname> button. In case the action was operating on
-	the nodes slurmd, an RXEngine window comes up, in which one can track the success of
+	the nodes slurmd, an RXengine window comes up, in which one can track the success of
 	the remote slurmd operation. To clear the complete list of selected nodes, one can
 	click the <classname>Clear</classname> button. To remove only a subset of nodes, one
 	can select them in the right list and remove them via the context-menu.

@@ -11,9 +11,9 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xml:id="chap-RX-Engine">
-  <title>RXEngine / Remote Execution Engine</title>
+  <title>RXengine / Remote Execution Engine</title>
   <section xml:id="sec-RXE-Overview">
-    <title>RXEngine Overview</title>
+    <title>RXengine Overview</title>
     <para>
       <mediaobject>
         <imageobject><imagedata
@@ -64,16 +64,9 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    Multiple commands can be run in tabs from the same <literal>Execute
-	    Commands</literal> window and multiple <literal>Execute Commands</literal>
-	    windows can be opened side by side.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    A history of executed commands is kept both locally for commands executed
-	    by the GUI on any cluster as well as separately on the cluster for commands
-	    executed by any user. This allows for auditing commands later.
+	    Multiple commands can be run in tabs from the same <classname>RXengine</classname>
+	    window and multiple <classname>RXengine</classname> windows can be opened
+	    simultaneously.
 	  </para>
 	</listitem>
 	<listitem>
@@ -93,6 +86,16 @@
 	    The output can further be <emphasis role="bold">filtered</emphasis> by the return
 	    code of the command and by (de)selecting <literal>stdout</literal> and/or
 	    <literal>stderr</literal>.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    A <emphasis role="bold">history of executed commands</emphasis> is kept a) in the
+	    database on the cluster head-node (hence accessible to all QluMan users of that
+	    cluster) and b) locally in the user's home directory. The local database logs
+	    commands executed on any cluster managed with QluMan by that user. Commands can be
+	    re-executed or saved to the execution menu from the <classname>Command
+	    History</classname> viewer.
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -135,24 +138,28 @@
         </para></caption>
       </mediaobject>
       Pre-Defined commands can be created using the <classname>Command Editor</classname> (see
-      <xref linkend="sec-RXE-Command-Editor"/> for details). Commands can be defined as cluster
-      commands stored on a specific cluster and usable by different users on the cluster or as
-      user commands stored in the GUI client and usable only by the user but across different
-      clusters. To execute a pre-defined command,
-      open the pull-down menu of the <guibutton>Execute button</guibutton> at the bottom of the
-      <classname>Enclosure View</classname> and select a command from either the
-      <menuitem>Cluster Commands</menuitem> or <menuitem>User Commands</menuitem> sub-menu.
-      This opens a new
-      <classname>Execute Commands</classname> window with the pre-defined commands already
-      selected. At the very top of it, the <guilabel>Execute on</guilabel> is always present
-      showing where the command will be executed. Below that the selected pre-defined command is
-      shown. It can be changed if required by selecting a different command from the
-      <guibutton>Pull-down</guibutton> button. If defined,
-      additional arguments of the command are displayed underneath. Further below, the command
-      text is shown if <guibutton>Show Command</guibutton> is selected. The <guibutton>Evaluate
-      Filters</guibutton> will show the final command with all the arguments inserted at the right
-      places and filters evaluated to their respective hostlists. The command will be
-      executed upon clicking the <guibutton>Execute</guibutton> button.
+      <xref linkend="sec-RXE-Command-Editor"/> for details). They can be defined as
+      <literal>cluster commands</literal> stored in the DB of the cluster currently connected
+      to and usable by different users on that cluster or as <literal>user commands</literal>
+      stored in the user's home directory and usable only by that user but on all clusters the
+      user has access to.
+    </para>
+    <para>
+      To execute a pre-defined command, open the pull-down menu of the
+      <guibutton>Execute</guibutton> button at the bottom of the <classname>Enclosure
+      View</classname> and select a command from either the <guimenuitem>Cluster
+      Commands</guimenuitem> or <guimenuitem>User Commands</guimenuitem> sub-menu. This opens a
+      new <classname>RXengine</classname> window with the chosen command already selected. At
+      the very top of the window, the <guilabel>Execute on</guilabel> field shows the hosts on
+      which the command will be executed. Below that, the selected pre-defined command is
+      shown. It can be changed at any time by choosing a different entry via the
+      <guibutton>Pull-down</guibutton> button. If defined, additional arguments of the command
+      are displayed underneath. If <guibutton>Show Command</guibutton> is checked, the actual
+      command code is shown further below. If <guibutton>Evaluate Filters</guibutton> is
+      checked, the final command will be shown with all its arguments inserted at the right
+      places and filters evaluated to their respective hostlists. Upon clicking the
+      <guibutton>Execute</guibutton> button, execution of the command on all selected hosts
+      starts.
     </para>
     <para>
       <mediaobject>
@@ -256,13 +263,13 @@
       <emphasis role="bold">easy selection of hosts</emphasis> to run a command on by <link
       linkend="sec-Host-Selections">selecting them</link> in the <classname>Enclosure
       View</classname>. The hostlist can also be updated at a later time from the currently
-      selected hosts in the Enclosure View by selecting the <menuitem>&lt;current
-      selection&gt;</menuitem> from the drop down menu for filters. This makes it simple, to
+      selected hosts in the Enclosure View by selecting the <guimenuitem>&lt;current
+      selection&gt;</guimenuitem> from the drop down menu for filters. This makes it simple, to
       run the same command on different sets of hosts. When
       a command is executed, it is added to the <literal>Command History</literal> in the GUI
       client and on the cluster the command is executed on. The Command History (explained in
-      <xref linkend="sec-RXE-Command-History"/>) can be opened from the <menu>Manage
-      Cluster</menu> -> <menuitem>Command History</menuitem> and
+      <xref linkend="sec-RXE-Command-History"/>) can be opened from the <guimenu>Manage
+      Cluster</guimenu> -> <guimenuitem>Command History</guimenuitem> and
       allows viewing past commands and rerunning recently used
       commands without having to retype them every time.
       <note>
@@ -282,10 +289,10 @@
         fileref="images/execute/input.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          RXEngine - Passing input to a command
+          RXengine - Passing input to a command
         </phrase></textobject>
         <caption><para>
-          RXEngine - Passing input to a command
+          RXengine - Passing input to a command
         </para></caption>
       </mediaobject>
       Sometimes it is necessary to pass some input to a command. This can be done by checking
@@ -391,10 +398,10 @@
         fileref="images/execute/command.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          RXEngine - Executing a custom command
+          RXengine - Executing a custom command
         </phrase></textobject>
         <caption><para>
-          RXEngine - Executing a custom command
+          RXengine - Executing a custom command
         </para></caption>
       </mediaobject>
       Once the hostlist is added, a command can simply be run by entering it in the command
@@ -413,10 +420,10 @@
 	  fileref="images/execute/df.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Tracking the status of executed commands
+	    RXengine - Tracking the status of executed commands
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Tracking the status of executed commands
+	    RXengine - Tracking the status of executed commands
 	  </para></caption>
 	</mediaobject>
 	After the <guibutton>Execute</guibutton> button has been pressed, all hosts will start
@@ -435,10 +442,10 @@
 	  fileref="images/execute/pending.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Hosts in pending state
+	    RXengine - Hosts in pending state
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Hosts in pending state
+	    RXengine - Hosts in pending state
 	  </para></caption>
 	</mediaobject>
 	<mediaobject>
@@ -446,10 +453,10 @@
 	  fileref="images/execute/killed.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Killing a command
+	    RXengine - Killing a command
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Killing a command
+	    RXengine - Killing a command
 	  </para></caption>
 	</mediaobject>
 	In the screenshot example, the hosts <systemitem class="systemname">sn-1</systemitem>
@@ -472,10 +479,10 @@
 	  fileref="images/execute/group.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Statistics about job status
+	    RXengine - Statistics about job status
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Statistics about job status
+	    RXengine - Statistics about job status
 	  </para></caption>
 	</mediaobject>
 	Hosts executing a command are not only grouped by their execution state, the command
@@ -510,10 +517,10 @@
 	  fileref="images/execute/errors.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - A command with stdout and stderr output 
+	    RXengine - A command with stdout and stderr output 
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - A command with stdout and stderr output 
+	    RXengine - A command with stdout and stderr output 
 	  </para></caption>
 	</mediaobject>
 	Commands usually output regular text to <literal>stdout</literal> and warnings as well
@@ -531,10 +538,10 @@
 	  fileref="images/execute/stdout.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Filtering stdout
+	    RXengine - Filtering stdout
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Filtering stdout
+	    RXengine - Filtering stdout
 	  </para></caption>
 	</mediaobject>
 	<mediaobject>
@@ -542,10 +549,10 @@
 	  fileref="images/execute/stderr.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    RXEngine - Filtering stderr
+	    RXengine - Filtering stderr
 	  </phrase></textobject>
 	  <caption><para>
-	    RXEngine - Filtering stderr
+	    RXengine - Filtering stderr
 	  </para></caption>
 	</mediaobject>
 	Some commands produce a lot of output. Error messages are then easily overseen in
@@ -823,10 +830,10 @@
 	  fileref="images/command_editor/testing_command.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    The test command appearing in the RXEngine window
+	    The test command appearing in the RXengine window
 	  </phrase></textobject>
 	  <caption><para>
-	    The test command appearing in the RXEngine window
+	    The test command appearing in the RXengine window
 	  </para></caption>
 	</mediaobject>
 	In the screenshot example, the test command is defined to execute on all head-nodes
