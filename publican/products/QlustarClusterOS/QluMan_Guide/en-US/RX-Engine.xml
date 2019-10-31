@@ -257,26 +257,31 @@
           Selecting hosts for remote execution
         </para></caption>
       </mediaobject>
-      In case hosts were selected in the <classname>Enclosure View</classname> before
-      clicking the <guibutton>Execute</guibutton> button, a hostlist representing these hosts
-      will be present in the <classname>Command Execution</classname> window. This allows
-      <emphasis role="bold">easy selection of hosts</emphasis> to run a command on by <link
+      In case hosts were selected in the <classname>Enclosure View</classname> before clicking
+      the <guibutton>Execute</guibutton> button, a hostlist representing these hosts will be
+      present in the <classname>RXengine</classname> window. This allows <emphasis
+      role="bold">easy selection of hosts</emphasis> to run a command on by <link
       linkend="sec-Host-Selections">selecting them</link> in the <classname>Enclosure
-      View</classname>. The hostlist can also be updated at a later time from the currently
-      selected hosts in the Enclosure View by selecting the <guimenuitem>&lt;current
-      selection&gt;</guimenuitem> from the drop down menu for filters. This makes it simple, to
-      run the same command on different sets of hosts. When
-      a command is executed, it is added to the <literal>Command History</literal> in the GUI
-      client and on the cluster the command is executed on. The Command History (explained in
-      <xref linkend="sec-RXE-Command-History"/>) can be opened from the <guimenu>Manage
-      Cluster</guimenu> -> <guimenuitem>Command History</guimenuitem> and
-      allows viewing past commands and rerunning recently used
-      commands without having to retype them every time.
+      View</classname>.
+    </para>
+    <para>
+      The hostlist can also be updated at a later time with the currently selected hosts in the
+      <classname>Enclosure View</classname> by selecting <guimenuitem>&lt;current
+      selection&gt;</guimenuitem> from the drop-down menu for filters. This makes it easy, to
+      run the same command on different sets of hosts. When a command is executed, it is added
+      to both the cluster and local <link linkend="sec-RXE-Command-History">Command
+      History</link>.
+    </para>
+    <para>
+      The <classname>Command History</classname> viewer can be opened from <guimenu>Manage
+      Cluster</guimenu> -> <guimenuitem>Command History</guimenuitem>. It allows viewing
+      previous commands as well as re-executing or saving them in the <classname>Command
+      Editor</classname> (see <xref linkend="sec-RXE-Command-Editor"/>).
       <note>
 	<para>
-	  Note, that the history, both local and cluster, is ment more as a log of commands than
-	  a repository of useful commands. The preferred way to manage frequently used commands
-	  is by pre-defining them (explained in <xref linkend="sec-RXE-Command-Editor"/>).
+	  Note, that the main purpose of the history is as a log of commands (possibly for
+	  auditing) rather than a repository of useful commands. The preferred way to manage
+	  frequently used commands is by pre-defining them.
 	</para>
       </note>
     </para>
@@ -296,9 +301,9 @@
         </para></caption>
       </mediaobject>
       Sometimes it is necessary to pass some input to a command. This can be done by checking
-      the <guibutton>Show Input</guibutton> checkbox. Another text box will then be
-      added to the window and will allow to specify, what should be passed to
-      <literal>stdin</literal> of the command on each host.
+      the <guibutton>Show Input</guibutton> checkbox. Another text box will then be added to
+      the window where text can be entered that will be passed as <literal>stdin</literal> to
+      the command on each host.
     </para>
     <bridgehead>
       Command Syntax
