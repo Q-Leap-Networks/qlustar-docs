@@ -596,14 +596,25 @@
         </para></caption>
       </mediaobject>
       The <classname>command editor</classname> shows all the pre-defined commands in a tree
-      view on the left. A number of useful commands are already defined by default. Selecting
+      view on the left. The tree is made up of two top level items. At the top the Cluster
+      Commands contains all the pre-defined commands of the current cluster as sub-tree. 
+      A number of useful commands are already defined by default there. The second top
+      level item is User Commands and contains pre-defined commands stored in the user's
+      home directory and accessible only to the user but across all clusters.
+      Selecting
       a command shows its definition on the right-hand side, where it can also be
-      edited. Every command has a unique name/alias under which it appears in the tree view
+      edited. Every command has a name/alias under which it appears in the tree view
       on the left, the execute menu in the <classname>Enclosure View</classname> and in the
-      drop down menu of the pre-defined commands execution window. In the future, it will
-      also be possible to limit commands to specific user roles, but for now all commands are
-      unrestricted. A user either has rights to execute any pre-defined commands or
-      none. Below the role selector, the command itself is defined.
+      drop down menu of the RXengine window.
+      </para>
+      <para>
+	There are three Admin Rights concerning pre-defined commands: "Can create, modify and
+	delete predefined commands" refers to the right to create Cluster Commands while
+	"Can execute predefined commands on nodes" refers to their execution. User commands
+	on the other hand can always be created, modified or deleted by the user. But to
+	execute them the "Can execute custom commands on nodes" right is required same as
+	when executing custom commands directly. User pre-defined commands are just a
+	short-cut for custom commands that are used frequently.
     </para>
     <section xml:id="sec-RXE-Command-Editor-Sorting">
       <title>Sorting commands</title>
@@ -642,12 +653,20 @@
 	  </para></caption>
 	</mediaobject>
 	Commands are kept in a tree structure, grouping similar commands together. They can be
-	sorted freely using the context menu to make frequently used commands easier to
-	select. The <guimenuitem>Move Up</guimenuitem> and <guimenuitem>Move Down</guimenuitem>
-	menu items move a command or group up or down within the group respectively. The
-	<guimenuitem>Move to group</guimenuitem> sub-menu allows moving a command up or down in
-	the tree hierarchy. Groups can be created, renamed and deleted to achieve any desired
-	hierarchy of commands.
+	sorted freely using drag&amp;drop. Select one ore more commands or groups and drag them
+	where they should appear. Items are moved if they remain inside the same top level item.
+	So a Cluster Command can be dragged and drop within the Cluster Command sub-tree to move
+	it to a beter place. Moves between Cluster Commands and User Commands on the other hand
+	will copy the select commands or groups. Groups can be created, renamed, moved and
+	deleted to achieve any desired hierarchy of commands.
+      </para>
+      <para>
+	<!--cbox(file: command_editor/context_menu_4.png caption: )-->
+	When a cluster is first installed a number of pre-defined commands are added to the
+	cluster per default. A few more default commands can be added from the context menu
+	by selecting <guimenu>Add default command</guimenu> and following the tree structure
+	there. This also includes all the commands added by default. So in case one was
+	deleted it can always be added back that way.
       </para>
     </section>
     <section xml:id="sec-RXE-Command-Editor-Defining">
@@ -694,8 +713,7 @@
       <para>
 	To edit a command, it needs to be selected first. Then its definitions will be shown on
 	the right-hand side. The name/alias of a command can be edited by clicking in the text
-	box at the top and entering the new name. The check-box to the right of the name
-	indicates, whether your name is valid. Press <keycap>return</keycap>, to save the new
+	box at the top and entering the new name. Press <keycap>return</keycap>, to save the new
 	name and the check-box will become fully checked again. To undo editing, simply
 	reselect the command in the tree view.
       </para>
