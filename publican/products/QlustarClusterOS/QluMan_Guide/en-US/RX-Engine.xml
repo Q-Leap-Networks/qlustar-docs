@@ -861,5 +861,70 @@
       </note>
     </section>
   </section>
+  <section xml:id="sec-RXE-Command-History">
+    <title>Command History</title>
+    <!--cbox(file: execute/command_history_all.png caption: Command History overview)-->
+    <para>
+      Every time a command is executed using the RXengine the command is logged in the
+      Command History. There are two Command Histories: local and cluster. The local Command
+      History is stored locally in the user's home directory and contains a list of all the
+      commands executed by the user on any cluster. This history is only accessible to and
+      managed by the user himself. The cluster Command History is stored in the database on
+      the cluster head-node and lists all the commands executed on that cluster. It is
+      accessible to all users and managed by users with the Admin Right "Can clear command
+      execution history".
+    </para>
+    <para>
+      When first opened the Command History will show a merge of the local and cluster Command
+      History for the current cluster and commands will be sorted with the most popular command
+      at the top. If the popularity is equal the newer command will be at the top. This can
+      be altered in several ways.
+    </para>
+    <!--cbox(file: execute/command_history_local.png caption: )-->
+    <!--cbox(file: execute/command_history_cluster.png caption: )-->
+    <para>
+      The local and cluster Command History view can be toggeled on and off using the two check
+      boxes <guibutton>Local History</guibutton> and <guibutton>Cluster History</guibutton>.
+      Whichever boxes are checked that history is shown.
+    </para>
+    <!--cbox(file: execute/command_history_sorting.png caption: )-->
+    <para>
+      The table can also be sorted by any column by clicking at the column header. Repeated
+      clicks will reverse the direction of the sort as shown by an up or down arrow at the
+      right side of the column header used to sort.
+    </para>
+    <!--cbox(file: execute/command_history_no_popularity.png caption: )-->
+    <para>
+      When first opened the Command History will group identical commands together and show
+      the number each command was executed in the Popularity count column (Pop.). Removing
+      the checkmark from the <guibutton>Popularity</guibutton> checkbox will list each command
+      separately allowing for a full audit of the command history.
+    </para>
+    <note>
+      <para>
+	The state of the Command History is preserved when the window is opened again later.
+	The same history (local/cluster) is shown and the same sorting is applied. But this
+	does not persist across restarts of qluman-qt.	
+      </para>
+    </note>
+    <!--cbox(file: execute/command_history_execute_again.png caption: )-->
+    <!--cbox(file: execute/command_history_save_command.png caption: )-->
+    <para>
+      Besides being a log for excuted commands the Command History has 2 more functions:
+      A command can be executed again by first selecting the command from the list and then
+      clicking the <guibutton>Execute again</guibutton>. This will open the RXengine window
+      with the selected command already filled in. The command can be edited or the execute
+      on hostlist can be altered before clicking the <guibutton>Execute</guibutton> button
+      to actually start the execution.
+    </para>
+    <para>
+      The second function is to use the command as template for a pre-defined command. Clicking
+      the <guibutton>Save command</guibutton> button will open the Command Editor window and
+      start the creation of a new command by asking for the alias for the new command. The
+      command will the be created as a local pre-defined command and can be edited, moved around
+      in the pre-defined command tree or moved to the cluster pre-defined commands like any other
+      pre-defined command.
+    </para>      
+  </section>
 </chapter>
 
