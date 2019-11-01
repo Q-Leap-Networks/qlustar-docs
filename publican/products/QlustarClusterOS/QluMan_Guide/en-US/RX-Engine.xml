@@ -92,7 +92,7 @@
 	  <para>
 	    A <emphasis role="bold">history of executed commands</emphasis> is kept a) in the
 	    database on the cluster head-node (hence accessible to all QluMan users of that
-	    cluster) and b) locally in the user's home directory. The local database logs
+	    cluster) and b) locally in the user's home directory. The user database logs
 	    commands executed on any cluster managed with QluMan by that user. Commands can be
 	    re-executed or saved to the execution menu from the <classname>Command
 	    History</classname> viewer.
@@ -269,7 +269,7 @@
       <classname>Enclosure View</classname> by selecting <guimenuitem>&lt;current
       selection&gt;</guimenuitem> from the drop-down menu for filters. This makes it easy, to
       run the same command on different sets of hosts. When a command is executed, it is added
-      to both the cluster and local <link linkend="sec-RXE-Command-History">Command
+      to both the cluster and user <link linkend="sec-RXE-Command-History">Command
       History</link>.
     </para>
     <para>
@@ -314,86 +314,6 @@
       as in the last example, and working with variables works as expected. Please refer to the
       bash documentation (e.g. <code>man bash</code>) for more details.
     </para>
-    <section xml:id="sec-RXE-Edit-Custom">
-    <title>Custom Command Editor</title>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/main_with_edit_button_highlighted.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Invoking the Custom Command Editor.
-        </phrase></textobject>
-        <caption><para>
-          Invoking the Custom Command Editor.
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/custom_command_editor.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          The Custom Command Editor.
-        </phrase></textobject>
-        <caption><para>
-          The Custom Command Editor.
-        </para></caption>
-      </mediaobject>
-      To edit your custom commands open the <classname>Custom Command Editor</classname> by
-      clicking the tool button next to the command. This dialog allows you to rearrange the
-      order of how the commands appear in the custom command selectbox, delete and even edit
-      them.
-    </para>
-    <bridgehead>Editing a custom command</bridgehead>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/custom_command_editor_edit.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Editing a Custom Command.
-        </phrase></textobject>
-        <caption><para>
-          Editing a Custom Command.
-        </para></caption>
-      </mediaobject>
-      To edit a command just select it. Now the <classname>Edit</classname> button gets
-      enabled. After you click on it, a new dialog appears that lets you edit the
-      command. Click <classname>Apply</classname> to save your changes.
-    </para>
-    <bridgehead>Deleting a custom command</bridgehead>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/custom_command_editor_delete.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Deleting a Custom Command.
-        </phrase></textobject>
-        <caption><para>
-          Deleting a Custom Command.
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/execute/custom_command_editor_drag.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Rearranging Custom Commands.
-        </phrase></textobject>
-        <caption><para>
-          Rearranging Custom Commands.
-        </para></caption>
-      </mediaobject>
-      To delete a custom command just go into its contextmenu and select
-      <classname>Delete</classname>.
-    </para>
-    <bridgehead>Changing the order of custom commands</bridgehead>
-    <para>
-      The order of the custom commands can be changed via Drag&amp;Drop. You don't have to
-      explicitly save the changes, since this is done automatically after each rearrangement.
-    </para>
-    </section>
   </section>
   <section xml:id="sec-RXE-Output-Analysis">
     <title>Analysis of Command Status/Output</title>
@@ -595,26 +515,22 @@
           The definition of a command
         </para></caption>
       </mediaobject>
-      The <classname>command editor</classname> shows all the pre-defined commands in a tree
-      view on the left. The tree is made up of two top level items. At the top the Cluster
-      Commands contains all the pre-defined commands of the current cluster as sub-tree. 
-      A number of useful commands are already defined by default there. The second top
-      level item is User Commands and contains pre-defined commands stored in the user's
-      home directory and accessible only to the user but across all clusters.
-      Selecting
-      a command shows its definition on the right-hand side, where it can also be
-      edited. Every command has a name/alias under which it appears in the tree view
-      on the left, the execute menu in the <classname>Enclosure View</classname> and in the
-      drop down menu of the RXengine window.
-      </para>
-      <para>
-	There are three Admin Rights concerning pre-defined commands: "Can create, modify and
-	delete predefined commands" refers to the right to create Cluster Commands while
-	"Can execute predefined commands on nodes" refers to their execution. User commands
-	on the other hand can always be created, modified or deleted by the user. But to
-	execute them the "Can execute custom commands on nodes" right is required same as
-	when executing custom commands directly. User pre-defined commands are just a
-	short-cut for custom commands that are used frequently.
+      The <classname>Command Editor</classname> shows all the pre-defined commands in a tree
+      view on the left. The tree consists of two top level items, <literal>Cluster
+      Commands</literal> on top and <literal>User Commands</literal> underneath. Cluster
+      commands are stored in the cluster's QluMan DB and user commands in the user's home
+      directory. Selecting a command shows its definition on the right, where it can also be
+      edited. Every command has a name/alias under which it appears in the tree view on the
+      left as well as in the <guimenu>Execute</guimenu> menu in the <classname>Enclosure
+      View</classname> and in the drop-down menu of an RXengine window.
+    </para>
+    <para>
+      There are three <literal>Admin Rights</literal> concerning pre-defined commands: "Can
+      create, modify and delete predefined commands" refers to the right to create Cluster
+      Commands while "Can execute predefined commands on nodes" refers to their execution. User
+      commands on the other hand can always be created, modified or deleted by the user. But to
+      execute them, the right "Can execute custom commands on nodes" is required just like when
+      executing custom commands directly.
     </para>
     <section xml:id="sec-RXE-Command-Editor-Sorting">
       <title>Sorting commands</title>
@@ -646,27 +562,37 @@
 	  fileref="images/command_editor/context_menu_3.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    Actions for menu commands
+	    Actions for pre-defined commands
 	  </phrase></textobject>
 	  <caption><para>
-	    Actions for menu commands
+	    Actions for pre-defined commands
 	  </para></caption>
 	</mediaobject>
 	Commands are kept in a tree structure, grouping similar commands together. They can be
-	sorted freely using drag&amp;drop. Select one ore more commands or groups and drag them
-	where they should appear. Items are moved if they remain inside the same top level item.
-	So a Cluster Command can be dragged and drop within the Cluster Command sub-tree to move
-	it to a beter place. Moves between Cluster Commands and User Commands on the other hand
-	will copy the select commands or groups. Groups can be created, renamed, moved and
-	deleted to achieve any desired hierarchy of commands.
+	sorted freely using drag&amp;drop. You may select one ore more commands or groups and
+	drag them where they should appear. Items are <emphasis role="bold">moved</emphasis> if
+	they remain inside the same top level item (cluster or user) otherwise they are
+	<emphasis role="bold">copied</emphasis>, since the two are stored in different
+	places. Groups can be created, renamed, moved and deleted to achieve any desired
+	hierarchy of commands.
       </para>
       <para>
-	<!--cbox(file: command_editor/context_menu_4.png caption: )-->
-	When a cluster is first installed a number of pre-defined commands are added to the
-	cluster per default. A few more default commands can be added from the context menu
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/context_menu_4.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    Adding default commands
+	  </phrase></textobject>
+	  <caption><para>
+	    Adding default commands
+	  </para></caption>
+	</mediaobject>
+	When a cluster is first installed, a number of pre-defined commands are added to the
+	cluster automatically. A few more default commands can be added from the context menu
 	by selecting <guimenu>Add default command</guimenu> and following the tree structure
-	there. This also includes all the commands added by default. So in case one was
-	deleted it can always be added back that way.
+	there. This also includes all the commands added at installation time. So in case one
+	of these was deleted, it can always be restored again.
       </para>
     </section>
     <section xml:id="sec-RXE-Command-Editor-Defining">
@@ -712,9 +638,9 @@
       </para>
       <para>
 	To edit a command, it needs to be selected first. Then its definitions will be shown on
-	the right-hand side. The name/alias of a command can be edited by clicking in the text
-	box at the top and entering the new name. Press <keycap>return</keycap>, to save the new
-	name and the check-box will become fully checked again. To undo editing, simply
+	the right. The name/alias of a command can be edited by clicking in the text
+	box at the top and entering the new name. Press <keycap>return</keycap>, to save the
+	new name and the check-box will become fully checked again. To undo editing, simply
 	reselect the command in the tree view.
       </para>
       <para>
@@ -881,67 +807,142 @@
   </section>
   <section xml:id="sec-RXE-Command-History">
     <title>Command History</title>
-    <!--cbox(file: execute/command_history_all.png caption: Command History overview)-->
     <para>
-      Every time a command is executed using the RXengine the command is logged in the
-      Command History. There are two Command Histories: local and cluster. The local Command
-      History is stored locally in the user's home directory and contains a list of all the
-      commands executed by the user on any cluster. This history is only accessible to and
-      managed by the user himself. The cluster Command History is stored in the database on
-      the cluster head-node and lists all the commands executed on that cluster. It is
-      accessible to all users and managed by users with the Admin Right "Can clear command
-      execution history".
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_all.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Command History overview
+        </phrase></textobject>
+        <caption><para>
+          Command History overview
+        </para></caption>
+      </mediaobject>
+      Every time a command is executed using the RXengine the command is logged in the command
+      history. There are two separate history logs: One for the QluMan user and one for the
+      cluster. The user history is stored locally in a sqlite database located in the user's
+      home directory and contains a list of all the commands executed by the user on any
+      cluster she/he has access to. This history is only accessible to and managed by the user
+      himself. The cluster history is stored in the QluMan database on the cluster head-node
+      and holds all the commands executed on that particular cluster. It is accessible to all
+      QluMan users but entries can be removed only by users with the specific <literal>Admin
+      Right</literal> that exists for this.
     </para>
     <para>
-      When first opened the Command History will show a merge of the local and cluster Command
-      History for the current cluster and commands will be sorted with the most popular command
-      at the top. If the popularity is equal the newer command will be at the top. This can
-      be altered in several ways.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_local.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          User Command History
+        </phrase></textobject>
+        <caption><para>
+          User Command History
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_cluster.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Cluster Command History
+        </phrase></textobject>
+        <caption><para>
+          Cluster Command History
+        </para></caption>
+      </mediaobject>
+      When first opened, the <classname>Command History</classname> viewer will show a merge of
+      the user history with the cluster history of the cluster currently connected to. Commands
+      will be sorted with the most popular command at the top. Popularity is defined by the
+      number of times a command has been executed. If the popularity is equal, the newer
+      command will be at the top. The view in the <classname>Command History</classname> viewer
+      can be altered in several ways:
     </para>
-    <!--cbox(file: execute/command_history_local.png caption: )-->
-    <!--cbox(file: execute/command_history_cluster.png caption: )-->
     <para>
-      The local and cluster Command History view can be toggeled on and off using the two check
-      boxes <guibutton>Local History</guibutton> and <guibutton>Cluster History</guibutton>.
-      Whichever boxes are checked that history is shown.
+      The display of the user and cluster history can be toggled on and off using the two check
+      boxes <guibutton>User history</guibutton> and <guibutton>Cluster history</guibutton>.
+      If a box is unchecked, the corresponding history will not be shown.
     </para>
-    <!--cbox(file: execute/command_history_sorting.png caption: )-->
     <para>
-      The table can also be sorted by any column by clicking at the column header. Repeated
-      clicks will reverse the direction of the sort as shown by an up or down arrow at the
-      right side of the column header used to sort.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_sorting.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Sorting The Command History
+        </phrase></textobject>
+        <caption><para>
+          Sorting The Command History
+        </para></caption>
+      </mediaobject>
+      The history can also be sorted with respect to any displayed column of the table by
+      clicking at the column header. Repeated clicks will reverse the direction of the sort as
+      shown by an up or down arrow at the right side of the column header used to sort.
     </para>
-    <!--cbox(file: execute/command_history_no_popularity.png caption: )-->
     <para>
-      When first opened the Command History will group identical commands together and show
-      the number each command was executed in the Popularity count column (Pop.). Removing
-      the checkmark from the <guibutton>Popularity</guibutton> checkbox will list each command
-      separately allowing for a full audit of the command history.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_no_popularity.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Toggle Popularity
+        </phrase></textobject>
+        <caption><para>
+          Toggle Popularity
+        </para></caption>
+      </mediaobject>
+      When first opened, the <classname>Command History</classname> viewer will group identical
+      commands together and show the number of times each command was executed in the
+      popularity count column <literal>Pop.</literal>. Removing the checkmark from the
+      <guibutton>Popularity</guibutton> checkbox will list each command separately, allowing
+      for a full audit of the history.
     </para>
     <note>
       <para>
-	The state of the Command History is preserved when the window is opened again later.
-	The same history (local/cluster) is shown and the same sorting is applied. But this
-	does not persist across restarts of qluman-qt.	
+	The state of the <classname>Command History</classname> viewer is preserved when the
+	window is opened again later. The same history (user/cluster) is shown and the same
+	sorting is applied, it does not persist across restarts of the QluMan GUI though.
       </para>
     </note>
-    <!--cbox(file: execute/command_history_execute_again.png caption: )-->
-    <!--cbox(file: execute/command_history_save_command.png caption: )-->
     <para>
-      Besides being a log for excuted commands the Command History has 2 more functions:
-      A command can be executed again by first selecting the command from the list and then
-      clicking the <guibutton>Execute again</guibutton>. This will open the RXengine window
-      with the selected command already filled in. The command can be edited or the execute
-      on hostlist can be altered before clicking the <guibutton>Execute</guibutton> button
-      to actually start the execution.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/command_history_execute_again.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Re-executing a command
+        </phrase></textobject>
+        <caption><para>
+          Re-executing a command
+        </para></caption>
+      </mediaobject>
+      Besides being a log for excuted commands the <classname>Command History</classname>
+      viewer has two more useful functions: A command can be re-executed by first selecting the
+      command from the list and then clicking the <guibutton>Execute again</guibutton>. This
+      will open the <classname>RXengine</classname> window with the selected command already
+      filled in. The command may then still be edited or the <literal>Execute on</literal>
+      hostlist be altered before clicking <guibutton>Execute</guibutton> to actually initiate
+      the execution.
     </para>
     <para>
-      The second function is to use the command as template for a pre-defined command. Clicking
-      the <guibutton>Save command</guibutton> button will open the Command Editor window and
-      start the creation of a new command by asking for the alias for the new command. The
-      command will the be created as a local pre-defined command and can be edited, moved around
-      in the pre-defined command tree or moved to the cluster pre-defined commands like any other
-      pre-defined command.
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/execute/command_history_save_command.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Saving a command
+      </phrase></textobject>
+      <caption><para>
+        Saving a command
+      </para></caption>
+    </mediaobject>
+      Additionally a command in the history may be used as a template for a pre-defined
+      command. Clicking the <guibutton>Save command</guibutton> button will ask for an alias of
+      the command and will then open the <classname>Command Editor</classname> window to start
+      the creation of a new entry. The command will be created as a user pre-defined command.
+      Later it may be edited and moved around in the pre-defined command trees like any other
+      entry.
     </para>      
   </section>
 </chapter>
