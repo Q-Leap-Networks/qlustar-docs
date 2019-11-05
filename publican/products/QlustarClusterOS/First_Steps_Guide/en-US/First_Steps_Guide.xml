@@ -645,7 +645,7 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 		    xlink:href="https://qlustar.com/download___blank___">Download
 		    page</link>. This makes it really easy to start the GUI as a non-root user
 		    on any machine with Singularity installed (minimum Singularity version is
-		    2.4.1 for QluMan 11 containers): Just download the desired version of the
+		    3.2 for QluMan 11 containers): Just download the desired version of the
 		    image, check its sha256sum, make it executable and execute it (assuming you
 		    saved it as <filename>$HOME/qluman-11.0.0.16-singularity.sqsh</filename>):
 		    <screen>
@@ -655,6 +655,13 @@ gpg: key 3C0BC307: public key "Q-Leap Networks (automatic archive key) &lt;info@
 <command>chmod 755 $HOME/qluman-11.0.0.16-singularity.sqsh</command>
 <prompt>0 user@workstation ~ $</prompt>
 <command>$HOME/qluman-11.0.0.16-singularity.sqsh</command>
+		    </screen>
+		    You can view the changelog of the QluMan version inside the container by
+		    executing the following command:
+		    <screen>
+<prompt>0 user@workstation ~ $</prompt>
+<command>singularity exec $HOME/qluman-11.0.0.16-singularity.sqsh \
+  zless /usr/share/doc/qluman-qt-11/changelog.gz</command>
 		    </screen>
 		  </para>
 		</listitem>
