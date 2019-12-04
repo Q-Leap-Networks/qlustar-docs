@@ -490,6 +490,18 @@
 	<literal>stderr</literal> output selectively on and off.
       </para>
     </section>
+    <section xml:id="sec-RXE-Search">
+      <title>Searching in the output</title>
+      <!--cbox(file: execute/search.png caption:)-->
+      <para>
+	The output can also be searched by entering text in the search field at the bottom.
+	The text is interpreted as a regular expression and a match is searched in the text
+	starting at the current position in the output. If a match is found the matching
+	text is highlighted. The up and down buttons next to the search field allow
+	skipping to the previous or next match respectively. If no match is found the
+	<guilabel>Search</guilabel> label will turn red.
+      </para>
+    </section>
   </section>
   <section xml:id="sec-RXE-Command-Editor">
     <title>Command Editor</title>
@@ -955,7 +967,29 @@
       the creation of a new entry. The command will be created as a user pre-defined command.
       Later it may be edited and moved around in the pre-defined command trees like any other
       entry.
-    </para>      
+    </para>
+    <!--cbox(file: execute/command_history_clear_all.png caption:)-->
+    <!--cbox(file: execute/command_history_clear_local.png caption:)-->
+    <para>
+      Over time the command history will grow and at some point should be pruned back. All history
+      can be removed by clicking the <guibutton>Clear all</guibutton> when both histories are shown
+      and no line is selected. If only the user history or cluster history is shown this button
+      changes accordingly to clear only the local or cluster history.
+    </para>
+    <!--cbox(file: execute/command_history_clear_selected.png caption:)-->
+    <para>
+      To clear history with even more control select entries in the history. Ranges of entries can be
+      selected using shift or individual entries using ctrl. The button then changes to
+      <guibutton>Clear selected</guibutton> and will remove all selected entries from the history.
+    </para>
+    <note>
+      <para>
+	When popularity is active each line represents multiple entries, as shown by the popularity
+	column and the date will be the most recent occurance of each command. To delete for example
+	all commands older than 2 month first disable popularity so older entries are not hidden by
+	recent ones.
+      </para>
+    </note>
   </section>
 </chapter>
 
