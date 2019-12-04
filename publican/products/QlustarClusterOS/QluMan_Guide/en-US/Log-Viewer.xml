@@ -73,6 +73,47 @@
       <guibutton>Details</guibutton> button. The extra window makes it easier to read
       multi-line messages and allows copy+paste.
     </para>
+    <para>
+      Starting with Qluman 11.0.2.8 some new message categories were added to better track
+      what happens on the cluster with multiple admins. Creating, clonening or removing a chroot
+      now adds a message in the Chroot cathegory. For slurm users starting, stopping or restarting
+      slurmd on a node will now add a message.
+    </para>
+    <!--cbox(file: messages/messages-execution.png caption: Message for command execution)-->
+    <para>
+      Command execution is now also logged in Messages. For command execution the origin is the name
+      of the user executing the command. The short message contains the hosts the command was executed
+      on as either a hostlist or a filter followed by the command. For predefined commands the alias
+      of the command is shown instead of the actual command. The actual list of hosts the command
+      was executed as well as the full command text can be seen in the tooltip or by clicking the
+      <guibutton>Details</guibutton> button.
+    </para>
+    <!--cbox(file: messages/messages-offline.png caption: Tooltips show more information)-->
+    <para>
+    Last but not least the messages for the Online category have been greatly reduced in number
+    but not in information. For example when restarting Qlumand the messages of individual host
+    reconnecting has been surpressed and after a short time a single message is added with a
+    summary of nodes that have reconnected or failed to do so. The full list of nodes can be
+    seen in the tooltip or by clicking the <guibutton>Details</guibutton> button.
+    </para>
+    <para>
+      Not just the message flood when restarting qlumand has been reduced but also when the cluster
+      boots or nodes are rebooted, as can be seen in the screenshot. Instead of one message per node
+      going offline or coming online the messages are now merged within a short timeframe. The
+      origin for the merged message shows the hostlist of nodes in compact form while the tooltip
+      or detail view gives a host by host list with individual timestamps. Reducing the amount of
+      messages on node restarts allowed adding a new message <emphasis role="bold">Host
+      booting</emphasis> to the Online category, listing hosts that are downloading the Qlustar
+      image at the moment.
+    </para>
+    <note>
+      <para>
+	Merged messages are shown with a timestamp of the last entry. This means that it is possible
+	for messages to appear out of order. For example the Host online message for hosts can appear
+	before the Host booting message if the last node in Host booting hasn't come online (yet). If
+	in doubt compare the individual timestamps for each host.
+      </para>
+    </note>
   </section>
   <section xml:id="sec-LogViewer-filter">
     <title>Message Filter</title>
