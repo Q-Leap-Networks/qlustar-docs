@@ -384,15 +384,15 @@
 	    RXengine - Killing a command
 	  </para></caption>
 	</mediaobject>
-	In the screenshot example, the hosts <systemitem class="systemname">sn-1</systemitem>
-	and <systemitem class="systemname">sn-2</systemitem> were down, so they remained in the
+	In the screenshot example, the hosts <systemitem class="systemname">beo-201</systemitem>
+	and <systemitem class="systemname">beo-202</systemitem> were down, so they remained in the
 	<literal>Pending</literal> state. By clicking the <guibutton>Pending</guibutton>
 	button, a hostlist of the pending hosts is displayed. The <application>QluMan
 	server</application> will start the command on those hosts, when they become online
 	again. If you do not want that to happen, or if the command does not terminate on its
 	own, then the <guibutton>Kill</guibutton> button allows you to stop the command. A
-	killed command counts as failed, so <systemitem class="systemname">sn-1</systemitem>
-	and <systemitem class="systemname">sn-2</systemitem> now enter that state. The command
+	killed command counts as failed, so <systemitem class="systemname">beo-201</systemitem>
+	and <systemitem class="systemname">beo-202</systemitem> now enter that state. The command
 	output also reflects, that the command was killed.
       </para>
     </section>
@@ -418,16 +418,17 @@
 	displayed below each state button.
       </para>
       <para>
-	In the screenshot example, two hosts (<systemitem class="systemname">sn-1</systemitem>
-	and <systemitem class="systemname">sn-2</systemitem>) have failed, because they where
+	In the screenshot example, two hosts (<systemitem class="systemname">beo-201</systemitem>
+	and <systemitem class="systemname">beo-202</systemitem>) have failed, because they where
 	offline and the command was killed before starting. The output of both was identical,
 	so they form one group. Similar, one host (<systemitem
-	class="systemname">ql-head-pr-t</systemitem>) completed the command successfully and
+	class="systemname">beosrv-c</systemitem>) completed the command successfully and
 	builds its own group.
       </para>
       <para>
 	The <guibutton>S</guibutton> buttons next to the numbers add or remove the hosts in
-	each state to form a new hostlist. Press the button to include the corresponding hosts
+	each state to form a new hostlist for the next command. Press the button to include
+        the corresponding hosts
 	and press it once more to exclude them again. This is convenient, e.g. to quickly
 	select only the hosts for which a command failed: Analyze the errors and later relaunch
 	with an adjusted command. Another example: Select only the successful hosts to run a
@@ -785,13 +786,24 @@
 	    The test command appearing in the RXengine window
 	  </para></caption>
 	</mediaobject>
+	<mediaobject>
+	  <imageobject><imagedata
+	  fileref="images/command_editor/testing_command2.png"
+	  width="85%" format="PNG"/></imageobject>
+	  <textobject><phrase>
+	    The test command appearing in the RXengine window
+	  </phrase></textobject>
+	  <caption><para>
+	    The test command appearing in the RXengine window
+	  </para></caption>
+	</mediaobject>
 	In the screenshot example, the test command is defined to execute on all head-nodes
-	(<systemitem class="systemname">qlu-dev</systemitem> is the only head node in the
-	cluster). It has some input and two extra arguments. The first one is fixed to a
-	<classname>Hostname filter</classname> that evaluates to any host starting with
-	<systemitem class="systemname">beo</systemitem>. The second one is left for the user to
+	(<systemitem class="systemname">beosrv-c</systemitem> is the only head node in the
+	cluster). It has some input and two extra arguments. The first one is fixed to the
+	<classname>ONLINE NODES</classname> filter that evaluates to any host reported as
+        online. The second one is left for the user to
 	be specified, hence, when executing the command, only the second argument is
-	editable. In the screenshot, the <literal>ONLINE</literal> filter was chosen for this
+	editable. In the screenshot, the <literal>HEADNODES</literal> filter was chosen for this
 	argument, but any other text would have been possible too. For easy verification, the
 	command text, with all the arguments substituted, is shown together with the command
 	input (if defined).
