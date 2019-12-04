@@ -111,6 +111,18 @@
 	is also listed there.
       </para>
     </section>
+    <section xml:id="sec-version-check">
+      <title>Online Version Check</title>
+      <!--cbox(file: connect_cluster_dialog/version-check.png caption:)-->
+      <para>
+	Qluman-qt includes a simple online version check that is mostly relevant for users of the
+	singularity images. At the start the Qluman download page is fetched and searched for a
+	newer image version matching the major version of the client. If a newer version is
+	found to be available or the major version is no longer supported a button will appear
+	in the lower left corner. Click the <guibutton>Update Available</guibutton> to open
+	the Online Version Check dialog to get more details.
+      </para>
+    </section>
   </section>
   <section xml:id="sec-manage-cluster">
     <title>Managing Clusters</title>
