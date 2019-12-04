@@ -490,6 +490,18 @@
 	<literal>stderr</literal> output selectively on and off.
       </para>
     </section>
+    <section xml:id="sec-RXE-Search">
+      <title>Searching in the output</title>
+      <!--cbox(file: execute/search.png caption:)-->
+      <para>
+	The output can also be searched by entering text in the search field at the bottom.
+	The text is interpreted as a regular expression and a match is searched in the text
+	starting at the current position in the output. If a match is found the matching
+	text is highlighted. The up and down buttons next to the search field allow
+	skipping to the previous or next match respectively. If no match is found the
+	<guilabel>Search</guilabel> label will turn red.
+      </para>
+    </section>
   </section>
   <section xml:id="sec-RXE-Command-Editor">
     <title>Command Editor</title>
