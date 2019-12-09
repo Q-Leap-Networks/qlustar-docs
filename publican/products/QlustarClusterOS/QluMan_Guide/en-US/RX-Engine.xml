@@ -384,16 +384,17 @@
 	    RXengine - Killing a command
 	  </para></caption>
 	</mediaobject>
-	In the screenshot example, the hosts <systemitem class="systemname">beo-201</systemitem>
-	and <systemitem class="systemname">beo-202</systemitem> were down, so they remained in the
+	In the screenshot example, the hosts <systemitem
+	class="systemname">beo-201</systemitem> and <systemitem
+	class="systemname">beo-202</systemitem> were down, so they remained in the
 	<literal>Pending</literal> state. By clicking the <guibutton>Pending</guibutton>
 	button, a hostlist of the pending hosts is displayed. The <application>QluMan
 	server</application> will start the command on those hosts, when they become online
 	again. If you do not want that to happen, or if the command does not terminate on its
 	own, then the <guibutton>Kill</guibutton> button allows you to stop the command. A
 	killed command counts as failed, so <systemitem class="systemname">beo-201</systemitem>
-	and <systemitem class="systemname">beo-202</systemitem> now enter that state. The command
-	output also reflects, that the command was killed.
+	and <systemitem class="systemname">beo-202</systemitem> now enter that state. The
+	command output also reflects, that the command was killed.
       </para>
     </section>
     <section xml:id="sec-RXE-Host-Grouping">
@@ -491,15 +492,25 @@
       </para>
     </section>
     <section xml:id="sec-RXE-Search">
-      <title>Searching in the output</title>
-      <!--cbox(file: execute/search.png caption:)-->
+      <title>Searching in the Command Output</title>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/execute/search.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Searching in the Command Output
+        </phrase></textobject>
+        <caption><para>
+          Searching in the Command Output
+        </para></caption>
+      </mediaobject>
       <para>
-	The output can also be searched by entering text in the search field at the bottom.
-	The text is interpreted as a regular expression and a match is searched in the text
-	starting at the current position in the output. If a match is found the matching
-	text is highlighted. The up and down buttons next to the search field allow
-	skipping to the previous or next match respectively. If no match is found the
-	<guilabel>Search</guilabel> label will turn red.
+	Searching in the command output is possible by entering text in the search field at the
+	bottom of the execution window. The text is interpreted as a regular expression and a
+	match is searched in the text starting at the current position in the output. If a
+	match is found, the matching text is highlighted. The up/down buttons next to the
+	search field allow skipping to the previous/next match respectively. If no match is
+	found, the <guilabel>Search</guilabel> label will turn red.
       </para>
     </section>
   </section>
@@ -968,26 +979,60 @@
       Later it may be edited and moved around in the pre-defined command trees like any other
       entry.
     </para>
-    <!--cbox(file: execute/command_history_clear_all.png caption:)-->
-    <!--cbox(file: execute/command_history_clear_local.png caption:)-->
     <para>
-      Over time the command history will grow and at some point should be pruned back. All history
-      can be removed by clicking the <guibutton>Clear all</guibutton> when both histories are shown
-      and no line is selected. If only the user history or cluster history is shown this button
-      changes accordingly to clear only the local or cluster history.
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/execute/command_history_clear_all.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Clearing all command history.
+      </phrase></textobject>
+      <caption><para>
+        Clearing all command history.
+      </para></caption>
+    </mediaobject>
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/execute/command_history_clear_local.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Clearing only the user command history
+      </phrase></textobject>
+      <caption><para>
+        Clearing only the user command history
+      </para></caption>
+    </mediaobject>
+      As time passes, the command history continues to grow and at some point you might want to
+      clean up old or unimportant entries. There are various ways to truncate the list: If both
+      histories are displayed and no lines are explicitly selected, the full history can be
+      removed by clicking the <guibutton>Clear all</guibutton> button. If only the user or
+      cluster history is selected to be shown, this button changes accordingly to clear only
+      the history currently displayed.
     </para>
-    <!--cbox(file: execute/command_history_clear_selected.png caption:)-->
     <para>
-      To clear history with even more control select entries in the history. Ranges of entries can be
-      selected using shift or individual entries using ctrl. The button then changes to
-      <guibutton>Clear selected</guibutton> and will remove all selected entries from the history.
+    <mediaobject>
+      <imageobject><imagedata
+      fileref="images/execute/command_history_clear_selected.png"
+      width="85%" format="PNG"/></imageobject>
+      <textobject><phrase>
+        Clearing selected entries of the command history
+      </phrase></textobject>
+      <caption><para>
+        Clearing selected entries of the command history
+      </para></caption>
+    </mediaobject>
+      To delete individual history elements, select the corresponding entries in the
+      history. Ranges of entries can be selected using the <keycap>Shift</keycap> key,
+      individual ones using <keycap>Ctrl</keycap>. The button then changes to <guibutton>Clear
+      selected</guibutton> and will remove all selected entries from the history.
     </para>
     <note>
       <para>
-	When popularity is active each line represents multiple entries, as shown by the popularity
-	column and the date will be the most recent occurance of each command. To delete for example
-	all commands older than 2 month first disable popularity so older entries are not hidden by
-	recent ones.
+	When <classname>Popularity</classname> is active, each line may represent multiple
+	history entries, as shown by the Popularity column. The date shown for an entry will
+	then be the most recent occurance of each command. This means that if for example you
+	want to delete all commands older than 2 months, you should first disable
+	<classname>popularity</classname> so older entries are not hidden by more recent ones.
       </para>
     </note>
   </section>
