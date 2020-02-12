@@ -47,13 +47,28 @@
         </para></caption>
       </mediaobject>
       Many of the configurations managed in the <application>QluMan</application> GUI via
-      <classname>Config Classes</classname> and sub-classes, are translated into automatically
-      generated configuration files on the head-node(s). While
+      <classname>Config Classes</classname> and sub-classes are translated into automatically
+      generated configuration files located in the filesystem of the head-node(s). While
       <application>QluMan</application> configuration options are usually saved in the
       <application>QluMan</application> database immediately after they have been entered in
       the GUI, the write process of the real configuration files on disk is a separate step,
-      that needs to be specifically initiated and confirmed.
+      that needs to be explicitly initiated and confirmed.
     </para>
+    <para>
+      Each configuration dialog of a <classname>Config Class</classname> has a
+      <guibutton>Preview</guibutton> button that opens the <classname>Write Files</classname>
+      window with its own config files already expanded. If a <classname>Config
+      Class</classname> has no pending changes, the <guibutton>Preview</guibutton> button
+      becomes a <guibutton>View</guibutton> button, while its function remains the same.
+    </para>
+    <note>
+      <para>
+	The <classname>Write Files</classname> window as described here, was introduced only in
+	QluMan version 11.0.3.1. If you are running an older version, you should either update
+	or consult the 10.1 version of the QluMan guide for documentation about this particular
+	feature.
+      </para>
+    </note>
     <para>
       <mediaobject>
         <imageobject><imagedata
@@ -66,14 +81,9 @@
           The Write Files button.
         </para></caption>
       </mediaobject>
-      Each configuration dialog of a <classname>Config Class</classname> has a
-      <guibutton>Preview</guibutton> button that opens the <classname>Write Files</classname>
-      window with its own config files already expanded. If a <classname>Config
-      Class</classname> has no pending changes, the <guibutton>Preview</guibutton> button
-      becomes a <guibutton>View</guibutton> button. It's function remains the same. The
-      <classname>Write Files</classname> window can also be opened from <guimenuitem>Manage
+      The <classname>Write Files</classname> window can also be opened from <guimenuitem>Manage
       Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
-      Files</guibutton> button at the bottom right of the main window. The button is an
+      Files</guibutton> button at the bottom right of the main window. This button is an
       indicator for the presence of pending changes: It is grayed out if there aren't any, and
       fully visible otherwise.
     </para>
@@ -100,13 +110,12 @@
           Write changed file classes
         </para></caption>
       </mediaobject>
-      When the Write Files preview is opened it shows a list of <classname>Config
-      Classes</classname> that can be written on the right. Each <classname>Config
-      Classes</classname> has a status LED showing red if there are pending changed that can be
-      written. If there are no pending changes the LED turns green. The changes for all
-      <classname>Config Classes</classname> can be written by clicking the <guibutton>Write
-      Changed</guibutton> at the bottom. If there are no changes then the button will be
-      ghosted.
+      When the <classname>Write Files</classname> window is opened, on the left it shows the
+      list of all QluMan <classname>Config Classes</classname> that may be written. Each
+      <classname>Config Class</classname> has a status LED. It is red if there are changes
+      pending to be written, otherwise green. The files of all <classname>Config
+      Classes</classname> with pending changes can be written by clicking the <guibutton>Write
+      Changed</guibutton> button at the bottom. It will be grayed out if there are no changes.
     </para>
     <para>
       <mediaobject>
@@ -121,12 +130,16 @@
         </para></caption>
       </mediaobject>
       <classname>Config Classes</classname> can also be written individually by setting the
-      check-mark before each class. This changes the write button at the bottom to
-      <guibutton>Write Selected</guibutton> and will write all selected classes regardless of
-      whether they have changes or not. Writing a <classname>Config Class</classname> without
-      changes is sometimes desirable to restart its related service, like the slurm daemon for
-      the Slurm Config class.
+      check-mark before each class. This converts the button at the bottom to <guibutton>Write
+      Selected</guibutton>. Pressing it will then write the files of all checked classes
+      regardless of whether they have changes or not.
     </para>
+    <note>
+      <para>
+	Writing a <classname>Config Class</classname> without changes is sometimes desirable to
+	restart its related service, like e.g. the slurm daemon for the Slurm Config class.
+      </para>
+    </note>
     <note>
       <para>
 	The actual write command is performed via the <link linkend="chap-RX-Engine">Qlustar
@@ -146,6 +159,15 @@
           Expanding
         </para></caption>
       </mediaobject>
+      Before writing the generated files for each <classname>Config Class</classname>, they can
+      be inspected by expanding their entry in the tree view. Under the hood, this expansion
+      initiates a request by the GUI to the QluMan server, asking to send the generated files
+      together with a diff against the current files on disk. For the latter to work, the execd
+      on the Headnode needs to be up and running.
+    </para>
+    <para>
+      The generated files are shown in a tree structure where nodes represent directories and
+      leafs the individual files. For compactness, directories with only one entry are combined
       <mediaobject>
         <imageobject><imagedata
         fileref="images/write_files/diff.png"
@@ -168,20 +190,10 @@
           A file with no pending changes.
         </para></caption>
       </mediaobject>
-      Before writing the generated files for each <classname>Config Class</classname> they can
-      be inspected by expanding the <classname>Config Class</classname>it in the tree view. The
-      expansion initiates a request for sending the generated files as well as a diff against
-      the current files on disk. For the latter to work, the execd on the Headnode needs to be
-      up and running.
-    </para>
-    <para>
-      The generated files are shown in a tree structure where nodes represent directories and
-      leafs represent the individual files. For compactness, directories with only one entry
-      are combined into a single node. Each entry again has a status LED showing green if no
-      changes are found and red when changes are pending. A red-green LED is shown if some
-      files in a directory have changes and some do not. Selecting a file will show the
-      contents of the selected file on the right. If changes are pending, a diff of the changes
-      will also be shown below that.
+      into a single node. Each entry has its own status LED. It's red if there are changes
+      pending to be written, otherwise green. A red-green LED is shown if some files in a
+      directory have changes and some do not. Selecting a file will show its contents on the
+      right. If changes are pending, a diff of the changes will also be shown below that.
     </para>
     <para>
       <mediaobject>
@@ -195,13 +207,13 @@
           Scanning through all config files
         </para></caption>
       </mediaobject>
-      Besides selecting files from the tree there is also a second method of navigating between
-      files. On the right side at the bottom there are two buttons to go to the previous and
-      next file in the tree respectively. This allows to quickly browse through all files with
-      single clicks without having to move the mouse. Per default the
-      <guibutton>Prev</guibutton> and <guibutton>Next</guibutton> buttons will go through all
-      files. But if the <guibutton>Only changed files</guibutton> checkbox is set then they
-      will skip ahead to the previous or next file with pending changes instead.
+      Besides selecting files from the tree, there is also a second method of navigating
+      between files. At the bottom of the right side, there are two arrow buttons that will
+      switch to the previous and next file in the tree respectively. This allows to quickly
+      browse through all files with single clicks without having to move the mouse. Per
+      default, the <guibutton>Prev</guibutton> and <guibutton>Next</guibutton> buttons will
+      cycle through all files. After checking the <guibutton>Only changed files</guibutton>
+      checkbox, only files with pending changes will be switched to.
     </para>
     <para>
       <mediaobject>
@@ -226,25 +238,30 @@
           Changes are not written before having refreshed.
         </para></caption>
       </mediaobject>
-      While the Write Files preview is opened further changes can be made to the cluster
-      configuration, either by the user himself or another user. The Write Files preview will
-      detect this and add a yellow component to all LEDs and activate the
-      <guibutton>Refresh</guibutton> button at the bottom. Until the
-      <guibutton>Refresh</guibutton> button is clicked the displayed information will not
-      reflect the latest changes. Trying to write will also fail with an error message as that
-      would write different files then what has been previewed.
+      While the <classname>Write Files</classname> window is open, further changes may have
+      been made to the cluster configuration, either by the current user or another one. The
+      <classname>Write Files</classname> window will detect this. As a result, a yellow
+      component will be added to all LEDs and the <guibutton>Refresh</guibutton> button at the
+      bottom be activated . Until the latter is clicked, the displayed information will not
+      reflect the latest changes and trying to write will also fail with an error message. This
+      is to prevent the activation of files with a content that is different from what has been
+      previewed.
     </para>
     <note>
       <para>
-	Generating the files for each <classname>Config Class</classname> can be costly on
-	large clusters.  This is therefore not done for every change. Instead the server has a
-	rough idea what changes will affect each <classname>Config Class</classname> and will
-	flag the relevant classes as having changes.  Generating the actual files is delayed
-	for 10 seconds and might find that no changes will actually occur. This reduces the
-	load on the server if multiple changes are made in a short time. The downside is that
-	the LEDs can show red or yellow for a time where no actual change exists. Clicking the
-	<guibutton>Refresh</guibutton> button will abort the delay and generate the files for
-	each config class immediately.
+	Generating the files for each <classname>Config Class</classname> can be an expensive
+	operation on large clusters. This is therefore not done automatically after every
+	change. Instead, the server has a rough idea about what changes will affect each
+	<classname>Config Class</classname> and will simply flag the relevant ones as being a
+	candidate for having changed files. Generating the actual files is then delayed for 10
+	seconds and might find that no changes will actually occur.
+      </para>
+      <para>
+	This delay reduces the load on the server if multiple changes are made within a short
+	time. The downside of it is that the LEDs can turn red or yellow for a short time, even
+	though no actual change exists. Clicking the <guibutton>Refresh</guibutton> button in
+	this situation will abort the delay and generate the files for each <classname>Config
+	Class</classname> immediately.
       </para>
     </note>
     <section xml:id="sec-Host-Specific-Configs">
@@ -274,20 +291,19 @@
 	</mediaobject>
 	Various configurations managed in the <application>QluMan</application> GUI via
 	<classname>Config Classes</classname> and sub-classes translate into automatically
-	generated configuration files for the individual hosts. These will be sent to the host
-	and written by its <application>execd</application> in the pre-systemd phase of the
-	boot process. There is generally no update mechanism for running systems and changes
-	only take effect on the next reboot. A preview of the generated configs can be
-	initiated by selecting <guimenuitem>Preview config</guimenuitem> from the context menu.
-	More than one host may be selected for this.
+	generated configuration files for the individual hosts. In the pre-systemd phase of
+	their boot process, these files will be sent to them and written by their
+	<application>execd</application>. At this stage, there is no general update mechanism
+	concerning these files for running nodes and changes only take effect during the next
+	boot. A preview of the generated configs can be initiated by selecting
+	<guimenuitem>Preview config</guimenuitem> from the host's context menu. More than one
+	host may be selected for this.
       </para>
       <note>
 	<para>
-	  Changes to the current config of a host will only be shown if the host is
-	  online. Each host is being sent the latest files when it boots, so generally no
-	  changes can be present once the host is turned on. But if the host is offline (for
-	  example due to network problems) and not powered down, changes might be present and
-	  not shown.
+	  Changes to the current config files of a host will only be shown if the host is
+	  online. If the host is offline (for example due to network problems) but not powered
+	  down, possible changes might not be shown.
 	</para>
       </note>
     </section>

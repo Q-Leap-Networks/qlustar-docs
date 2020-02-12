@@ -20,10 +20,10 @@
         fileref="images/QlustarImages/main.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          The Qlustar OS Image configuration window
+          Node OS Image configuration
         </phrase></textobject>
         <caption><para>
-          The Qlustar OS Image configuration window
+          Node OS Image configuration
         </para></caption>
       </mediaobject>
       Qlustar OS images can be defined and configured in the <classname>Qlustar
@@ -65,10 +65,10 @@
 	  fileref="images/QlustarImages/modules.png"
 	  width="85%" format="PNG"/></imageobject>
 	  <textobject><phrase>
-	    Adding a module to a Qlustar Image
+	    Adding a module to an Image
 	  </phrase></textobject>
 	  <caption><para>
-	    Adding a module to a Qlustar Image
+	    Adding a module to an Image
 	  </para></caption>
 	</mediaobject>
 	A couple of images are pre-defined during the installation process. The dialog shows
