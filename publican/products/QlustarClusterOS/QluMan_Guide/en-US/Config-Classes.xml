@@ -181,9 +181,17 @@
 	and written by its <application>execd</application> in the pre-systemd phase of the
 	boot process. There is generally no update mechanism for running systems and changes
 	only take effect on the next reboot. A preview of the generated configs can be
-	initiated by selecting <guimenuitem>Preview config</guimenuitem> from the context menu
-	of a host.
+	initiated by selecting <guimenuitem>Preview config</guimenuitem> from the context menu.
+	More than one host may be selected for this.
       </para>
+      <note>
+	<para>
+	  Changes to the current config of a host will only be shown if the host is online. Each
+	  host is send the latest files when it boots so generally no changes can be present once
+	  the host is turned on. But if the host is offline due to for example network problems
+	  and not powered down then changes might be present and not shown.
+	</para>
+      </note>
     </section>
   </section>
   <section xml:id="sec-Boot-Configs">
