@@ -29,7 +29,7 @@
       Qlustar OS images can be defined and configured in the <classname>Qlustar
       Images</classname> dialog accessible via <guimenuitem>Manage
       Configs</guimenuitem>-><guimenuitem>Qlustar Images</guimenuitem>. Each image has a unique
-      name, a flavor (e.g. <classname>trusty</classname>), a version, an optional <link
+      name, a flavor (e.g. <classname>bionic</classname>), a version, an optional <link
       linkend="sec-UnionFS-Chroots">chroot</link> and one or more image modules.
     </para>
     <section xml:id="sec-Image-Versioning">
