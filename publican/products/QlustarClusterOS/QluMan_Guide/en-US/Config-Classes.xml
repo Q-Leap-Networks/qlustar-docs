@@ -66,33 +66,66 @@
           The Write Files button.
         </para></caption>
       </mediaobject>
-      Each configuration dialog of a <classname>Config Class</classname> has a <guibutton>Preview</guibutton>
-      button that opens the Write Files preview with its own config files already expanded.
-      If a <classname>Config Class</classname> has no pending changes, the <guibutton>Preview</guibutton> button
-      becomes a <guibutton>View</guibutton> button. It's function remains the same.
-      The Write Files preview can also be opened from <guimenuitem>Manage
+      Each configuration dialog of a <classname>Config Class</classname> has a
+      <guibutton>Preview</guibutton> button that opens the <classname>Write Files</classname>
+      window with its own config files already expanded. If a <classname>Config
+      Class</classname> has no pending changes, the <guibutton>Preview</guibutton> button
+      becomes a <guibutton>View</guibutton> button. It's function remains the same. The
+      <classname>Write Files</classname> window can also be opened from <guimenuitem>Manage
       Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
       Files</guibutton> button at the bottom right of the main window. The button is an
       indicator for the presence of pending changes: It is grayed out if there aren't any, and
       fully visible otherwise.
     </para>
     <para>      
-      <!--cbox(file: write_files/write_none.png caption: )-->
-      <!--cbox(file: write_files/write_all.png caption: )-->
-      When the Write Files preview is opened it shows a list of <classname>Config Classes</classname>
-      that can be written on the right. Each <classname>Config Classes</classname> has a status LED
-      showing red if there are pending changed that can be written. If there are no pending changes
-      the LED turns green. The changes for all <classname>Config Classes</classname> can be written
-      by clicking the <guibutton>Write Changed</guibutton> at the bottom. If there are no changes then
-      the button will be ghosted.
+      <mediaobject>      
+        <imageobject><imagedata      
+        fileref="images/write_files/write_none.png"      
+        width="85%" format="PNG"/></imageobject>      
+        <textobject><phrase>      
+          No pending changes      
+        </phrase></textobject>      
+        <caption><para>      
+          No pending changes      
+        </para></caption>      
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/write_all.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Write changed file classes
+        </phrase></textobject>
+        <caption><para>
+          Write changed file classes
+        </para></caption>
+      </mediaobject>
+      When the Write Files preview is opened it shows a list of <classname>Config
+      Classes</classname> that can be written on the right. Each <classname>Config
+      Classes</classname> has a status LED showing red if there are pending changed that can be
+      written. If there are no pending changes the LED turns green. The changes for all
+      <classname>Config Classes</classname> can be written by clicking the <guibutton>Write
+      Changed</guibutton> at the bottom. If there are no changes then the button will be
+      ghosted.
     </para>
     <para>
-      <!--cbox(file: write_files/write_selected.png caption: )-->
-      <classname>Config Classes</classname> can also be written individually by setting the check-mark
-      before each class. This changes the write button at the bottom to <guibutton>Write Selected</guibutton>
-      and will write all selected classes regardless of weather it has changes or not. Writing a
-      <classname>Config Classes</classname> without changes is sometimes desirable to restart services
-      related to the <classname>Config Class</classname>, like the slurm daemon for the Slurm Config class.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/write_selected.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Selecting files to write
+        </phrase></textobject>
+        <caption><para>
+          Selecting files to write
+        </para></caption>
+      </mediaobject>
+      <classname>Config Classes</classname> can also be written individually by setting the
+      check-mark before each class. This changes the write button at the bottom to
+      <guibutton>Write Selected</guibutton> and will write all selected classes regardless of
+      whether they have changes or not. Writing a <classname>Config Class</classname> without
+      changes is sometimes desirable to restart its related service, like the slurm daemon for
+      the Slurm Config class.
     </para>
     <note>
       <para>
@@ -102,52 +135,116 @@
       </para>
     </note>
     <para>
-      <!--cbox(file: write_files/expand.png caption: )-->
-      <!--cbox(file: write_files/diff.png caption: )-->
-      <!--cbox(file: write_files/no_diff.png caption: )-->
-      Before writing the generated files for each <classname>Config Classes</classname> can be
-      inspected by expanding the <classname>Config Class</classname>. This then requests the
-      generated files from qlumand as well as a diff against the current files. For the later
-      the execd on the Headnode needs to be up and running. The generated files are shown in
-      a tree structure where nodes represent directories and leafs represent the individual
-      files. For compactness directories with only one entry are combined into a single node.
-      Each entry again has a status LED showing green if no changes are found and red when
-      changes are pending. A red-green LED is shown if some files in a directory have
-      changes and some do not. Selecting a file will show the contents of the selected file
-      on the right. If changes are pending a diff of the changes will also be shown below
-      that.
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/expand.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Expanding
+        </phrase></textobject>
+        <caption><para>
+          Expanding
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/diff.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Displaying the diff of pending changes.
+        </phrase></textobject>
+        <caption><para>
+          Displaying the diff of pending changes.
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/no_diff.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          A file with no pending changes.
+        </phrase></textobject>
+        <caption><para>
+          A file with no pending changes.
+        </para></caption>
+      </mediaobject>
+      Before writing the generated files for each <classname>Config Class</classname> they can
+      be inspected by expanding the <classname>Config Class</classname>it in the tree view. The
+      expansion initiates a request for sending the generated files as well as a diff against
+      the current files on disk. For the latter to work, the execd on the Headnode needs to be
+      up and running.
     </para>
     <para>
-      <!--cbox(file: write_files/prev_next.png caption: )-->
+      The generated files are shown in a tree structure where nodes represent directories and
+      leafs represent the individual files. For compactness, directories with only one entry
+      are combined into a single node. Each entry again has a status LED showing green if no
+      changes are found and red when changes are pending. A red-green LED is shown if some
+      files in a directory have changes and some do not. Selecting a file will show the
+      contents of the selected file on the right. If changes are pending, a diff of the changes
+      will also be shown below that.
+    </para>
+    <para>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/prev_next.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Scanning through all config files
+        </phrase></textobject>
+        <caption><para>
+          Scanning through all config files
+        </para></caption>
+      </mediaobject>
       Besides selecting files from the tree there is also a second method of navigating between
-      files. On the right side at the bottom there are two buttons to go to the previous and next
-      file in the tree respectively. This allows to quickly browse through all files with single
-      clicks without having to move the mouse. Per default the <guibutton>Prev</guibutton> and
-      <guibutton>Next</guibutton> buttons will go through all files. But if the <guibutton>Only
-      changed files</guibutton> checkbox is set then they will skip ahead to the previous or
-      next file with pending changes instead.
+      files. On the right side at the bottom there are two buttons to go to the previous and
+      next file in the tree respectively. This allows to quickly browse through all files with
+      single clicks without having to move the mouse. Per default the
+      <guibutton>Prev</guibutton> and <guibutton>Next</guibutton> buttons will go through all
+      files. But if the <guibutton>Only changed files</guibutton> checkbox is set then they
+      will skip ahead to the previous or next file with pending changes instead.
     </para>
     <para>
-      <!--cbox(file: write_files/refresh.png caption: )-->
-      <!--cbox(file: write_files/write_refresh.png caption: )-->
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/refresh.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Refreshing the display after changes were committed.
+        </phrase></textobject>
+        <caption><para>
+          Refreshing the display after changes were committed.
+        </para></caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject><imagedata
+        fileref="images/write_files/write_refresh.png"
+        width="85%" format="PNG"/></imageobject>
+        <textobject><phrase>
+          Changes are not written before having refreshed.
+        </phrase></textobject>
+        <caption><para>
+          Changes are not written before having refreshed.
+        </para></caption>
+      </mediaobject>
       While the Write Files preview is opened further changes can be made to the cluster
-      configuration, either by the user himself or another user. The Write Files preview
-      will detect this and add a yellow component to all LEDs and activate the
-      <guibutton>Refresh</guibutton> button at the bottom. Until the <guibutton>Refresh</guibutton>
-      button is clicked the displayed information will not reflect the latest changes. Trying to
-      write will also fail with an error message as that would write different files then what has
-      been previewed.
+      configuration, either by the user himself or another user. The Write Files preview will
+      detect this and add a yellow component to all LEDs and activate the
+      <guibutton>Refresh</guibutton> button at the bottom. Until the
+      <guibutton>Refresh</guibutton> button is clicked the displayed information will not
+      reflect the latest changes. Trying to write will also fail with an error message as that
+      would write different files then what has been previewed.
     </para>
     <note>
       <para>
-	Generating the files for each <classname>Config Class</classname> can be costly on large clusters.
-	This is therefore not done for every change. Instead the server has a rough idea what changes will
-	affect each <classname>Config Class</classname> and will flag the relevant classes as having changes.
-	Generating the actual files is delayed for 10 seconds and might find that no changes will actually
-	occur. This reduces the load on the server if multiple changes are made in a short time. The downside
-	is that the LEDs can show red or yellow for a time where no actual change exists. Clicking the
-	<guibutton>Refresh</guibutton> button will abort the delay and generate the files for each config
-	class immediately.
+	Generating the files for each <classname>Config Class</classname> can be costly on
+	large clusters.  This is therefore not done for every change. Instead the server has a
+	rough idea what changes will affect each <classname>Config Class</classname> and will
+	flag the relevant classes as having changes.  Generating the actual files is delayed
+	for 10 seconds and might find that no changes will actually occur. This reduces the
+	load on the server if multiple changes are made in a short time. The downside is that
+	the LEDs can show red or yellow for a time where no actual change exists. Clicking the
+	<guibutton>Refresh</guibutton> button will abort the delay and generate the files for
+	each config class immediately.
       </para>
     </note>
     <section xml:id="sec-Host-Specific-Configs">
@@ -186,10 +283,11 @@
       </para>
       <note>
 	<para>
-	  Changes to the current config of a host will only be shown if the host is online. Each
-	  host is send the latest files when it boots so generally no changes can be present once
-	  the host is turned on. But if the host is offline due to for example network problems
-	  and not powered down then changes might be present and not shown.
+	  Changes to the current config of a host will only be shown if the host is
+	  online. Each host is being sent the latest files when it boots, so generally no
+	  changes can be present once the host is turned on. But if the host is offline (for
+	  example due to network problems) and not powered down, changes might be present and
+	  not shown.
 	</para>
       </note>
     </section>
