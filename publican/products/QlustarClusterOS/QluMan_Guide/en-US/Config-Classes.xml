@@ -40,21 +40,10 @@
         fileref="images/write_files/main.png"
         width="85%" format="PNG"/></imageobject>
         <textobject><phrase>
-          The Write Files dialog
+          The Write Files Preview dialog
         </phrase></textobject>
         <caption><para>
-          The Write Files dialog
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/write_files/with_changes.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          The Write Files dialog with pending changes
-        </phrase></textobject>
-        <caption><para>
-          The Write Files dialog with pending changes
+          The Write Files Preview dialog
         </para></caption>
       </mediaobject>
       Many of the configurations managed in the <application>QluMan</application> GUI via
@@ -77,68 +66,88 @@
           The Write Files button.
         </para></caption>
       </mediaobject>
-      Each configuration dialog of a config class has a <guibutton>Preview</guibutton> and a
-      <guibutton>Write</guibutton> button for its own config files. Additionally, there is a
-      dedicated dialog for writing and previewing <emphasis role="bold">all</emphasis>
-      configuration files. You can access the latter from <guimenuitem>Manage
+      Each configuration dialog of a <classname>Config Class</classname> has a <guibutton>Preview</guibutton>
+      button that opens the Write Files preview with its own config files already expanded.
+      If a <classname>Config Class</classname> has no pending changes, the <guibutton>Preview</guibutton> button
+      becomes a <guibutton>View</guibutton> button. It's function remains the same.
+      The Write Files preview can also be opened from <guimenuitem>Manage
       Cluster</guimenuitem>-><guimenuitem>Write Files</guimenuitem> or via the <guibutton>Write
       Files</guibutton> button at the bottom right of the main window. The button is an
       indicator for the presence of pending changes: It is grayed out if there aren't any, and
       fully visible otherwise.
     </para>
-    <para>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/preview_diff/view.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Display of a config's content
-        </phrase></textobject>
-        <caption><para>
-          Display of a config's content
-        </para></caption>
-      </mediaobject>
-      <mediaobject>
-        <imageobject><imagedata
-        fileref="images/preview_diff/diff_one.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Display of a single config's content including a diff
-        </phrase></textobject>
-        <caption><para>
-          Display of a single config's content including a diff
-        </para></caption>
-      </mediaobject>
-       <mediaobject>
-        <imageobject><imagedata
-        fileref="images/preview_diff/diff_many.png"
-        width="85%" format="PNG"/></imageobject>
-        <textobject><phrase>
-          Display of multiple configs including their diffs
-        </phrase></textobject>
-        <caption><para>
-          Display of multiple configs including their diffs
-        </para></caption>
-      </mediaobject>
-      If a config class has no pending changes, the <guibutton>Preview</guibutton> button
-      becomes a <guibutton>View</guibutton> button and the <guibutton>Write</guibutton> button
-      becomes ghosted. The Preview window shows both, the new version of the config file that
-      will be written, as well as a <parameter>context diff</parameter> of the changes compared
-      to the current file on disk (if there are any differences). If a <classname>Config
-      Class</classname> changes only one file, that file will be shown directly. If multiple
-      files are involved, there will be one tab for each file.
+    <para>      
+      <!--cbox(file: write_files/write_none.png caption: )-->
+      <!--cbox(file: write_files/write_all.png caption: )-->
+      When the Write Files preview is opened it shows a list of <classname>Config Classes</classname>
+      that can be written on the right. Each <classname>Config Classes</classname> has a status LED
+      showing red if there are pending changed that can be written. If there are no pending changes
+      the LED turns green. The changes for all <classname>Config Classes</classname> can be written
+      by clicking the <guibutton>Write Changed</guibutton> at the bottom. If there are no changes then
+      the button will be ghosted.
     </para>
-    <note>
-      <para>
-	Checking the optional <guibutton>Force</guibutton> button, will initiate a rewrite of
-	all config files, even if they haven't changed.
-      </para>
-    </note>
+    <para>
+      <!--cbox(file: write_files/write_selected.png caption: )-->
+      <classname>Config Classes</classname> can also be written individually by setting the check-mark
+      before each class. This changes the write button at the bottom to <guibutton>Write Selected</guibutton>
+      and will write all selected classes regardless of weather it has changes or not. Writing a
+      <classname>Config Classes</classname> without changes is sometimes desirable to restart services
+      related to the <classname>Config Class</classname>, like the slurm daemon for the Slurm Config class.
+    </para>
     <note>
       <para>
 	The actual write command is performed via the <link linkend="chap-RX-Engine">Qlustar
 	RXengine</link>. This allows for <emphasis role="bold">consistent management</emphasis>
 	of multiple head-nodes e.g. in a high-availability configuration.
+      </para>
+    </note>
+    <para>
+      <!--cbox(file: write_files/expand.png caption: )-->
+      <!--cbox(file: write_files/diff.png caption: )-->
+      <!--cbox(file: write_files/no_diff.png caption: )-->
+      Before writing the generated files for each <classname>Config Classes</classname> can be
+      inspected by expanding the <classname>Config Class</classname>. This then requests the
+      generated files from qlumand as well as a diff against the current files. For the later
+      the execd on the Headnode needs to be up and running. The generated files are shown in
+      a tree structure where nodes represent directories and leafs represent the individual
+      files. For compactness directories with only one entry are combined into a single node.
+      Each entry again has a status LED showing green if no changes are found and red when
+      changes are pending. A red-green LED is shown if some files in a directory have
+      changes and some do not. Selecting a file will show the contents of the selected file
+      on the right. If changes are pending a diff of the changes will also be shown below
+      that.
+    </para>
+    <para>
+      <!--cbox(file: write_files/prev_next.png caption: )-->
+      Besides selecting files from the tree there is also a second method of navigating between
+      files. On the right side at the bottom there are two buttons to go to the previous and next
+      file in the tree respectively. This allows to quickly browse through all files with single
+      clicks without having to move the mouse. Per default the <guibutton>Prev</guibutton> and
+      <guibutton>Next</guibutton> buttons will go through all files. But if the <guibutton>Only
+      changed files</guibutton> checkbox is set then they will skip ahead to the previous or
+      next file with pending changes instead.
+    </para>
+    <para>
+      <!--cbox(file: write_files/refresh.png caption: )-->
+      <!--cbox(file: write_files/write_refresh.png caption: )-->
+      While the Write Files preview is opened further changes can be made to the cluster
+      configuration, either by the user himself or another user. The Write Files preview
+      will detect this and add a yellow component to all LEDs and activate the
+      <guibutton>Refresh</guibutton> button at the bottom. Until the <guibutton>Refresh</guibutton>
+      button is clicked the displayed information will not reflect the latest changes. Trying to
+      write will also fail with an error message as that would write different files then what has
+      been previewed.
+    </para>
+    <note>
+      <para>
+	Generating the files for each <classname>Config Class</classname> can be costly on large clusters.
+	This is therefore not done for every change. Instead the server has a rough idea what changes will
+	affect each <classname>Config Class</classname> and will flag the relevant classes as having changes.
+	Generating the actual files is delayed for 10 seconds and might find that no changes will actually
+	occur. This reduces the load on the server if multiple changes are made in a short time. The downside
+	is that the LEDs can show red or yellow for a time where no actual change exists. Clicking the
+	<guibutton>Refresh</guibutton> button will abort the delay and generate the files for each config
+	class immediately.
       </para>
     </note>
     <section xml:id="sec-Host-Specific-Configs">
