@@ -205,6 +205,20 @@
 	    welcome screen at which you can start the setup process by pressing
 	    <keycap>Enter</keycap>.
 	  </para>
+	  <note>
+	    <para>
+	      The installer is running in a <link
+	      xlink:href="https://www.gnu.org/software/screen/screen___blank___">screen</link>
+	      session with the screen <firstterm>command character</firstterm> being remapped
+	      to <keycap>Ctrl-t</keycap>. Hence, if you need to start a shell during the
+	      installation process, you can do so at any time after the welcome screen has
+	      popped up by typing <keycap>Ctrl-t c</keycap> (this opens a new screen window)
+	      and then executing <application>bash</application>. An arbitrary number of
+	      additional screen windows can be opened this way. To switch back to the main
+	      installer window type <keycap>Ctrl-t 0</keycap>. To cycle between possible other
+	      additional screen windows type <keycap>Ctrl-t n</keycap>.
+	    </para>
+	  </note>
 	</step>
 	<step>
 	  <title>Localization settings</title>
