@@ -82,9 +82,9 @@
 	that drivers for some network or storage adapters on Laptops or other non-server PCs
 	are missing. If you run into such problems, please post it in the <link
 	xlink:href="https://lists.qlustar.org/postorius/lists/qlustar-general.qlustar.org/___blank___">
-	Qlustar Mailing List</link>. At this stage, Qlustar also has no support for secure boot
-	(UEFI). If your hardware uses UEFI by default, you need to configure your BIOS to allow
-	so-called <firstterm>legacy boot</firstterm>.
+	Qlustar Mailing List</link>. At this stage, Qlustar also has no support for
+	<firstterm>secure boot</firstterm>, but fully supports UEFI otherwise. So make sure
+	that <firstterm>secure boot</firstterm> is disabled in your BIOS settings.
       </para>
     </note>
   </chapter>

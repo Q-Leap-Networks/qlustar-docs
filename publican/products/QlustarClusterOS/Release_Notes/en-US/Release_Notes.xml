@@ -19,11 +19,12 @@
     <abstract>
       <para>
 	The 11.0 release updates Qlustar's core platform to current Ubuntu 18.04 LTS.  The
-	CentOS edge platform is now based on 7.6. As a result of our continuous platform
-	optimization/simplification process we moved to <link
-	xlink:href="http://dnsmasq.org/___blank___">dnsmasq</link> as a replacement of the
-	previously used ISC DHCP and atftp TFTP server. dnsmasq also provides cluster internal
-	name services (DNS) replacing the NIS hosts map and acts as a DNS proxy.
+	CentOS 7 edge platform is now based on 7.8 and the new CentOS 8 edge platform has been
+	added based on 8.1. As a result of our continuous platform optimization/simplification
+	process we moved to <link xlink:href="http://dnsmasq.org/___blank___">dnsmasq</link> as
+	a replacement of the previously used ISC DHCP and atftp TFTP server. dnsmasq also
+	provides cluster internal name services (DNS) replacing the NIS hosts map and acts as a
+	DNS proxy.
       </para>
       <para>
 	In addition to the dnsmasq management interface, the second new major feature of QluMan
@@ -45,11 +46,11 @@
   <section>
     <title>Basic Info</title>
       <para>
-	The Qlustar 11.0 release is based on Ubuntu 18.04.2. It includes all security fixes and
+	The Qlustar 11.0 release is based on Ubuntu 18.04. It includes all security fixes and
 	other package updates published before June 13th 2019. Available security updates
 	relevant to Qlustar 11.0, that have appeared after this date, will be announced on the
 	Qlustar website and in the Qlustar security newsletter. Supported edge-platforms are
-	Ubuntu 18.04 (Bionic) and CentOS 7.6 with integration of OpenHPC 1.3.8.
+	Ubuntu 18.04 (Bionic), CentOS 7 and CentOS 8 with integration of OpenHPC 1.3.8.
       </para>
   </section>
   <section>
@@ -226,7 +227,7 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    <classname>Lustre</classname>: 2.12.2
+	    <classname>Lustre</classname>: 2.12.4
 	  </para>
 	</listitem>
 	<listitem>
@@ -396,11 +397,32 @@ apt dist-upgrade</command>
 	  </note>
 	</step>
 	<step>
+	  <title>Migration to GRUB PXE booting</title>
+	  <para>
+	    To enable support for UEFI PXE booting, <classname>GRUB</classname> is now used per
+	    default as the boot loader for both EFI and PC BIOS netboot nodes. To make this
+	    work, the new package <classname>qlustar-headnode</classname> must be installed at
+	    this time.
+	  </para>
+	  <warning>
+	    <para>
+	      This is absolutely necessary, otherwise PXE booting won't work anymore.
+	    </para>
+	  </warning>
+	  <note>
+	    <para>
+	      If for some reason, you want to keep booting PC BIOS nodes via the legacy
+	      PXELINUX mechanism, you will have to install the package
+	      <classname>qlustar-netboot-compat</classname>.
+	    </para>
+	  </note>
+	</step>
+	<step>
 	  <title>Migration to dnsmasq</title>
 	  <para>
 	    Migration to dnsmasq is not absolutely required during this upgrade, but highly
-	    recommended. If you want to delay the migration for now, you can do so by checking
-	    the <link
+	    recommended. However, for PXE booting of UEFI nodes it is mandatory. If you want to
+	    delay the migration for now, you can do so by checking the <link
 	    xlink:href="../QluMan_Guide/index.html#sec-Writing-Config-Files___blank___">legacy
 	    checkbox in QluMan</link>. In this case you still have to disable systemd-timesyncd
 	    though in order for ntp to work:
@@ -410,13 +432,15 @@ service systemd-timesyncd stop
 systemctl disable systemd-timesyncd
 </command>
 	    </screen>
-	    After this, you can reboot the head-node once more and proceed with step 8.
+	    You also have to install the package <classname>qlustar-netboot-compat</classname>
+	    in this case. After this, you can reboot the head-node once more and proceed with
+	    step 8.
 	  </para>
 	  <warning>
 	    <para>
 	      Support for the old legacy setup with separate DHCP and TFTP servers will be
-	      discontinued starting with the 11.1 release. So you'll have to do the migration
-	      sometime before updating to 11.1. To do so, just follow the remainder of this
+	      discontinued starting with the 12.0 release. So you'll have to do the migration
+	      sometime before updating to 12.0. To do so, just follow the remainder of this
 	      step at any time.
 	    </para>
 	  </warning>
