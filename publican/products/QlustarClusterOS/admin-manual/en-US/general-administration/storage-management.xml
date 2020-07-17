@@ -96,6 +96,16 @@ watch --differences=cumulative cat /proc/mdstat</command>
 	</screen>
 	Press <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo> to exit the display.
       </para>
+      <note>
+	<para>
+	  After an OS RAID boot disk has been replaced, one also has to make sure that the BIOS
+	  will be able to boot from the new disk. For systems installed/booting in (U)EFI mode,
+	  you have to execute the shell function <command>grub-install-uefi-raid</command> for
+	  that. On systems running under legacy BIOS mode, you will have to run the command
+	  <command>dpkg-reconfigure grub-pc</command> and make sure the new disk is selected
+	  when prompted for the GRUB install locations (leave all other options as is).
+	</para>
+      </note>
     </section>
   </section>
   <section xml:id="admin-man-sect-vol-man">
